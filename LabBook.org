@@ -1,0 +1,242 @@
+#+TITLE: Bellini's Dissertation LabBook
+#+AUTHOR: Lucas e Tais
+#+LATEX_HEADER: \usepackage[margin=2cm,a4paper]{geometry}
+#+STARTUP: overview indent
+#+TAGS: Lucas(L) Tais(T) noexport(n) deprecated(d)
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+SEQ_TODO: TODO(t!) STARTED(s!) WAITING(w!) | DONE(d!) CANCELLED(c!) DEFERRED(f!)
+
+* 2015-09-15 Structure / Draft of TCC                            :Lucas:Tais:
+
+1. Introduction (3 pages max)
+   + Context (current scenario with pajeng c++)
+   + Motivation
+2. Basic Concepts? (5 pages max)
+   + JavaCC?
+   + Ferramentas de análise de desempenho
+   + MySQL ? 
+3. PajeNG
+   + How it is used by others (pjdump, etc)
+   + Description of how it works internally
+   + The problems with the current approach
+     + Focus on your contribution
+4. Java Simulator
+   + JavaCC / Perf. Eval. against others / Why JavaCC?
+5. Plugins
+  + Null
+  + PjDump
+  + MySQL
+    + Database modeling
+    + arguments (batches, server, etc.)
+6. Performance Evaluation
+  + Overview of what is being evaluated and why (my sql is the only NEW feature)
+  + Methodology
+  + Results and grafics
+  + Possible explanations
+7. Conclusion
+
+* 2016-03-17 Meeting with Tais (TCC Registration)                :Lucas:Tais:
+
+_Title_
+
+Extensible Simulator for Trace Replay
+
+_Abstract_
+
+Observation of program behavior is particularly important in High
+Performance Computing since it enables a performance analysis. Tracing
+is a very common method to do so, where interesting program events are
+registered in trace files. Replaying these trace files through
+simulation is used to analyze the data. The idea of simulation is to
+combine information that is spread in multiple events deriving new and
+richer combined entities. Usually, this event processing is done once
+and discarded, an approach adopted, for instance, by the Paje trace
+simulator. Since today trace files can be very large, it would be
+interesting to save these entities for future analysis. The objective
+of this proposal is to allow the performance analyst to change the
+simulator behavior when entities are detected. This extensibility
+should be implemented through plugins, that could be developed by
+anyone. The methodology to implement this objective is to develop a
+extensible simulator where every time an entity is created, it would
+direct that information to a plugin. It will be the plugin's
+reponsability to handle the entity. As a proof of concept, this work
+will propose the implementation of two plugins: a textual output
+similar to Paje's =pj_dump=; and an efficient database insertion in a
+pre-defined relational schema. A performance evaluation will be
+conducted to compare the trace simulator against other existing
+similar approaches.
+
+_Side Note_
+- Change way variables are stored in tables
+  - Each entry (value) of one given variable must have start and end time
+- Two meetings are expected
+  - Performance analysis of the implementation
+  - TCC organization (script/plan)
+- How to save in Emacs (C-x C-s)
+  - Copy: Select with the mouse or keyboard and then M-w
+  - Past: C-y
+
+
+* 2016-04-20 TCC Structure                                       :Lucas:Tais:
+
+1. Introduction
+   - Overview/Context
+     - Observation of program behavior is particularly important in
+       High Performance Computing since it enables a performance
+       analysis. Tracing is a very common method to do so, where
+       interesting program events are registered in trace
+       files. Replaying these trace files through simulation is used
+       to analyze the data. The idea of simulation is to combine
+       information that is spread in multiple events deriving new and
+       richer combined entities. Usually, this event processing is
+       done once and discarded, an approach adopted, for instance, by
+       the Paje trace simulator. Since today trace files can be very
+       large, it would be interesting to save these entities for
+       future analysis.
+   - Specific Context
+     - About Paje, how it works, ...
+       - Who use it: SimGrid, StarPU, 
+     - How does it work?
+   - Problem identification
+     - There are at least three problems with the current
+       implementaton of Paje: 1, 2 and 3.
+     - It is very complicated to change the Paje simulator behavior,
+       since it requires code modifications in the simulator core and
+       understand code details.
+     - The simulator creates the entities according to the events, but
+       the user needs to wait the end of simulation to access the
+       data. You cannot have a partial view of already simulated data.
+     - Last, once the simulator finished, all the simulation effort is
+       lost since no record of the simulated entities are kept between
+       executions.
+   - Objective
+     - The objective of this proposal is to allow the performance
+       analyst to change the simulator behavior when entities are
+       detected. This extensibility can be implemented through plugins
+       that can be attached to the simulator in specific and important
+       points where trace events are combined. This main objective
+       solves the first problem previously presented, about the
+       extensability of the simulator. Secondary objectives are the
+       creation of plugins to dump partial simulated data and to make
+       simulated data permanent. Finally, do a performance analysis to
+       compare against the previous implementation of the paje simulator.
+   - Main Results
+     - We have implemented two plugins: one for data insertion in a
+       DB, another to dump to standard output partial simulated data.
+     - Highlight the main performance analysis results.
+2. Basic Concepts? (5 pages max)
+   + JavaCC? their flex
+     - Introduction
+     - How does it work (.jj -> .java -> .class)
+     - .jj has a grammar, you can define a grammar the same way you do
+       in bison/yacc
+     - Other alternatives to javacc
+       - ANTLR, but it is too slow (maybe show a plot comparing both
+         if you have time)
+   + R and Experimental Design
+     - What is an experimental design?
+     - Full factorial design!
+     - Jain 1991
+   + MySQL ?
+     - 
+3. PajeNG and the Paje File Format (3 to 4 pages, finish with a motivation to your own work)
+   - Paje File Format
+     - Container
+     - State
+     - Variables
+     - Links
+     - Events
+     - Container has all others
+   - PajeNG
+     + How it is used by others (pjdump, etc)
+       - In SimGrid, trace is in Paje file format, but all people use
+         the CSV (the result of Paje simulation obtained through
+         pjdump)
+     + Description of how it works internally
+       - It is a library with three main components
+         - FileReader
+         - EventDecoder
+         - PajeSimulator
+       - Works as a pipeline
+         - See http://paje.sf.net/
+           - Pajé, an interactive visualization tool for tuning multi-threaded parallel applications.
+             A. Chassin de Kergommeaux, B. de Oliveira Stein, and Bernard P.E.
+             Parallel Computing, 26(10):1253–1274, aug 2000.
+           - See in particular the Fig. 7
+
+     + _The problems with the current approach_
+       - There are at least three problems with the current
+         implementaton of Paje: 1, 2 and 3.
+       - It is very complicated to change the Paje simulator behavior,
+         since it requires code modifications in the simulator core and
+         understand code details.
+       - The simulator creates the entities according to the events, but
+         the user needs to wait the end of simulation to access the
+         data. You cannot have a partial view of already simulated data.
+       - Last, once the simulator finished, all the simulation effort is
+         lost since no record of the simulated entities are kept between
+         executions.
+     + Differences against your own contribution
+       - My contribution is detailed in the next two chapters
+4. Our Approach: a Java-based Simulator
+   - Start with an overview
+     - Figure showing all your components
+
+   - Instrumentation points
+     + The instrumentation points where plugins can be attached to
+     - Describe each instrumentation point
+       - The information that is passed along
+       - Justify the presence of each information
+     - Make reference to the overview figure
+     - Figure
+       - Has the simulator core (the component)
+         - All the points
+
+   - JavaCC Parsing and Paje File format grammar
+     - Explain the grammar in yacc/bison terminology
+       - Non-terminals, terminals..., tokens
+     - Top-down parsing... or bottom-up?
+     - Explain the process of transforming the grammar to java code
+
+   - Simulator core
+     - Follows the same structure of PajeNG
+       - Simulator and Container (where simulation happens)
+       - Use stack to simulate states
+     - What are the _technical_ differences against PajeNG
+
+   Next chapter details the implementation of the two plugins.
+
+5. Plugins
+
+The methodology to implement this objective is to develop a
+extensible simulator where every time an entity is created, it would
+direct that information to a plugin. It will be the plugin's
+reponsability to handle the entity. As a proof of concept, this work
+will propose the implementation of two plugins: a textual output
+similar to Paje's =pj_dump=; and an efficient database insertion in a
+pre-defined relational schema. A performance evaluation will be
+conducted to compare the trace simulator against other existing
+similar approaches.
+
+   + Null
+   + PjDump
+   + MySQL
+     + Database modeling
+     + arguments (batches, server, etc.)
+
+6. Performance Evaluation
+   + Overview of what is being evaluated and why (mysql is the only NEW feature)
+   + Experimental Methodology
+     - Full factorial
+   + Results and grafics
+   + Possible explanations
+   + 
+
+7. Conclusion
+   - All efforts in the simulator optimization benefit all plugins.
+   - Future work
+     - Perf. Eval. in Windows
+
+Appendix
+- How to implement a plugin?
