@@ -240,3 +240,16 @@ similar approaches.
 
 Appendix
 - How to implement a plugin?
+
+* References
+
+** 23/04
+
+https://dzone.com/articles/antlr-and-javacc-parser-generators
+https://javacc.java.net/
+http://www.computing.dcu.ie/~hamilton/teaching/CA448/notes/JavaCClex2.pdf
+
+** 24/04
+http://eriklievaart.com/blog/javacc2.html
+
+

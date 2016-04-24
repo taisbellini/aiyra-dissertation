@@ -1,11 +1,176 @@
 * Introduction
-Observation of program behavior is particularly important in High Performance Computing since it enables an accurate performance analysis. A very common method of evaluation is registering program events in trace files and then replaying them in a simulation. During this process, information spread in multiple events is combined deriving new and richer entities. This event processing is usually done once and discarded, which can be very incovenient considering that some trace files are very large. Therefore, it would be intersting to save these entites for further analysis.  
+Observation of program behavior is particularly important in High Performance Computing since it enables an accurate performance analysis. A very common method of evaluation is registering program events in trace files and then replaying them in a simulation. During this process, information spread in multiple events is combined deriving new and richer entities. This event processing is usually done once and discarded, which can be very incovenient considering that some trace files are very large. Therefore, it would be intersting to save these entities for further analysis.  
 
-In this context of performance analysis, a common tool used is the Pajé Trace Simulator, an open source project that reads trace files in a specific format (Pajé File Format) and generates five types of entities: Containers, States, Links, Variables and Events. As a base for the implementation of this proposal, the new generation of Pajé, PajeNG, was used. Details of PajeNG, the types of entities and the Pajé File Format will be presented in chapter 3. Although it has a visualization functionality, we will focus on the simulation part of the Pajé implementation in this project. The most commonly used tool of PajeNG is the Paje Dump (pj_dump), that dumps the main information of all the entities created throughout the simulation to the standard output. 
+In this context of performance analysis, a common tool used is the Pajé Trace Simulator, an open source project that reads trace files in a specific format (Pajé File Format) and generates five types of entities: Containers, States, Links, Variables and Events. As a base for the implementation of this proposal, the new generation of Pajé, PajeNG, was used. Details of PajeNG, the types of entities and the Pajé File Format will be presented in Chapter 3. Although it has a visualization functionality, we will focus on the simulation part of the Pajé implementation in this project. The most commonly used tool of PajeNG is the Paje Dump (pj_dump), that dumps the main information of all the entities created throughout the simulation to the standard output. 
 
 There are at least three problems with the current implementation of Pajé: little extensibility, lack of partial outcomes and impermanent results. It is very complicated to change the Paje simulator behavior, since it requires code modifications in the simulator core, which depends upon understanding details of the program. If a performance analyst wants to evaluate only one type of entity, or needs a different presentation of the data, he will need to have at least a basic understanding of how the program is implemented in order to generate these different results. Throughout the simulation, the Pajé tool creates entities according to the events listed in the trace file, saving each one of them in memory to dump everything at once in the end. Since some trace files can be very large (over 1 Gigabyte), it may take a while for the results to be printed out. Besides not being able to have a partial view of already simulated entities, the user won`t have records of the results between executions for different files unless he specifies a destination for it himself. To address these issues, an extensible trace files simulator, Aiyra, was developed in Java.
 
-The objective of this proposal is to allow the performance analyst to change the simulator behavior when a new entity is detected. Thus, the partial results can be immediately presented to the user, or saved in a database, or even discarded if not relevant. This extensibility is implemented through the concept of plugins that are attached to the simulator in specific and important points where the trace events are combined. This main objective solves the first problem previously presented, which is the lack of extensibility. Once the simulator allows the immediate manipulation of the entities, the other two issues can be easily addressed with plugins. Hence, the secondary objectives of the project are the creation of plugins to dump partial data that has just been simulated and to make the results permanent. 
+The objective of this proposal is to allow the performance analyst to change the simulator behavior when a new entity is detected. Thus, the partial results can be immediately presented to the user, or saved in a database, or even discarded if not relevant. This extensibility is implemented through the concept of plugins that are attached to the simulator in specific and important points where the trace events are combined. This main objective solves the first problem previously presented, which is the lack of extensibility. Once the simulator allows the immediate manipulation of the entities, the other two issues can be easily addressed with extensions. Hence, the secondary objectives of the project are the creation of plugins to dump partial data that has just been simulated and to make the results permanent. 
 
-For the validation of the extensible trace files simulator, two plugins were implemented: Paje Dump Plugin and Paje Insert Database Plugin. The first one plays the same roll as the original Paje Dump tool in the Paje new generation, with the difference that the entities are dumped at the moment they are completed. The second one inserts all the data in a relational database. A specific schema for the Pajé Format was designed and will be presented in Chapter 5. A performance analysis was developed to compare Aiyra against the previous one. It is worth highlighting that the new simulator had better performance results with bigger files (over 120 Megabytes), that being possibly attributed to the fact that it discards from memory entities that will no longer be used. Additionally, the Pajé Insert Database plugin was evaluated comparing its different possibilities of usage. In this investigation, we varied the frequency of the insertions in the database by grouping queries in memory until it had a specific size to insert. The objective of this test was to understand the impact of an access to a database in the performance of the program. Likewise, the usage of the memory was also examined to determine the best balance between excution time and memory management. As we will see in Chapter 6, the memory usage had more impact in the performance than the accessed to the database themselves, probably due to the Garbage Collector mechanism used by Java.
+For the validation of the extensible trace files simulator, two plugins were implemented: Paje Dump Plugin and Paje Insert Database Plugin. The first one plays the same roll as the original Paje Dump tool in the Paje new generation, with the difference that the entities are dumped at the moment they are completed. The second one inserts all the data in a relational database. A specific schema for the Pajé Format was designed and will be presented in Chapter 5. A performance analysis was developed to compare Aiyra against the previous one. It is worth highlighting that the new simulator had better performance results with bigger files (over 120 Megabytes), that being possibly attributed to the fact that it discards from memory entities that will no longer be used. Additionally, the Pajé Insert Database plugin was evaluated comparing its different possibilities of usage. In this investigation, we varied the frequency of the insertions in the database by grouping queries in memory until it had a specific size to insert. The objective of this test was to understand the impact of an access to a database in the performance of the program. Likewise, the usage of the memory was also examined to determine the best balance between excution time and memory management. As we will see in Chapter 6, the memory usage had more impact in the performance than the accesses to the database themselves, probably due to the Garbage Collector mechanism used by Java.
+
+* Basic Concepts
+In this Chapter, the basic concept of the technologies used to develop this project will be presented to guarantee a full understanting of all the process.
+
+** JavaCC
+
+The first part of Aiyra simulator consists in reading a trace file, that is in a specific standard, and parsing it to define how each line of the entry will be simulated. For that, a lexical and parser generator, called Java Compiler Compiler (JavaCC), was used. JavaCC behaves similarly to Flex and Bison, receiving a set of regular expressions describing the tokens in the language and a grammar defined using these tokens. The output of the generator is a lexical analyser, that separates the input file into tokens, and a parser, which performs a syntax analysis. What differentiates JavaCC from other parser generators that exist for the Java language is that it creates files that are written in pure Java, which facilitates the understanding and eliminates the need of having dependencies in the code. JavaCC has also shown itself to have a much better performance than other tools such as ANTLR (Another Tool For Language Recognition), that requires a runtime library. 
+
+JavaCC can be downloaded, unziped and added to the PATH. It also has a plugin for Eclipse. Once installed, JavaCC will process your grammar defined in a file with extension ".jj" using the command  (USE ORGMODE COMMANDS THAT I DON'T KNOW) javacc. As an example, I will use MyGrammar.jj. The result of the processing are seven files: 
+ =MyGrammar.java=: The parser;
+ =MyGrammarTokenManager.java= : The lexical analyser, that manages the tokens;
+ =MyGrammarConstants.java= : Some useful constants. 
+
+The other four files generated: =Token.java=, =TokenMgrError.java=, =SimpleCharStream.java= and =ParseException.java= are boilerplate files that can be reused within parsers and are not affected by the grammar itself.
+
+*** Structure and syntax
+
+The whole grammar will be in the =MyGrammar.jj= file and it is the only file that needs to be modified. There, the tokens used will be defined, the parser rules specified, and it is possible to even add Java code that has to be executed during the parsing. The structure of this file is the following: 
+
+options{
+}
+
+A set of optional flags. An example, is the flag STATIC, which means that there is only one parser for the JVM when set to true. 
+
+PARSER_BEGIN(MyGrammar)
+
+public class MyGrammar {
+
+}
+
+PARSER_END(MyGrammar)
+
+In this part, the Java code will be placed and it's the main class of the program. Notice that the class must have the same name as the generated parser. 
+
+TOKEN_MGR_DECLS:
+{
+
+}
+
+The declarations used by the lexical analyser are placed in the TOKEN_MGR_DECLS function.
+Below these three structures, comes the lexical analysis where the Token rules and parser actions can be written using a top-down approach. First, the Tokens are declared, always using the word "TOKEN" before. To exemplify the creation of a grammar in JavaCC, we will create a language that consists in the declaration of integer and char variables and assignments of values to these variables. All the declarations come first, then come the assignments. No verification will be performed since it is just an example to clarify the JavaCC syntax. To declare tokens, we use the following notation: 
+
+TOKEN: 
+{
+  < [NAME] : [EXPRESSION] >  
+}
+
+For our example of language we will have the following tokens: 
+
+/* Integer Literals */
+TOKEN : 
+{
+  < INTEGER: "0" | ["0"- "9"] (["0"-"9")* >
+}
+
+/*Variables, assignments and char values*/
+TOKEN : 
+{
+  < VARIABLE: (["a"-"z", "A" - "Z"])+ >
+  < ASSIGNMENT: "=" >
+  < CHAR: (~["\""] | "\\" (["n","r","\\","\'","\""])) >
+} 
+/* Types */
+TOKEN: 
+{
+  < INTEGER_TYPE : "int" >
+  < CHAR_TYPE: "char" >
+}
+
+As we can see in the definitions above, it is not necessary to explicit the word TOKEN for each one. It is usually separated to be better organized and easier to understand. Although the token's agroupation is not relevant, the order in which they are declared is. When an input matches more than one token specification, the one declared first will be considered.
+There is also another kind of regular expression production, which is the SKIP. Whatever matches the regular expression defined in the SKIP scope will not be treated by the parser. 
+Example: 
+
+SKIP: 
+{
+  "\n" 
+  \| "\t"
+
+} 
+
+After the token declaration, comes the grammar rules. The rules are declared as methods, that can have return values or not. The structure of a method is the following: 
+
+[type] [name] ()
+{}
+{ 
+  /* Rules */
+}
+
+The empty braces in the beginning of the method can be filled with variable declarations in Java. More Java code can be added in the middle of the rules by using braces. Inside the next braces it is possible to assign tokens, regular expressions or even methods to the variables declared earlier. To refer to the tokens, we use it's name between angular brackets. Example: 
+
+void parser()
+{ int number; }
+{
+  number = <INTEGER>
+}
+
+The first method defined will be the entrance to the parser and it can contain methods inside that will be expanded later in the rules. The entrance for the language we are using as an example would be as follows: 
+
+void start()
+{}
+{
+  declarations() assignments() <EOF>
+}
+
+EOF is a default token. It is important to guarantee that the file will be parsed until the end. By the definition of our first method, we assure that the declarations will obligatorily be in the beginning, and the assignments at the end. Next, we expand the two methods to address all the possibilities: 
+
+void declarations()
+{}
+{
+  ((<INTEGER_TYPE> | <CHAR_TYPE>) <VARIABLE>)*
+}
+
+void assignments()
+{}
+{
+  (<VARIABLE> <ASSIGNMENT> (<CHAR> | <INTEGER>))*
+}
+
+The multiplicity can be defined with the standard characters "*", "?", "+", just as in the lexer. This example is just one possible approache to define these rules. For example, you can use another non-terminal to describe a value that will be assigned to a variable. In this case, the assignments() rule would be expanded as follows: 
+
+void assignments()
+{}
+{
+  (<VARIABLE> <ASSIGNMENT> assignable() )*
+}
+
+void assignable():
+{}
+{
+  <CHAR> | <INTEGER> 
+}
+
+*** Usage
+
+In order to call the parser in a Java program, an object of the MyGrammar class needs to be instantiated: 
+
+MyGrammar parser = new MyGrammar(input);
+
+Then, once there is an instance of the parser, it is possible to call the first method of the parser:
+
+parser.start();
+
+This code has a Java syntax and is placed in the main class presented previously. Between the declarations of PARSER_BEGIN and PARSER_END, any Java code can be placed to manipulate the results of the parsing.  
+
+PARSER_BEGIN(MyGrammar)
+/* Imports */
+public class MyGrammar {
+    public static void main(String args []){
+        /* Code to read the input */
+
+        MyGrammar parser = new MyGrammar(input);
+        parser.start();
+
+       /* Java code to manipulate the parser results */
+	
+  }
+
+}
+
+PARSER_END(MyGrammar)
+
+
+
+
+  
   
