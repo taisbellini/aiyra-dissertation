@@ -138,16 +138,26 @@ _Side Note_
      - What is an experimental design?
      - Full factorial design!
      - Jain 1991
+     - R to develop the factorial design
    + MySQL ?
      - 
 3. PajeNG and the Paje File Format (3 to 4 pages, finish with a motivation to your own work)
    - Paje File Format
+   - Overview
      - Container
      - State
      - Variables
      - Links
      - Events
      - Container has all others
+   - Definition of events
+   - Type hierarchy 
+   - Events
+     - Container
+     - State
+     - Event
+     - Variable
+     - Link 
    - PajeNG
      + How it is used by others (pjdump, etc)
        - In SimGrid, trace is in Paje file format, but all people use
@@ -251,5 +261,6 @@ http://www.computing.dcu.ie/~hamilton/teaching/CA448/notes/JavaCClex2.pdf
 
 ** 24/04
 http://eriklievaart.com/blog/javacc2.html
+http://paje.sourceforge.net/download/publication/lang-paje.pdf
 
 
