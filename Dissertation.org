@@ -218,11 +218,29 @@ An example of event definition:
 After the event definition the events themselves are described, one in each line. Every event starts with the number that identifies it, which was defined previously. For the example above, every line that contains an event which is a PajeNewEvent will start with the number 17. The fields are separated by space or tab and must appear in the same order as it was declared in the definition. Fields of type string don't need to be double quoted unless they are empty or have a space or tab character. Before the entities can be created, a hierarchy of types and containers must be created and containers need to be intantiated, since every entity belongs to a container.
 
 **** Types
-Type don't have a timestamp can be declared at anytime in a trace file, as long as it is not used before its definition. It is more common to have all the types defined in the beginning. There are 6 different type definitions, one for each sort of entity and one for value objects: 
-=PajeDefineContainerType=: Must have the fields _Name_ and _Type_, and can have an optional field _Alias_. Defines a new container type called _Name_, contained in a previously defined container of type _Type_.  
+Type don't have a timestamp and can be declared at anytime in a trace file, as long as it is not used before its definition. It is more common to have all the types defined in the beginning. There are 6 different type definitions, one for each sort of entity and one for value objects: 
+
+=PajeDefineContainerType=: Must have the fields _Name_ and _Type_, and can have an optional field _Alias_. Defines a new container type called _Name_, contained in a previously defined container of type _Type_. 
+=PajeDefineStateType=: Must have the fields _Name_ and _Type_, and can have an optional field _Alias_. Defines a new state type called _Name_, contained in a previously defined container of type _Type_.  
+=PajeDefineEventType=: Must have the fields _Name_ and _Type_, and can have an optional field _Alias_. Defines a new event type called _Name_, contained in a previously defined container of type _Type_.
+=PajeDefineVariableType=: Must have the fields _Name_, _Type_ and _Color_, and can have an optional field _Alias_. Defines a new state type called _Name_, contained in a previously defined container of type _Type_, with the color _Color_. Notice that the color is associated to the type, and not to the object. Therefore, every variable of determined type will have the same color. 
+=PajeDefineLinkType=: Must have the fields _Name_, _Type_, _StartContainerType_ and _EndContainerType_, and can have an optional field _Alias_. Defines a new link type called _Name_, contained in a previously defined container of type _Type_, that connects the previously defined container type _StartContainerType_ to the previously defined _EndContainerType_. Also, the container type given in _Type_ must be an ancestral of both Start and End container types.
+=PajeDefineEntityValue=: Must have the fields _Name_, _Type_ and _Color_, and can have an optional field _Alias_. This is an optional event that defines the possible values of an entity type, which can be a State, Link or Event. Defines a new value called _Name_ for the previously defined type _Type_ with color _Color_.  
 
 **** Containers
+Intances of containers can be created and destroyed during the trace file. The events associated to the containers are timestamped.
+
+=PajeCreateContainer=: Must have the fields _Time_, _Name_, _Type_ and _Container_, and can have an optional field _Alias_. Creates, at timestamp _Time_, a container instance called _Name_, of the container type _Type_ and that is a child of the previously created container _Container_. 
+=PajeDestroyContainer=: Must have the fields _Time_, _Name_ and _Type_. Destroys, at timestamp _Time_, a container instance called _Name_ of the container type _Type_.
+
 **** States
+The state events change the values of a determined container's state, by setting, pushing, popping and reseting.
+
+=PajeSetState=: Must have the fields _Time_, _Type_, _Container_ and _Value_. Changes, at timestamp _Time_, to the value _Value_ the state type _Type_ of the container identified by _Container_.
+=PajePushState=: Must have the fields _Time_, _Type_, _Container_ and _Value_. Pushes, at timestamp _Time_, the value _Value_ of the state type _Type_ in the container identified by _Container_. The push event saves the existing value of the same state.
+=PajePopState=: Must have the fields _Time_, _Type_ and _Container_. Pops, at timestamp _Time_, the last state of type _Type_ in the container identified by _Container_.
+=PajeResetState=: Must have the fields _Time_, _Type_ and _Container_. Clears, at timestamp _Time_, the state of type _Type_ in the container identified by _Container_. If the stack is empty, the event does nothing.
+
 **** Events
 **** Variables
 **** Links
