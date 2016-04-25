@@ -14,15 +14,15 @@ In this Chapter, the basic concept of the technologies used to develop this proj
 
 ** JavaCC
 
-The first part of Aiyra simulator consists in reading a trace file, that is in a specific standard, and parsing it to define how each line of the entry will be simulated. For that, a lexical and parser generator, called Java Compiler Compiler (JavaCC), was used. JavaCC behaves similarly to Flex and Bison, receiving a set of regular expressions describing the tokens in the language and a grammar defined using these tokens. The output of the generator is a lexical analyser, that separates the input file into tokens, and a parser, which performs a syntax analysis. What differentiates JavaCC from other parser generators that exist for the Java language is that it creates files that are written in pure Java, which facilitates the understanding and eliminates the need of having dependencies in the code. JavaCC has also shown itself to have a much better performance than other tools such as ANTLR (Another Tool For Language Recognition), that requires a runtime library. 
+The first part of Aiyra simulator consists in reading a trace file, that is in a specific standard, and parsing it to define how each line of the entry will be simulated. For that, a lexical and parser generator, called Java Compiler Compiler (JavaCC), was used. JavaCC behaves similarly to Flex and Bison, receiving a set of regular expressions describing the tokens of the language and a grammar defined using these tokens. The output of the generator is a lexical analyser, that separates the input file into tokens, and a parser, which performs a syntax analysis. What differentiates JavaCC from other parser generators that exist for the Java language is that it creates files written in pure Java, which facilitates the understanding and eliminates the need of having dependencies in the code. JavaCC has also shown itself to have a much better performance than other tools such as ANTLR (Another Tool For Language Recognition), that requires a runtime library. 
 
-JavaCC can be downloaded, unziped and added to the PATH. It also has a plugin for Eclipse. Once installed, JavaCC will process your grammar defined in a file with extension ".jj" using the command  (USE ORGMODE COMMANDS THAT I DON'T KNOW) javacc. As an example, I will use MyGrammar.jj. The result of the processing are seven files: 
+JavaCC can be downloaded, unziped and added to the PATH. It also has a plugin for Eclipse. Once installed, JavaCC will process your grammar defined in a file with extension ".jj" using the command "javacc". As an example, I will use MyGrammar.jj. The result of the processing are seven files: 
  =MyGrammar.java=: The parser;
- =MyGrammarTokenManager.java= : The lexical analyser, that manages the tokens;
+ =MyGrammarTokenManager.java=: The lexical analyser, that manages the tokens;
  =MyGrammarConstants.java= : Some useful constants. 
 
 The other four files generated: =Token.java=, =TokenMgrError.java=, =SimpleCharStream.java= and =ParseException.java= are boilerplate files that can be reused within parsers and are not affected by the grammar itself.
-Once having ".java"files, it is possible to compile them using "javac" as usual. 
+Once having ".java" files, it is possible to compile them using "javac" as usual. 
 
 *** Structure and syntax
 
@@ -49,7 +49,8 @@ TOKEN_MGR_DECLS:
 }
 
 The declarations used by the lexical analyser are placed in the TOKEN_MGR_DECLS function.
-Below these three structures, comes the lexical analysis where the Token rules and parser actions can be written using a top-down approach. First, the Tokens are declared, always using the word "TOKEN" before. To exemplify the creation of a grammar in JavaCC, we will create a language that consists in the declaration of integer and char variables and assignments of values to these variables. All the declarations come first, then come the assignments. No verification will be performed since it is just an example to clarify the JavaCC syntax. To declare tokens, we use the following notation: 
+
+Below these three structures, comes the lexical analysis where the Token rules and parser actions can be written using a top-down approach. First, the Tokens are declared, always using the word "TOKEN" before. To exemplify the creation of a grammar in JavaCC, we will create a language that consists in the declaration of integer and char variables and assignments of values to these variables. All the declarations come first, then the assignments. No verification will be performed since it is just an example to clarify the JavaCC syntax. To declare tokens, we use the following notation: 
 
 TOKEN: 
 {
@@ -97,7 +98,7 @@ After the token declaration, comes the grammar rules. The rules are declared as 
   /* Rules */
 }
 
-The empty braces in the beginning of the method can be filled with variable declarations in Java. More Java code can be added in the middle of the rules by using braces. Inside the next braces it is possible to assign tokens, regular expressions or even methods to the variables declared earlier. To refer to the tokens, we use it's name between angular brackets. Example: 
+The empty braces in the beginning of the method can be filled with variable declarations in Java. More Java code can be added in the middle of the rules by using braces. Inside the next braces, it is possible to assign tokens, regular expressions or even methods to the variables declared earlier. To refer to the tokens, we use its name between angular brackets. Example: 
 
 void parser()
 { int number; }
@@ -127,7 +128,7 @@ void assignments()
   (<VARIABLE> <ASSIGNMENT> (<CHAR> | <INTEGER>))*
 }
 
-The multiplicity can be defined with the standard characters "*", "?", "+", just as in the lexer. This example is just one possible approache to define these rules. For example, you can use another non-terminal to describe a value that will be assigned to a variable. In this case, the assignments() rule would be expanded as follows: 
+The multiplicity can be defined with the standard characters "*", "?", "+", just as in the lexer. This example is just one possible approach to define these rules. For example, you can use another non-terminal to describe a value that will be assigned to a variable. In this case, the assignments() rule would be expanded as follows: 
 
 void assignments()
 {}
