@@ -174,35 +174,35 @@ PARSER_END(MyGrammar)
 
 * PajeNG 
 
-** Paje Trace File Format
+** Pajé Trace File Format
 
-The Pajé Trace File Format is a textual and generic format that describes the behavior of paralell and distributed programs. This format contains three sections: event definitions, type hierarchy declaration and timestamped events. As mentioned before, the Pajé format uses five types of entities: Containers, States, Events, Variables and Links. Each entity is always associated to a container, even the containers themselves. Below, a succint definition of each type of entity:
+The Pajé Trace File Format is a textual and generic format that describes the behavior of paralell and distributed programs. This format contains three sections: event definition, type hierarchy declaration and timestamped events. As mentioned before, the Pajé format uses five types of entities: Containers, States, Events, Variables and Links. Each entity is always associated to a container, even the containers themselves. Below, a succint definition of each type of entity:
 
 =Container=: A container can be any hardware or software entity, such as a processor, a thread, a network link, etc. It is the only Pajé object that holds other objects, including containers, which makes it the main component to define the type hierarchy. 
 =State=: A state is used to describe periods of time where a container stays at the same state. It always has a beginning and an ending timestamp.
 =Event=: An event has only one timestamp, and can be anything noteworthy to be uniquely identified. 
-=Variable=: A variable entity represents the progression of the value of a variable along the time. A variable is represented by an object with beginning and end timestamps, but one determined type of variable can have several objects according to the changes on its value.
-=Links=: A link has beginning and end timestamps and represents a relation between two containers, such as communication between processes.
+=Variable=: A variable entity represents the progression of the value of a variable along the time. A variable is represented by an object with beginning and ending timestamps and one determined type of variable can have several objects according to the changes on its value.
+=Links=: A link has beginning and ending timestamps and represents a relation between two containers, such as a communication between processes.
 
-The Pajé objects must be organized as a type hierarchy, where each entity is always associated with a type. This hierarchy is specific for each trace file, although it can be repeated in traces with the same scenario. In the structure of the trace file, the type hierarchy comes after the event definition where each type of the program is defined and one of the fields is always the parent type. The containers are the base for the organization of the hierarchy, being considered the nodes of the tree, while the other entities are the leaves. The containers must follow the same hierarchy as the types definition. For example, if the container C1, of type T1, is the parent of the container C2, of type T2, the type T2 must be below T1 in the type hierarchy. The root type is the number "0".
+The Pajé objects must be organized as a type hierarchy, where each entity is always associated with a type. This hierarchy is specific for each trace file, although it can be repeated in traces with the same scenario. In the structure of the trace file, the type hierarchy comes after the event definition where each type of the program is defined and one of the fields is always the parent type. The containers are the base for the organization of the hierarchy, being considered the nodes of the tree, while the other entities are the leaves. The containers must follow the same hierarchy as the types definition. For example, if the container C1, of type T1, is the parent of the container C2, of type T2, the type T2 must be below T1 in the type tree. The root type is the number "0".
 
 *** Event Definition
 
 The format of the event definition part has the following format: 
 
-- Every line of the event definition part of the Pajé format start with the character "%".
-- An event definition starts with "%EventDef" plus the =name= of the event followed by an =unique number= to identify it.
+- Every line of the event definition part of the Pajé format starts with the character "%".
+- An event definition starts with "%EventDef" plus the =name= of the event followed by a =unique number= to identify it.
 - An event definition ends with "%EndEventDef". 
 - Between the "%EventDef" and "%EndEventDef" lines there is a list of fields, one per line, with =name= and =type=. 
-- It is possible to have two events with the same name but different indentification numbers. This is useful to specify different sets of fields for the same type of event.
+- It is possible to have two events with the same name but different identification numbers. This is useful to specify different sets of fields for the same type of event.
 
 The types of fields can be: 
-=date=: a double precision floating-point number, which usually means the seconds since the program start;
+=date=: a double precision floating-point number, which usually means the seconds since the program started;
 =int=: integer number;
 =double=: floating-point number;
 =hex=: address in hexadecimal;
 =string=: string of characters;
-=color=: a sequence of three to four floating-point numbers between 0 and 1, inside double quotes. The values mean red, green, blue and alpha(optional).
+=color=: a sequence of three to four floating-point numbers between 0 and 1 inside double quotes. The values mean red, green, blue and alpha(optional).
 
 An example of event definition: 
 
@@ -215,10 +215,14 @@ An example of event definition:
 
 *** Events 
 
-After the event definition the events themselves are described, one in each line. Every event starts with the number that identifies it, which was defined previously. For the example above, every line that contains an event which is a PajeNewEvent will start with the number 17. The fields are separated by space or tab and must appear in the same order as it was declared in the definition. Fields of type string don't need to be double quoted unless they are empty or have a space or tab character. Before the entities can be created, a hierarchy of types and containers must be created and containers need to be intantiated, since every entity belongs to a container.
+After the event definition, the events themselves are described, one in each line. Every event starts with the number that identifies it, which was defined previously. For the example above, every line that contains a PajeNewEvent event will start with the number 17. The fields are separated by space or tab and must appear in the same order as it was declared in the definition. In the example below, there is a PajeNewEvent event with timestamp =3.14532= of type =S= in the container =p1= and with value =M=:
+
+17 3.14532 p1 S M
+
+Fields of type =string= don't need to be double quoted unless they are empty or have a space or tab character. Before the entities can be created, a hierarchy of types and containers must be defined and containers need to be intantiated, since every entity belongs to a container.
 
 **** Types
-Type don't have a timestamp and can be declared at anytime in a trace file, as long as it is not used before its definition. It is more common to have all the types defined in the beginning. There are 6 different type definitions, one for each sort of entity and one for value objects: 
+Type doesn't have a timestamp and can be declared at anytime in a trace file, as long as it is not used before its definition. It is more common to have all the types defined in the beginning. There are 6 different type definitions, one for each sort of entity and one for value objects: 
 
 =PajeDefineContainerType=: Must have the fields _Name_ and _Type_, and can have an optional field _Alias_. Defines a new container type called _Name_, contained in a previously defined container of type _Type_. 
 =PajeDefineStateType=: Must have the fields _Name_ and _Type_, and can have an optional field _Alias_. Defines a new state type called _Name_, contained in a previously defined container of type _Type_.  
@@ -242,8 +246,23 @@ The state events change the values of a determined container's state, by setting
 =PajeResetState=: Must have the fields _Time_, _Type_ and _Container_. Clears, at timestamp _Time_, the state of type _Type_ in the container identified by _Container_. If the stack is empty, the event does nothing.
 
 **** Events
+An event is something that is relevant enough to be acknowledged and has a unique timestamp. 
+
+=PajeNewEvent=: Must have the fields _Time_, _Type_, _Container_ and _Value_. Instantiates, at timestamp _Time_, a remarkable event of type _Type_ in the container _Container_ with value _Value_.
+
 **** Variables
+Variables are set at a specific timestamp and can have its value changed throughout the simulation. The value of a variable is a double precision floating-point number, which is different from the values of the other entities. A variable must be set before changes to its value can be made.
+
+=PajeSetVariable=: Must have the fields _Time_, _Type_, _Container_ and _Value_. Instantiates, at timestamp _Time_, a variable of type _Type_ in the container _Container_ with value _Value_. 
+=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_ and _Value_. Adds, at timestamp _Time_, a value _Value_ to an existing variable of type _Type_ in the container _Container_.
+=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_ and _Value_. Subtracts, at timestamp _Time_, a value _Value_to an existing variable of type _Type_ in the container _Container_.
+
 **** Links
+A link can start at a container and end in another one. Every completed link is identified by a unique key. 
+
+=PajeStartLink=: Must have the fields _Time_, _Type_, _Container_, _StartContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the beginning of a link of type _Type_ in container _Container_ starting from _StartContainer_ with value _Value_ and identified by key _Key_.
+=PajeEndLink=: Must have the fields _Time_, _Type_, _Container_, _EndContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the end of a link of type _Type_ in container _Container_ ending in _EndContainer_ with value _Value_ and identified by key _Key_.
+
   
 
 
