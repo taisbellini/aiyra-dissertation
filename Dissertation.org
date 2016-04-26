@@ -321,9 +321,13 @@ A link can start at a container and end in another one. Every completed link is 
 ** PajeNG
 
 The PajeNG implementation is the new generation of the Pajé Visualization Tool. It was developed in C++ and follows the same architecture as the original Pajé. It comprises a library containing the core of the simulation, a space-time visualization tool and some auxiliar tools to manage the trace files. 
-As mentioned before, the visualization component was not considered in this proposal and the =libpaje= library was used as a base to the implementation. 
+As mentioned before, the visualization component was not considered in this proposal and the =libpaje= library was used as a base to the implementation. The library has three main components that form a pipeline that results in complete simulated entities. These components are: FileReader, EventDecoder and PajeSimulator. First, the FileReader reads from the trace file the event, it can be done either by Flex and Bison or a regular C++ parsing, it is the user's choice. Then, the EventDecoder identifies what is the event being processed and created an object with all the necessary information. Last, the PajeSimulator receives this event object and addresses to the proper simulation.
+(image?)
+All the simulation is done in two classes: PajeSimulator and PajeContainer. A PajeSimulator object is instantiated in the beginning of the program and incorporates all the event processing of the simulation. All the type definitions, container creations and entity value declarations are completed in the PajeSimulator object. Everytime there is an event of type _CreateContainer_, a PajeContainer object is instantiated. All other events are always associated to a container, thus, they will be simulated in the appropriate container object. This object will keep the entities until it is destroyed or the program finishes.
 
-  
+(image?)
+
+Details about the implementation? stack of states, maps, etc.   
 
 
 
