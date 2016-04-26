@@ -171,7 +171,31 @@ public class MyGrammar {
 
 PARSER_END(MyGrammar)
 
-** Experimental Design and R
+** Experimental Design
+
+For the performance evaluation, we used the technique of experimental design. Experimental design is a form of performance analysis that aims to define a minimum number of experiments that will collect the maximum information necessary. It also targets random variations that could affect the results, guaranteeing that the number of tests executed and the error margin calculated will be suficient o avoid misleading conclusions.
+
+*** Terminology
+The terminology used in experimental design is the following: 
+
+=Response Variable=: The response variable is the outcome of an experiment;
+=Factors=: The factors are all the variables that could have several different values and affects the response variable; 
+=Levels=: The levels are the possible values that a factor can assume;
+=Primary Factors=: The primary factors are the factors that need to be quantified;
+=Secondary Factors=: The secondary factors are the factors whose impacts in the performance are not relevant for the analysis;
+=Replication=: Replication is the repetition of all or some experiments;
+=Design=: The experimental design is the specification of total number of experiments, based on factor level combination and number of replications for each experiment.
+=Experimental Unit=: The experimental unit is th entity used for the experiment, for example, a computer;
+=Interaction=: Interaction is when the levels of a fator affect the results of other factor.
+
+*** General Full Factorial Designs with k Factors
+
+There are several types of experimental design modeling. In this project, we used a full factorial design, which consists in analysing every possible combination at all levels of all factors. The advantage of this model is that every possible combination will be analysed, generating richer results. However, depending on the number of factors, levels and replications, it may generate a very large total number of experiments, which can cost a lot of time. Therefore, when using this technique, it is important to weight the relevance of each factor and level to generate an appropriate and accurate design. 
+ 
+ 
+
+** R
+
 
 * PajeNG 
 
