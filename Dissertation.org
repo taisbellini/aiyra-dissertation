@@ -173,13 +173,13 @@ PARSER_END(MyGrammar)
 
 ** Experimental Design
 
-For the performance evaluation, we used the technique of experimental design. Experimental design is a form of performance analysis that aims to define a minimum number of experiments that will collect the maximum information necessary. It also targets random variations that could affect the results, guaranteeing that the number of tests executed and the error margin calculated will be suficient o avoid misleading conclusions.
+For the performance evaluation, we used the technique of experimental design, which is a form of performance analysis that aims to define a minimum number of experiments that will collect the maximum information necessary. It also targets random variations that could affect the results, guaranteeing that the number of tests executed and the error margin calculated will be suficient to avoid misleading conclusions.
 
 *** Terminology
 The terminology used in experimental design is the following: 
 
 =Response Variable=: The response variable is the outcome of an experiment;
-=Factors=: The factors are all the variables that could have several different values and affects the response variable; 
+=Factors=: The factors are all the variables that could have several different values affecting the response variable; 
 =Levels=: The levels are the possible values that a factor can assume;
 =Primary Factors=: The primary factors are the factors that need to be quantified;
 =Secondary Factors=: The secondary factors are the factors whose impacts in the performance are not relevant for the analysis;
@@ -188,20 +188,50 @@ The terminology used in experimental design is the following:
 =Experimental Unit=: The experimental unit is th entity used for the experiment, for example, a computer;
 =Interaction=: Interaction is when the levels of a fator affect the results of other factor.
 
-*** General Full Factorial Designs with k Factors
+*** Full Factorial Design
 
-There are several types of experimental design modeling. In this project, we used a full factorial design, which consists in analysing every possible combination at all levels of all factors. The advantage of this model is that every possible combination will be analysed, generating richer results. However, depending on the number of factors, levels and replications, it may generate a very large total number of experiments, which can cost a lot of time. Therefore, when using this technique, it is important to weight the relevance of each factor and level to generate an appropriate and accurate design. 
- 
- 
+There are several types of experimental design modeling. In this project, we used a full factorial design, which consists in analysing every possible combination at all levels of all factors. With this type of design, it is possible to evaluate factor that have different numbers of levels. The advantage of this model is that every possible combination will be analysed, generating richer results. However, depending on the number of factors, levels and replications, it may generate a very large total number of experiments, which can cost a lot of time. Therefore, when using this technique, it is important to weight the relevance of each factor and level to generate an appropriate and accurate design. To calculate the total size of the sample you multiply the numbers of levels of the factors and the number of replications. For example, a design with a three-level factor and a two-level factor with 20 replications would have 120 experiments.
 
-** R
+** R language
+
+R is a language for statistical computing and graphics generation. It can be very easily extended, by creating and using packages. For this work, the "DoE.base" and "ggplot" packages were used. 
+
+**** Doe.base
+
+DoE.base is a package to generate full factorial experimental designs. It contains the class _design_ with several accessor functions to create different types of design. One particular important function is the _fac.design_, which creates full factorial designs with arbitrary numbers of levels. The function receives several arguments, including number of factors, levels and replication. The usage of the function is the following: 
+
+#+begin_src R :results output silent :session :exports none
+  require(DoE.base);
+  fac.design (
+           nfactors=NULL,
+           replications=1,
+           repeat.only=FALSE,
+           blocks=1,
+           randomize=TRUE,
+           seed=NULL,
+           nlevels=NULL,
+           factor.names= NULL )
+#+end_src
+
+=nfactors=: The number of factors;
+=replications=: The number of replications;
+=repeat.only=: If true, replications of each run are grouped together;
+=blocks=: Number of blocks in which the experiment wil lbe subdivided. Must be a prime;
+=randomize=: If true, the design is randomized;
+=seed=: seed For the randomization (optional);
+=nlevels=: A vector with the number of levels for each factor;
+=factor.names=: A list of vectors with factor levels. 
+
+**** ggplot
 
 
-* PajeNG 
+* Pajé Visualization Tool - PajeNG 
+
+The Pajé Visualization Tool is a tool to display the execution of parallel and distributed programs. The tool reads information from trace files that describe the important events in the execution of a parallel program. This implementation plots the simulation of trace files in the Pajé Trace File Format, which is described below. 
 
 ** Pajé Trace File Format
 
-The Pajé Trace File Format is a textual and generic format that describes the behavior of paralell and distributed programs. This format contains three sections: event definition, type hierarchy declaration and timestamped events. As mentioned before, the Pajé format uses five types of entities: Containers, States, Events, Variables and Links. Each entity is always associated to a container, even the containers themselves. Below, a succint definition of each type of entity:
+The Pajé Trace File Format is a textual and generic format that describes the behavior of paralell and distributed programs. This format contains three sections: event definition, type hierarchy declaration and timestamped events. As mentioned before, the Pajé format describes five types of entities: Containers, States, Events, Variables and Links. Each entity is always associated to a container, even the containers themselves. Below, a succint definition of each type of entity:
 
 =Container=: A container can be any hardware or software entity, such as a processor, a thread, a network link, etc. It is the only Pajé object that holds other objects, including containers, which makes it the main component to define the type hierarchy. 
 =State=: A state is used to describe periods of time where a container stays at the same state. It always has a beginning and an ending timestamp.
@@ -287,6 +317,11 @@ A link can start at a container and end in another one. Every completed link is 
 
 =PajeStartLink=: Must have the fields _Time_, _Type_, _Container_, _StartContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the beginning of a link of type _Type_ in container _Container_ starting from _StartContainer_ with value _Value_ and identified by key _Key_.
 =PajeEndLink=: Must have the fields _Time_, _Type_, _Container_, _EndContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the end of a link of type _Type_ in container _Container_ ending in _EndContainer_ with value _Value_ and identified by key _Key_.
+
+** PajeNG
+
+The PajeNG implementation is the new generation of the Pajé Visualization Tool. It was developed in C++ and follows the same architecture as the original Pajé. It comprises a library containing the core of the simulation, a space-time visualization tool and some auxiliar tools to manage the trace files. 
+As mentioned before, the visualization component was not considered in this proposal and the =libpaje= library was used as a base to the implementation. 
 
   
 

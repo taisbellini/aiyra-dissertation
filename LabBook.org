@@ -263,4 +263,15 @@ http://www.computing.dcu.ie/~hamilton/teaching/CA448/notes/JavaCClex2.pdf
 http://eriklievaart.com/blog/javacc2.html
 http://paje.sourceforge.net/download/publication/lang-paje.pdf
 
+** 26/04
+
+http://www.jmp.com/support/help/Full_Factorial_Designs.shtml
+https://cran.r-project.org/web/packages/DoE.base/DoE.base.pdf
+
+https://github.com/schnorr/pajeng/wiki/pj_dump
+
+http://simgrid.gforge.inria.fr/tutorials/simgrid-tracing-101.pdf
+http://simgrid.gforge.inria.fr/
+
+
 
