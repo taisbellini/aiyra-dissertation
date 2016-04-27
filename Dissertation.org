@@ -352,7 +352,6 @@ DoE.base is a package to generate full factorial experimental designs. It contai
 
 **** ggplot
 
-
 * Pajé Visualization Tool - PajeNG 
 
 The Pajé Visualization Tool is a tool to display the execution of parallel and distributed programs. The tool reads information from trace files that describe the important events in the execution of a parallel program. This implementation plots the simulation of trace files in the Pajé Trace File Format, which is described below. 
