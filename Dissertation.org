@@ -83,20 +83,25 @@ As we can see in the definitions above, it is not necessary to explicit the word
 There is also another kind of regular expression production, which is the SKIP. Whatever matches the regular expression defined in the SKIP scope will not be treated by the parser. 
 Example: 
 
+#+BEGIN_EXAMPLE
 SKIP: 
 {
   "\n" 
   \| "\t"
 
 } 
+#+END_EXAMPLE
 
 After the token declaration, comes the grammar rules. The rules are declared as methods, that can have return values or not. The structure of a method is the following: 
 
+#+BEGIN_EXAMPLE
 [type] [name] ()
 {}
 { 
   /* Rules */
 }
+#+END_EXAMPLE
+
 
 The empty braces in the beginning of the method can be filled with variable declarations in Java. More Java code can be added in the middle of the rules by using braces. Inside the next braces, it is possible to assign tokens, regular expressions or even methods to the variables declared earlier. To refer to the tokens, we use its name between angular brackets. Example: 
 
