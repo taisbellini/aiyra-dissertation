@@ -1,3 +1,126 @@
+#+TITLE: 
+#+AUTHOR: Tais Bellini
+
+#+STARTUP: overview indent
+#+LANGUAGE: en
+#+OPTIONS: H:3 creator:nil timestamp:nil skip:nil toc:nil num:t ^:nil ~:~
+#+OPTIONS: author:nil title:nil date:nil
+#+TAGS: noexport(n) deprecated(d) ignore(i)
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+#+LATEX_CLASS: iiufrgs
+#+LATEX_CLASS_OPTIONS: [times,cic,tc]
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage{subfigure}
+#+LATEX_HEADER: \usepackage{tabulary}
+#+LATEX_HEADER: \usepackage{tabularx}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{algorithm}
+#+LATEX_HEADER: \usepackage{algorithmic}
+#+LATEX_HEADER: \newcommand{\prettysmall}{\fontsize{6.5}{6.5}\selectfont}
+#+LATEX_HEADER: \newcommand{\prettysmallbis}{\fontsize{7}{7}\selectfont}
+#+LATEX_HEADER: \newcommand{\mtilde}{~}
+
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage{palatino}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \usepackage{cleveref}
+#+LATEX_HEADER: \usepackage{booktabs}
+#+LATEX_HEADER: \usepackage[normalem]{ulem}
+#+LATEX_HEADER: \usepackage{xspace}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{color}
+#+LATEX_HEADER: \graphicspath{{img/}{img/final/}}
+#+LATEX_HEADER: \hypersetup{hidelinks = true}
+
+#+LATEX_HEADER: \newcommand{\review}[1]{\textcolor[rgb]{1,0,0}{[Lucas: #1]}}
+#+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
+
+#+BEGIN_LaTeX
+\title{TCC da Tais}
+\author{Loureiro Bellini}{Tais}
+\advisor[Prof.~Dr.]{Mello Schnorr}{Lucas}
+\date{Junho}{2016}
+\location{Porto Alegre}{RS}
+
+% \renewcommand{\nominataReit}{Prof\textsuperscript{a}.~Wrana Maria Panizzi}
+% \renewcommand{\nominataReitname}{Reitora}
+% \renewcommand{\nominataPRE}{Prof.~Jos{\'e} Carlos Ferraz Hennemann}
+% \renewcommand{\nominataPREname}{Pr{\'o}-Reitor de Ensino}
+% \renewcommand{\nominataPRAPG}{Prof\textsuperscript{a}.~Joc{\'e}lia Grazia}
+% \renewcommand{\nominataPRAPGname}{Pr{\'o}-Reitora Adjunta de P{\'o}s-Gradua{\c{c}}{\~a}o}
+% \renewcommand{\nominataDir}{Prof.~Philippe Olivier Alexandre Navaux}
+% \renewcommand{\nominataDirname}{Diretor do Instituto de Inform{\'a}tica}
+% \renewcommand{\nominataCoord}{Prof.~Carlos Alberto Heuser}
+% \renewcommand{\nominataCoordname}{Coordenador do PPGC}
+% \renewcommand{\nominataBibchefe}{Beatriz Regina Bastos Haro}
+% \renewcommand{\nominataBibchefename}{Bibliotec{\'a}ria-chefe do Instituto de Inform{\'a}tica}
+% \renewcommand{\nominataChefeINA}{Prof.~Jos{\'e} Valdeni de Lima}
+% \renewcommand{\nominataChefeINAname}{Chefe do \deptINA}
+% \renewcommand{\nominataChefeINT}{Prof.~Leila Ribeiro}
+% \renewcommand{\nominataChefeINTname}{Chefe do \deptINT}
+
+
+% \keyword{formatação eletrônica de documentos}
+% \keyword{\LaTeX}
+% \keyword{ABNT}
+% \keyword{UFRGS}
+
+
+
+\maketitle
+
+
+
+#+END_LaTeX
+
+                                                      
+# #+BEGIN_LaTeX
+# \begin{abstract}
+# #+END_LaTeX
+
+
+# #+BEGIN_LaTeX
+# \end{abstract}
+# #+END_LaTeX
+
+
+* Configuring Emacs to correctly export to PDF			   :noexport:
+
+Org mode is configured by default to export only the base classes.
+
+See for details:
++ http://orgmode.org/worg/org-tutorials/org-latex-export.html
+
+Execute the following code (with C-c C-c) prior to export this file to PDF.
+
+#+BEGIN_SRC emacs-lisp :results silent :exports none
+(add-to-list 'org-latex-classes
+             '("iiufrgs"
+               "\\documentclass{iiufrgs}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+END_SRC
+* 2016-03-18 First entry (proper emacs configuration file)   :noexport:Lucas:
+
+I recommend you use Arnaud's emacs configuration file, available here:
++ http://mescal.imag.fr/membres/arnaud.legrand/misc/init.php
+
+Download the file =init.org=:
+
+#+begin_src sh :results output :session :exports both
+wget http://mescal.imag.fr/membres/arnaud.legrand/misc/init.org
+#+end_src
+
+#+RESULTS:
+
 * Introduction
 Observation of program behavior is particularly important in High Performance Computing since it enables an accurate performance analysis. A very common method of evaluation is registering program events in trace files that work as a log, so, whenever a relevant event happens, it will be logged in the trace file with the proper information. Then, these traces are replayed in simulation combining information that is spread across multiple events deriving new and richer entities. This event processing is usually done once and discarded, which can be very incovenient considering that some trace files are very large. Therefore, it would be intersting to save these entities for further analysis.  
 
