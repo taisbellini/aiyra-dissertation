@@ -140,7 +140,7 @@ a specific format, the Pajé Trace File Format, and processes five types of
 entities: Containers, States, Events, Variables and Links. These
 concepts represent basic structures of computer programs executed in
 parallel or distributed systems, such as processes, threads, network
-links, variables and so on. As a base for the implementation of this
+links, hardware counters and so on. As a base for the implementation of this
 proposal, the new generation of Pajé, PajeNG, was used. Details of
 PajeNG, the types of entities and the Pajé File Format will be
 presented in Chapter 3. Although it has a visualization functionality,
