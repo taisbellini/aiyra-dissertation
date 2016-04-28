@@ -146,8 +146,8 @@ PajeNG, the types of entities and the Pajé File Format will be
 presented in Chapter 3. Although it has a visualization functionality,
 we will focus on the simulation part of the Pajé implementation in
 this project. The most commonly used tool of PajeNG is the Paje Dump
-(pj_dump), that dumps the main information of all the entities created
-throughout the simulation to the standard output.
+(=pj_dump=), that dumps to the standard output all
+information regarding entities created throughout the simulation.
 
 There are at least three problems with the current implementation of
 Pajé: little extensibility, lack of partial outcomes and impermanent
