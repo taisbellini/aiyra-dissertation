@@ -136,7 +136,7 @@ entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
 Pajé Trace Simulator, an open source project that reads trace files in
-a specific format, Pajé Trace File Format, and processes five types of
+a specific format, the Pajé Trace File Format, and processes five types of
 entities: Containers, States, Events, Variables and Links. These
 concepts represent basic structures of computer programs executed in
 parallel or distributed systems, such as processes, threads, network
