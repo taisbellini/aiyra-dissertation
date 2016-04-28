@@ -204,7 +204,22 @@ between excution time and memory management. As we will see in Chapter
 accesses to the database themselves, probably due to the Garbage
 Collector mechanism used by Java.
 
+*Add here the document structure.* Something like "This document is
+organized as follows. Chapter ...
+
+Other points:
+- use the \label command in each chapter to mark (I give you an
+  example in basic concepts chapter below)
+- use the \ref to make reference to a chapter/section, such as
+  \ref{chapter.basic_concepts}. This provides you a cleaner way to
+  reference things, such as figures, tables, sections, whatever.
+- you need to cite the documents you reference, and still cite related
+  work that support your motivation. I'll give you an example of that
+  asap, using bibtex.
+
 * Basic Concepts
+\label{chapter.basic_concepts}
+
 In this Chapter, the basic concept of the technologies used to develop this project will be presented to guarantee a full understanting of all the process.
 
 ** JavaCC
