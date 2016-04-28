@@ -131,7 +131,7 @@ information. Then, these traces are replayed in simulation combining
 information that is spread across multiple events deriving new and
 richer entities. This event processing is usually done once and
 discarded, which can be very incovenient considering that some trace
-files are very large. Therefore, it would be intersting to save these
+files are very large. Therefore, it would be interesting to save these
 entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
