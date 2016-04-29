@@ -228,25 +228,62 @@ all the process.
 
 ** JavaCC
 
-The first part of Aiyra simulator consists in reading a trace file, that is in a specific standard, and parsing it to define how each line of the entry will be simulated. For that, a lexical and parser generator, called Java Compiler Compiler (JavaCC), was used. JavaCC behaves similarly to Flex and Bison, receiving a set of regular expressions describing the tokens of the language and a grammar defined using these tokens. The output of the generator is a lexical analyser, that separates the input file into tokens, and a parser, which performs a syntax analysis. What differentiates JavaCC from other parser generators that exist for the Java language is that it creates files written in pure Java, which facilitates the understanding and eliminates the need of having dependencies in the code. JavaCC has also shown itself to have a much better performance than other tools such as ANTLR (Another Tool For Language Recognition), that requires a runtime library. 
+The first part of Aiyra simulator consists in reading a trace file,
+that is in a specific standard, and parsing it to define how each line
+of the entry will be simulated. For that, a lexical and parser
+generator, called Java Compiler Compiler (JavaCC), was used. JavaCC
+behaves similarly to Flex and Bison, receiving a set of regular
+expressions describing the tokens of the language and a grammar
+defined using these tokens. The output of the generator is a lexical
+analyser, that separates the input file into tokens, and a parser,
+which performs a syntax analysis. What differentiates JavaCC from
+other parser generators that exist for the Java language is that it
+creates files written in pure Java, which facilitates the
+understanding and eliminates the need of having dependencies in the
+code. JavaCC has also shown itself to have a much better performance
+than other tools such as ANTLR (Another Tool For Language
+Recognition), that requires a runtime library.
 
-JavaCC can be downloaded, unziped and added to the PATH. It also has a plugin for Eclipse. Once installed, JavaCC will process your grammar defined in a file with extension ".jj" using the command "javacc". As an example, I will use MyGrammar.jj. The result of the processing are seven files: 
- =MyGrammar.java=: The parser;
- =MyGrammarTokenManager.java=: The lexical analyser, that manages the tokens;
- =MyGrammarConstants.java= : Some useful constants. 
+JavaCC can be downloaded, unziped and added to the PATH. It also has a
+plugin for Eclipse. Once installed, JavaCC will process your grammar
+defined in a file with extension ".jj" using the command
+#+BEGIN_EXAMPLE
+javacc
+#+END_EXAMPLE
+ 
+As an example, I will use =MyGrammar.jj=. The result of the processing
+are seven files:
 
-The other four files generated: =Token.java=, =TokenMgrError.java=, =SimpleCharStream.java= and =ParseException.java= are boilerplate files that can be reused within parsers and are not affected by the grammar itself.
-Once having ".java" files, it is possible to compile them using "javac" as usual. 
+=MyGrammar.java=: The parser;
+
+=MyGrammarTokenManager.java=: The lexical analyser, that manages the tokens;
+
+=MyGrammarConstants.java= : Some useful constants. 
+
+The other four files generated: =Token.java=, =TokenMgrError.java=,
+=SimpleCharStream.java= and =ParseException.java= are boilerplate
+files that can be reused within parsers and are not affected by the
+grammar itself.  Once having ".java" files, it is possible to compile
+them using "javac" as usual.
 
 *** Structure and syntax
 
-The whole grammar will be in the =MyGrammar.jj= file and it is the only file that needs to be modified. There, the tokens used will be defined, the parser rules specified, and it is possible to even add Java code that has to be executed during the parsing. The structure of this file is the following: 
+The whole grammar will be in the =MyGrammar.jj= file and it is the
+only file that needs to be modified. There, the tokens used will be
+defined, the parser rules specified, and it is possible to even add
+Java code that has to be executed during the parsing. The structure of
+this file is the following:
 
+#+BEGIN_EXAMPLE
 options{
+
 }
+#+END_EXAMPLE
 
-A set of optional flags. An example, is the flag STATIC, which means that there is only one parser for the JVM when set to true. 
+A set of optional flags. An example, is the flag STATIC, which means
+that there is only one parser for the JVM when set to true.
 
+#+BEGIN_EXAMPLE
 PARSER_BEGIN(MyGrammar)
 
 public class MyGrammar {
@@ -255,24 +292,44 @@ public class MyGrammar {
 
 PARSER_END(MyGrammar)
 
-In this part, the Java code will be placed and it's the main class of the program. Notice that the class must have the same name as the generated parser. 
+#+END_EXAMPLE
 
+In this part, the Java code will be placed and it's the main class of
+the program. Notice that the class must have the same name as the
+generated parser.
+
+#+BEGIN_EXAMPLE
 TOKEN_MGR_DECLS:
 {
 
 }
+#+END_EXAMPLE
 
-The declarations used by the lexical analyser are placed in the TOKEN_MGR_DECLS function.
+The declarations used by the lexical analyser are placed in the
+TOKEN_MGR_DECLS function.
 
-Below these three structures, comes the lexical analysis where the Token rules and parser actions can be written using a top-down approach. First, the Tokens are declared, always using the word "TOKEN" before. To exemplify the creation of a grammar in JavaCC, we will create a language that consists in the declaration of integer and char variables and assignments of values to these variables. All the declarations come first, then the assignments. No verification will be performed since it is just an example to clarify the JavaCC syntax. To declare tokens, we use the following notation: 
+Below these three structures, comes the lexical analysis where the
+Token rules and parser actions can be written using a top-down
+approach. First, the Tokens are declared, always using the word
+"TOKEN" before. To exemplify the creation of a grammar in JavaCC, we
+will create a language that consists in the declaration of integer and
+char variables and assignments of values to these variables. All the
+declarations come first, then the assignments. No verification will be
+performed since it is just an example to clarify the JavaCC syntax. To
+declare tokens, we use the following notation:
 
+#+BEGIN_EXAMPLE
 TOKEN: 
 {
   < [NAME] : [EXPRESSION] >  
 }
 
+#+END_EXAMPLE
+
 For our example of language we will have the following tokens: 
 
+
+#+BEGIN_EXAMPLE
 /* Integer Literals */
 TOKEN : 
 {
@@ -293,9 +350,17 @@ TOKEN:
   < CHAR_TYPE: "char" >
 }
 
-As we can see in the definitions above, it is not necessary to explicit the word TOKEN for each one. It is usually separated to be better organized and easier to understand. Although the token's agroupation is not relevant, the order in which they are declared is. When an input matches more than one token specification, the one declared first will be considered.
-There is also another kind of regular expression production, which is the SKIP. Whatever matches the regular expression defined in the SKIP scope will not be treated by the parser. 
-Example: 
+#+END_EXAMPLE
+
+As we can see in the definitions above, it is not necessary to
+explicit the word TOKEN for each one. It is usually separated to be
+better organized and easier to understand. Although the token's
+agroupation is not relevant, the order in which they are declared
+is. When an input matches more than one token specification, the one
+declared first will be considered.  There is also another kind of
+regular expression production, which is the SKIP. Whatever matches the
+regular expression defined in the SKIP scope will not be treated by
+the parser.  Example:
 
 #+BEGIN_EXAMPLE
 SKIP: 
@@ -306,7 +371,9 @@ SKIP:
 } 
 #+END_EXAMPLE
 
-After the token declaration, comes the grammar rules. The rules are declared as methods, that can have return values or not. The structure of a method is the following: 
+After the token declaration, comes the grammar rules. The rules are
+declared as methods, that can have return values or not. The structure
+of a method is the following:
 
 #+BEGIN_EXAMPLE
 [type] [name] ()
@@ -316,25 +383,41 @@ After the token declaration, comes the grammar rules. The rules are declared as 
 }
 #+END_EXAMPLE
 
+The empty braces in the beginning of the method can be filled with
+variable declarations in Java. More Java code can be added in the
+middle of the rules by using braces. Inside the next braces, it is
+possible to assign tokens, regular expressions or even methods to the
+variables declared earlier. To refer to the tokens, we use its name
+between angular brackets. Example:
 
-The empty braces in the beginning of the method can be filled with variable declarations in Java. More Java code can be added in the middle of the rules by using braces. Inside the next braces, it is possible to assign tokens, regular expressions or even methods to the variables declared earlier. To refer to the tokens, we use its name between angular brackets. Example: 
-
+#+BEGIN_EXAMPLE
 void parser()
 { int number; }
 {
   number = <INTEGER>
 }
+#+END_EXAMPLE
 
-The first method defined will be the entrance to the parser and it can contain methods inside that will be expanded later in the rules. The entrance for the language we are using as an example would be as follows: 
+The first method defined will be the entrance to the parser and it can
+contain methods inside that will be expanded later in the rules. The
+entrance for the language we are using as an example would be as
+follows:
 
+#+BEGIN_EXAMPLE
 void start()
 {}
 {
   declarations() assignments() <EOF>
 }
+#+END_EXAMPLE
 
-EOF is a default token. It is important to guarantee that the file will be parsed until the end. By the definition of our first method, we assure that the declarations will obligatorily be in the beginning, and the assignments at the end. Next, we expand the two methods to address all the possibilities: 
+EOF is a default token. It is important to guarantee that the file
+will be parsed until the end. By the definition of our first method,
+we assure that the declarations will obligatorily be in the beginning,
+and the assignments at the end. Next, we expand the two methods to
+address all the possibilities:
 
+#+BEGIN_EXAMPLE
 void declarations()
 {}
 {
@@ -347,8 +430,15 @@ void assignments()
   (<VARIABLE> <ASSIGNMENT> (<CHAR> | <INTEGER>))*
 }
 
-The multiplicity can be defined with the standard characters "*", "?", "+", just as in the lexer. This example is just one possible approach to define these rules. For example, you can use another non-terminal to describe a value that will be assigned to a variable. In this case, the assignments() rule would be expanded as follows: 
+#+END_EXAMPLE
 
+The multiplicity can be defined with the standard characters "*", "?",
+"+", just as in the lexer. This example is just one possible approach
+to define these rules. For example, you can use another non-terminal
+to describe a value that will be assigned to a variable. In this case,
+the assignments() rule would be expanded as follows:
+
+#+BEGIN_EXAMPLE
 void assignments()
 {}
 {
@@ -360,19 +450,29 @@ void assignable():
 {
   <CHAR> | <INTEGER> 
 }
+#+END_EXAMPLE
 
 *** Usage with Java
 
-In order to call the parser in a Java program, an object of the MyGrammar class needs to be instantiated: 
+In order to call the parser in a Java program, an object of the
+MyGrammar class needs to be instantiated:
 
+#+BEGIN_EXAMPLE
 MyGrammar parser = new MyGrammar(input);
+#+END_EXAMPLE
 
-Then, once there is an instance of the parser, it is possible to call the first method of the parser:
+Then, once there is an instance of the parser, it is possible to call
+the first method of the parser:
 
+#+BEGIN_EXAMPLE
 parser.start();
+#+END_EXAMPLE
 
-This code has a Java syntax and is placed in the main class presented previously. Between the declarations of PARSER_BEGIN and PARSER_END, any Java code can be placed to manipulate the results of the parsing.  
+This code has a Java syntax and is placed in the main class presented
+previously. Between the declarations of PARSER_BEGIN and PARSER_END,
+any Java code can be placed to manipulate the results of the parsing.
 
+#+BEGIN_EXAMPLE
 PARSER_BEGIN(MyGrammar)
 /* Imports */
 public class MyGrammar {
@@ -389,35 +489,78 @@ public class MyGrammar {
 }
 
 PARSER_END(MyGrammar)
+#+END_EXAMPLE
 
 ** Experimental Design
 
-For the performance evaluation, we used the technique of experimental design, which is a form of performance analysis that aims to define a minimum number of experiments that will collect the maximum information necessary. It also targets random variations that could affect the results, guaranteeing that the number of tests executed and the error margin calculated will be suficient to avoid misleading conclusions.
+For the performance evaluation, we used the technique of experimental
+design, which is a form of performance analysis that aims to define a
+minimum number of experiments that will collect the maximum
+information necessary. It also targets random variations that could
+affect the results, guaranteeing that the number of tests executed and
+the error margin calculated will be suficient to avoid misleading
+conclusions.
 
 *** Terminology
 The terminology used in experimental design is the following: 
 
-=Response Variable=: The response variable is the outcome of an experiment;
-=Factors=: The factors are all the variables that could have several different values affecting the response variable; 
-=Levels=: The levels are the possible values that a factor can assume;
-=Primary Factors=: The primary factors are the factors that need to be quantified;
-=Secondary Factors=: The secondary factors are the factors whose impacts in the performance are not relevant for the analysis;
-=Replication=: Replication is the repetition of all or some experiments;
-=Design=: The experimental design is the specification of total number of experiments, based on factor level combination and number of replications for each experiment.
-=Experimental Unit=: The experimental unit is th entity used for the experiment, for example, a computer;
-=Interaction=: Interaction is when the levels of a fator affect the results of other factor.
+=Response Variable=: The outcome of an experiment;
+
+=Factors=: All the variables that could have several different values
+affecting the response variable;
+
+=Levels=: The possible values that a factor can assume;
+
+=Primary Factors=: The factors that need to be quantified;
+
+=Secondary Factors=: The factors whose impacts in the performance are
+not relevant for the analysis;
+
+=Replication=: The repetition of all or some experiments;
+
+=Design=: The specification of total number of experiments, based on
+factor level combination and number of replications for each
+experiment.
+
+=Experimental Unit=: The entity used for the experiment, for example,
+a computer;
+
+=Interaction=: When the levels of a fator affect the results of other
+factor.
 
 *** Full Factorial Design
 
-There are several types of experimental design modeling. In this project, we used a full factorial design, which consists in analysing every possible combination at all levels of all factors. With this type of design, it is possible to evaluate factor that have different numbers of levels. The advantage of this model is that every possible combination will be analysed, generating richer results. However, depending on the number of factors, levels and replications, it may generate a very large total number of experiments, which can cost a lot of time. Therefore, when using this technique, it is important to weight the relevance of each factor and level to generate an appropriate and accurate design. To calculate the total size of the sample you multiply the numbers of levels of the factors and the number of replications. For example, a design with a three-level factor and a two-level factor with 20 replications would have 120 experiments.
+There are several types of experimental design modeling. In this
+project, we used a full factorial design, which consists in analysing
+every possible combination at all levels of all factors. With this
+type of design, it is possible to evaluate factors that have different
+numbers of levels. The advantage of this model is that every possible
+combination will be analysed, generating richer results. However,
+depending on the number of factors, levels and replications, it may
+generate a very large total number of experiments, which can cost a
+lot of time. Therefore, when using this technique, it is important to
+weight the relevance of each factor and level to generate an
+appropriate and accurate design. To calculate the total size of the
+sample you multiply the numbers of levels of the factors and the
+number of replications. For example, a design with a three-level
+factor and a two-level factor with 20 replications would have 120
+experiments (3*2*20).
 
 ** R language
 
-R is a language for statistical computing and graphics generation. It can be very easily extended, by creating and using packages. For this work, the "DoE.base" and "ggplot" packages were used. 
+R is a language for statistical computing and graphics generation. It
+can be very easily extended, by creating and using packages. For this
+work, the "DoE.base" and "ggplot" packages were used.
 
 **** Doe.base
 
-DoE.base is a package to generate full factorial experimental designs. It contains the class _design_ with several accessor functions to create different types of design. One particular important function is the _fac.design_, which creates full factorial designs with arbitrary numbers of levels. The function receives several arguments, including number of factors, levels and replication. The usage of the function is the following: 
+DoE.base is a package to generate full factorial experimental
+designs. It contains the class _design_ with several accessor
+functions to create different types of design. One particular
+important function is the _fac.design_, which creates full factorial
+designs with arbitrary numbers of levels. The function receives
+several arguments, including number of factors, levels and
+replication. The usage of the function is the following:
 
 #+begin_src R :results output silent :session :exports none
   require(DoE.base);
