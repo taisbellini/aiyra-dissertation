@@ -164,6 +164,12 @@ used tool of PajeNG is the Pajé Dump (=pj_dump=) \cite{XXX}, that dumps to the
 standard output all information regarding entities created throughout
 the simulation.
 
+(Write about the current extensibility of Paje original and next
+generation. Say that is not enough for current needs because writing
+a full component for Paje is a complex thing - one needs to know the
+protocol, the internal objects and class hierarchy and so on. Very few
+people have done so.)
+
 There are at least three problems with the current implementation of
 Pajé: little extensibility, lack of partial outcomes and impermanent
 results. It is very complicated to change the Paje simulator behavior,
