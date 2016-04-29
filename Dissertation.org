@@ -136,7 +136,8 @@ entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
 Pajé Trace Simulator, an open source project that reads trace files in
-a specific format, the Pajé Trace File Format, and processes five
+a specific format, the Pajé Trace File Format \cite{pajetracefile},
+and processes five
 types of entities: Containers, States, Events, Variables and
 Links. These concepts represent basic structures of computer programs
 executed in parallel or distributed systems, such as processes,
@@ -594,7 +595,8 @@ The Pajé Visualization Tool is a tool to display the execution of
 parallel and distributed programs. The tool reads information from
 trace files that describe the important events in the execution of a
 parallel program. This implementation plots the simulation of trace
-files that are in the Pajé Trace File Format, which is described below. 
+files that are in the Pajé Trace File Format \cite{pajetracefile},
+which is described below. 
 
 ** Pajé Trace File Format
 
@@ -908,3 +910,5 @@ removing (by setting an end time) entities of these structures.
  \label{chapter.performance}
 * Conclusion
 \label{chapter.conclusion}
+
+#+LATEX: \bibliography{References}
