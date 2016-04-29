@@ -121,6 +121,19 @@ wget http://mescal.imag.fr/membres/arnaud.legrand/misc/init.org
 
 #+RESULTS:
 
+* 2016-04-29 How to compile with _bibtex_ entries              :Lucas:noexport:
+
+Do as follows:
+
+1. Export as usual to latex
+2. Then, type in the terminal
+   #+begin_src sh :results output :session :exports both
+   pdflatex Dissertation.tex
+   bibtex Dissertation
+   pdflatex Dissertation.tex
+   pdflatex Dissertation.tex
+   #+end_src
+
 * Introduction
 Observation of program behavior is particularly important in High
 Performance Computing since it enables an accurate performance
