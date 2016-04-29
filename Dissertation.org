@@ -137,30 +137,30 @@ Do as follows:
 * Introduction
 Observation of program behavior is particularly important in High
 Performance Computing since it enables an accurate performance
-analysis. A very common method of evaluation is registering program
+analysis \cite{XXX}. A very common method of evaluation is registering program
 events in trace files that work as a log, so, whenever a relevant
 event happens, it will be logged in the trace file with the proper
-information. Then, these traces are replayed in simulation combining
+information \cite{XXX}. Then, these traces are replayed in simulation combining
 information that is spread across multiple events deriving new and
-richer entities. This event processing is usually done once and
+richer entities \cite{XXX}. This event processing is usually done once and
 discarded, which can be very inconvenient considering that some trace
 files are very large. Therefore, it would be interesting to save these
 entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
-Pajé Trace Simulator, an open source project that reads trace files in
+Pajé Trace Simulator \cite{kergommeaux2000paje}, an open source project that reads trace files in
 a specific format, the Pajé Trace File Format \cite{pajetracefile},
 and processes five
 types of entities: Containers, States, Events, Variables and
 Links. These concepts represent basic structures of computer programs
 executed in parallel or distributed systems, such as processes,
 threads, network links, hardware counters and so on. As a base for the
-implementation of this proposal, the new generation of Pajé, PajeNG,
+implementation of this proposal, the new generation of Pajé, PajeNG \cite{XXX},
 was used. Details of PajeNG, the types of entities and the Pajé File
 Format will be presented in Chapter \ref{chapter.paje}. Although it
 has a visualization functionality, we will focus on the simulation
 part of the Pajé implementation in this project. The most commonly
-used tool of PajeNG is the Pajé Dump (=pj_dump=), that dumps to the
+used tool of PajeNG is the Pajé Dump (=pj_dump=) \cite{XXX}, that dumps to the
 standard output all information regarding entities created throughout
 the simulation.
 
