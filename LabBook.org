@@ -275,3 +275,14 @@ http://simgrid.gforge.inria.fr/
 
 
 
+
+* 
+Other points:
+- use the \label command in each chapter to mark (I give you an
+  example in basic concepts chapter below)
+- use the \ref to make reference to a chapter/section, such as
+  \ref{chapter.basic_concepts}. This provides you a cleaner way to
+  reference things, such as figures, tables, sections, whatever.
+- you need to cite the documents you reference, and still cite related
+  work that support your motivation. I'll give you an example of that
+  asap, using bibtex.
