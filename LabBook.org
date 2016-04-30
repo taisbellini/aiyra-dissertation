@@ -286,3 +286,23 @@ Other points:
 - you need to cite the documents you reference, and still cite related
   work that support your motivation. I'll give you an example of that
   asap, using bibtex.
+
+
+(Write about the current extensibility of Paje original and next
+generation. Say that is not enough for current needs because writing
+a full component for Paje is a complex thing - one needs to know the
+protocol, the internal objects and class hierarchy and so on. Very few
+people have done so.)
+
+It is very complicated to change the Paje simulator behavior,
+since it requires code modifications in the simulator core, which
+depends upon understanding details of the program. If a performance
+analyst wants to evaluate only one type of entity, or needs a
+different presentation of the data, he will need to have at least a
+basic understanding of how the program is implemented in order to
+generate these different results. 
+
+* Notes 
+
+Importance of implementtion of plugins, to validade and to see flaws,
+such as which objects to send to the plugin. 

@@ -148,46 +148,40 @@ files are very large. Therefore, it would be interesting to save these
 entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
-Pajé Trace Simulator \cite{kergommeaux2000paje}, an open source project that reads trace files in
-a specific format, the Pajé Trace File Format \cite{pajetracefile},
-and processes five
-types of entities: Containers, States, Events, Variables and
-Links. These concepts represent basic structures of computer programs
-executed in parallel or distributed systems, such as processes,
-threads, network links, hardware counters and so on. As a base for the
-implementation of this proposal, the new generation of Pajé, PajeNG \cite{XXX},
-was used. Details of PajeNG, the types of entities and the Pajé File
+Pajé Trace Simulator \cite{kergommeaux2000paje}, an open source
+project that reads trace files in a specific format, the Pajé Trace
+File Format \cite{pajetracefile}, and processes five types of
+entities: Containers, States, Events, Variables and Links. These
+concepts represent basic structures of computer programs executed in
+parallel or distributed systems, such as processes, threads, network
+links, hardware counters and so on. As a base for the implementation
+of this proposal, the new generation of Pajé, PajeNG \cite{XXX}, was
+used. Details of PajeNG, the types of entities and the Pajé File
 Format will be presented in Chapter \ref{chapter.paje}. Although it
 has a visualization functionality, we will focus on the simulation
 part of the Pajé implementation in this project. The most commonly
-used tool of PajeNG is the Pajé Dump (=pj_dump=) \cite{XXX}, that dumps to the
-standard output all information regarding entities created throughout
-the simulation.
-
-(Write about the current extensibility of Paje original and next
-generation. Say that is not enough for current needs because writing
-a full component for Paje is a complex thing - one needs to know the
-protocol, the internal objects and class hierarchy and so on. Very few
-people have done so.)
+used tool of PajeNG is the Pajé Dump (=pj_dump=) \cite{XXX}, that
+dumps to the standard output all information regarding entities
+created throughout the simulation.
 
 There are at least three problems with the current implementation of
 Pajé: little extensibility, lack of partial outcomes and impermanent
-results. It is very complicated to change the Paje simulator behavior,
-since it requires code modifications in the simulator core, which
-depends upon understanding details of the program. If a performance
-analyst wants to evaluate only one type of entity, or needs a
-different presentation of the data, he will need to have at least a
-basic understanding of how the program is implemented in order to
-generate these different results. Throughout the simulation, the Pajé
-tool creates entities according to the events listed in the trace
-file, saving each one of them in memory to dump everything at once in
-the end. Since some trace files can be very large (over 1 Gigabyte),
-it may take a while for the results to be printed out. Besides not
-being able to have a partial view of already simulated entities, the
-user won't have records of the results between executions for
-different files unless he specifies a destination for it himself. To
-address these issues, an extensible trace files simulator, Aiyra, was
-developed in Java.
+results. The original Pajé and, consequently, its next generation were
+idealized and built in an extensible way, that could be easily
+expanded based on the user's needs. Although the implementation is
+very modular, it is necessary to write a full component for Pajé,
+which is a complex thing because it implies in understanding the
+internal objects, class hierarchy, protocol, and so on. Until now,
+very few people have actually extended this tool. Throughout the
+simulation, the Pajé tool creates entities according to the events
+listed in the trace file, saving each one of them in memory to dump
+everything at once in the end. Since some trace files can be very
+large (over 1 Gigabyte), it may take a while for the results to be
+printed out. Besides not being able to have a partial view of already
+simulated entities, the user won't have records of the results between
+executions for different files unless he specifies a destination for
+it himself. To address these issues, an extensible trace files
+simulator, Aiyra, was developed in Java.
 
 The objective of this proposal is to allow the performance analyst to
 change the simulator behavior when a new entity is detected. Thus, the
@@ -511,7 +505,7 @@ public class MyGrammar {
 PARSER_END(MyGrammar)
 #+END_EXAMPLE
 
-** Experimental Design
+** Experimental Design and R
 
 For the performance evaluation, we used the technique of experimental
 design, which is a form of performance analysis that aims to define a
@@ -566,13 +560,11 @@ number of replications. For example, a design with a three-level
 factor and a two-level factor with 20 replications would have 120
 experiments (3*2*20).
 
-** R language
-
+*** R language
 R is a language for statistical computing and graphics generation. It
-can be very easily extended, by creating and using packages. For this
-work, the "DoE.base" and "ggplot" packages were used.
-
-**** Doe.base
+can be very easily extended, by creating and using packages. To create
+the design for the experiments of this work, the =Doe.base= package
+was used.
 
 DoE.base is a package to generate full factorial experimental
 designs. It contains the class _design_ with several accessor
@@ -604,18 +596,16 @@ replication. The usage of the function is the following:
 =nlevels=: A vector with the number of levels for each factor;
 =factor.names=: A list of vectors with factor levels. 
 
-**** ggplot
-
-
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
 
+(ta ruim)
 The Pajé Visualization Tool is a tool to display the execution of
 parallel and distributed programs. The tool reads information from
 trace files that describe the important events in the execution of a
-parallel program. This implementation plots the simulation of trace
-files that are in the Pajé Trace File Format \cite{pajetracefile},
-which is described below. 
+parallel program and replays them. This implementation plots the
+simulation of trace files that are in the Pajé Trace File Format
+\cite{pajetracefile}, which is described below.
 
 ** Pajé Trace File Format
 
@@ -855,9 +845,9 @@ The PajeNG implementation is the new generation of the Pajé
 Visualization Tool. It was developed in C++ and follows the same
 architecture as the original Pajé. It comprises a library containing
 the core of the simulation, a space-time visualization tool and some
-auxiliar tools to manage the trace files.  The visualization component
+auxiliar tools to manage the trace files. The visualization component
 was not considered in this proposal and the base for the
-implementation of this proposal was the =libpaje= library. The library
+implementation of this project was the =libpaje= library. The library
 has three main components forming a pipeline that results in complete
 simulated entities. These components are: FileReader, EventDecoder and
 PajeSimulator. First, the FileReader reads an event from the trace
@@ -869,57 +859,77 @@ object and addresses to the proper simulation.
 
 (image from paje-parco)
 
-All the simulation is performed in two classes: PajeSimulator and
-PajeContainer, which defines container objects. A PajeSimulator object
-is instantiated in the beginning of the program and incorporates all
-the event processing of the simulation. The type definitions,
-container creations and entity value declarations are completed and
-stored in the PajeSimulator object. Everytime there is an event of
-type _CreateContainer_, a PajeContainer object is instantiated. All
-other events are always associated to a container, thus, they will be
-simulated in the appropriate container object. The PajeSimulator
-object will keep the entities until it is destroyed or the program
-finishes. Since all the data from the simulation is kept in memory,
-the end timestamp is used to sinalize that an entity is no longer
-available to the program.
+All the simulation is performed in two classes: =PajeSimulator= and
+=PajeContainer=, which defines container objects. A PajeSimulator
+object is instantiated in the beginning of the program and
+incorporates all the event processing of the simulation. The type
+definitions, container creations and entity value declarations are
+completed and stored in the PajeSimulator object. Everytime there is
+an event of type _CreateContainer_, a PajeContainer object is
+instantiated. All other events are always associated to a container,
+thus, they will be simulated in the appropriate container object. The
+PajeSimulator object will keep the entities until it is destroyed or
+the program finishes. Since all the data from the simulation is kept
+in memory, the end timestamp is used to sinalize that an entity is no
+longer available to the program.
 
-(image?)
+(image)
 
 The PajeSimulator class lists every type declared and container
-created throughout the simulation by using a map structure and the
-name or alias as the key of the map. There is also a pointer to the
-root type and another to the root container. The simulator contains
-one method for each type of event described in section
-\ref{subsection.events}, which perform all the validations, besides
-the processing itself. Whenever an event that defines a type, such as
-=PajeDefineContainerType=, or the =PajeDefineEntityValue= event is
-recognized, the entity generated is added to the map. When an event
-related to a container is being simulated, the container in question
-is found in the cotainer's list and the proper method of the container
-object is called, receiving the event as an argument.
+created throughout the simulation by using a map structures:
 
-The PajeContainer class stores all the entities that are related to it
-including other containers. There is a list, represented by a map, of
-all the entities that belong to that container. What identifies an
-entity is its type and container, hence, the type is the key of this
-map and a vector of entities is the value. Although there are specific
-structures to states and links, all the entities are obligatorily in
-this list, even if they are duplicated. Since the objects are
-pointers, the changes made in one structure are reflected in the other
-one. All of the variable and event objects are stored in this general
-list of entities. 
+=typeMap=: a map containing all the types that have been defined in
+the simulation, with name or alias as key;
 
-As an auxiliar structure, there is another map representing a stack of
-states, also identified by the type and with a vector of state
+=contMap=: a map of the created containers also identified by the name
+or alias.
+
+All the types, such as =PajeStateType= or =PajeLinkType=, inherit from
+ a main class =PajeType=. This implementation is particularly important
+ for the possibility of creating new types and events in the Pajé
+ format. In the simulator, there is always a pointer to the root type
+ and another to the root container initialized in the beginning of the
+ program. The simulator contains one method for each type of event
+ described in section \ref{subsection.events}, which perform all the
+ validations, besides the processing itself. Whenever an event that
+ defines a type, such as =PajeDefineContainerType=, or the
+ =PajeDefineEntityValue= event is recognized, the entity generated is
+ added to the =typeMap=. When an event related to a container is being
+ simulated, the container in question is found in =contMap= and the
+ proper method of the container object is called, receiving the event
+ as an argument.
+
+The PajeContainer class stores in map structures all the entities that
+are related to it including other containers:
+
+=stackStates=: a map identified by the type and with a vector of state
 entities as the value. Every event of type =PajePushState= will add a
 state entity to the end of the stack, while every =PajePopState= will
-set the end time of the last state in the vector. Also, a map of
-pending links stores the communications that were opened but have not
-been closed yet. The link key is the identification, and the
-simulation fails if a container is destroyed, or the simulation ends,
-before all the links are completed. The PajeContainer class contains a
-method for each event that is associated to a container, adding and
-removing (by setting an end time) entities of these structures.
+set the end time of the last state in the vector;
+
+=pendingLinks=: a map of pending links stores the communications that
+were opened but have not been closed yet. The link key is the
+identification, and the simulation fails if a container is destroyed,
+or the simulation ends, before all the links are completed.;
+
+=linksUsedKeys=: a map listing all the keys for links that were
+already used in this container.
+
+=entities=: This map lists all the entities that belong to the
+container, even if they were already listed in the other
+structures. What identifies an entity is its type and container,
+hence, the =PajeType= is the key of this map and a vector of entities
+is the value. Here, we notice the importance of having the a single
+parent class =PajeType=. Just as the types, the entities inherit from
+a main class =PajeEntity=, which permits the existance of the
+=entities= map that groups together different types of objects. Since
+the objects are pointers, the changes made in one structure are
+reflected in the other ones. All of the variable and event objects are
+stored in this general list of entities.
+
+The PajeContainer class contains a method for each event that is
+associated to a container, adding and removing entities of these
+structures listed above. (classes das entidades + value). 
 
 * Aiyra - Java-based simulator
 \label{chapter.aiyra}
