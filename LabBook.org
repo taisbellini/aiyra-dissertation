@@ -27,6 +27,7 @@
    + option handling
      - library 
      - one class to make it easier to the user
+     - the general options ONLY
    + Parsing 
      - JavaCC, why, grammar
    + simulation
@@ -41,9 +42,11 @@
 5. Plugins
   + Null
   + PjDump
+    - which options in options handler it adds.
   + MySQL
     + Database modeling
-    + arguments (batches, server, etc.)
+    + arguments added to the options handler. (batches, server, etc.)
+      
 6. Performance Evaluation
   + Overview of what is being evaluated and why (my sql is the only NEW feature)
   + Methodology

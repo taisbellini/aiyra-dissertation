@@ -1048,7 +1048,132 @@ next two chapters.
    + how to compile and execute
      - basic options to execute - filename, comment, platform
 
-Aiyra is an extensible simulator written in Java that implements 
+Aiyra is an extensible simulator written in Java that reads trace
+files in the Pajé format and, instead of storing the results in
+memory, forwards every created entity to a common place where it
+can be manipulated freely.
+
+** Processing Command Line Arguments 
+
+Since handling command line arguments is not very straightforward in
+Java, an external library \cite{optionhandler} was used. The command
+line arguments are used for the user to pass information to the
+simulator, such as the name of the file to be processed, or a comment
+about the trace.
+
+All of the arguments processing is done in one class:
+=OptionsHandler=. The options that are needed in the simulation core
+are stored in this single class. These are: 
+
+*filename*: a string that receives the name of the trace file to be
+read;
+
+*comment*: a string that stores an optional comment about the file;
+
+The centralization of the options has the objective of facilitating
+the extensibility of the program. The arguments regarding a specific
+plugin are sent directly to its proper object.
+
+The constructor of this class receives the list of arguments that was
+passed in the execution of the program and creates an object =opt= of
+type =Options= with the arguments as parameter. 
+
+#+BEGIN_EXAMPLE
+import ml.options.Options;
+
+public class OptionsHandler {
+
+  public Options opt;
+
+  public OptionsHandler(String args[]) {
+	  opt = new Options(args);	
+  }
+}
+
+Options opt
+#+END_EXAMPLE
+
+The Options type is the core of the library used, and all of the argument's
+processing will be done in the =opt= instance. It is also in the
+constructor that we set all of the possible options that can be used
+by the user. To define a new one, we use the following line of
+code:
+
+#+BEGIN_EXAMPLE
+opt.getSet().addOption("<alias>", Options.Separator.<SEPARATOR>, Options.Multiplicity.<MULTIPLICITY>);
+#+END_EXAMPLE
+
+=<alias>=: the alias that will be used to identify the option;
+
+=<SEPARATOR>=: used for options that have a value. Can be *COLON*,
+*EQUALS*, *BLANK* or *NONE*;
+
+=<MULTIPLICITY>=: the multiplicity defines if the value is required or
+optional, or if it can appear more than once. The possible values are:
+*ONCE*, *ONCE_OR_MORE*, *ZERO_OR_ONE*, *ZERO_OR_MORE*.
+
+
+The default for the prefix is a dash and is the one chosen for the
+program. The constructor of Aiyra's OptionsHandler class has the
+following definitions:
+
+#+BEGIN_EXAMPLE
+opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
+opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
+opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);		
+#+END_EXAMPLE
+
+=-f=: required field that indicates the file to be parsed;
+
+=-m=: an optional comment about the trace;
+
+=-p=: the plugin to be used by the simulator.
+
+To check if the user has passed the arguments properly, the Options
+class provides a simple method thet returns a boolean:
+
+#+BEGIN_EXAMPLE
+opt.check
+#+END_EXAMPLE
+
+In the OptionsHandler class, this verification is done in the
+=checkOptionsHelper= method, which prints a helper text to the user in
+case the check fails.
+
+#+BEGIN_EXAMPLE
+public void checkOptionsHelper() {
+	// true=ignoreUnmatched false=requireLast
+	if (!this.opt.check(true, false)) {
+		System.out.println("Your input is incorrect");
+		System.out.println("Please use the following notation:");
+		System.out.println("-f <path-to-filename>");
+		System.out.println("-m <comment> (optional)");
+		System.out.println("-p <plugin> (optional, default: null) ");
+			
+		System.exit(1);
+	}
+}
+#+END_EXAMPLE
+
+This validation must be done before the program continues, thus, this
+method is already called in the constructor:
+
+#+BEGIN_EXAMPLE
+ public OptionsHandler(String args[]) {
+	  opt = new Options(args);
+
+      opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
+      opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
+      opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
+
+      checkOptionsHelper();	
+  }
+#+END_EXAMPLE 
+
+** Pajé Grammar
+
+To parse the Pajé trace files, the JavaCC 
+  
 * Plugins
 \label{chapter.plugins} 
 * Performance Evaluation
