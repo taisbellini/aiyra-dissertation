@@ -22,7 +22,22 @@
    + The problems with the current approach
      + Focus on your contribution
 4. Java Simulator
-   + JavaCC / Perf. Eval. against others / Why JavaCC?
+   + Overview
+     - extensible, java, problems solved, structure, image.
+   + option handling
+     - library 
+     - one class to make it easier to the user
+   + Parsing 
+     - JavaCC, why, grammar
+   + simulation
+     - same structure as PajeNG, why? because it was working. not
+       reduce the extensibility, just add more. 
+     - technical differences
+   + plugins
+     - PajePlugin class
+     - instrumentation points
+   + how to compile and execute
+     - basic options to execute - filename, comment, platform
 5. Plugins
   + Null
   + PjDump
