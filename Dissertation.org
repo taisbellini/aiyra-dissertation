@@ -240,6 +240,10 @@ In this Chapter, the basic concept of the technologies used to develop
 this project will be presented to guarantee a full understanting of
 all the process.
 
+_Comment_: a more direct way of introducing the chapter follows. "This
+chapter presents the basic concepts of technologies adopted to develop
+this project. They contribute to the understanding of our work."
+
 ** JavaCC
 
 The first part of Aiyra simulator consists in reading a trace file,
