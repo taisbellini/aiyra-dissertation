@@ -299,8 +299,7 @@ http://simgrid.gforge.inria.fr/
 
 
 
-* 
-Other points:
+* Other points:
 - use the \label command in each chapter to mark (I give you an
   example in basic concepts chapter below)
 - use the \ref to make reference to a chapter/section, such as
