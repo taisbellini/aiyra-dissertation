@@ -253,7 +253,15 @@ experimental design in the scope of the R language."
 
 The first part of Aiyra simulator consists in reading a trace file,
 that is in a specific standard, and parsing it to define how each line
-of the entry will be simulated. For that, a lexical and parser
+of the entry will be simulated. 
+
+_Comment_: It is very strange to me find things about Aiyra here. You
+haven't presented it yet. Stick to the basics: there is no need to
+justify why you are talking about JavaCC. You could start directly
+with something like this: "Java Compiler Compiler (JavaCC) is a
+lexical and parser generator..."
+
+For that, a lexical and parser
 generator, called Java Compiler Compiler (JavaCC), was used. JavaCC
 behaves similarly to Flex and Bison, receiving a set of regular
 expressions describing the tokens of the language and a grammar
