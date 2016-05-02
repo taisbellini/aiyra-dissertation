@@ -244,6 +244,11 @@ _Comment_: a more direct way of introducing the chapter follows. "This
 chapter presents the basic concepts of technologies adopted to develop
 this project. They contribute to the understanding of our work."
 
+_Comment_: state very briefly (one phrase) what you are going to write
+about in the chapter. Example: "Two topics are covered: the Java
+Compiler Compiler (JavaCC) and the a general overview about
+experimental design in the scope of the R language."
+
 ** The Java Compiler Compiler (JavaCC) tool
 
 The first part of Aiyra simulator consists in reading a trace file,
