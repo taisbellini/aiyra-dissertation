@@ -244,7 +244,7 @@ _Comment_: a more direct way of introducing the chapter follows. "This
 chapter presents the basic concepts of technologies adopted to develop
 this project. They contribute to the understanding of our work."
 
-** JavaCC
+** The Java Compiler Compiler (JavaCC) tool
 
 The first part of Aiyra simulator consists in reading a trace file,
 that is in a specific standard, and parsing it to define how each line
