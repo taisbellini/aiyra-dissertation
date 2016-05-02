@@ -509,7 +509,7 @@ public class MyGrammar {
 PARSER_END(MyGrammar)
 #+END_EXAMPLE
 
-** Experimental Design and R
+** Experimental Design and the R Language
 
 For the performance evaluation, we used the technique of experimental
 design, which is a form of performance analysis that aims to define a
