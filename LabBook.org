@@ -29,7 +29,12 @@
      - one class to make it easier to the user
      - the general options ONLY
    + Parsing 
-     - JavaCC, why, grammar
+     - JavaCC, why, 
+     - PajeGrammar,jj file 
+       - it is the entry point of the program. 
+       - it has java code and the main class
+       - it has variables that are global for the whole program 
+     - grammar
    + simulation
      - same structure as PajeNG, why? because it was working. not
        reduce the extensibility, just add more. 

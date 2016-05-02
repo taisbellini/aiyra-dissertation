@@ -1170,12 +1170,26 @@ method is already called in the constructor:
   }
 #+END_EXAMPLE 
 
-** Pajé Grammar
+** Parsing 
 
 To parse the Pajé trace files, the JavaCC 
   
 * Plugins
 \label{chapter.plugins} 
+
+To validate the concept of the plugins, two were implemented:
+=PajeDumpPlugin= and =PajeIsertDBPlugin=. Also, there is a default
+plugin, the =PajeNullPlugin=, that does not make any treatment to the
+data so it is simply discarded. It is useful to verify the performance
+of the simulation itself, whothout the interference of the other
+segments.
+
+** Paje Dump Plugin
+
+The Dump plugin just outputs 
+
+
+
 * Performance Evaluation
  \label{chapter.performance}
 * Conclusion
