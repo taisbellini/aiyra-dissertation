@@ -262,18 +262,33 @@ with something like this: "Java Compiler Compiler (JavaCC) is a
 lexical and parser generator..."
 
 For that, a lexical and parser
-generator, called Java Compiler Compiler (JavaCC), was used. JavaCC
-behaves similarly to Flex and Bison, receiving a set of regular
+generator, called Java Compiler Compiler (JavaCC), was used. 
+
+_Comment_: Be more direct. I recommend the reading of the book "The Elements of Style".
+
+JavaCC
+behaves similarly to Flex and Bison
+
+_Comment_: What are Flex and Bison?
+
+, receiving a set of regular
 expressions describing the tokens of the language and a grammar
 defined using these tokens. The output of the generator is a lexical
 analyser, that separates the input file into tokens, and a parser,
 which performs a syntax analysis. What differentiates JavaCC from
 other parser generators that exist for the Java language is that it
-creates files written in pure Java, which facilitates the
+creates files written in pure Java,
+
+_Comment_: it generates source code in Java.
+
+ which facilitates the
 understanding and eliminates the need of having dependencies in the
 code. JavaCC has also shown itself to have a much better performance
 than other tools such as ANTLR (Another Tool For Language
 Recognition), that requires a runtime library.
+
+_Comment_: You need to cite someone that shows that JavaCC is faster
+than ANTLR.
 
 JavaCC can be downloaded, unziped and added to the PATH. It also has a
 plugin for Eclipse. Once installed, JavaCC will process your grammar
@@ -281,6 +296,8 @@ defined in a file with extension ".jj" using the command
 #+BEGIN_EXAMPLE
 javacc
 #+END_EXAMPLE
+
+_Comment_: You can be simpler by using =javacc= instead of the Example env.
  
 As an example, I will use =MyGrammar.jj=. The result of the processing
 are seven files:
@@ -291,11 +308,21 @@ are seven files:
 
 =MyGrammarConstants.java= : Some useful constants. 
 
+_Comments_: Usually we avoid the use of singular first person
+(i.e. I). Use plural first person (i.e. "We"). Perhaps a figure here
+would be nice.
+
 The other four files generated: =Token.java=, =TokenMgrError.java=,
 =SimpleCharStream.java= and =ParseException.java= are boilerplate
 files that can be reused within parsers and are not affected by the
 grammar itself.  Once having ".java" files, it is possible to compile
 them using "javac" as usual.
+
+_Comment_: "Once the corresponding Java source code for the scanner and
+parser are generated, compile them as usual with =javac=."
+
+_Comment_: Before going to the subsections below, state what you are
+going to talk about.
 
 *** Structure and syntax
 
