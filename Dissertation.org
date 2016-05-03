@@ -382,6 +382,11 @@ subdivided. Must be a prime;
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
 
+_Comments_:
+- "tool is a tool" sounds strange;
+- "display the execution" => "display the execution behavior"
+- "all the types of entities" => "all entities types"
+
 The Pajé Visualization Tool is a tool to display the execution of
 parallel and distributed programs. It reads information from trace
 files that describe the important events in the execution of a
@@ -399,6 +404,10 @@ described.
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
+_Comments_:
+- pass =aspell= check, using =flyspell-buffer= command with M-x
+  - you may need to install it first
+
 The Pajé Trace File Format is a textual and generic format that
 describes the behavior of paralell and distributed programs. This
 format contains three sections: event definition, type hierarchy
@@ -407,6 +416,11 @@ types of entities: Containers, States, Events, Variables and
 Links. Each entity is always associated to a container, even the
 containers themselves. Below, a succint definition of each type of
 entity:
+
+_Comments_:
+- Period after entity above.
+- Make a reference to the paje file format definition (the PDF)
+- 
 
 *Container*: A container can be any hardware or software entity, such
 as a processor, a thread, a network link, etc. It is the only Pajé
@@ -420,6 +434,10 @@ example. It always has a beginning and an ending timestamp.
 *Event*: An event has only one timestamp, and can be anything
 noteworthy to be uniquely identified.
 
+_Comments_:
+- "along the time" => "along time"
+- Can't understand the last phrase of variable paragraph
+
 *Variable*: A variable entity represents the progression of the value
 of a variable along the time. A variable is represented by an object
 with a value and two timestamps, beginning and end, indicating how
@@ -430,6 +448,18 @@ value.
 *Links*: A link represents a relationship between two containers,
 such as a communication between processes. It contains two timestamps
 specifying the beginning and the end of the communication.
+
+_Comments_:
+- There are two separated hierarchies. The first one is the type
+  hierarchy; the second is the entities (objects hierarchy). Both have
+  the same structure, the difference relies on the number of
+  nodes. While the type hierarchy has only a few; the object hierarchy
+  may have millions depending on the number of containers on the
+  trace. The simulator uses the type hierarchy to verify
+  correctness. Some people call type hierarchy  the trace model.
+- You may rewrite the text below considering this, since it isn't clear.
+- You could provide a figure with an example of all this. I think it
+  would help to make it clearer.
 
 The Pajé objects must be organized as a type hierarchy, where each
 entity is always associated with a type. This hierarchy is specific
@@ -444,7 +474,16 @@ definition. For example, if the container C1, of type T1, is the
 parent of the container C2, of type T2, the type T2 must be below T1
 in the type tree. The root type is the number "0".
 
+
 *** Event Definition
+
+_Comments_:
+- I don't like itemized texts. It breaks the reading flow too often. A
+  better approch is to avoid completely, writing a full text
+  paragraph. You could have a broad definition, letting the format
+  details to the appendix (the already proposed appendix). Such as "An
+  event definition has its kind, followed by a unique identifier and a
+  set of fields. Each field has its name and type."
 
 The format of the event definition part has the following format:
 
@@ -490,6 +529,10 @@ An example of event definition:
 
 *** Events
 \label{subsection.events} 
+
+_Comments_: great, all this to the appendix. Keep here a very small
+fraction corresponding to an overview. Reference the appendix for
+details.
 
 After the event definition, the events themselves are described, one
 in each line. Every event starts with the number that identifies it,
@@ -641,11 +684,27 @@ architecture as the original Pajé. It comprises a library containing
 the core of the simulation, a space-time visualization tool and some
 auxiliar tools to manage the trace files. The visualization component
 was not considered in this proposal and the base for the
-implementation of this project was the =libpaje= library. The library
+implementation of this project was the =libpaje= library. 
+
+_Comments_:
+- Be positive. Instead of saying what has not been considered, say
+  what has been considered. I refer you again to "The Elements of
+  Style".
+
+The library
 has three main components forming a pipeline that results in complete
 simulated entities. These components are: FileReader, EventDecoder and
 PajeSimulator. First, the FileReader reads an event from the trace
-file. Then, the EventDecoder identifies what is the event being
+file. 
+
+_Comments_:
+- Correction: the =FileReader= reads a data chunk from file, puts in
+  memory. It isn't aware of events at all. The =EventDecoder= breaks
+  that data chunk in events (it splits each line in fields, until the
+  end of line character), creating an object to represent that,
+  passing along to the =PajeSimulator=.
+
+Then, the EventDecoder identifies what is the event being
 processed and created an object with all the necessary
 information. Last, the PajeSimulator receives this event object and
 addresses to the proper simulation.
@@ -663,6 +722,8 @@ objective: one for events, one for types and one for entities. With
 this modular implementation, it is relatively easy to add a new type
 of event or entity and integrate it with the rest of the code.
 
+*Class Hierarchy for Paje Events*
+
 An event object is what is passed as an argument to the simulator so
 that it can be processed. Therefore, it must contain all of the
 necessary information for the simulation. The first object created
@@ -677,7 +738,15 @@ categorized event is characterized by having a =PajeValue= associated
 to it, thus, =PajeStateEvent=, =PajeEventEvent=, =PajeLinkEvent=, and
 their respective childs inherit from it.
 
+_Comments_:
+- I think you can safely call this the "class hierarchy" to
+  differentiate from the "type hierarchy" of the paje file format. I
+  feel that the way it is written confuses the eventual reader a
+  bit.
+
 (image of event hierarchy)
+
+*Class hierarchy for the Paje Types*
 
 The first class of the type hierarchy is the =PajeType=. It has a
 name, an alias and a parent type, which is also a PajeType. These
@@ -690,6 +759,8 @@ field and methods to manipulate it. Its childs are the
 =PajeStateType=, =PajeEventType= and =PajeLinkType=.
 
 (image of type hierarchy beginning in pajetype)
+
+*Class hierarchy for the Paje Entities*
 
 The =PajeEntity= is the first node of the entities tree. It origins a
 =PajeSingleTimedEntity= class, that describes entities with one single
@@ -705,6 +776,8 @@ as childs. A =PajeContainer= inherits from the named entity.
 
 (image of entities hierarchy beginning in PajeEntity)
 
+*The Core Simulator*
+
 All the simulation is performed in two classes: =PajeSimulator= and
 =PajeContainer=. A PajeSimulator object is instantiated in the
 beginning of the program and incorporates all the event processing of
@@ -714,9 +787,21 @@ object. Everytime there is an event of type =PajeCreateContainer=, a
 PajeContainer object is instantiated. All other events are always
 associated to a container, thus, they will be simulated in the
 appropriate container instance. The PajeContainer object will keep the
-entities until it is destroyed or the program finishes. Since all the
+entities until it is destroyed or the program finishes. 
+
+_Comments_:
+- Correction. On destruction, the container is only marked
+  destroyed. It isn't cleared from memory. Until now, I haven't seen a
+  case where a container will be destroyed and another re-created with
+  the same name. That should be addressed in the future.
+
+Since all the
 data from the simulation is kept in memory, the end timestamp is used
 to sinalize that an entity is no longer available to the program.
+
+_Comments_:
+- Correction. All entities are available always, no matter their end
+  time.
 
 (image Paje Simulator and PajeContainer relation)
 
@@ -775,7 +860,17 @@ structures listed above.
 
 The focus of the Paje implementation is to allow the user to extend
 the Pajé format and adapt the simulator to it. When thinking about the
-handling of the simulated data, it is not very straightforward. One of
+handling of the simulated data, it is not very straightforward. 
+
+_Comments_:
+- what is not straightforward?
+- I think inapropriate to call =pj_dump= as a module. It is a tool, a
+  terminology you have already adopted previously in the text.
+- Aspell
+- What is a module? This is new to me.
+- 
+
+One of
 the modules of PajeNG is the tools module, which contains the
 =pj_dump= functionality. The PajeSimulator instance maintains all of
 the simulated entities in memory, and the dump tool throws to the
@@ -790,6 +885,13 @@ its hierarchies in order to build a module to the program. Another
 problem with this implementation is the ephemerality of the results,
 since it is kept in memory during simulation and then discarded at the
 end.
+
+_Comments_:
+- Avoid details about Aiyra here, it is described in the next section.
+- Of course mention that problems will be addressed by your tool.
+- You are talking about plugins below, but I have no idea what it is.
+  - Save it to later, mention you adress extensibility thourhg plugins
+    that will be detailed later.
 
 Based on these issues, an extensible simulator written in Java was
 developed. The proposed program contains instrumentation points which
