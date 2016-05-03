@@ -232,7 +232,6 @@ performance analysis of the Pajé Insert Database Plugin and a
 comparison between Aiyra and PajeNG. The conclusion and final
 considerations are expressed in Chapter \ref{chapter.conclusion}.
 
-
 * Basic Concepts
 \label{chapter.basic_concepts}
 
@@ -256,6 +255,8 @@ understanding and eliminates the need of having dependencies in the code.
 JavaCC has also shown itself to have a much better performance than other
 tools such as ANTLR (Another Tool For Language Recognition), that requires a
 runtime library \cite{javaccversusantlr}.
+
+*Tais also made some experiments that concludes the same thing.*
 
 JavaCC can be downloaded, unziped and added to the PATH. It also has a
 plugin for Eclipse. Once installed, JavaCC will process your grammar
@@ -858,7 +859,6 @@ chapter. The problems listed above, besides the difficulty in extending the
 simulator, were solved with the creation of plugins. The details of the
 implementation are in the next two chapters.
 
-
 * Aiyra - Java-based simulator
 \label{chapter.aiyra}
 
@@ -1005,6 +1005,14 @@ method is already called in the constructor:
 ** Parsing 
 
 To parse the Pajé trace files, the JavaCC 
+
+** Aiyra's Core Simulator
+
+*Instrumentation points*
+- all trace events have instrumentation points
+  - justify the need for full points
+
+** Plugins
   
 * Plugins
 \label{chapter.plugins} 
@@ -1021,11 +1029,16 @@ segments.
 The Dump plugin just outputs 
 
 
-
 * Performance Evaluation
- \label{chapter.performance}
+\label{chapter.performance}
 * Conclusion
 \label{chapter.conclusion}
+
+- not only the simulator
+- plugins are important
+
+*Future Work*
+- Plugins in other languages
 
 #+LATEX: \bibliography{References}
 
@@ -1246,4 +1259,5 @@ public class MyGrammar {
 
 PARSER_END(MyGrammar)
 #+END_EXAMPLE
+* Paje File Format Specification
 * Paje File Format Parser for JavaCC
