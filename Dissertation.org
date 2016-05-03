@@ -324,6 +324,14 @@ parser are generated, compile them as usual with =javac=."
 _Comment_: Before going to the subsections below, state what you are
 going to talk about.
 
+_Comment about next two subsections_: (structure and syntax) and (usage
+with java). I think these subsections should be placed in an
+appendix. You can of course write a little about how it is roughly
+made using =javacc=, but without too much details. You refer to the
+appendix to further details. I think one of the appendix will be these
+subsections, then you create another one with the actual code of
+current implementation (without the simulator, only the parser).
+
 *** Structure and syntax
 
 The whole grammar will be in the =MyGrammar.jj= file and it is the
@@ -1236,3 +1244,7 @@ The Dump plugin just outputs
 \label{chapter.conclusion}
 
 #+LATEX: \bibliography{References}
+
+\appendix
+* JavaCC Tutorial
+* Paje File Format Parser for JavaCC
