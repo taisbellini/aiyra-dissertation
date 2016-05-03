@@ -338,7 +338,7 @@ options{
 }
 #+END_EXAMPLE
 
-A set of optional flags. An example, is the flag STATIC, which means
+A set of optional flags. An example, is the flag =STATIC=, which means
 that there is only one parser for the JVM when set to true.
 
 #+BEGIN_EXAMPLE
