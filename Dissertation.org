@@ -555,6 +555,12 @@ PARSER_END(MyGrammar)
 
 ** Experimental Design and the R Language
 
+_Comment_: you don't need to say you have used experimental evaluation
+in the perf. eval. Say it later. for now, stick to the basic concepts
+description. A good start is "Experimental design is an area of
+statistics interest in creating good designs to correctly observe and
+measure behavior ..."
+
 For the performance evaluation, we used the technique of experimental
 design, which is a form of performance analysis that aims to define a
 minimum number of experiments that will collect the maximum
@@ -562,6 +568,14 @@ information necessary. It also targets random variations that could
 affect the results, guaranteeing that the number of tests executed and
 the error margin calculated will be suficient to avoid misleading
 conclusions.
+
+_Comment_: next sections have so few text. I am not sure subsections are
+required. You could simply transform "Terminology" in a
+paragraph. Then, talk about the FF design. You probably should mention
+fractional designs as well. The "R language" subsection could be
+upgraded to a chapter's section, since it is independent of
+experimental designs. You just found out that using R to design
+experiments is neat.
 
 *** Terminology
 The terminology used in experimental design is the following: 
