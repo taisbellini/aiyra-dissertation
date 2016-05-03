@@ -669,6 +669,11 @@ subdivided. Must be a prime;
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
 
+_Comments_:
+- "tool is a tool" sounds strange;
+- "display the execution" => "display the execution behavior"
+- "all the types of entities" => "all entities types"
+
 The Pajé Visualization Tool is a tool to display the execution of
 parallel and distributed programs. It reads information from trace
 files that describe the important events in the execution of a
@@ -686,6 +691,10 @@ described.
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
+_Comments_:
+- pass =aspell= check, using =flyspell-buffer= command with M-x
+  - you may need to install it first
+
 The Pajé Trace File Format is a textual and generic format that
 describes the behavior of paralell and distributed programs. This
 format contains three sections: event definition, type hierarchy
@@ -694,6 +703,11 @@ types of entities: Containers, States, Events, Variables and
 Links. Each entity is always associated to a container, even the
 containers themselves. Below, a succint definition of each type of
 entity:
+
+_Comments_:
+- Period after entity above.
+- Make a reference to the paje file format definition (the PDF)
+- 
 
 *Container*: A container can be any hardware or software entity, such
 as a processor, a thread, a network link, etc. It is the only Pajé
@@ -707,6 +721,10 @@ example. It always has a beginning and an ending timestamp.
 *Event*: An event has only one timestamp, and can be anything
 noteworthy to be uniquely identified.
 
+_Comments_:
+- "along the time" => "along time"
+- Can't understand the last phrase of variable paragraph
+
 *Variable*: A variable entity represents the progression of the value
 of a variable along the time. A variable is represented by an object
 with a value and two timestamps, beginning and end, indicating how
@@ -717,6 +735,18 @@ value.
 *Links*: A link represents a relationship between two containers,
 such as a communication between processes. It contains two timestamps
 specifying the beginning and the end of the communication.
+
+_Comments_:
+- There are two separated hierarchies. The first one is the type
+  hierarchy; the second is the entities (objects hierarchy). Both have
+  the same structure, the difference relies on the number of
+  nodes. While the type hierarchy has only a few; the object hierarchy
+  may have millions depending on the number of containers on the
+  trace. The simulator uses the type hierarchy to verify
+  correctness. Some people call type hierarchy  the trace model.
+- You may rewrite the text below considering this, since it isn't clear.
+- You could provide a figure with an example of all this. I think it
+  would help to make it clearer.
 
 The Pajé objects must be organized as a type hierarchy, where each
 entity is always associated with a type. This hierarchy is specific
@@ -731,7 +761,16 @@ definition. For example, if the container C1, of type T1, is the
 parent of the container C2, of type T2, the type T2 must be below T1
 in the type tree. The root type is the number "0".
 
+
 *** Event Definition
+
+_Comments_:
+- I don't like itemized texts. It breaks the reading flow too often. A
+  better approch is to avoid completely, writing a full text
+  paragraph. You could have a broad definition, letting the format
+  details to the appendix (the already proposed appendix). Such as "An
+  event definition has its kind, followed by a unique identifier and a
+  set of fields. Each field has its name and type."
 
 The format of the event definition part has the following format:
 
@@ -777,6 +816,10 @@ An example of event definition:
 
 *** Events
 \label{subsection.events} 
+
+_Comments_: great, all this to the appendix. Keep here a very small
+fraction corresponding to an overview. Reference the appendix for
+details.
 
 After the event definition, the events themselves are described, one
 in each line. Every event starts with the number that identifies it,
