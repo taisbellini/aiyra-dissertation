@@ -349,7 +349,6 @@ public class MyGrammar {
 }
 
 PARSER_END(MyGrammar)
-
 #+END_EXAMPLE
 
 In this part, the Java code will be placed and it's the main class of
@@ -381,11 +380,9 @@ TOKEN:
 {
   < [NAME] : [EXPRESSION] >  
 }
-
 #+END_EXAMPLE
 
 For our example of language we will have the following tokens: 
-
 
 #+BEGIN_EXAMPLE
 /* Integer Literals */
@@ -407,7 +404,6 @@ TOKEN:
   < INTEGER_TYPE : "int" >
   < CHAR_TYPE: "char" >
 }
-
 #+END_EXAMPLE
 
 As we can see in the definitions above, it is not necessary to
