@@ -382,23 +382,16 @@ subdivided. Must be a prime;
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
 
-_Comments_:
-- "tool is a tool" sounds strange;
-- "display the execution" => "display the execution behavior"
-- "all the types of entities" => "all entities types"
-
-The Pajé Visualization Tool is a tool to display the execution of
-parallel and distributed programs. It reads information from trace
-files that describe the important events in the execution of a
-parallel program and replays them in simulation. It is developed to
-simulate trace files in the Pajé Trace File Format, thus, it is
-important to understand how the Pajé trace files are composed. Section
-\ref{section.pajeformat} describes this format and all the types of
-entities. The next section describes the PajeNG implementation
-focusing on the =libpaje= module, which is where the core simulation
-is performed. Since the new generation follows the exact same
-structure as the original Pajé, it will be the only one to be
-described.
+The Pajé Visualization Tool is an implementantion to display the execution
+behavior of parallel and distributed programs. It reads information from trace
+files that describe the important events in the execution of a parallel
+program and replays them in simulation. It is developed to simulate trace
+files in the Pajé Trace File Format, thus, it is important to understand how
+the Pajé trace files are composed. Section \ref{section.pajeformat} describes
+this format and all entities types. The next section describes the
+PajeNG implementation focusing on the =libpaje= module, which is where the
+core simulation is performed. Since the new generation follows the exact same
+structure as the original Pajé, it will be the only one to be described.
  
 
 ** Pajé Trace File Format
@@ -408,19 +401,13 @@ _Comments_:
 - pass =aspell= check, using =flyspell-buffer= command with M-x
   - you may need to install it first
 
-The Pajé Trace File Format is a textual and generic format that
-describes the behavior of paralell and distributed programs. This
-format contains three sections: event definition, type hierarchy
-declaration and timestamped events. The Pajé format describes five
-types of entities: Containers, States, Events, Variables and
-Links. Each entity is always associated to a container, even the
-containers themselves. Below, a succint definition of each type of
-entity:
-
-_Comments_:
-- Period after entity above.
-- Make a reference to the paje file format definition (the PDF)
-- 
+The Pajé Trace File Format \cite{pajetracefile} is a textual and generic
+format that describes the behavior of paralell and distributed programs. This
+format contains three sections: event definition, type hierarchy declaration
+and timestamped events. The Pajé format describes five types of entities:
+Containers, States, Events, Variables and Links. Each entity is always
+associated to a container, even the containers themselves. Below, a succint
+definition of each type of entity.
 
 *Container*: A container can be any hardware or software entity, such
 as a processor, a thread, a network link, etc. It is the only Pajé
@@ -434,16 +421,10 @@ example. It always has a beginning and an ending timestamp.
 *Event*: An event has only one timestamp, and can be anything
 noteworthy to be uniquely identified.
 
-_Comments_:
-- "along the time" => "along time"
-- Can't understand the last phrase of variable paragraph
-
 *Variable*: A variable entity represents the progression of the value
-of a variable along the time. A variable is represented by an object
+of a variable along time. A variable is represented by an object
 with a value and two timestamps, beginning and end, indicating how
-long the variable had that specific value. One determined type of
-variable can have several objects according to the changes on its
-value.
+long the variable had that specific value. 
 
 *Links*: A link represents a relationship between two containers,
 such as a communication between processes. It contains two timestamps
@@ -787,13 +768,9 @@ object. Everytime there is an event of type =PajeCreateContainer=, a
 PajeContainer object is instantiated. All other events are always
 associated to a container, thus, they will be simulated in the
 appropriate container instance. The PajeContainer object will keep the
-entities until it is destroyed or the program finishes. 
+entities until the program finishes. 
 
-_Comments_:
-- Correction. On destruction, the container is only marked
-  destroyed. It isn't cleared from memory. Until now, I haven't seen a
-  case where a container will be destroyed and another re-created with
-  the same name. That should be addressed in the future.
+
 
 Since all the
 data from the simulation is kept in memory, the end timestamp is used
@@ -858,50 +835,28 @@ structures listed above.
 
 ** Issues of PajeNG
 
-The focus of the Paje implementation is to allow the user to extend
-the Pajé format and adapt the simulator to it. When thinking about the
-handling of the simulated data, it is not very straightforward. 
+The focus of the Paje implementation is to allow the user to extend the Pajé
+format and adapt the simulator to it. When thinking about the handling of the
+simulated data, it requires a deeper understanding of the code structure.
 
-_Comments_:
-- what is not straightforward?
-- I think inapropriate to call =pj_dump= as a module. It is a tool, a
-  terminology you have already adopted previously in the text.
-- Aspell
-- What is a module? This is new to me.
-- 
+One of the tools of PajeNG is the =pj_dump=. The PajeSimulator instance
+maintains all of the simulated entities in memory, and the dump tool throws to
+the standard output all the information about each entity stored. If a user
+wants to see the resulted entities during the simulation, he would need to get
+into the PajeSimulator code to make the necessary changes. Techincally, since
+all the results are stored in memory, it would be simple to add a new
+functionality, but it is limited to manipulation of the whole set of results,
+not each entity separatedly. Also, there is the need of understanding the
+classes and its hierarchies in order to build a new tool for the program.
+Another problem with this implementation is the ephemerality of the results,
+since it is kept in memory during simulation and then discarded at the end.
 
-One of
-the modules of PajeNG is the tools module, which contains the
-=pj_dump= functionality. The PajeSimulator instance maintains all of
-the simulated entities in memory, and the dump tool throws to the
-standard output all the information about each entity stored. If a
-user wants to see the resulted entities during the simulation, he
-would need to get into the PajeSimulator code to make the necessary
-changes. Techincally, since all the results are stored in memory, it
-would be simple to add a new functionality, but it is limited to
-manipulation of the whole set of results, not each entity
-separatedly. Also, there is the need of understanding the classes and
-its hierarchies in order to build a module to the program. Another
-problem with this implementation is the ephemerality of the results,
-since it is kept in memory during simulation and then discarded at the
-end.
-
-_Comments_:
-- Avoid details about Aiyra here, it is described in the next section.
-- Of course mention that problems will be addressed by your tool.
-- You are talking about plugins below, but I have no idea what it is.
-  - Save it to later, mention you adress extensibility thourhg plugins
-    that will be detailed later.
-
-Based on these issues, an extensible simulator written in Java was
-developed. The proposed program contains instrumentation points which
-allow the creation of plugins attached to it. For example, if one
-wants to handle only state entities, he can create a plugin attached
-only to the points that are related to states. The other entities
-created will be discarded by the simulator. The problems listed above,
-besides the difficulty in extending the simulator, were solved with
-the creation of plugins. The details of the implementation are in the
-next two chapters.
+(bad)
+Based on these issues, an extensible simulator written in Java was developed.
+The program uses the concept of plugins, that will be detailed in the next
+chapter. The problems listed above, besides the difficulty in extending the
+simulator, were solved with the creation of plugins. The details of the
+implementation are in the next two chapters.
 
 
 * Aiyra - Java-based simulator

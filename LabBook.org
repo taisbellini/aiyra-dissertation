@@ -330,6 +330,12 @@ The first part of Aiyra simulator consists in reading a trace file,
 that is in a specific standard, and parsing it to define how each line
 of the entry will be simulated. 
 
+The proposed program contains instrumentation points which
+allow the creation of plugins attached to it. For example, if one
+wants to handle only state entities, he can create a plugin attached
+only to the points that are related to states. The other entities
+created will be discarded by the simulator.
+
 
 * Comments
 ** Chapter 2: 
@@ -380,6 +386,47 @@ fractional designs as well. The "R language" subsection could be
 upgraded to a chapter's section, since it is independent of
 experimental designs. You just found out that using R to design
 experiments is neat.
+
+** Chapter 3:
+
+ _Comments_:
+- "tool is a tool" sounds strange;
+- "display the execution" => "display the execution behavior"
+- "all the types of entities" => "all entities types"
+
+_Comments_:
+- Period after entity above.
+- Make a reference to the paje file format definition (the PDF)
+- 
+
+_Comments_:
+- "along the time" => "along time"
+- Can't understand the last phrase of variable paragraph
+
+
+*** Pajeng
+_Comments_:
+- Correction. On destruction, the container is only marked
+  destroyed. It isn't cleared from memory. Until now, I haven't seen a
+  case where a container will be destroyed and another re-created with
+  the same name. That should be addressed in the future.
+
+  _Comments_:
+- what is not straightforward?
+- I think inapropriate to call =pj_dump= as a module. It is a tool, a
+  terminology you have already adopted previously in the text.
+- Aspell
+- What is a module? This is new to me.
+
+_Comments_:
+- Avoid details about Aiyra here, it is described in the next section.
+- Of course mention that problems will be addressed by your tool.
+- You are talking about plugins below, but I have no idea what it is.
+  - Save it to later, mention you adress extensibility thourhg plugins
+    that will be detailed later.
+
+
+
 
 
 * Notes 
