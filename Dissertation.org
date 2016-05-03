@@ -10,7 +10,7 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 
 #+LATEX_CLASS: iiufrgs
-#+LATEX_CLASS_OPTIONS: [times,cic,tc]
+#+LATEX_CLASS_OPTIONS: [times,cic,tc,english]
 #+LATEX_HEADER: \usepackage[utf8]{inputenc}
 #+LATEX_HEADER: \usepackage[T1]{fontenc}
 #+LATEX_HEADER: \usepackage{subfigure}
