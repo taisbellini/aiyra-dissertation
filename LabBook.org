@@ -316,6 +316,8 @@ a full component for Paje is a complex thing - one needs to know the
 protocol, the internal objects and class hierarchy and so on. Very few
 people have done so.)
 
+* Parts cut off 
+
 It is very complicated to change the Paje simulator behavior,
 since it requires code modifications in the simulator core, which
 depends upon understanding details of the program. If a performance
@@ -323,6 +325,62 @@ analyst wants to evaluate only one type of entity, or needs a
 different presentation of the data, he will need to have at least a
 basic understanding of how the program is implemented in order to
 generate these different results. 
+
+The first part of Aiyra simulator consists in reading a trace file,
+that is in a specific standard, and parsing it to define how each line
+of the entry will be simulated. 
+
+
+* Comments
+** Chapter 2: 
+
+_Comment_: a more direct way of introducing the chapter follows. "This
+chapter presents the basic concepts of technologies adopted to develop
+this project. They contribute to the understanding of our work."
+
+_Comment_: state very briefly (one phrase) what you are going to write
+about in the chapter. Example: "Two topics are covered: the Java
+Compiler Compiler (JavaCC) and the a general overview about
+experimental design in the scope of the R language."
+
+_Comment_: It is very strange to me find things about Aiyra here. You
+haven't presented it yet. Stick to the basics: there is no need to
+justify why you are talking about JavaCC. You could start directly
+with something like this: "Java Compiler Compiler (JavaCC) is a
+lexical and parser generator..."
+
+_Comment_: You need to cite someone that shows that JavaCC is faster
+than ANTLR.
+
+_Comments_: Usually we avoid the use of singular first person
+(i.e. I). Use plural first person (i.e. "We"). Perhaps a figure here
+would be nice.
+
+_Comment_: Before going to the subsections below, state what you are
+going to talk about.
+
+_Comment about next two subsections_: (structure and syntax) and (usage
+with java). I think these subsections should be placed in an
+appendix. You can of course write a little about how it is roughly
+made using =javacc=, but without too much details. You refer to the
+appendix to further details. I think one of the appendix will be these
+subsections, then you create another one with the actual code of
+current implementation (without the simulator, only the parser).
+
+_Comment_: you don't need to say you have used experimental evaluation
+in the perf. eval. Say it later. for now, stick to the basic concepts
+description. A good start is "Experimental design is an area of
+statistics interest in creating good designs to correctly observe and
+measure behavior ..."
+
+_Comment_: next sections have so few text. I am not sure subsections are
+required. You could simply transform "Terminology" in a
+paragraph. Then, talk about the FF design. You probably should mention
+fractional designs as well. The "R language" subsection could be
+upgraded to a chapter's section, since it is independent of
+experimental designs. You just found out that using R to design
+experiments is neat.
+
 
 * Notes 
 
