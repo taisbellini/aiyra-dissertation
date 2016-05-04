@@ -664,30 +664,28 @@ The PajeNG implementation is the new generation of the Pajé
 Visualization Tool. It was developed in C++ and follows the same
 architecture as the original Pajé. It comprises a library containing
 the core of the simulation, a space-time visualization tool and some
-auxiliar tools to manage the trace files. The visualization component
-was not considered in this proposal and the base for the
-implementation of this project was the =libpaje= library. 
+auxiliar tools to manage the trace files. The base for the
+implementation of this project was the =libpaje= library.
 
-_Comments_:
+_Comments_:DONE
 - Be positive. Instead of saying what has not been considered, say
   what has been considered. I refer you again to "The Elements of
   Style".
 
-The library
-has three main components forming a pipeline that results in complete
-simulated entities. These components are: FileReader, EventDecoder and
-PajeSimulator. First, the FileReader reads an event from the trace
-file. 
+The library has three main components forming a pipeline that results
+in complete simulated entities. These components are: FileReader,
+EventDecoder and PajeSimulator. First, the FileReader reads a chunk of
+data from the trace file and puts it in memory. 
 
-_Comments_:
+_Comments_: DONE
 - Correction: the =FileReader= reads a data chunk from file, puts in
   memory. It isn't aware of events at all. The =EventDecoder= breaks
   that data chunk in events (it splits each line in fields, until the
   end of line character), creating an object to represent that,
   passing along to the =PajeSimulator=.
 
-Then, the EventDecoder identifies what is the event being
-processed and created an object with all the necessary
+Then, the EventDecoder breaks it into events identifying, line by
+line, the event's fields and creating an object with all the necessary
 information. Last, the PajeSimulator receives this event object and
 addresses to the proper simulation.
 
@@ -696,13 +694,13 @@ addresses to the proper simulation.
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
 expandable, which makes it necessary to build a simulator
-accordingly. This flexibility is implemented by an hierarchy of
-classes, going from the most general, containing the basic fields
-common to every type and entity, to the most specific. There
-are three main hierarchies that are particularly important in this
-objective: one for events, one for types and one for entities. With
-this modular implementation, it is relatively easy to add a new type
-of event or entity and integrate it with the rest of the code.
+accordingly. This flexibility is implemented by a class hierarchy,
+going from the most general, containing the basic fields common to
+every type and entity, to the most specific. There are three main
+hierarchies that are particularly important in this objective: one for
+events, one for types and one for entities. With this modular
+implementation, it is relatively easy to add a new type of event or
+entity and integrate it with the rest of the code.
 
 *Class Hierarchy for Paje Events*
 
@@ -730,12 +728,12 @@ _Comments_:
 
 *Class hierarchy for the Paje Types*
 
-The first class of the type hierarchy is the =PajeType=. It has a
-name, an alias and a parent type, which is also a PajeType. These
-fields are the ones common to all the type definition events described
-in section \ref{section.pajeformat}. The immediate childs of this
-class are: =PajeCategorizedType=, =PajeVariableType= and
-=PajeContainerType=. As the events, the categorized types are
+The first element of the type's class hierarchy is the =PajeType=. It
+has a name, an alias and a parent type, which is also a
+PajeType. These fields are the ones common to all the type definition
+events described in section \ref{section.pajeformat}. The immediate
+childs of this class are: =PajeCategorizedType=, =PajeVariableType=
+and =PajeContainerType=. As the events, the categorized types are
 associated to a value, hence, the PajeCategorizedType has a PajeValue
 field and methods to manipulate it. Its childs are the
 =PajeStateType=, =PajeEventType= and =PajeLinkType=.
