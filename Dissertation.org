@@ -220,17 +220,16 @@ memory usage had more impact in the performance than the accesses to
 the database themselves, probably due to the Garbage Collector
 mechanism used by Java.
 
-This document is organized as follows. Chapter
-\ref{chapter.basic_concepts} provides the basic concepts of the
-technologies used throughout the project. Chapter \ref{chapter.paje}
-gives an overview of the existing simulator for the Pajé format and
-the problems with this current implementation. Chapter
+This document is organized as follows. Chapter \ref{chapter.basic_concepts}
+provides the basic concepts of the technologies used throughout the project.
+Chapter \ref{chapter.paje} gives an overview of the existing simulator for the
+Pajé format and the problems with this current implementation. Chapter
 \ref{chapter.aiyra} describes the details of the extensible simulator
-developed in Java and Chapter \ref{chapter.plugins} characterize the
-plugins developed. Chapter \ref{chapter.performance} presents a
-performance analysis of the Pajé Insert Database Plugin and a
-comparison between Aiyra and PajeNG. The conclusion and final
-considerations are expressed in Chapter \ref{chapter.conclusion}.
+developed in Java and Chapter \ref{chapter.plugins} characterize the plugins
+developed. Chapter \ref{chapter.performance} presents a performance analysis
+of the Pajé Insert Database Plugin and a comparison between Aiyra and PajeNG.
+The conclusion and final considerations are expressed in Chapter
+\ref{chapter.conclusion}.
 
 * Basic Concepts
 \label{chapter.basic_concepts}
@@ -254,9 +253,8 @@ Java language is that it generates source code in Java, which facilitates the
 understanding and eliminates the need of having dependencies in the code.
 JavaCC has also shown itself to have a much better performance than other
 tools such as ANTLR (Another Tool For Language Recognition), that requires a
-runtime library \cite{javaccversusantlr}.
-
-*Tais also made some experiments that concludes the same thing.*
+runtime library \cite{javaccversusantlr}. ANTLR was our first choice of parser
+generator, but it was soon discarded due to its low performance.
 
 JavaCC can be downloaded, unziped and added to the PATH. It also has a
 plugin for Eclipse. Once installed, JavaCC will process your grammar
@@ -277,9 +275,6 @@ can be reused within parsers and are not affected by the grammar itself.  Once
 the corresponding Java source code for the scanner and parser are generated,
 compile them as usual with =javac=.
 
-
-*** Structure and syntax
-
 The whole grammar will be in the =MyGrammar.jj= file and it is the
 only file that needs to be modified. There, the tokens used will be
 defined, the parser rules specified, and it is possible to even add
@@ -289,7 +284,7 @@ Java code that has to be executed during the parsing.
 
 Experimental design is a form of performance analysis that aims to define a
 minimum number of experiments that will collect the maximum information
-necessary. It also targets random variations that could affect the results,
+necessary \cite{jain}. It also targets random variations that could affect the results,
 guaranteeing that the number of tests executed and the error margin calculated
 will be suficient to avoid misleading conclusions.
 
@@ -336,7 +331,9 @@ have 120 experiments (3*2*20).
 When there is a large number of factors or levels, it may not be possible to
 use the full factorial design. In these cases, one can use a fractional
 factorial design, which covers just a fraction of the full factorial design.
-(...) Although it saves time and expenses, the results provide less
+In this type of experiment, a carefully chosen subset of factors and levels is
+taken into consideration, based on the most important features the analyser
+wants to test. Although it saves time and expenses, the results provide less
 information.
 
 ** R language
@@ -431,232 +428,63 @@ long the variable had that specific value.
 such as a communication between processes. It contains two timestamps
 specifying the beginning and the end of the communication.
 
-_Comments_:
-- There are two separated hierarchies. The first one is the type
-  hierarchy; the second is the entities (objects hierarchy). Both have
-  the same structure, the difference relies on the number of
-  nodes. While the type hierarchy has only a few; the object hierarchy
-  may have millions depending on the number of containers on the
-  trace. The simulator uses the type hierarchy to verify
-  correctness. Some people call type hierarchy  the trace model.
-- You may rewrite the text below considering this, since it isn't clear.
-- You could provide a figure with an example of all this. I think it
-  would help to make it clearer.
-
-The Pajé objects must be organized as a type hierarchy, where each
-entity is always associated with a type. This hierarchy is specific
-for each trace file, although it can be repeated in traces with the
-same scenario. In the structure of the trace file, the type hierarchy
-comes after the event definition where each type of the program is
-defined and one of the fields is always the parent type. The
-containers are the base for the organization of the hierarchy, being
-considered the nodes of the tree, while the other entities are the
-leaves. The containers must follow the same precedence as the types
-definition. For example, if the container C1, of type T1, is the
-parent of the container C2, of type T2, the type T2 must be below T1
-in the type tree. The root type is the number "0".
+The Pajé objects are organized in two separated hierarchies: types and
+entities. These hierarchies are specific for each trace file, although it can
+be repeated in traces with the same scenario. In the structure of the trace
+file, the type hierarchy comes after the event definition where each type of
+the program is defined and one of the fields is always the parent type. Each
+entity is always associated to a type and they must follow the same precedence
+as the types definition. For example, if the container C1, of type T1, is the
+parent of the container C2, of type T2, the type T2 must be below T1 in the
+type tree. The root type is always the number "0". The difference between both
+hieararchies relies on the number of nodes: while the type hierarchy has only
+a few, the entities hierarchy may have millions depending on the number of
+containers in the trace.
 
 
-*** Event Definition
+*Event Definition* 
 
-_Comments_:
-- I don't like itemized texts. It breaks the reading flow too often. A
-  better approch is to avoid completely, writing a full text
-  paragraph. You could have a broad definition, letting the format
-  details to the appendix (the already proposed appendix). Such as "An
-  event definition has its kind, followed by a unique identifier and a
-  set of fields. Each field has its name and type."
-
-The format of the event definition part has the following format:
-
-- Every line of the event definition part of the Pajé format starts
-  with the character "%".
-- An event definition starts with "%EventDef" plus the =name= of the
-  event followed by a =unique number= to identify it.
-- An event definition ends with "%EndEventDef".
-- Between the "%EventDef" and "%EndEventDef" lines there is a list of
-  fields, one per line, with =name= and =type=.
-- It is possible to have two events with the same name but different
-  identification numbers. This is useful to specify different sets of
-  fields for the same type of event.
-
-The types of fields can be: 
-
-=date=: a double precision floating-point number, which usually means
-the seconds since the program started;
-
-=int=: integer number;
-
-=double=: floating-point number;
-
-=hex=: address in hexadecimal;
-
-=string=: string of characters;
-
- =color=: a sequence of three to four floating-point numbers between 0
-and 1 inside double quotes. The values mean red, green, blue and
-alpha(optional).
-
-An example of event definition: 
-
-#+BEGIN_EXAMPLE
-%EventDef PajeNewEvent 17
-%       Time date
-%       Container string
-%       Type string
-%       Value double
-%EndEventDef
-#+END_EXAMPLE
-
+The first part of a trace file describes all the possible events of the trace.
+An event definition has its kind, followed by a unique identifier and a set of
+fields. Each field has its name and type. See the appendix for details of the
+syntax and an example.
 
 *** Events
 \label{subsection.events} 
 
-_Comments_: great, all this to the appendix. Keep here a very small
-fraction corresponding to an overview. Reference the appendix for
-details.
+After the event definition, the events themselves are described, one in each
+line. Every event starts with the number that identifies it, which was defined
+previously, followed by the fields separated by space or tab. Before the
+entities, such as states or links, can be created, a hierarchy of types and
+containers must be defined and containers need to be intantiated, since every
+entity belongs to a container.
 
-After the event definition, the events themselves are described, one
-in each line. Every event starts with the number that identifies it,
-which was defined previously. For the example above, every line that
-contains a =PajeNewEvent= event will start with the number 17. The
-fields are separated by space or tab and must appear in the same order
-as it was declared in the definition. In the example below, there is a
-PajeNewEvent event with timestamp =3.14532=, of type =S=, in the
-container =p1=, and with value =M=:
+There are sets of events associated to type definitions and the manipulation
+of each kind of entity. The events have some specific characteristics and must
+follow some rules about its fields. For example, an entity with container C1
+as parent can only be instantiated after the creation of container C1.
 
-#+BEGIN_EXAMPLE
-17 3.14532 p1 S M
-#+END_EXAMPLE
+Type definition events don't have a timestamp field and can occur at anytime
+in a trace file, as long as the type is not used before its definition. It is
+more common to have all the types defined in the beginning. 
 
-Fields of type =string= don't need to be double quoted unless they are
-empty or have a space or tab character. Before the entities can be
-created, a hierarchy of types and containers must be defined and
-containers need to be intantiated, since every entity belongs to a
-container.
+The events associated to the containers are timestamped and can create or
+destroy instances during the trace file. A container cannot be referenced after
+it was destroyed. 
 
-**** Types
-Type doesn't have a timestamp and can be declared at anytime in a
-trace file, as long as it is not used before its definition. It is
-more common to have all the types defined in the beginning. There are
-6 different type definitions, one for each sort of entity and one for
-value objects:
-
-=PajeDefineContainerType=: Must have the fields _Name_ and _Type_, and
-can have an optional field _Alias_. Defines a new container type
-called _Name_, contained in a previously defined container of type
-_Type_.
-
-=PajeDefineStateType=: Must have the fields _Name_ and _Type_, and can
-have an optional field _Alias_. Defines a new state type called
-_Name_, contained in a previously defined container of type _Type_.
-
-=PajeDefineEventType=: Must have the fields _Name_ and _Type_, and can
-have an optional field _Alias_. Defines a new event type called
-_Name_, contained in a previously defined container of type _Type_.
-
-=PajeDefineVariableType=: Must have the fields _Name_, _Type_ and
-_Color_, and can have an optional field _Alias_. Defines a new
-variable type called _Name_, contained in a previously defined
-container of type _Type_, with the color _Color_. Notice that the
-color is associated to the type, and not to the object. Therefore,
-every variable of determined type will have the same color.
-
-=PajeDefineLinkType=: Must have the fields _Name_, _Type_,
-_StartContainerType_ and _EndContainerType_, and can have an optional
-field _Alias_. Defines a new link type called _Name_, contained in a
-previously defined container of type _Type_, that connects the
-previously defined container type _StartContainerType_ to the
-previously defined _EndContainerType_. Also, the container type given
-in _Type_ must be an ancestral of both start and end container types.
-
-=PajeDefineEntityValue=: Must have the fields _Name_, _Type_ and
-_Color_, and can have an optional field _Alias_. This is an optional
-event that defines the possible values of an entity type, which can be
-a State, Link or Event. Defines a new value called _Name_ for the
-previously defined type _Type_ with color _Color_. Notice that this
-value is an entity, differently from the one indentifying a variable,
-which is a double value.
-
-**** Containers
-Intances of containers can be created and destroyed during the trace
-file. A container cannot be referenced after it was destroyed. The
-events associated to the containers are timestamped.
-
-=PajeCreateContainer=: Must have the fields _Time_, _Name_, _Type_ and
-_Container_, and can have an optional field _Alias_. Creates, at
-timestamp _Time_, a container instance called _Name_, of the container
-type _Type_ and that is a child of the previously created container
-_Container_.
-
-=PajeDestroyContainer=: Must have the fields _Time_, _Name_ and
-_Type_. Destroys, at timestamp _Time_, a container instance called
-_Name_, of the container type _Type_.
-
-**** States
-The state events change the values of a determined container's state,
-by setting, pushing, popping and reseting.
-
-=PajeSetState=: Must have the fields _Time_, _Type_, _Container_ and
-_Value_. Changes, at timestamp _Time_, to the value _Value_, the state
-type _Type_, of the container identified by _Container_.
-
-=PajePushState=: Must have the fields _Time_, _Type_, _Container_ and
-_Value_. Pushes, at timestamp _Time_, the value _Value_ of the state
-type _Type_, in the container identified by _Container_. The push event
-saves the existing value of the same state.
-
-=PajePopState=: Must have the fields _Time_, _Type_ and
-_Container_. Pops, at timestamp _Time_, the last state of type _Type_
-in the container identified by _Container_.
-
-=PajeResetState=: Must have the fields _Time_, _Type_ and
-_Container_. Clears, at timestamp _Time_, the state of type _Type_ in
-the container identified by _Container_. If the stack is empty, the
-event does nothing.
-
-**** Events
 An event is something that is relevant enough to be acknowledged and
-has a unique timestamp.
+the events associated to this occasions have a unique timestamp.
 
-=PajeNewEvent=: Must have the fields _Time_, _Type_, _Container_ and
-_Value_. Instantiates, at timestamp _Time_, a remarkable event of type
-_Type_, in the container _Container_, with value _Value_.
+Variables can be set at a specific timestamp and have its value changed
+throughout the simulation by addition and subtraction events. The value of a
+variable is a double precision floating-point number, which is different from
+the values of the other entities. A variable must be set before changes to its
+value can be made.
 
-**** Variables
-Variables are set at a specific timestamp and can have its value
-changed throughout the simulation. The value of a variable is a double
-precision floating-point number, which is different from the values of
-the other entities. A variable must be set before changes to its value
-can be made.
+A link can start at a container and end in another one. There is a field with
+a unique key that identifies the connection.
 
-=PajeSetVariable=: Must have the fields _Time_, _Type_, _Container_
-and _Value_. Instantiates, at timestamp _Time_, a variable of type
-_Type_, in the container _Container_, with value _Value_.
-
-=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_
-and _Value_. Adds, at timestamp _Time_, a value _Value_, to an existing
-variable of type _Type_, in the container _Container_.
-
-=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_
-and _Value_. Subtracts, at timestamp _Time_, a value _Value_, of an
-existing variable of type _Type_, in the container _Container_.
-
-**** Links
-A link can start at a container and end in another one. Every
-completed link is identified by a unique key.
-
-=PajeStartLink=: Must have the fields _Time_, _Type_, _Container_,
-_StartContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_,
-the beginning of a link of type _Type_, in container _Container_,
-starting from _StartContainer_, with value _Value_, and identified by
-key _Key_.
-
-=PajeEndLink=: Must have the fields _Time_, _Type_, _Container_,
-_EndContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the
-end of a link of type _Type_, in container _Container_, ending in
-_EndContainer_, with value _Value_, and identified by key _Key_.
-
+For a detailed list of all events in the Pajé format, refer to the appendix.
 
 ** PajeNG
 
@@ -667,27 +495,13 @@ the core of the simulation, a space-time visualization tool and some
 auxiliar tools to manage the trace files. The base for the
 implementation of this project was the =libpaje= library.
 
-_Comments_:DONE
-- Be positive. Instead of saying what has not been considered, say
-  what has been considered. I refer you again to "The Elements of
-  Style".
-
-The library has three main components forming a pipeline that results
-in complete simulated entities. These components are: FileReader,
-EventDecoder and PajeSimulator. First, the FileReader reads a chunk of
-data from the trace file and puts it in memory. 
-
-_Comments_: DONE
-- Correction: the =FileReader= reads a data chunk from file, puts in
-  memory. It isn't aware of events at all. The =EventDecoder= breaks
-  that data chunk in events (it splits each line in fields, until the
-  end of line character), creating an object to represent that,
-  passing along to the =PajeSimulator=.
-
-Then, the EventDecoder breaks it into events identifying, line by
-line, the event's fields and creating an object with all the necessary
-information. Last, the PajeSimulator receives this event object and
-addresses to the proper simulation.
+The library has three main components forming a pipeline that results in
+complete simulated entities. These components are: FileReader, EventDecoder
+and PajeSimulator. First, the FileReader reads a chunk of data from the trace
+file and puts it in memory. Then, the EventDecoder breaks it into events
+identifying, line by line, the event's fields and creating an object with all
+the necessary information. Last, the PajeSimulator receives this event object
+and addresses to the proper simulation.
 
 (image from paje-parco)
 
@@ -718,25 +532,18 @@ categorized event is characterized by having a =PajeValue= associated
 to it, thus, =PajeStateEvent=, =PajeEventEvent=, =PajeLinkEvent=, and
 their respective childs inherit from it.
 
-_Comments_:
-- I think you can safely call this the "class hierarchy" to
-  differentiate from the "type hierarchy" of the paje file format. I
-  feel that the way it is written confuses the eventual reader a
-  bit.
-
 (image of event hierarchy)
 
 *Class hierarchy for the Paje Types*
 
-The first element of the type's class hierarchy is the =PajeType=. It
-has a name, an alias and a parent type, which is also a
-PajeType. These fields are the ones common to all the type definition
-events described in section \ref{section.pajeformat}. The immediate
-childs of this class are: =PajeCategorizedType=, =PajeVariableType=
-and =PajeContainerType=. As the events, the categorized types are
-associated to a value, hence, the PajeCategorizedType has a PajeValue
-field and methods to manipulate it. Its childs are the
-=PajeStateType=, =PajeEventType= and =PajeLinkType=.
+The first element of the type's class hierarchy is the =PajeType=. It has a
+name, an alias and a parent type, which is also a PajeType. These fields are
+the ones common to all the type definition events described in section
+\ref{section.pajeformat}. The immediate childs of this class are:
+=PajeCategorizedType=, =PajeVariableType= and =PajeContainerType=. As the
+events, the categorized types are associated to a value, hence, the
+PajeCategorizedType has a PajeValue field and methods to manipulate it. Its
+childs are the =PajeStateType=, =PajeEventType= and =PajeLinkType=.
 
 (image of type hierarchy beginning in pajetype)
 
@@ -744,93 +551,59 @@ field and methods to manipulate it. Its childs are the
 
 The =PajeEntity= is the first node of the entities tree. It origins a
 =PajeSingleTimedEntity= class, that describes entities with one single
-timestamp. The =PajeUserEvent= is the only entity with this
-characteristic, but it is possible to add, in the future, more
-entities with just one timestamp. The =PajeDoubleTimedEntity= inherits
-from this class and represents entities with start and end
-timestamps. Like the other hierarchies, the valued entities are
-grouped together so a =PajeValueEntity= is a child of the double timed
-entity, having =PajeUserState= and =PajeUserLink= as descendents. The
-double timed entity also has =PajeUserVariable= and =PajeNamedEntity=
-as childs. A =PajeContainer= inherits from the named entity.
+timestamp. The =PajeUserEvent= is the only entity with this characteristic,
+but it is possible to add, in the future, more entities with just one
+timestamp. The =PajeDoubleTimedEntity= inherits from this class and represents
+entities with start and end timestamps. Like the other hierarchies, the valued
+entities are grouped together so a =PajeValueEntity= is a child of the double
+timed entity, having =PajeUserState= and =PajeUserLink= as descendents. The
+double timed entity also has =PajeUserVariable= and =PajeNamedEntity= as
+childs. A =PajeContainer= inherits from the named entity.
 
 (image of entities hierarchy beginning in PajeEntity)
 
 *The Core Simulator*
 
 All the simulation is performed in two classes: =PajeSimulator= and
-=PajeContainer=. A PajeSimulator object is instantiated in the
-beginning of the program and incorporates all the event processing of
-the simulation. The type definitions, container creations and entity
-value declarations are completed and stored in the PajeSimulator
-object. Everytime there is an event of type =PajeCreateContainer=, a
-PajeContainer object is instantiated. All other events are always
-associated to a container, thus, they will be simulated in the
-appropriate container instance. The PajeContainer object will keep the
-entities until the program finishes. 
-
-
-
-Since all the
-data from the simulation is kept in memory, the end timestamp is used
-to sinalize that an entity is no longer available to the program.
-
-_Comments_:
-- Correction. All entities are available always, no matter their end
-  time.
+=PajeContainer=. A PajeSimulator object is instantiated in the beginning of
+the program and incorporates all the event processing of the simulation. The
+type definitions, container creations and entity value declarations are
+completed and stored in the PajeSimulator object. Everytime there is an event
+of type =PajeCreateContainer=, a PajeContainer object is instantiated. All
+other events are always associated to a container, thus, they will be
+simulated in the appropriate container instance. The PajeContainer object will
+keep the entities until the program finishes. Since all the data from the
+simulation is kept in memory, the end timestamp is used to sinalize that an
+entity no longer can be refered.
 
 (image Paje Simulator and PajeContainer relation)
 
+The PajeSimulator class lists every type declared and container created
+throughout the simulation by using map structures (=typeMap= and =contMap=)
+with the name or alias as key. There is always a pointer to the root type and
+another to the root container initialized in the beginning of the  program.
+The simulator contains one method for each type of event described in section
+\ref{subsection.events}, which perform all the  validations, besides the
+processing itself. Whenever there is an event that defines a type the  entity
+generated is added to the =typeMap=. When an event related to  a container is
+being simulated, the container in question is found in  =contMap= and the
+proper method of the container object is called.
 
-The PajeSimulator class lists every type declared and container
-created throughout the simulation by using map structures:
+The PajeContainer class also uses map structures to store all the entities
+that are related to it including other containers. Besides one general
+structure that list all of the objects related to the container (=entities=),
+there are auxiliar structures for some specific type, such as states
+(=stackStates=) and links (=pendingLinks=). There is some repetition between
+=entities= and the other constructions but, since the objects are pointers, the
+changes made in one structure are reflected in the other ones.
 
-=typeMap=: a map containing all the types that have been defined in
-the simulation, with name or alias as key;
-
-=contMap=: a map of the created containers also identified by the name
-or alias.
-
-In the simulator, there is always a pointer to the root type and
- another to the root container initialized in the beginning of the
- program. The simulator contains one method for each type of event
- described in section \ref{subsection.events}, which perform all the
- validations, besides the processing itself. Whenever there is an
- event that defines a type, such as =PajeDefineContainerType=, the
- entity generated is added to the =typeMap=. When an event related to
- a container is being simulated, the container in question is found in
- =contMap= and the proper method of the container object is called.
-
-The PajeContainer class stores in map structures all the entities that
-are related to it including other containers:
-
-=stackStates=: a map identified by the type and with a vector of state
-entities as the value. Every event of type =PajePushState= will add a
-state entity to the end of the stack, while every =PajePopState= will
-"remove" the last state in the vector by setting its end time;
-
-=pendingLinks=: a map of pending links stores the communications that
-were opened but have not been closed yet. The link key is the
-identification, and the simulation fails if a container is destroyed,
-or the simulation ends, before all the links are completed;
-
-=linksUsedKeys=: a map listing all the keys for links that were
-already used in this container.
-
-=entities=: This map lists all the entities that belong to the
-container, even if they were already listed in the other
-structures. What identifies an entity is its type and container,
-hence, the PajeType is the key of this map and a vector of entities is
-the value. Here, we notice the importance of having the single parent
-type class PajeType, and a unique parent entity class, PajeEntity, to
-group together different types of objects. Since the objects are
-pointers, the changes made in one structure are reflected in the other
-ones. All of the variable and event objects are stored in this general
-list of entities.
-
-The PajeContainer class contains a method for each event that is
-associated to a container, adding and removing entities of these
-structures listed above. 
+Every event that pushes a state will add a state entity to the end of the
+=stackStates= stack, while every pop state event will "remove" the last state
+in the vector by setting its end time. The simulation keeps track of the
+pending communication links and fails if a container is destroyed, or the
+simulation ends, before all the links are completed. The PajeContainer
+class contains a method for each event that is associated to a container,
+adding and removing entities of these structures listed above.
 
 ** Issues of PajeNG
 
@@ -1258,4 +1031,230 @@ public class MyGrammar {
 PARSER_END(MyGrammar)
 #+END_EXAMPLE
 * Paje File Format Specification
+The format of the event definition part has the following format:
+
+- Every line of the event definition part of the Pajé format starts
+  with the character "%".
+- An event definition starts with "%EventDef" plus the =name= of the
+  event followed by a =unique number= to identify it.
+- An event definition ends with "%EndEventDef".
+- Between the "%EventDef" and "%EndEventDef" lines there is a list of
+  fields, one per line, with =name= and =type=.
+- It is possible to have two events with the same name but different
+  identification numbers. This is useful to specify different sets of
+  fields for the same type of event.
+
+The types of fields can be: 
+
+=date=: a double precision floating-point number, which usually means
+the seconds since the program started;
+
+=int=: integer number;
+
+=double=: floating-point number;
+
+=hex=: address in hexadecimal;
+
+=string=: string of characters;
+
+ =color=: a sequence of three to four floating-point numbers between 0
+and 1 inside double quotes. The values mean red, green, blue and
+alpha(optional).
+
+An example of event definition: 
+
+#+BEGIN_EXAMPLE
+%EventDef PajeNewEvent 17
+%       Time date
+%       Container string
+%       Type string
+%       Value double
+%EndEventDef
+#+END_EXAMPLE
+
+*** Events
+\label{subsection.events} 
+
+_Comments_: great, all this to the appendix. Keep here a very small
+fraction corresponding to an overview. Reference the appendix for
+details.
+
+After the event definition, the events themselves are described, one
+in each line. Every event starts with the number that identifies it,
+which was defined previously. For the example above, every line that
+contains a =PajeNewEvent= event will start with the number 17. The
+fields are separated by space or tab and must appear in the same order
+as it was declared in the definition. In the example below, there is a
+PajeNewEvent event with timestamp =3.14532=, of type =S=, in the
+container =p1=, and with value =M=:
+
+#+BEGIN_EXAMPLE
+17 3.14532 p1 S M
+#+END_EXAMPLE
+
+Fields of type =string= don't need to be double quoted unless they are
+empty or have a space or tab character. Before the entities can be
+created, a hierarchy of types and containers must be defined and
+containers need to be intantiated, since every entity belongs to a
+container.
+
+**** Types
+Type doesn't have a timestamp and can be declared at anytime in a
+trace file, as long as it is not used before its definition. It is
+more common to have all the types defined in the beginning. There are
+6 different type definitions, one for each sort of entity and one for
+value objects:
+
+=PajeDefineContainerType=: Must have the fields _Name_ and _Type_, and
+can have an optional field _Alias_. Defines a new container type
+called _Name_, contained in a previously defined container of type
+_Type_.
+
+=PajeDefineStateType=: Must have the fields _Name_ and _Type_, and can
+have an optional field _Alias_. Defines a new state type called
+_Name_, contained in a previously defined container of type _Type_.
+
+=PajeDefineEventType=: Must have the fields _Name_ and _Type_, and can
+have an optional field _Alias_. Defines a new event type called
+_Name_, contained in a previously defined container of type _Type_.
+
+=PajeDefineVariableType=: Must have the fields _Name_, _Type_ and
+_Color_, and can have an optional field _Alias_. Defines a new
+variable type called _Name_, contained in a previously defined
+container of type _Type_, with the color _Color_. Notice that the
+color is associated to the type, and not to the object. Therefore,
+every variable of determined type will have the same color.
+
+=PajeDefineLinkType=: Must have the fields _Name_, _Type_,
+_StartContainerType_ and _EndContainerType_, and can have an optional
+field _Alias_. Defines a new link type called _Name_, contained in a
+previously defined container of type _Type_, that connects the
+previously defined container type _StartContainerType_ to the
+previously defined _EndContainerType_. Also, the container type given
+in _Type_ must be an ancestral of both start and end container types.
+
+=PajeDefineEntityValue=: Must have the fields _Name_, _Type_ and
+_Color_, and can have an optional field _Alias_. This is an optional
+event that defines the possible values of an entity type, which can be
+a State, Link or Event. Defines a new value called _Name_ for the
+previously defined type _Type_ with color _Color_. Notice that this
+value is an entity, differently from the one indentifying a variable,
+which is a double value.
+
+**** Containers
+Intances of containers can be created and destroyed during the trace
+file. A container cannot be referenced after it was destroyed. The
+events associated to the containers are timestamped.
+
+=PajeCreateContainer=: Must have the fields _Time_, _Name_, _Type_ and
+_Container_, and can have an optional field _Alias_. Creates, at
+timestamp _Time_, a container instance called _Name_, of the container
+type _Type_ and that is a child of the previously created container
+_Container_.
+
+=PajeDestroyContainer=: Must have the fields _Time_, _Name_ and
+_Type_. Destroys, at timestamp _Time_, a container instance called
+_Name_, of the container type _Type_.
+
+**** States
+The state events change the values of a determined container's state,
+by setting, pushing, popping and reseting.
+
+=PajeSetState=: Must have the fields _Time_, _Type_, _Container_ and
+_Value_. Changes, at timestamp _Time_, to the value _Value_, the state
+type _Type_, of the container identified by _Container_.
+
+=PajePushState=: Must have the fields _Time_, _Type_, _Container_ and
+_Value_. Pushes, at timestamp _Time_, the value _Value_ of the state
+type _Type_, in the container identified by _Container_. The push event
+saves the existing value of the same state.
+
+=PajePopState=: Must have the fields _Time_, _Type_ and
+_Container_. Pops, at timestamp _Time_, the last state of type _Type_
+in the container identified by _Container_.
+
+=PajeResetState=: Must have the fields _Time_, _Type_ and
+_Container_. Clears, at timestamp _Time_, the state of type _Type_ in
+the container identified by _Container_. If the stack is empty, the
+event does nothing.
+
+**** Events
+An event is something that is relevant enough to be acknowledged and
+has a unique timestamp.
+
+=PajeNewEvent=: Must have the fields _Time_, _Type_, _Container_ and
+_Value_. Instantiates, at timestamp _Time_, a remarkable event of type
+_Type_, in the container _Container_, with value _Value_.
+
+**** Variables
+Variables are set at a specific timestamp and can have its value
+changed throughout the simulation. The value of a variable is a double
+precision floating-point number, which is different from the values of
+the other entities. A variable must be set before changes to its value
+can be made.
+
+=PajeSetVariable=: Must have the fields _Time_, _Type_, _Container_
+and _Value_. Instantiates, at timestamp _Time_, a variable of type
+_Type_, in the container _Container_, with value _Value_.
+
+=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_
+and _Value_. Adds, at timestamp _Time_, a value _Value_, to an existing
+variable of type _Type_, in the container _Container_.
+
+=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_
+and _Value_. Subtracts, at timestamp _Time_, a value _Value_, of an
+existing variable of type _Type_, in the container _Container_.
+
+**** Links
+A link can start at a container and end in another one. Every
+completed link is identified by a unique key.
+
+=PajeStartLink=: Must have the fields _Time_, _Type_, _Container_,
+_StartContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_,
+the beginning of a link of type _Type_, in container _Container_,
+starting from _StartContainer_, with value _Value_, and identified by
+key _Key_.
+
+=PajeEndLink=: Must have the fields _Time_, _Type_, _Container_,
+_EndContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the
+end of a link of type _Type_, in container _Container_, ending in
+_EndContainer_, with value _Value_, and identified by key _Key_.
+
+* PajeNG structures*
+
+*Simulator*
+
+=typeMap=: a map containing all the types that have been defined in
+the simulation, with name or alias as key;
+
+=contMap=: a map of the created containers also identified by the name
+or alias.
+
+*Container*
+
+=stackStates=: a map identified by the type and with a vector of state
+entities as the value. Every event of type =PajePushState= will add a
+state entity to the end of the stack, while every =PajePopState= will
+"remove" the last state in the vector by setting its end time;
+
+=pendingLinks=: a map of pending links stores the communications that
+were opened but have not been closed yet. The link key is the
+identification, and the simulation fails if a container is destroyed,
+or the simulation ends, before all the links are completed;
+
+=linksUsedKeys=: a map listing all the keys for links that were
+already used in this container.
+
+=entities=: This map lists all the entities that belong to the
+container, even if they were already listed in the other
+structures. What identifies an entity is its type and container,
+hence, the PajeType is the key of this map and a vector of entities is
+the value. Here, we notice the importance of having the single parent
+type class PajeType, and a unique parent entity class, PajeEntity, to
+group together different types of objects. Since the objects are
+pointers, the changes made in one structure are reflected in the other
+ones. All of the variable and event objects are stored in this general
+list of entities.
+
+
 * Paje File Format Parser for JavaCC

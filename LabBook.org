@@ -403,7 +403,24 @@ _Comments_:
 - "along the time" => "along time"
 - Can't understand the last phrase of variable paragraph
 
+_Comments_:
+- There are two separated hierarchies. The first one is the type
+  hierarchy; the second is the entities (objects hierarchy). Both have
+  the same structure, the difference relies on the number of
+  nodes. While the type hierarchy has only a few; the object hierarchy
+  may have millions depending on the number of containers on the
+  trace. The simulator uses the type hierarchy to verify
+  correctness. Some people call type hierarchy  the trace model.
+- You may rewrite the text below considering this, since it isn't clear.
+- You could provide a figure with an example of all this. I think it
+  would help to make it clearer.
 
+
+_Comments_: great, all this to the appendix. Keep here a very small
+fraction corresponding to an overview. Reference the appendix for
+details.
+
+  
 *** Pajeng
 _Comments_:
 - Correction. On destruction, the container is only marked
@@ -425,6 +442,28 @@ _Comments_:
   - Save it to later, mention you adress extensibility thourhg plugins
     that will be detailed later.
 
+
+_Comments_:DONE
+- Be positive. Instead of saying what has not been considered, say
+  what has been considered. I refer you again to "The Elements of
+  Style".
+
+  _Comments_: DONE
+- Correction: the =FileReader= reads a data chunk from file, puts in
+  memory. It isn't aware of events at all. The =EventDecoder= breaks
+  that data chunk in events (it splits each line in fields, until the
+  end of line character), creating an object to represent that,
+  passing along to the =PajeSimulator=.
+
+_Comments_:
+- I think you can safely call this the "class hierarchy" to
+  differentiate from the "type hierarchy" of the paje file format. I
+  feel that the way it is written confuses the eventual reader a
+  bit.
+
+_Comments_:
+- Correction. All entities are available always, no matter their end
+  time.
 
 
 
