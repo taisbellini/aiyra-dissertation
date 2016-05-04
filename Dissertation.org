@@ -449,7 +449,7 @@ An event definition has its kind, followed by a unique identifier and a set of
 fields. Each field has its name and type. See the appendix for details of the
 syntax and an example.
 
-*** Events
+*Events*
 \label{subsection.events} 
 
 After the event definition, the events themselves are described, one in each
@@ -457,43 +457,32 @@ line. Every event starts with the number that identifies it, which was defined
 previously, followed by the fields separated by space or tab. Before the
 entities, such as states or links, can be created, a hierarchy of types and
 containers must be defined and containers need to be intantiated, since every
-entity belongs to a container.
-
-There are sets of events associated to type definitions and the manipulation
-of each kind of entity. The events have some specific characteristics and must
-follow some rules about its fields. For example, an entity with container C1
-as parent can only be instantiated after the creation of container C1.
+entity belongs to a container. There are sets of events associated to each
+kind of entity described above, besides the events that define entity types.
 
 Type definition events don't have a timestamp field and can occur at anytime
 in a trace file, as long as the type is not used before its definition. It is
-more common to have all the types defined in the beginning. 
-
-The events associated to the containers are timestamped and can create or
-destroy instances during the trace file. A container cannot be referenced after
-it was destroyed. 
-
-An event is something that is relevant enough to be acknowledged and
-the events associated to this occasions have a unique timestamp.
-
-Variables can be set at a specific timestamp and have its value changed
-throughout the simulation by addition and subtraction events. The value of a
-variable is a double precision floating-point number, which is different from
-the values of the other entities. A variable must be set before changes to its
-value can be made.
-
-A link can start at a container and end in another one. There is a field with
-a unique key that identifies the connection.
+more common to have all the types defined in the beginning. The events
+associated to the containers are timestamped and can create or destroy
+instances during the trace file. A container cannot be referenced after it was
+destroyed. Variables can be set at a specific timestamp and have its value
+changed throughout the simulation by addition and subtraction events. The
+value of a variable is a double precision floating-point number, which is
+different from the values of the other entities. A variable must be set before
+changes to its value can be made.
 
 For a detailed list of all events in the Pajé format, refer to the appendix.
+The next section describes the implementation of the new generation of the
+Pajé simulator.
 
 ** PajeNG
 
-The PajeNG implementation is the new generation of the Pajé
-Visualization Tool. It was developed in C++ and follows the same
-architecture as the original Pajé. It comprises a library containing
-the core of the simulation, a space-time visualization tool and some
-auxiliar tools to manage the trace files. The base for the
-implementation of this project was the =libpaje= library.
+The PajeNG implementation is the new generation of the Pajé Visualization
+Tool. It was developed in C++ and follows the same architecture as the
+original Pajé. It comprises a library containing the core of the simulation, a
+space-time visualization tool and some auxiliar tools to manage the trace
+files. The base for the implementation of this project was the =libpaje=
+library.
 
 The library has three main components forming a pipeline that results in
 complete simulated entities. These components are: FileReader, EventDecoder
@@ -591,9 +580,9 @@ proper method of the container object is called.
 
 The PajeContainer class also uses map structures to store all the entities
 that are related to it including other containers. Besides one general
-structure that list all of the objects related to the container (=entities=),
-there are auxiliar structures for some specific type, such as states
-(=stackStates=) and links (=pendingLinks=). There is some repetition between
+structure that lists all of the objects related to the container (=entities=),
+there are auxiliar structures for some specific types, such as states
+(=stackStates=) and links (=pendingLinks=). There is some redundancy between
 =entities= and the other constructions but, since the objects are pointers, the
 changes made in one structure are reflected in the other ones.
 
@@ -623,12 +612,12 @@ classes and its hierarchies in order to build a new tool for the program.
 Another problem with this implementation is the ephemerality of the results,
 since it is kept in memory during simulation and then discarded at the end.
 
-(bad)
-Based on these issues, an extensible simulator written in Java was developed.
-The program uses the concept of plugins, that will be detailed in the next
-chapter. The problems listed above, besides the difficulty in extending the
-simulator, were solved with the creation of plugins. The details of the
-implementation are in the next two chapters.
+Considering the presented issues, an extensible simulator written in Java was
+developed. The intention of this proposal is to make the simulation core more
+transparent for the performance analyst providing the created entities in a
+way that he can manipulate them without looking to the rest of the
+implementation. The program uses the concept of plugins attached to every type
+of event. The details of this approach will be detailed in the next chapter.
 
 * Aiyra - Java-based simulator
 \label{chapter.aiyra}
