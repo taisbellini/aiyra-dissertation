@@ -299,8 +299,7 @@ http://simgrid.gforge.inria.fr/
 
 
 
-* 
-Other points:
+* Other points:
 - use the \label command in each chapter to mark (I give you an
   example in basic concepts chapter below)
 - use the \ref to make reference to a chapter/section, such as
@@ -317,6 +316,8 @@ a full component for Paje is a complex thing - one needs to know the
 protocol, the internal objects and class hierarchy and so on. Very few
 people have done so.)
 
+* Parts cut off 
+
 It is very complicated to change the Paje simulator behavior,
 since it requires code modifications in the simulator core, which
 depends upon understanding details of the program. If a performance
@@ -324,6 +325,148 @@ analyst wants to evaluate only one type of entity, or needs a
 different presentation of the data, he will need to have at least a
 basic understanding of how the program is implemented in order to
 generate these different results. 
+
+The first part of Aiyra simulator consists in reading a trace file,
+that is in a specific standard, and parsing it to define how each line
+of the entry will be simulated. 
+
+The proposed program contains instrumentation points which
+allow the creation of plugins attached to it. For example, if one
+wants to handle only state entities, he can create a plugin attached
+only to the points that are related to states. The other entities
+created will be discarded by the simulator.
+
+
+* Comments
+** Chapter 2: 
+
+_Comment_: a more direct way of introducing the chapter follows. "This
+chapter presents the basic concepts of technologies adopted to develop
+this project. They contribute to the understanding of our work."
+
+_Comment_: state very briefly (one phrase) what you are going to write
+about in the chapter. Example: "Two topics are covered: the Java
+Compiler Compiler (JavaCC) and the a general overview about
+experimental design in the scope of the R language."
+
+_Comment_: It is very strange to me find things about Aiyra here. You
+haven't presented it yet. Stick to the basics: there is no need to
+justify why you are talking about JavaCC. You could start directly
+with something like this: "Java Compiler Compiler (JavaCC) is a
+lexical and parser generator..."
+
+_Comment_: You need to cite someone that shows that JavaCC is faster
+than ANTLR.
+
+_Comments_: Usually we avoid the use of singular first person
+(i.e. I). Use plural first person (i.e. "We"). Perhaps a figure here
+would be nice.
+
+_Comment_: Before going to the subsections below, state what you are
+going to talk about.
+
+_Comment about next two subsections_: (structure and syntax) and (usage
+with java). I think these subsections should be placed in an
+appendix. You can of course write a little about how it is roughly
+made using =javacc=, but without too much details. You refer to the
+appendix to further details. I think one of the appendix will be these
+subsections, then you create another one with the actual code of
+current implementation (without the simulator, only the parser).
+
+_Comment_: you don't need to say you have used experimental evaluation
+in the perf. eval. Say it later. for now, stick to the basic concepts
+description. A good start is "Experimental design is an area of
+statistics interest in creating good designs to correctly observe and
+measure behavior ..."
+
+_Comment_: next sections have so few text. I am not sure subsections are
+required. You could simply transform "Terminology" in a
+paragraph. Then, talk about the FF design. You probably should mention
+fractional designs as well. The "R language" subsection could be
+upgraded to a chapter's section, since it is independent of
+experimental designs. You just found out that using R to design
+experiments is neat.
+
+** Chapter 3:
+
+ _Comments_:
+- "tool is a tool" sounds strange;
+- "display the execution" => "display the execution behavior"
+- "all the types of entities" => "all entities types"
+
+_Comments_:
+- Period after entity above.
+- Make a reference to the paje file format definition (the PDF)
+- 
+
+_Comments_:
+- "along the time" => "along time"
+- Can't understand the last phrase of variable paragraph
+
+_Comments_:
+- There are two separated hierarchies. The first one is the type
+  hierarchy; the second is the entities (objects hierarchy). Both have
+  the same structure, the difference relies on the number of
+  nodes. While the type hierarchy has only a few; the object hierarchy
+  may have millions depending on the number of containers on the
+  trace. The simulator uses the type hierarchy to verify
+  correctness. Some people call type hierarchy  the trace model.
+- You may rewrite the text below considering this, since it isn't clear.
+- You could provide a figure with an example of all this. I think it
+  would help to make it clearer.
+
+
+_Comments_: great, all this to the appendix. Keep here a very small
+fraction corresponding to an overview. Reference the appendix for
+details.
+
+  
+*** Pajeng
+_Comments_:
+- Correction. On destruction, the container is only marked
+  destroyed. It isn't cleared from memory. Until now, I haven't seen a
+  case where a container will be destroyed and another re-created with
+  the same name. That should be addressed in the future.
+
+  _Comments_:
+- what is not straightforward?
+- I think inapropriate to call =pj_dump= as a module. It is a tool, a
+  terminology you have already adopted previously in the text.
+- Aspell
+- What is a module? This is new to me.
+
+_Comments_:
+- Avoid details about Aiyra here, it is described in the next section.
+- Of course mention that problems will be addressed by your tool.
+- You are talking about plugins below, but I have no idea what it is.
+  - Save it to later, mention you adress extensibility thourhg plugins
+    that will be detailed later.
+
+
+_Comments_:DONE
+- Be positive. Instead of saying what has not been considered, say
+  what has been considered. I refer you again to "The Elements of
+  Style".
+
+  _Comments_: DONE
+- Correction: the =FileReader= reads a data chunk from file, puts in
+  memory. It isn't aware of events at all. The =EventDecoder= breaks
+  that data chunk in events (it splits each line in fields, until the
+  end of line character), creating an object to represent that,
+  passing along to the =PajeSimulator=.
+
+_Comments_:
+- I think you can safely call this the "class hierarchy" to
+  differentiate from the "type hierarchy" of the paje file format. I
+  feel that the way it is written confuses the eventual reader a
+  bit.
+
+_Comments_:
+- Correction. All entities are available always, no matter their end
+  time.
+
+
+
 
 * Notes 
 
