@@ -338,6 +338,11 @@ created will be discarded by the simulator.
 
 
 * Comments
+
+_Comments_:
+- pass =aspell= check, using =flyspell-buffer= command with M-x
+  - you may need to install it first
+
 ** Chapter 2: 
 
 _Comment_: a more direct way of introducing the chapter follows. "This

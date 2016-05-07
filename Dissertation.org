@@ -381,7 +381,6 @@ core simulation is performed. Since the new generation follows the
 exact same structure as the original Pajé, it will be the only one to
 be described.
  
-
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
@@ -429,6 +428,7 @@ both hierarchies relies on the number of nodes: while the type
 hierarchy has only a few, the entities hierarchy may have millions
 depending on the number of containers in the trace.
 
+The format is divided in two sections: event definition and events.
 
 *Event Definition* 
 
@@ -484,7 +484,7 @@ PajeSimulator receives this event object and addresses to the proper
 simulation.
 
 #+CAPTION: Image taken from \cite{kergommeaux2000paje}
-[[img/paje-parco.png]]
+[[file:~/TCC/aiyra-dissertation/img/paje-parco.png]]
 
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
@@ -513,7 +513,8 @@ categorized event is characterized by having a =PajeValue= associated
 to it, thus, =PajeStateEvent=, =PajeEventEvent=, =PajeLinkEvent=, and
 their respective childs inherit from it.
 
-(image of event hierarchy)
+#+CAPTION: Events class hierarchy
+[[file:~/TCC/aiyra-dissertation/img/eventsHierarchy.png]]
 
 *Class hierarchy for the Paje Types*
 
@@ -527,7 +528,9 @@ associated to a value, hence, the PajeCategorizedType has a PajeValue
 field and methods to manipulate it. Its childs are the
 =PajeStateType=, =PajeEventType= and =PajeLinkType=.
 
-(image of type hierarchy beginning in pajetype)
+#+CAPTION: Types class hierarchy
+[[file:~/TCC/aiyra-dissertation/img/typesHierarchy.png]]
+
 
 *Class hierarchy for the Paje Entities*
 
@@ -543,7 +546,9 @@ entity, having =PajeUserState= and =PajeUserLink= as descendents. The
 double timed entity also has =PajeUserVariable= and =PajeNamedEntity=
 as childs. A =PajeContainer= inherits from the named entity.
 
-(image of entities hierarchy beginning in PajeEntity)
+#+CAPTION: Entities class hierarchy
+[[file:~/TCC/aiyra-dissertation/img/entitiesHierarchy.png]]
+
 
 *The Core Simulator*
 
@@ -623,39 +628,23 @@ this approach will be detailed in the next chapter.
 * Aiyra - Java-based simulator
 \label{chapter.aiyra}
 
-+ Overview
-     - extensible, java, problems solved, structure, image.
-   + option handling
-     - library 
-     - one class to make it easier to the user
-   + Parsing 
-     - JavaCC, why, grammar
-   + simulation
-     - same structure as PajeNG, why? because it was working. not
-       reduce the extensibility, just add more. 
-     - technical differences
-       - not optional fields
-   + plugins
-     - PajePlugin class
-     - instrumentation points
-   + how to compile and execute
-     - basic options to execute - filename, comment, platform
-
 Aiyra is an extensible simulator written in Java that reads trace
 files in the Pajé format and, instead of storing the results in
 memory, forwards every created entity to a common place where it can
 be manipulated freely. The architecture of the implementation contains
 three packages: parser, simulator core and plugin. Every event of a
-trace file always goes through all the packages. First, the file is
+trace file always goes through all of the packages. First, the file is
 read by the parser, where a trace event object is created. This
 instance contains the type of event in question and the field
 values. Then, the simulator receives this object and executes the
-simulation based on the event type. This simulation always generates
-an entity, even if incomplete (with no end timestamp, for
-example). Last, this new entity is sent to the plugin, which contains
-specific entry points for every different kind of entity.
+simulation based on the event type. The simulation always generates an
+entity, even if incomplete (with no end timestamp, for example). Last,
+this new entity is sent to the plugin, which contains specific entry
+points for every different kind of entity.
 
-(image)
+#+CAPTION: Aiyra's Architecture
+#+NAME: Aiyra
+[[file:~/TCC/aiyra-dissertation/img/aiyraArchitecture.png]]
 
 The program receives arguments from the user in its execution. The
 *filename* option (=-f=) is the only mandatory one, which indicates
@@ -663,7 +652,7 @@ what is the trace file to be replayed. There are other two general
 options: *comment* (=-m=), a comment about the file; and *plugin*
 (=-p=), which indicates which plugin will be used in the
 simulation. The details about the already implemented plugins will be
-presented in chapter \ref{chapter.plugins}. 
+presented in chapter \ref{chapter.plugins}.
 
 The following subsections will detail each one of the packages.
 
@@ -699,63 +688,107 @@ Aiyra's core simulator follows the exact same structure of the
 =PajeNG= implementation, having the same class hierarchies. It
 implements only the essential functionalities, leaving aside the
 possibility of defining a specific timestamp to end the simulation or
-to ignore pending links, for example. As in the =PajeNG=, all the
+to ignore pending links, for example. As in the =PajeNG=, all of the
 events go through the =PajeSimulator= object, which forwards to the
 =PajeContainer= if it is an event associated to a container.
 
 Since the implementation is supposed to comprise the maximum of needs
 of the user, every trace event has an instrumentation point, which
 dispatches the entity objects generated to the plugin. These points
-are either in the PajeSimulator or in the PajeContainer. This
-structure 
+are either in the PajeSimulator or in the PajeContainer. In the
+=PajeSimulator= are all of the outputs regarding the definition of
+types, the creation of containers and the definition of
+values. Although the containers are not complete objects, since they
+don't have ending timestamp or the related entities, they are sent
+anyway with the alias and type information. The =PajeContainer= in in
+charge of dispatching to the plugin the instances related to it, which
+involve the states, events, links and variables. It also may send
+unfinished objects.
 
-This concept of  
-*Instrumentation points*
-- all trace events have instrumentation points
-  - justify the need for full points
+(image)
+
+The need of an instrumentation point for each trace event is due to
+the intention of covering all of the diffent needs of the user. One
+may need the alias of a container before it can process the entities
+related to it, for example, which cannot be achieved by receiving the
+container only when it is completed. Or else, may be a situation where
+the push state events need to be measured, instead of the pop state
+events, where the entities are finished. Since we cannot predict all
+of the use cases, it is desirable to have a broad approach. A full
+list of the plugin entraces and the information received in each one
+is presented in the next section.
 
 ** Plugin
 
-Whenever a type of any kind is defined, it is sent to a unique point
-=newType=. There is a method in the type objects that indicates what
-is the nature of that object (Container, State, Event, Variable or
-Link). When a container is created, it is forwarded to the
+The plugin package is composed by an abstract class with one method
+for each instrumentation point presented above. It also contains a
+method called =finish()= where the user can perform some final actions
+after the simulation is completed. To create a new plugin, the user
+just needs to extend the =PajePlugin= class and override its
+functions. It is also possible to extend another plugin, if the
+differences are too little and not worth of a full plugin
+implementation.
+
+The entrances of the plugins comprise the definition of types and
+values, the creation of containers and the formation of new
+entities. Whenever a type of any kind is defined, it is sent to a
+unique point =newType=, with the =PajeType= object as argument. The
+new values are received in the =newValue= entry point. When a
+container is created, the instance is forwarded to the
 =newCreatedContainer= entry point, with the end timestamp set to
 -1. Whenever an entity is not completed yet, it will have the end
-timestamp as -1. The link states have three instrumentation points:
-=startLink=, =endLink= and =newCompletedLink=. At anytime a variable
-is set or updated, there are three entities sent to the plugin: the
-first, which contains the first value of the variable; the last, which
-is the one immediately before the variable in question; and the new
-variable. The aditions and subtractions are sent to the same point
-(=updateVar=).
+timestamp as -1. The destroyed containers are sent to the
+=destroyedContainer= method. The link states have three
+instrumentation points: =startLink=, a communication link entity with
+unknown end time and container; =endLink=, when the instance has the
+end point of the link but not the start; and =newCompletedLink=, when
+there is a link entity with beginning and end. Anytime a variable is
+set or updated, there are three entities sent to the plugin: the
+=first=, which contains the first value of the variable; the =last=,
+which is the one immediately before the variable in question; and the
+=newVar= variable. The aditions and subtractions are sent to the same
+point (=updateVar=). The set, push and pop state events each have one
+method: =setState=, =pushState=, =popState=. The events are sent to
+the =newEvent= function.
+
+To validate the concept of the plugins and its entry points, three
+plugins were created: =PajeNullPlugin=, =PajeDumpPlugin= and
+=PajeInsertDBPlugin=. Their implementation is described in the next
+chapter.
   
 * Plugins
 \label{chapter.plugins} 
 
-To validate the concept of the plugins, two were implemented:
-=PajeDumpPlugin= and =PajeIsertDBPlugin=. Also, there is a default
-plugin, the =PajeNullPlugin=, that does not make any treatment to the
-data so it is simply discarded. It is useful to verify the performance
-of the simulation itself, whithout the interference of the other
-segments.
+In this chapted, two plugins are described: =PajeDumpPlugin= and
+=PajeIsertDBPlugin=. The =PajeNullPlugin= is the default one. It does
+not make any treatment to the data so the objects are simply
+discarded. It is useful to verify the performance of the simulation
+itself, whithout the interference of the other segments.
 
 ** Paje Dump Plugin
 
-The Dump plugin just outputs the entities generated by the
-simulator. The implementation is simply to add a print function in
-each instrumentation point that receives a complete entity. The
-difference between the =PajeDumpPlugin= and the =pj_dump= tool is that
-the first one dumps the information as soon as the entity is
-completed, whithout keeping it in memory. With this approach, it is
-possible to solve the issue regarding the need to wait for the program
-to end to have the results.
+The Dump plugin performs the same action as the =pj_dump= tool, which
+dumps to the standard output the entities generated by the
+simulator. The implementation consists in inserting a =print= function
+in each instrumentation point that receives a complete entity. When it
+is a destroyed container, it is necessary to iterate over the entities
+left in the container. The difference between the =PajeDumpPlugin= and
+the =pj_dump= tool is that the first one outputs the information as
+soon as the entity is completed, whithout keeping it in memory. With
+this approach, it is possible to solve the issue regarding the need to
+wait for the program to end to have the results.
 
 This plugin can be called with the argument =pjdump= in the =-p=
-option and adds a new argument (=-l=) which can group together a
+option and adds a new argument (=-l=) that can group together a
 certain number of entities before dumping it. The option receives an
-integer as parameter. This option gives a little more flexibility  
+integer as parameter defining the number of lines it should reach
+before dumping the entities. This option gives a little more
+flexibility for the user and may improve the performance, since the
+printing function of Jave costs time. For it to be possible, a
+=StringBuilder= is used as a buffer keeping all of the output until it
+reaches the number of lines informed.
 
+** Paje Insert Database Plugin
 
 * Performance Evaluation
 \label{chapter.performance}
