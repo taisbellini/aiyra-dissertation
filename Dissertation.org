@@ -19,6 +19,7 @@
 #+LATEX_HEADER: \usepackage{mathtools}
 #+LATEX_HEADER: \usepackage{algorithm}
 #+LATEX_HEADER: \usepackage{algorithmic}
+#+LATEX_HEADER: \usepackage{listings}
 #+LATEX_HEADER: \newcommand{\prettysmall}{\fontsize{6.5}{6.5}\selectfont}
 #+LATEX_HEADER: \newcommand{\prettysmallbis}{\fontsize{7}{7}\selectfont}
 #+LATEX_HEADER: \newcommand{\mtilde}{~}
@@ -38,6 +39,8 @@
 
 #+LATEX_HEADER: \newcommand{\review}[1]{\textcolor[rgb]{1,0,0}{[Lucas: #1]}}
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
+#+LATEX_HEADER: \input{configuration.tex}
+
 
 #+BEGIN_LaTeX
 \title{TCC da Tais}
@@ -333,35 +336,26 @@ particular important function is the _fac.design_, which creates full
 factorial designs with arbitrary numbers of levels. The function
 receives several arguments, including number of factors, levels and
 replication. The usage of the function is the following:
-
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
+\begin{lstlisting}
 require(DoE.base);
-  fac.design (
-           nfactors=NULL,
-           replications=1,
-           repeat.only=FALSE,
-           blocks=1,
-           randomize=TRUE,
-           seed=NULL,
-           nlevels=NULL,
-           factor.names= NULL )
-#+END_EXAMPLE
-
-=nfactors=: The number of factors;
-
-=replications=: The number of replications;
-
-=repeat.only=: If true, replications of each run are grouped together;
-
-=blocks=: Number of blocks in which the experiment will be
-subdivided. Must be a prime;
-
-=randomize=: If true, the design is randomized;
-
+fac.design(
+  nfactors=NULL,
+  replications=1,
+  repeat.only=FALSE,
+  blocks=1,
+  randomize=TRUE,
+  seed=NULL,
+  nlevels=NULL,
+  factor.names= NULL);
+\end{lstlisting}
+#+END_LaTeX
+where =nfactors= represents the number of factors, =replications= are the
+number of replications, =repeat.only= tells if the replications of each
+run are grouped together, =blocks= is a TODO TODO prime-number telling
+the number of blocks in which the experiment will be subdivided. =randomize=: If true, the design is randomized;
 =seed=: seed For the randomization (optional);
-
 =nlevels=: A vector with the number of levels for each factor;
-
 =factor.names=: A list of vectors with factor levels. 
 
 ** JDBC
@@ -485,7 +479,7 @@ PajeSimulator receives this event object and addresses to the proper
 simulation.
 
 #+CAPTION: Image taken from \cite{kergommeaux2000paje}
-[[file:~/TCC/aiyra-dissertation/img/paje-parco.png]]
+[[file:./img/paje-parco.png]]
 
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
@@ -561,9 +555,14 @@ entity, having =PajeUserState= and =PajeUserLink= as descendents. The
 double timed entity also has =PajeUserVariable= and =PajeNamedEntity=
 as childs. A =PajeContainer= inherits from the named entity.
 
-#+CAPTION: Entities class hierarchy
-[[file:~/TCC/aiyra-dissertation/img/entitiesHierarchy.png]]
-
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Entities class hierarchy}
+\centering
+\includegraphics[width=\linewidth]{./img/entitiesHierarchy.png}
+\label{fig.entitiesHierarchy}
+\end{figure}
+#+END_LaTeX
 
 *The Core Simulator*
 
