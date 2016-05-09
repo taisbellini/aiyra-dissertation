@@ -262,15 +262,14 @@ JavaCC can be downloaded, unzipped and added to the PATH. It also has
 a plugin for Eclipse. Once installed, JavaCC will process your grammar
 defined in a file with extension ".jj" using the command =javacc=.
 
-As an example, We will use =MyGrammar.jj=. The result of the
-processing are seven files: =MyGrammar.java=, the parser;
-=MyGrammarTokenManager.java=, the lexical analyser, that manages the
-tokens; =MyGrammarConstants.java=, some useful constants. The other
-four files generated: =Token.java=, =TokenMgrError.java=,
-=SimpleCharStream.java= and =ParseException.java= are boilerplate
-files that can be reused within parsers and are not affected by the
-grammar itself.  Once the corresponding Java source code for the
-scanner and parser are generated, compile them as usual with =javac=.
+For example, processing a file named =MyGrammar.jj= results in seven
+files: the parser in =MyGrammar.java=; the lexical analyser in
+=MyGrammarConstants.java=. The other four files generated: =Token.java=,
+=TokenMgrError.java=, =SimpleCharStream.java= and =ParseException.java= are
+boilerplate files that can be reused within parsers and are not
+affected by the grammar itself.  Once the corresponding Java source
+code for the scanner and parser are generated, compile them as usual
+with =javac=.
 
 The whole grammar will be in the =MyGrammar.jj= file and it is the
 only file that needs to be modified. There, the tokens used will be
