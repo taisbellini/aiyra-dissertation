@@ -514,8 +514,16 @@ categorized event is characterized by having a =PajeValue= associated
 to it, thus, =PajeStateEvent=, =PajeEventEvent=, =PajeLinkEvent=, and
 their respective childs inherit from it.
 
-#+CAPTION: Events class hierarchy
-[[file:~/TCC/aiyra-dissertation/img/eventsHierarchy.png]]
+See Figure \ref{fig.eventsHierarchy}.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Events class hierarchy}
+\centering
+\includegraphics[width=\linewidth]{./img/eventsHierarchy.png}
+\label{fig.eventsHierarchy}
+\end{figure}
+#+END_LaTeX
 
 *Class hierarchy for the Paje Types*
 
@@ -529,8 +537,14 @@ associated to a value, hence, the PajeCategorizedType has a PajeValue
 field and methods to manipulate it. Its childs are the
 =PajeStateType=, =PajeEventType= and =PajeLinkType=.
 
-#+CAPTION: Types class hierarchy
-[[file:~/TCC/aiyra-dissertation/img/typesHierarchy.png]]
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Events class hierarchy}
+\centering
+\includegraphics[width=.65\linewidth]{./img/typesHierarchy.png}
+\label{fig.typesHierarchy}
+\end{figure}
+#+END_LaTeX
 
 
 *Class hierarchy for the Paje Entities*
@@ -643,9 +657,14 @@ entity, even if incomplete (with no end timestamp, for example). Last,
 this new entity is sent to the plugin, which contains specific entry
 points for every different kind of entity.
 
-#+CAPTION: Aiyra's Architecture
-#+NAME: Aiyra
-[[file:~/TCC/aiyra-dissertation/img/aiyraArchitecture.png]]
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Aiyra Architecture}
+\centering
+\includegraphics[width=\linewidth]{./img/aiyraArchitecture.png}
+\label{fig.aiyraArchitecture}
+\end{figure}
+#+END_LaTeX
 
 The program receives arguments from the user in its execution. The
 *filename* option (=-f=) is the only mandatory one, which indicates
