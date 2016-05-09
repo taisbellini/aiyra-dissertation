@@ -1,0 +1,90 @@
+* Basic Concepts
+
+** JDBC and MySQL
+
+The Java Database Connectivity (JDBC) API is a standard for connectivity
+between Java and a range of databases \cite{jdbc}. It comprises methods to
+query and update data in relational databases allowing the Java language to
+interact with several Database Management Systems (DBMS).  
+
+MySQL is one of the most important open-source DBMS in the market. It is
+developed by Oracle and uses SQL language as interface. To enable the use of
+MySQL with Java, Oracle provides a driver for JDBC, as well as a native C
+library to allow developers to embed MySQL directly in the application's code.
+
+** Entity-Relationship and Relational Models
+
+An Entity-Relationship (ER) model defines a database in a conceptual view
+\cite{ertutorial}. This model can be represented by an ER Diagram (ERD). It is
+based in the notion of entities, which can be real-world objects that are
+esiliy identifiable, and the relationship between them. The entities have
+attributes to describe them, where one or more are defined as the identifier,
+which will uniquely identify an object of that entity. When entities have some
+common attributes with other ones but still have characteristics of its own,
+it is possible to make a *specialization*, where a main entity derives more
+specialized entities. This definition of the database structure is called
+*schema*.
+
+A relationship between entities *A* and *B* can have one of the following
+forms: *one-to-one*, where an object of the entity A can be associated to only
+one of type B and vice versa; *one-to-many*, which means that an instance of
+the entity A can be associated to more than one entities of type B, but B
+entities can only relate to at most one of type A; *many-to-many*, where one
+object from the A entity can be associated to more than one entities of type B
+and vice versa. Besides, the relationship can be identifying, which means that
+the relation itself identifies an object. In these cases, one of the entities
+will have the identifying attributes of the other composing its own. The
+entity that is identified by the other's attributes is sometimes called a
+*weak entity*.
+
+
+(image with various types of relations and labels)
+
+The ER Model is an overview of the structure of a database. To evolve to the
+implementation, a translation to a Relational Model must be performed. The ER
+model is a conceptual description of the database, while the relational model
+is a logical representation \cite{heuser}. Relational databases are based in
+the concept of *tables* \cite{relationalmodel}, thus, the terminology used in
+this step involves *tables*, *rows* (or *tuples*) and *columns*. The
+identifier is called *primary key*.
+
+The *entities* of the ER model become *tables* in the relational model, while
+its attributes become the *columns* of the tables. Each instance of an entity
+is a row of the entity's relation, and its identifier can be one or more
+columns that compose the *primary key*. A *one-to-one* relationship generates
+a merge of both tables involved. *one-to-many* links adds an attribute in one
+of the tables. The entity that can only be related to one of the instances of
+the other will receive the attribute, which will be called *foreign key*. The
+foreign key is what preserves the link between two entities. *many-to-many*
+relationships have to be represented by a table with the primary keys of both
+entities involved, which will also work as foreign keys. The translation of
+specializations can be made in two ways: one single table for all of the
+hierachy, where the primary key would be the identifier of the most generic
+entity and there would be optional columns; and one table for each specialized
+entity, where all of them would have the primary key of the most generic
+entity composing the identifier.
+
+(image
+
+
+
+
+@misc{jdbc,
+title= {Java SE Technologies - Database}, 
+author = {Oracle}, 
+howpublished = {\url{http://www.oracle.com/technetwork/java/javase/jdbc/index.html}},
+note = {Accessed: 2016-05-09}}
+
+@misc{ertutorial,
+title= {ER Model - Basic Concepts}, 
+howpublished = {\url{http://www.tutorialspoint.com/dbms/er_model_basic_concepts.htm}},
+note = {Accessed: 2016-05-09}}
+
+@misc{relationalmodel,
+http://www.service-architecture.com/articles/database/relational_model_concepts.html
+}
+
+@book{heuser,
+
+}
+
