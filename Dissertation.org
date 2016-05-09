@@ -335,8 +335,8 @@ factorial designs with arbitrary numbers of levels. The function
 receives several arguments, including number of factors, levels and
 replication. The usage of the function is the following:
 
-#+begin_src R :results output silent :session :exports none
-  require(DoE.base);
+#+BEGIN_EXAMPLE
+require(DoE.base);
   fac.design (
            nfactors=NULL,
            replications=1,
@@ -346,7 +346,7 @@ replication. The usage of the function is the following:
            seed=NULL,
            nlevels=NULL,
            factor.names= NULL )
-#+end_src
+#+END_EXAMPLE
 
 =nfactors=: The number of factors;
 
@@ -364,6 +364,8 @@ subdivided. Must be a prime;
 =nlevels=: A vector with the number of levels for each factor;
 
 =factor.names=: A list of vectors with factor levels. 
+
+** JDBC
 
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
@@ -660,7 +662,7 @@ The following subsections will detail each one of the packages.
 
 The parser package is the entry point of the program, thus, it also
 handles the arguments passed by the user. For this processing, an
-external library \cite{optionshandler} was used. The arguments
+external library \cite{optionhandler} was used. The arguments
 handling is centralized in one single class, =OptionsHandler=, to
 facilitate the inclusion of new ones. Refer to the appendix for more
 details about the library.
@@ -692,31 +694,29 @@ to ignore pending links, for example. As in the =PajeNG=, all of the
 events go through the =PajeSimulator= object, which forwards to the
 =PajeContainer= if it is an event associated to a container.
 
-Since the implementation is supposed to comprise the maximum of needs
-of the user, every trace event has an instrumentation point, which
-dispatches the entity objects generated to the plugin. These points
-are either in the PajeSimulator or in the PajeContainer. In the
-=PajeSimulator= are all of the outputs regarding the definition of
-types, the creation of containers and the definition of
-values. Although the containers are not complete objects, since they
-don't have ending timestamp or the related entities, they are sent
-anyway with the alias and type information. The =PajeContainer= in in
-charge of dispatching to the plugin the instances related to it, which
-involve the states, events, links and variables. It also may send
-unfinished objects.
+Every trace event has an instrumentation point, which dispatches the
+entity objects generated to the plugin. These points are either in the
+PajeSimulator or in the PajeContainer. In the =PajeSimulator= are all
+of the outputs regarding the definition of types, the creation of
+containers and the definition of values. Although the containers are
+not complete objects, since they don't have ending timestamp or the
+related entities, they are sent anyway with the alias and type
+information. The =PajeContainer= in in charge of dispatching to the
+plugin the instances related to it, which involve the states, events,
+links and variables. It also may send unfinished objects.
 
 (image)
 
-The need of an instrumentation point for each trace event is due to
-the intention of covering all of the diffent needs of the user. One
-may need the alias of a container before it can process the entities
-related to it, for example, which cannot be achieved by receiving the
-container only when it is completed. Or else, may be a situation where
-the push state events need to be measured, instead of the pop state
-events, where the entities are finished. Since we cannot predict all
-of the use cases, it is desirable to have a broad approach. A full
-list of the plugin entraces and the information received in each one
-is presented in the next section.
+The choice of creating an instrumentation point for each trace event
+is due to the intention of covering all of the diffent needs of the
+user. One may need the alias of a container before it can process the
+entities related to it, for example, which cannot be achieved by
+receiving the container only when it is completed. Or else, may be a
+situation where the push state events need to be measured, instead of
+the pop state events, where the entities are finished. Since we cannot
+predict all of the use cases, it is desirable to have a broad
+approach. A full list of the plugin entraces and the information
+received in each one is presented in the next section.
 
 ** Plugin
 
@@ -789,6 +789,61 @@ printing function of Jave costs time. For it to be possible, a
 reaches the number of lines informed.
 
 ** Paje Insert Database Plugin
+
+The =PajeInsertDBPlugin= saves in a relational database all the
+results of the simulation. For the implementation, the JDBC driver was
+used to make a connection with the MySQL database. The schema used was
+specially designed for the Pajé format and will be presented in the
+next subsections. Thsi plugin allows the user to save data from
+multiple files in the same database.
+
+The plugin can be used by specifying =mysql= as argument for the =-p=
+option. It is necessary to have a MySQL connection with a database
+with the correct schema. To specify the server of the connection,
+there is the option =-s=. It is also possible to inform a username
+(=-u=), a password (=-pwd=) and a database name (=-d=). The default
+for these options is: =localhost=, =root=, =root=, =paje=,
+respectively.
+
+To create a relational database for the Pajé format, first, we created
+an entity-relationship model that is described in the subsection
+below.
+
+*** Entity-Relationship Model
+
+The entity-relationship (ER) model contains one entity for each type
+of Pajé object. Also, to support multiple files, there is a =file=
+entity, which has the =name=, a =comment= and the =date= as
+attributes, as well as a =file_id=. The =type= and =container=
+entities have an identifying relationship with =file=, which means
+that the file id is part of their primary key. The relationship is a
+one to many, since a file can have multiple types and containers.
+
+The =type= entity has =alias=, composing the primary key, =name= and
+=depth= as attributes. It also contains a self-referencing one to many
+relationship to indicate the =parent= type, as a type can have
+multiple children. Link and Variable types have exclusive attributes
+that are not common to all types, thus, both are specific entities
+that ihnerit from =type=. =LinkType= adds a relationship with itself
+to represent the communication with start and end. This is a many to
+many relationship because the types can be start and end to various
+communications. The =VariableType= has a color attribute.
+
+The =container= entity has and identifying relashionship with =type=
+and contains the same attributes as type, including the =parent= one
+to many relation. The =value= entity is also a weak entity related to
+=type=, and has =alias= (primary key), =name= and =color= as
+attributes. Every e in the Pajé format is identified by its
+
+
+
+
+
+(image)
+
+*** Relational Model
+
+
 
 * Performance Evaluation
 \label{chapter.performance}
@@ -1211,7 +1266,7 @@ _EndContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the
 end of a link of type _Type_, in container _Container_, ending in
 _EndContainer_, with value _Value_, and identified by key _Key_.
 
-* PajeNG structures*
+* PajeNG structures
 
 *Simulator*
 
