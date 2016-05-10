@@ -237,11 +237,14 @@ The conclusion and final considerations are expressed in Chapter
 * Basic Concepts
 \label{chapter.basic_concepts}
 
-This chapter describes the basic concepts of the technologies used to
-develop this project. They contribute to the understanding of our
-work. It is structured in two topics: the Java Compiler Compiler
-(JavaCC) and an overview about experimental design in the scope of the
-R language.
+This chapter describes the basic notions of the concepts and
+technologies used to develop this project. They contribute to the
+understanding of our work. It is structured in five topics: the Java
+Compiler Compiler (JavaCC), the Java Database Connectivity (JDBC) API
+in the MySQL context, a brief description about the construction of
+conceptual and logical database schemas, an overview about
+experimental design and the R language in the experimental design
+context.
 
 ** The Java Compiler Compiler (JavaCC) tool
 \label{section.javacc}
@@ -253,13 +256,13 @@ lexical analyser, that separates the input file into tokens, and a
 parser, which performs a syntax analysis.
 
 What differentiates JavaCC from other parser generators that exist for
-the Java language is that it generates source code in Java, which
+the Java language is that it creates source code in Java, which
 facilitates the understanding and eliminates the need of having
-dependencies in the code.  JavaCC has also shown itself to have a much
-better performance than other tools such as ANTLR (Another Tool For
-Language Recognition), that requires a runtime library
+dependencies in the code. JavaCC has also shown itself to have a much
+better performance than other tools such as Another Tool For Language
+Recognition (ANTLR), that requires a runtime library
 \cite{javaccversusantlr}. ANTLR was our first choice of parser
-generator, but it was soon discarded due to its low performance.
+generator, but it was soon discarded due to its very low performance.
 
 JavaCC can be downloaded, unzipped and added to the PATH. It also has
 a plugin for Eclipse. Once installed, JavaCC will process your grammar
@@ -267,17 +270,110 @@ defined in a file with extension ".jj" using the command =javacc=.
 
 For example, processing a file named =MyGrammar.jj= results in seven
 files: the parser in =MyGrammar.java=; the lexical analyser in
-=MyGrammarConstants.java=. The other four files generated: =Token.java=,
-=TokenMgrError.java=, =SimpleCharStream.java= and =ParseException.java= are
-boilerplate files that can be reused within parsers and are not
-affected by the grammar itself.  Once the corresponding Java source
-code for the scanner and parser are generated, compile them as usual
-with =javac=.
+=MyGrammarTokenManager.java= and some useful constants in
+=MyGrammarConstants.java=. The other four files generated:
+=Token.java=, =TokenMgrError.java=, =SimpleCharStream.java= and
+=ParseException.java= are boilerplate files that can be reused within
+parsers and are not affected by the grammar itself.  Once the
+corresponding Java source code for the scanner and parser are
+generated, you can compile them as usual with =javac=.
 
 The whole grammar will be in the =MyGrammar.jj= file and it is the
 only file that needs to be modified. There, the tokens used will be
 defined, the parser rules specified, and it is possible to even add
 Java code that has to be executed during the parsing.
+
+** JDBC and MySQL
+
+The Java Database Connectivity (JDBC) API is a standard for
+connectivity between Java and a range of databases \cite{jdbc}. It
+comprises methods to query and update data in relational databases
+allowing the Java language to interact with several Database
+Management Systems (DBMS).
+
+MySQL is one of the most important open-source DBMS in the market. It
+is developed by Oracle and uses SQL language as interface. To enable
+the use of MySQL with Java, Oracle provides a driver for JDBC, as well
+as a native C library to allow developers to embed MySQL directly in
+the application's code.
+
+** Entity-Relationship and Relational Models
+
+An Entity-Relationship (ER) model defines a database in a conceptual
+view \cite{heuser}. This model can be represented by an ER Diagram
+(ERD) and can be denoted by *schema*. It is based in the notion of
+*entities*, which can be real-world objects that are esiliy
+identifiable \cite{ertutorial}, and the *relationship* between
+them. The entities have a set of attributes, where one or more are
+defined as the *identifier*, which will uniquely identify an object of
+that entity. It is also possible for a relationship to have
+attributes. Besides, an entity can derive other more specialized
+entities, which is called *specialization*.
+
+A relationship between entities *A* and *B* can have one of the
+following patterns: *one-to-one*, where an object of the entity A can
+be associated to only one of type B and vice versa; *one-to-many*,
+which means that an instance of the entity A can be associated to more
+than one entities of type B, but B entities can only relate to at most
+one of type A; *many-to-many*, where one object from the A entity can
+be associated to more than one entities of type B and vice
+versa. These characteristic also apply to self-referencing relations,
+where there is a relationship of an entity with itself. Besides, a
+connection can be an *identifying relationship*, which means that the
+relationship identifies an object. In these cases the entity is called
+a *weak entity*. Figure \ref{fig.ermodelex} exemplifies these
+concepts.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Image inspired in \cite{kergommeaux2000paje}}
+\centering
+\includegraphics[width=\linewidth]{./img/pajeparco.png}
+\label{fig.ermodelex}
+\end{figure}
+#+END_LaTeX
+
+The ER Model is an overview of the structure of a database. To evolve
+to the implementation, a translation to a Relational Model must be
+performed. The ER model is a conceptual description of the database,
+while the relational model is a logical representation
+\cite{heuser}. Relational databases are based in the concept of
+*tables* \cite{relationalmodel}, thus, the terminology used in this
+step involves *tables*, *rows* (or *tuples*) and *columns*. The
+identifier is called *primary key*. There are a set of rules to make
+this translation, although sometimes it is necessary to adapt the
+schema based on the user's needs.
+
+The *entities* of the ER model become *tables* in the relational
+model, while its attributes become the *columns* of the tables. Each
+instance of an entity is a row and its identifier can be one or more
+columns that compose the *primary key*. When there is an identifying
+relationship, the weak entity attaches the identifier of the other
+entity to its own primary key. A *one-to-one* relationship generates a
+merge of both tables involved. *One-to-many* links adds an attribute
+in one of the tables. The entity that can only be related to one of
+the instances of the other will receive the attribute, which will be
+called *foreign key*. It also absorbs the attributes of the
+relationship. In the example of figure \ref{fig.ermodelex}, the table
+referencing the =School= entity would have the *stateName* and
+*cityName* (the primary key of City) as foreign keys and *address* as
+attribute. The foreign key is what preserves the link between two
+entities. *Many-to-many* relationships have to be represented by a
+separate table with the primary keys of both entities involved, which
+will also work as foreign keys. In our illustration, the relationship
+between =Grade= and =Student= would become a table, with *studentId*
+and *gradeId* as primary and foreign keys.
+
+The translation of specializations can be made in two ways: one single
+table for all of the hierarchy, where the primary key would be the
+identifier of the most generic entity and there would be optional
+columns; and one table for each specialized entity, where all of them
+would have the identifier of the most generic entity composing the
+primary key. The first case, in figure \ref{fig.ermodelex}, would
+generate a single =Person= table, with *personId* as primary key and
+*name*, *phone*, *studentId*, *course* and *salary* as attributes. In
+the second option, =Student= and =Teacher= become tables, with
+*personId* composing their primary key.
 
 ** Experimental Design
 
@@ -288,39 +384,40 @@ that could affect the results, guaranteeing that the number of tests
 executed and the error margin calculated will be sufficient to avoid
 misleading conclusions.
 
-There is a specific terminology used in experimental design: =Response
-Variable=, the outcome of an experiment; =Factors=, all of the variables
-that could have several different values affecting the response
-variable; =Levels=, the possible values that a factor can assume;
-=Primary Factors=, the factors that need to be quantified; =Secondary
-Factors=, the factors whose impacts in the performance are not
-relevant for the analysis; =Replication=, the repetition of all or
-some experiments; =Design=, the specification of total number of
-experiments, based on factor level combination and number of
-replications for each experiment; =Experimental Unit=, the entity used
-for the experiment, for example, a computer; =Interaction=, when the
-levels of a fator affect the results of other factor.
+There is a specific terminology used in experimental design where
+=Response Variable= is the outcome of an experiment, =Factors= are all
+of the variables that can have several different values affecting the
+response variable and =Levels= are the possible values that a factor
+can assume. Also, the =Primary Factors= are the factors that need to
+be quantified, =Secondary Factors= are the factors whose impacts in
+the performance are not relevant for the analysis, =Replication= is
+the number of repetition of all or some experiments and =Design= is
+the specification of total number of experiments based on factor level
+combination and number of replications for each experiment. The
+=Experimental Unit= is the entity used for the experiment, which could
+be a computer, for example, and =Interaction= is when the levels of a
+fator affect the results of other factor.
 
 There are several types of experimental design modeling. One of them
 is the full factorial design, which consists in analysing every
 possible combination at all levels of all factors. With this type of
-design, it is possible to evaluate factors that have different numbers
-of levels. The advantage of this model is that every possible
-combination will be analysed, generating richer results. However,
-depending on the number of factors, levels and replications, it may
-generate a very large total number of experiments, which can cost a
-lot of time. Therefore, when using this technique, it is important to
-weight the relevance of each factor and level to generate an
-appropriate and accurate design. To calculate the total size of the
-sample you multiply the numbers of levels of the factors and the
-number of replications. For example, a design with a three-level
-factor and a two-level factor with 20 replications would have 120
-experiments (3*2*20).
+design, it is possible to evaluate factors with multiple numbers of
+levels. The advantage of this model is that every possible combination
+will be analysed, generating richer results. However, depending on the
+number of factors, levels and replications, it may generate a very
+large total number of experiments, which can cost a lot of
+time. Therefore, when using this technique, it is important to weight
+the relevance of each factor and level to generate an appropriate and
+accurate design. To calculate the total size of the sample you
+multiply the numbers of levels of the factors and the number of
+replications. For example, a design with a three-level factor, a
+two-level factor and 20 replications would have 120 experiments
+(3*2*20).
 
 When there is a large number of factors or levels, it may not be
 possible to use the full factorial design. In these cases, one can use
 a fractional factorial design, which covers just a fraction of the
-full factorial design.  In this type of experiment, a carefully chosen
+full factorial design. In this type of experiment, a carefully chosen
 subset of factors and levels is taken into consideration, based on the
 most important features the analyser wants to test. Although it saves
 time and expenses, the results provide less information.
@@ -330,11 +427,11 @@ time and expenses, the results provide less information.
 R is a language for statistical computing and graphics generation. It
 can be very easily extended, by creating and using packages. With R,
 it is possible to create full factorial or fractional designs using
-the =DoE.base= package.  This package contains the class _design_ with
-several accessor functions to create different types of design. One
-particular important function is the _fac.design_, which creates full
-factorial designs with arbitrary numbers of levels. The function
-receives several arguments, including number of factors, levels and
+the =DoE.base= package. It contains the class *design* with several
+accessor functions to create different types of design. One particular
+important function is the *fac.design*, which creates full factorial
+designs with arbitrary numbers of levels. The function receives
+several arguments, including number of factors, levels and
 replication. The usage of the function is the following:
 #+BEGIN_LaTeX
 \begin{lstlisting}
@@ -350,15 +447,13 @@ fac.design(
   factor.names= NULL);
 \end{lstlisting}
 #+END_LaTeX
-where =nfactors= represents the number of factors, =replications= are the
-number of replications, =repeat.only= tells if the replications of each
-run are grouped together, =blocks= is a TODO TODO prime-number telling
-the number of blocks in which the experiment will be subdivided. =randomize=: If true, the design is randomized;
-=seed=: seed For the randomization (optional);
-=nlevels=: A vector with the number of levels for each factor;
-=factor.names=: A list of vectors with factor levels. 
-
-** JDBC
+where =nfactors= represents the number of factors, =replications= is
+the number of replications, =repeat.only= tells if the replications of
+each run are grouped together, =blocks= is a prime-number telling the
+in how many blocks the experiment will be subdivided, =randomize=
+informs the design is randomized, =seed= is the optional seed for the
+randomization, =nlevels= is a vector with the number of levels for
+each factor and =factor.names=: a list of vectors with factor levels.
 
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
@@ -366,48 +461,41 @@ the number of blocks in which the experiment will be subdivided. =randomize=: If
 The Pajé Visualization Tool is an implementation to display the
 execution behavior of parallel and distributed programs. It reads
 information from trace files that describe the important events in the
-execution of a parallel program and replays them in simulation. It is
-developed to simulate trace files in the Pajé Trace File Format, thus,
-it is important to understand how the Pajé trace files are
-composed. Section \ref{section.pajeformat} describes this format and
-all entities types. The next section describes the PajeNG
-implementation focusing on the =libpaje= module, which is where the
-core simulation is performed. Since the new generation follows the
-exact same structure as the original Pajé, it will be the only one to
-be described.
+execution of a program and replays them in simulation. It is developed
+to simulate trace files in the Pajé Trace File Format, thus, it is
+important to understand how the Pajé trace files are composed. Section
+\ref{section.pajeformat} describes this format and all entity types it
+contains. The next section describes the new generation of the Pajé
+Visualization Tool, the PajeNG, focusing on the =libpaje= module,
+which is where the core simulation is performed. Since the new
+generation follows the exact same structure as the original Pajé, it
+will be the only one to be detailed.
  
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
 The Pajé Trace File Format \cite{pajetracefile} is a textual and
-generic format that describes the behavior of parallel and distributed
-programs. This format contains three sections: event definition, type
+generic format that describes the behaviour of parallel and distributed
+programs. This format contains three segments: event definition, type
 hierarchy declaration and timestamped events. The Pajé format
-describes five types of entities: Containers, States, Events,
-Variables and Links. Each entity is always associated to a container,
-even the containers themselves. Below, a succinct definition of each
-type of entity.
+describes five types of entities: containers, states, events,
+variables and links. Each entity is always associated to a container,
+even the containers themselves.
 
-*Container*: A container can be any hardware or software entity, such
-as a processor, a thread, a network link, etc. It is the only Pajé
-object that holds other objects, including containers, which makes it
-the main component to define the type hierarchy.
-
-*State*: A state is used to describe periods of time where a container
-stays at the same state, like a thread that is blocked, for
-example. It always has a beginning and an ending timestamp.
-
-*Event*: An event has only one timestamp, and can be anything
-noteworthy to be uniquely identified.
-
-*Variable*: A variable entity represents the progression of the value
-of a variable along time. A variable is represented by an object with
-a value and two timestamps, beginning and end, indicating how long the
-variable had that specific value.
-
-*Links*: A link represents a relationship between two containers, such
-as a communication between processes. It contains two timestamps
-specifying the beginning and the end of the communication.
+A *container* can be any hardware or software entity, such as a
+processor, a thread, a network link, etc. It is the only Pajé object
+that holds other objects, including containers, which makes it the
+main component to define the type hierarchy. A *state* is used to
+describe periods of time where a container stays at the same state,
+like a thread that is blocked, for example. It always has a beginning
+and an ending timestamps. An *event* has only one timestamp, and can
+be anything noteworthy to be uniquely identified. A *variable* entity
+represents the progression of a variable's value along time. It is
+represented by an object with a value and two timestamps, beginning
+and end, indicating how long the variable had that specific value. A
+*link* represents a relationship between two containers, such as a
+communication between processes. It contains two timestamps specifying
+the beginning and the end of the communication.
 
 The Pajé objects are organized in two separated hierarchies: types and
 entities. These hierarchies are specific for each trace file, although
@@ -423,26 +511,27 @@ both hierarchies relies on the number of nodes: while the type
 hierarchy has only a few, the entities hierarchy may have millions
 depending on the number of containers in the trace.
 
-The format is divided in two sections: event definition and events.
+A trace file is divided in two sections: event definition and events
+list. The types hierarchy declaration is part of the events list.
 
-*Event Definition* 
+*Events Definition* 
 
-The first part of a trace file describes all the possible events of
-the trace.  An event definition has its kind, followed by a unique
+The first part of a trace file describes all of the possible events of
+the trace. An event definition has its kind, followed by a unique
 identifier and a set of fields. Each field has its name and type. See
 the appendix for details of the syntax and an example.
 
 *Events*
 \label{subsection.events} 
 
-After the event definition, the events themselves are described, one
-in each line. Every event starts with the number that identifies it,
-which was defined previously, followed by the fields separated by
-space or tab. Before the entities, such as states or links, can be
-created, a hierarchy of types and containers must be defined and
-containers need to be intantiated, since every entity belongs to a
-container. There are sets of events associated to each kind of entity
-described above, besides the events that define entity types.
+After the events definition, the events themselves are described, one
+in each line. Every event starts with its identifying number, which
+was defined previously, followed by the fields separated by space or
+tab. Before the entities, such as states or links, can be created, a
+hierarchy of types and containers must be defined and containers need
+to be instantiated, since every entity belongs to a container. There
+are sets of events associated to each kind of entity described above,
+besides the events that define entity types.
 
 Type definition events don't have a timestamp field and can occur at
 anytime in a trace file, as long as the type is not used before its
@@ -463,11 +552,12 @@ generation of the Pajé simulator.
 ** PajeNG
 
 The PajeNG implementation is the new generation of the Pajé
-Visualization Tool. It was developed in C++ and follows the same
-architecture as the original Pajé. It comprises a library containing
-the core of the simulation, a space-time visualization tool and some
-auxiliar tools to manage the trace files. The base for the
-implementation of this project was the =libpaje= library.
+Visualization Tool \cite{pajeng}. It was developed in C++ and follows
+the same architecture as the original Pajé. It comprises a library
+containing the core of the simulation (=libpaje=), a space-time
+visualization tool and some auxiliar tools to manage the trace
+files. The base for the implementation of this project was the
+=libpaje= library.
 
 The library has three main components forming a pipeline that results
 in complete simulated entities. These components are: FileReader,
@@ -476,21 +566,30 @@ data from the trace file and puts it in memory. Then, the EventDecoder
 breaks it into events identifying, line by line, the event's fields
 and creating an object with all the necessary information. Last, the
 PajeSimulator receives this event object and addresses to the proper
-simulation.
+simulation. An illustration of this process is in figure
+\ref{fig.pajeparco}.
 
-#+CAPTION: Image taken from \cite{kergommeaux2000paje}
-[[file:./img/paje-parco.png]]
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Image inspired in \cite{kergommeaux2000paje}}
+\centering
+\includegraphics[width=\linewidth]{./img/pajeparco.png}
+\label{fig.pajeparco}
+\end{figure}
+#+END_LaTeX
 
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
 expandable, which makes it necessary to build a simulator
 accordingly. This flexibility is implemented by a class hierarchy,
 going from the most general, containing the basic fields common to
-every type and entity, to the most specific. There are three main
-hierarchies that are particularly important in this objective: one for
-events, one for types and one for entities. With this modular
-implementation, it is relatively easy to add a new type of event or
-entity and integrate it with the rest of the code.
+every type and entity, to the most specific. Besides, the PajeNG tool
+supports extra fields in the events, which allows the simulation of
+extended entities. There are three main hierarchies that are
+particularly important in this objective: one for events, one for
+types and one for entities. With this modular implementation, it is
+relatively easy to add a new type of event or entity and integrate it
+with the rest of the code.
 
 *Class Hierarchy for Paje Events*
 
@@ -506,9 +605,8 @@ and =PajeDestroyContainerEvent=. The variable event is the parent of
 the specific events for variables, which are set, add and subtract. A
 categorized event is characterized by having a =PajeValue= associated
 to it, thus, =PajeStateEvent=, =PajeEventEvent=, =PajeLinkEvent=, and
-their respective childs inherit from it.
-
-See Figure \ref{fig.eventsHierarchy}.
+their respective childs inherit from it. See Figure
+\ref{fig.eventsHierarchy}.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -529,7 +627,8 @@ childs of this class are: =PajeCategorizedType=, =PajeVariableType=
 and =PajeContainerType=. As the events, the categorized types are
 associated to a value, hence, the PajeCategorizedType has a PajeValue
 field and methods to manipulate it. Its childs are the
-=PajeStateType=, =PajeEventType= and =PajeLinkType=.
+=PajeStateType=, =PajeEventType= and =PajeLinkType=. This hierarchy is
+illustrated in Figure \ref{fig.typesHierarchy}.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -553,13 +652,14 @@ timestamps. Like the other hierarchies, the valued entities are
 grouped together so a =PajeValueEntity= is a child of the double timed
 entity, having =PajeUserState= and =PajeUserLink= as descendents. The
 double timed entity also has =PajeUserVariable= and =PajeNamedEntity=
-as childs. A =PajeContainer= inherits from the named entity.
+as childs. A =PajeContainer= inherits from the named entity. Figure
+\ref{entitiesHierarchy} represents this structure.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Entities class hierarchy}
 \centering
-\includegraphics[width=\linewidth]{./img/entitiesHierarchy.png}
+\includegraphics[width=.65\linewidth]{./img/entitiesHierarchy.png}
 \label{fig.entitiesHierarchy}
 \end{figure}
 #+END_LaTeX
@@ -579,8 +679,6 @@ entities until the program finishes. Since all the data from the
 simulation is kept in memory, the end timestamp is used to sinalize
 that an entity no longer can be referred.
 
-(image Paje Simulator and PajeContainer relation)
-
 The PajeSimulator class lists every type declared and container
 created throughout the simulation by using map structures (=typeMap=
 and =contMap=) with the name or alias as key. There is always a
@@ -589,8 +687,8 @@ in the beginning of the program.  The simulator contains one method
 for each type of event described in section \ref{subsection.events},
 which perform all the validations, besides the processing
 itself. Whenever there is an event that defines a type the entity
-generated is added to the =typeMap=. 
-=contMap= and the proper method of the container object is called.
+generated is added to the =typeMap=.  =contMap= and the proper method
+of the container object is called.
 
 The PajeContainer class also uses map structures to store all the
 entities that are related to it including other containers. Besides
@@ -859,7 +957,6 @@ attributes. Every e in the Pajé format is identified by its
 (image)
 
 *** Relational Model
-
 
 
 * Performance Evaluation
