@@ -326,9 +326,9 @@ concepts.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Image inspired in \cite{kergommeaux2000paje}}
+\caption{Example of ER Model}
 \centering
-\includegraphics[width=\linewidth]{./img/pajeparco.png}
+\includegraphics[width=\linewidth]{./img/ermodelex.png}
 \label{fig.ermodelex}
 \end{figure}
 #+END_LaTeX
@@ -634,7 +634,7 @@ illustrated in Figure \ref{fig.typesHierarchy}.
 \begin{figure}[!htb]
 \caption{Events class hierarchy}
 \centering
-\includegraphics[width=.65\linewidth]{./img/typesHierarchy.png}
+\includegraphics[width=.6\linewidth]{./img/typesHierarchy.png}
 \label{fig.typesHierarchy}
 \end{figure}
 #+END_LaTeX
@@ -659,7 +659,7 @@ as childs. A =PajeContainer= inherits from the named entity. Figure
 \begin{figure}[!htb]
 \caption{Entities class hierarchy}
 \centering
-\includegraphics[width=.65\linewidth]{./img/entitiesHierarchy.png}
+\includegraphics[width=\linewidth]{./img/entitiesHierarchy.png}
 \label{fig.entitiesHierarchy}
 \end{figure}
 #+END_LaTeX
