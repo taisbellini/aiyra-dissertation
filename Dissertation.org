@@ -550,6 +550,7 @@ appendix. The next section describes the implementation of the new
 generation of the Pajé simulator.
 
 ** PajeNG
+\label{section.pajeng}
 
 The PajeNG implementation is the new generation of the Pajé
 Visualization Tool \cite{pajeng}. It was developed in C++ and follows
@@ -634,7 +635,8 @@ illustrated in Figure \ref{fig.typesHierarchy}.
 \begin{figure}[!htb]
 \caption{Events class hierarchy}
 \centering
-\includegraphics[width=.6\linewidth]{./img/typesHierarchy.png}
+\includegraphics[width=.6
+\linewidth]{./img/typesHierarchy.png}
 \label{fig.typesHierarchy}
 \end{figure}
 #+END_LaTeX
@@ -744,15 +746,16 @@ Aiyra is an extensible simulator written in Java that reads trace
 files in the Pajé format and, instead of storing the results in
 memory, forwards every created entity to a common place where it can
 be manipulated freely. The architecture of the implementation contains
-three packages: parser, simulator core and plugin. Every event of a
-trace file always goes through all of the packages. First, the file is
-read by the parser, where a trace event object is created. This
-instance contains the type of event in question and the field
-values. Then, the simulator receives this object and executes the
-simulation based on the event type. The simulation always generates an
-entity, even if incomplete (with no end timestamp, for example). Last,
-this new entity is sent to the plugin, which contains specific entry
-points for every different kind of entity.
+three packages: *parser*, *simulator core* and *plugin*. Every event
+of a trace file always goes through all of the packages. First, the
+file is read by the parser, where a trace event object is
+created. This instance contains the type of event in question and the
+field values. Then, the simulator receives this object and executes
+the simulation based on the event type. The simulation always
+generates an entity, even if incomplete (with no end timestamp, for
+example). Last, this new entity is sent to the plugin, which contains
+specific entry points for every different kind of entity. Figure
+\ref{fig.aiyraArchitecture} illustrates this architecture.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -769,7 +772,8 @@ what is the trace file to be replayed. There are other two general
 options: *comment* (=-m=), a comment about the file; and *plugin*
 (=-p=), which indicates which plugin will be used in the
 simulation. The details about the already implemented plugins will be
-presented in chapter \ref{chapter.plugins}.
+presented in chapter \ref{chapter.plugins} and a step-by-step for the
+execution of Aiyra can be found in the appendix.
 
 The following subsections will detail each one of the packages.
 
@@ -802,23 +806,26 @@ the simulator core package.
 ** Aiyra's Core Simulator
 
 Aiyra's core simulator follows the exact same structure of the
-=PajeNG= implementation, having the same class hierarchies. It
-implements only the essential functionalities, leaving aside the
-possibility of defining a specific timestamp to end the simulation or
-to ignore pending links, for example. As in the =PajeNG=, all of the
+=PajeNG= implementation described in section \ref{section.pajeng},
+having the same class hierarchies. Thus, it is equally expandable in
+terms of creeating new types of events or entities. However, it does
+not support extra fields in the events, which makes it more limited
+for extensions in the Pajé Trace file. As in the =PajeNG=, all of the
 events go through the =PajeSimulator= object, which forwards to the
 =PajeContainer= if it is an event associated to a container.
 
 Every trace event has an instrumentation point, which dispatches the
 entity objects generated to the plugin. These points are either in the
-PajeSimulator or in the PajeContainer. In the =PajeSimulator= are all
-of the outputs regarding the definition of types, the creation of
+=PajeSimulator= or in the =PajeContainer=. In the =PajeSimulator= are
+all of the outputs regarding the definition of types, the creation of
 containers and the definition of values. Although the containers are
 not complete objects, since they don't have ending timestamp or the
-related entities, they are sent anyway with the alias and type
+related entities, they are forwarded anyway with the alias and type
 information. The =PajeContainer= in in charge of dispatching to the
 plugin the instances related to it, which involve the states, events,
-links and variables. It also may send unfinished objects.
+links and variables. It also may send unfinished objects. When there
+is a =PajeDestroyContainerEvent=, the container is sent again, now
+complete with an ending timestamp.
 
 (image)
 
@@ -830,19 +837,39 @@ receiving the container only when it is completed. Or else, may be a
 situation where the push state events need to be measured, instead of
 the pop state events, where the entities are finished. Since we cannot
 predict all of the use cases, it is desirable to have a broad
-approach. A full list of the plugin entraces and the information
+approach. A full list of the plugin entrances and the information
 received in each one is presented in the next section.
 
 ** Plugin
 
-The plugin package is composed by an abstract class with one method
-for each instrumentation point presented above. It also contains a
+The plugin package is composed by an abstract class, the =PajePlugin=,
+with one method for each instrumentation point. It also contains a
 method called =finish()= where the user can perform some final actions
 after the simulation is completed. To create a new plugin, the user
 just needs to extend the =PajePlugin= class and override its
 functions. It is also possible to extend another plugin, if the
-differences are too little and not worth of a full plugin
+differences are too little and not worth of a new class
 implementation.
+
+Every entity generated is represented by an object with attributes
+representing its fields. A =PajeType= contains =alias=, =name=,
+=depth=, and =parent=, which is a =PajeType= as well. it also provides
+the =getNature()= method, to identify which entity this type
+describes. The nature is an enumeration and can assume
+*ContainerType*, *StateType*, *EventType*, *LinkType* or
+*VariableType*. The =PajeVariableType= adds a =PajeColor= to its
+attributes, which is an object with the values for red (=r=), green
+(=g=), blue(=b=) and alpha(=a=). The =PajeLinkType=, in turn, includes
+=startType= and =endType=, which represent the type of the containers
+of start and end of the communication. A value is represented by a
+=PajeValue= class, with =name=, =alias=, =type= and =color= as
+attributes.
+
+A container object (=PajeContainer=) contains an =alias=, =name=,
+=type= and =parent= (another =PajeContainer=), besides the structures
+to store the entities related to it, as described in section
+\ref{section.pajeng}. As the container class is a child of the
+=PajeDoubleTimedEntity=, it also has =startTime= and =endTime=. 
 
 The entrances of the plugins comprise the definition of types and
 values, the creation of containers and the formation of new
