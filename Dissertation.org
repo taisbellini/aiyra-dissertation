@@ -814,18 +814,51 @@ for extensions in the Pajé Trace file. As in the =PajeNG=, all of the
 events go through the =PajeSimulator= object, which forwards to the
 =PajeContainer= if it is an event associated to a container.
 
-Every trace event has an instrumentation point, which dispatches the
-entity objects generated to the plugin. These points are either in the
-=PajeSimulator= or in the =PajeContainer=. In the =PajeSimulator= are
-all of the outputs regarding the definition of types, the creation of
-containers and the definition of values. Although the containers are
-not complete objects, since they don't have ending timestamp or the
-related entities, they are forwarded anyway with the alias and type
-information. The =PajeContainer= in in charge of dispatching to the
-plugin the instances related to it, which involve the states, events,
-links and variables. It also may send unfinished objects. When there
-is a =PajeDestroyContainerEvent=, the container is sent again, now
-complete with an ending timestamp.
+Every entity generated is represented by an object with attributes
+representing its fields. The class hierarchy of the entities is the
+same as the one presented in Figure \ref{fig.entitiesHierarchy}. All
+of the types derive from the =PajeType= class, which contains =alias=,
+=name=, =depth=, and =parent=, a =PajeType= as well, as attributes. It
+also provides the =getNature()= method, to identify which entity this
+type describes. The nature is an enumeration and can assume
+*ContainerType*, *StateType*, *EventType*, *LinkType* or
+*VariableType*. The =PajeVariableType= adds a =PajeColor= to its
+attributes, which is an object with the values for red (=r=), green
+(=g=), blue(=b=) and alpha(=a=). The =PajeLinkType=, in turn, includes
+=startType= and =endType=, which stand for the type of the start and
+end containers of the communication. A value is represented by a
+=PajeValue= class, with =name=, =alias=, =type= and =color= as
+attributes.
+
+A container object (=PajeContainer=) has an =alias=, =name=, =type=
+and =parent= (another =PajeContainer=), besides the structures to
+store the entities related to it, as described in section
+\ref{section.pajeng}. Since the container class is a child of the
+=PajeDoubleTimedEntity=, it also has a =startTime= and an
+=endTime=. All other entities are associated to a container and a
+type, thus, they have a =container= and a =type= fields. The event
+entity (=PajeUserEvent=) is the only one that derives from
+=PajeSingleTimedEntity=, hence, it has a unique timestamp named
+=time=. Also, it has a =value= attribute, which is a =PajeValue=. The
+other valued entities, =PajeUserState= and =PajeUserLink=, inherit the
+=PajeValue= attribute from the =PajeValuedEntity= class. A
+=PajeUserVariable= object also has a =value= attribute but, unlike
+events, states and links, it is a double number. The =PajeUserLink=
+also has a string that defines the =key= and start and end containers
+identified by =startContainer= and =endContainer=.
+
+Every trace event simulation has an instrumentation point, which
+dispatches the entity objects generated to the plugin. These points
+are either in the =PajeSimulator= or in the =PajeContainer=. In the
+=PajeSimulator= are all of the outputs regarding the definition of
+types and values and the creation of containers. Although in this
+point the containers are not complete objects, since they don't have
+ending timestamp or the related entities, they are forwarded anyway
+with the alias and type information. The =PajeContainer= is in charge
+of dispatching to the plugin the instances related to it, which
+involve the states, events, links and variables. It also may send
+unfinished objects. When there is a =PajeDestroyContainerEvent=, the
+container object is sent again, now complete with an ending timestamp.
 
 (image)
 
@@ -844,54 +877,46 @@ received in each one is presented in the next section.
 
 The plugin package is composed by an abstract class, the =PajePlugin=,
 with one method for each instrumentation point. It also contains a
-method called =finish()= where the user can perform some final actions
-after the simulation is completed. To create a new plugin, the user
-just needs to extend the =PajePlugin= class and override its
+method called *finish* where the user can perform some concluding
+actions after the simulation is completed. To create a new plugin, the
+user just needs to extend the =PajePlugin= class and override its
 functions. It is also possible to extend another plugin, if the
 differences are too little and not worth of a new class
 implementation.
 
-Every entity generated is represented by an object with attributes
-representing its fields. A =PajeType= contains =alias=, =name=,
-=depth=, and =parent=, which is a =PajeType= as well. it also provides
-the =getNature()= method, to identify which entity this type
-describes. The nature is an enumeration and can assume
-*ContainerType*, *StateType*, *EventType*, *LinkType* or
-*VariableType*. The =PajeVariableType= adds a =PajeColor= to its
-attributes, which is an object with the values for red (=r=), green
-(=g=), blue(=b=) and alpha(=a=). The =PajeLinkType=, in turn, includes
-=startType= and =endType=, which represent the type of the containers
-of start and end of the communication. A value is represented by a
-=PajeValue= class, with =name=, =alias=, =type= and =color= as
-attributes.
-
-A container object (=PajeContainer=) contains an =alias=, =name=,
-=type= and =parent= (another =PajeContainer=), besides the structures
-to store the entities related to it, as described in section
-\ref{section.pajeng}. As the container class is a child of the
-=PajeDoubleTimedEntity=, it also has =startTime= and =endTime=. 
-
 The entrances of the plugins comprise the definition of types and
-values, the creation of containers and the formation of new
-entities. Whenever a type of any kind is defined, it is sent to a
-unique point =newType=, with the =PajeType= object as argument. The
-new values are received in the =newValue= entry point. When a
-container is created, the instance is forwarded to the
-=newCreatedContainer= entry point, with the end timestamp set to
--1. Whenever an entity is not completed yet, it will have the end
-timestamp as -1. The destroyed containers are sent to the
-=destroyedContainer= method. The link states have three
-instrumentation points: =startLink=, a communication link entity with
-unknown end time and container; =endLink=, when the instance has the
-end point of the link but not the start; and =newCompletedLink=, when
-there is a link entity with beginning and end. Anytime a variable is
-set or updated, there are three entities sent to the plugin: the
-=first=, which contains the first value of the variable; the =last=,
-which is the one immediately before the variable in question; and the
-=newVar= variable. The aditions and subtractions are sent to the same
-point (=updateVar=). The set, push and pop state events each have one
-method: =setState=, =pushState=, =popState=. The events are sent to
-the =newEvent= function.
+values, the creation of containers, the formation and completion of
+new entities. The *newType* entry point is a unique entrance for when
+a type of any kind is defined, having the =PajeType= object as
+argument. The =getNature()= method can be used to identify the exact
+type. The =newValue= method receives every =PajeValue= created.
+
+When a container is created in the simulation, the instance is
+forwarded to the *newCreatedContainer* entry point, with the end
+timestamp set to =-1=. Whenever a method receives an entity that is
+not completed yet, the end timestamp will be set to =-1=. The
+*destroyedContainer* method takes in a complete container that has
+just been destroyed. Most of the entities are removed during
+simulation, but the destroyed container may have some remaining one
+that coundn't be excluded, such as variables.
+
+Link entities have three instrumentation points all receiving
+=PajeUserLink= objects: *startLink*, where the end time and end
+container of the communication link are unknown; *endLink*, when the
+instance has the end point of the link but not the start; and
+*newCompletedLink*, where the link entity has beginning and
+end. Anytime a variable is set or updated, there are three
+=PajeUserVariable= entities sent to the plugin: the =first=, which
+contains the first value of the variable; the =last=, which is the one
+immediately before the variable in question; and the new variable
+which is not completed yet (=newVar=). The aditions and subtractions
+are sent to the same point (*updateVar*). Since the previous variable
+objects are necessary to generate the new value, they are not removed
+from memory during simulation. The set, push and pop state events each
+have one method receiving a =PajeUserState=: *setState*, *pushState*
+and *popState*, the only one with an entity with beginning and end
+timestamps. The =PajeUserEvent= objects are sent to the *newEvent*
+function.
 
 To validate the concept of the plugins and its entry points, three
 plugins were created: =PajeNullPlugin=, =PajeDumpPlugin= and
@@ -912,23 +937,29 @@ itself, whithout the interference of the other segments.
 The Dump plugin performs the same action as the =pj_dump= tool, which
 dumps to the standard output the entities generated by the
 simulator. The implementation consists in inserting a =print= function
-in each instrumentation point that receives a complete entity. When it
-is a destroyed container, it is necessary to iterate over the entities
-left in the container. The difference between the =PajeDumpPlugin= and
-the =pj_dump= tool is that the first one outputs the information as
-soon as the entity is completed, whithout keeping it in memory. With
-this approach, it is possible to solve the issue regarding the need to
-wait for the program to end to have the results.
+in each instrumentation point that receives a complete entity. These
+points are: *destroyContainer*, *popState*, *newCompletedLink*, and
+*newEvent*. When it is a destroyed container, it is necessary to
+iterate over the entities left in the container. The variables are
+also printed in the destruction of the container, since they are not
+removed during simulation.
+
+The difference between the =PajeDumpPlugin= and the =pj_dump= tool is
+that the first one outputs the information as soon as the entity is
+completed. The =pj_dump=, in turn, keeps everything in memory before
+dumping it all at once. With this approach, it is possible to solve
+the issue regarding the need to wait for the program to end to have
+the results.
 
 This plugin can be called with the argument =pjdump= in the =-p=
 option and adds a new argument (=-l=) that can group together a
 certain number of entities before dumping it. The option receives an
 integer as parameter defining the number of lines it should reach
-before dumping the entities. This option gives a little more
-flexibility for the user and may improve the performance, since the
-printing function of Jave costs time. For it to be possible, a
-=StringBuilder= is used as a buffer keeping all of the output until it
-reaches the number of lines informed.
+before dumping the entities. This provides a little more flexibility
+for the user and may improve the performance, since the printing
+function of Java costs time. For it to be possible, a =StringBuilder=
+is used as a buffer keeping all of the output until it reaches the
+number of lines desired.
 
 ** Paje Insert Database Plugin
 
@@ -936,16 +967,15 @@ The =PajeInsertDBPlugin= saves in a relational database all the
 results of the simulation. For the implementation, the JDBC driver was
 used to make a connection with the MySQL database. The schema used was
 specially designed for the Pajé format and will be presented in the
-next subsections. Thsi plugin allows the user to save data from
+next subsections. This plugin allows the user to save data from
 multiple files in the same database.
 
 The plugin can be used by specifying =mysql= as argument for the =-p=
-option. It is necessary to have a MySQL connection with a database
-with the correct schema. To specify the server of the connection,
-there is the option =-s=. It is also possible to inform a username
-(=-u=), a password (=-pwd=) and a database name (=-d=). The default
-for these options is: =localhost=, =root=, =root=, =paje=,
-respectively.
+option. It is necessary to have a MySQL connection and a database with
+the correct schema. To specify the server of the connection, there is
+the option =-s=. It is also possible to inform a username (=-u=), a
+password (=-pwd=) and a database name (=-d=). The default for these
+options is: =localhost=, =root=, =root= and =paje=, respectively.
 
 To create a relational database for the Pajé format, first, we created
 an entity-relationship model that is described in the subsection
@@ -953,35 +983,51 @@ below.
 
 *** Entity-Relationship Model
 
-The entity-relationship (ER) model contains one entity for each type
-of Pajé object. Also, to support multiple files, there is a =file=
-entity, which has the =name=, a =comment= and the =date= as
-attributes, as well as a =file_id=. The =type= and =container=
-entities have an identifying relationship with =file=, which means
-that the file id is part of their primary key. The relationship is a
-one to many, since a file can have multiple types and containers.
+The entity-relationship (ER) model, illustrated in Figure
+\ref{fig.ermodel}, contains one entity for each type of Pajé
+object. Also, to support multiple files, there is a *file* entity,
+which has the =name=, a =comment= and the =date= as attributes, as
+well as a =file_id=. The *Type* and *Container* entities have an
+identifying relationship with =file=, which means that the file id is
+part of their identifier. The relationship is one-to-many, since a
+file can have multiple types and containers.
 
-The =type= entity has =alias=, composing the primary key, =name= and
+The *Type* entity has =alias=, composing the identifier, =name= and
 =depth= as attributes. It also contains a self-referencing one to many
 relationship to indicate the =parent= type, as a type can have
-multiple children. Link and Variable types have exclusive attributes
-that are not common to all types, thus, both are specific entities
-that ihnerit from =type=. =LinkType= adds a relationship with itself
-to represent the communication with start and end. This is a many to
-many relationship because the types can be start and end to various
-communications. The =VariableType= has a color attribute.
+multiple children. Link and variable types have exclusive attributes
+that are not common to all types, thus, both are specializations of
+*Type*. *LinkType* adds a relationship with itself to represent a the
+start and end. This is a many-to-many relationship because the types
+can be start and end to various communications. The =VariableType= has
+a color attribute.
 
-The =container= entity has and identifying relashionship with =type=
-and contains the same attributes as type, including the =parent= one
-to many relation. The =value= entity is also a weak entity related to
-=type=, and has =alias= (primary key), =name= and =color= as
-attributes. Every e in the Pajé format is identified by its
+The *Container* entity has an identifying one-to-many relashionship
+with *Type*, as well as every other entity, since all of them are
+classified by a type. Containers have the same attributes as types,
+including the =parent= one-to-many relation. The *Value* entity has
+=alias= (identifier), =name= and =color= as attributes. 
 
+All of the entities that are related to a container, have an
+identifying one-to-many relation with *Container* entity. The relation
+of *Container* with *State* has =start= and =end= attributes, where
+=start= is identifier. *State* is also identified by its one-to-one
+relationship with *Value*, as well as the other valued
+entities. *Link* has two relationships with *Container*, one for
+=startContainer= and one for =endContainer=. Since it has a unique
+=key= attribute, the containers are not identifiers. A *Variable*
+entity contains the =startTime= attribute identifiying it, as well as
+an =updateTime= in the relation with *Container*. Also, this relation
+has a =value= attribute. The *Event* entity has a =time= field.
 
-
-
-
-(image)
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{ER Model for the Pajé format}
+\centering
+\includegraphics[width=\linewidth]{./img/pajeparco.png}
+\label{fig.ermodel}
+\end{figure}
+#+END_LaTeX
 
 *** Relational Model
 
