@@ -298,6 +298,7 @@ as a native C library to allow developers to embed MySQL directly in
 the application's code.
 
 ** Entity-Relationship and Relational Models
+\label{subsection.er_relational}
 
 An Entity-Relationship (ER) model defines a database in a conceptual
 view \cite{heuser}. This model can be represented by an ER Diagram
@@ -651,7 +652,7 @@ characteristic, but it is possible to add, in the future, more
 entities with just one timestamp. The =PajeDoubleTimedEntity= inherits
 from this class and represents entities with start and end
 timestamps. Like the other hierarchies, the valued entities are
-grouped together so a =PajeValueEntity= is a child of the double timed
+grouped together so a =PajeValuedEntity= is a child of the double timed
 entity, having =PajeUserState= and =PajeUserLink= as descendents. The
 double timed entity also has =PajeUserVariable= and =PajeNamedEntity=
 as childs. A =PajeContainer= inherits from the named entity. Figure
@@ -992,15 +993,15 @@ identifying relationship with =file=, which means that the file id is
 part of their identifier. The relationship is one-to-many, since a
 file can have multiple types and containers.
 
-The *Type* entity has =alias=, composing the identifier, =name= and
-=depth= as attributes. It also contains a self-referencing one to many
-relationship to indicate the =parent= type, as a type can have
-multiple children. Link and variable types have exclusive attributes
-that are not common to all types, thus, both are specializations of
-*Type*. *LinkType* adds a relationship with itself to represent a the
-start and end. This is a many-to-many relationship because the types
-can be start and end to various communications. The =VariableType= has
-a color attribute.
+The *Type* entity has =alias=, composing the identifier, =name= and =depth= as
+attributes. It also contains a self-referencing one to many relationship to
+indicate the =parent= type, as a type can have multiple children. It is
+associated to a *Value* entity, which describes the =PajeValue= class, with
+=alias=, =name=, =type= and =color=. Link and variable types have exclusive
+attributes that are not common to all types, thus, both are specializations of
+*Type*. *LinkType* adds a relationship with itself to represent a the start
+and end. This is a many-to-many relationship because the types can be the start
+and end to various communications. The =VariableType= has a color attribute.
 
 The *Container* entity has an identifying one-to-many relashionship
 with *Type*, as well as every other entity, since all of them are
@@ -1011,9 +1012,7 @@ including the =parent= one-to-many relation. The *Value* entity has
 All of the entities that are related to a container, have an
 identifying one-to-many relation with *Container* entity. The relation
 of *Container* with *State* has =start= and =end= attributes, where
-=start= is identifier. *State* is also identified by its one-to-one
-relationship with *Value*, as well as the other valued
-entities. *Link* has two relationships with *Container*, one for
+=start= is identifier. *Link* has two relationships with *Container*, one for
 =startContainer= and one for =endContainer=. Since it has a unique
 =key= attribute, the containers are not identifiers. A *Variable*
 entity contains the =startTime= attribute identifiying it, as well as
@@ -1030,6 +1029,34 @@ has a =value= attribute. The *Event* entity has a =time= field.
 #+END_LaTeX
 
 *** Relational Model
+
+After the creation of the conceptual model, a translation to a logical model
+was made. In this conversion, besides applying the universally known rules
+presented in chapter \ref{chapter.basic_concepts}, we considered the usability
+of the schema, analysing the common consultations made in Pajé data. This
+reflection is a usual part of the process, where the needs of the client are
+contemplated.
+
+The entities defined in the ER Model all became tables. For the *Type*
+specialization, we used the first option presented in
+\ref{subsection.er_model}: combining everything in a single table with the
+following fields: =file_id=, =alias=, =name=, =depth=, =parent_type_alias=,
+=start_link_type=, =end_link_type= and =color=. =file_id=, inherited from the
+identifying relation with *File*, and =alias= compose the primary key. The
+self-referencing relationships are described as foreign keys in their tables.
+The entities associated to the container all have at least three foreign keys
+that are also identifiers: =type_alias=, =container_alias= and =file_id=.
+*Link* has two foreign keys from *Container* but they don't belong to the
+identifier.
+
+In our ER Model, the value is only associated to the *Type*, thus, if one
+wants to know the value of a state, for example, it needs to first get its
+type, then, go to *Type* table to retrieve the value. Since it is desirable to
+easily get an entity's value, we added a relationship between the valued
+entities (*State*, *Link* and *Variable*) with *Value*. =value_alias= is an
+identifying foreign key for all, except *Link*, where the identifier consists
+only in the =key=, =type= and =file_id=.
+
 
 
 * Performance Evaluation
