@@ -243,7 +243,7 @@ understanding of our work. It is structured in five topics: the Java
 Compiler Compiler (JavaCC), the Java Database Connectivity (JDBC) API
 in the MySQL context, a brief description about the construction of
 conceptual and logical database schemas, an overview about
-experimental design and the R language in the experimental design
+experimental design, and the R language in the experimental design
 context.
 
 ** The Java Compiler Compiler (JavaCC) tool
