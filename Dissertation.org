@@ -500,16 +500,24 @@ _Comments_
 
 The Pajé Visualization Tool is an implementation to display the
 execution behavior of parallel and distributed programs. It reads
-information from trace files that describe the important events in the
-execution of a program and replays them in simulation. It is developed
+information from trace files that describe the important events during
+the execution of a program and replays them through simulation.
+It has been developed
 to simulate trace files in the Pajé Trace File Format, thus, it is
 important to understand how the Pajé trace files are composed. Section
 \ref{section.pajeformat} describes this format and all entity types it
 contains. The next section describes the new generation of the Pajé
 Visualization Tool, the PajeNG, focusing on the =libpaje= module,
 which is where the core simulation is performed. Since the new
-generation follows the exact same structure as the original Pajé, it
-will be the only one to be detailed.
+generation (PajeNG) follows the exact same structure as the original
+Pajé, it will be the only one to be detailed.
+
+_Comment_:
+- this last phrase sound strange, because you haven't presented yet
+  PajeNG so reader has no idea there is an "old" version written in
+  Objective-C and a new one in C++. Still, you should mention there
+  (in the appropriate section) the source code language of each of
+  them, so the reader knows the "main" difference.
  
 ** Pajé Trace File Format
 \label{section.pajeformat}
@@ -540,16 +548,25 @@ the beginning and the end of the communication.
 The Pajé objects are organized in two separated hierarchies: types and
 entities. These hierarchies are specific for each trace file, although
 it can be repeated in traces with the same scenario. In the structure
-of the trace file, the type hierarchy comes after the event definition
-where each type of the program is defined and one of the fields is
-always the parent type. Each entity is always associated to a type and
+of the trace file, the type hierarchy comes just after the event
+definition. There, each type of the program is defined and one of the
+fields is always the parent type. Each entity is always associated to
+a type and
 they must follow the same precedence as the types definition. For
 example, if the container C1, of type T1, is the parent of the
-container C2, of type T2, the type T2 must be below T1 in the type
-tree. The root type is always the number "0". The difference between
+container C2, of type T2, the type T2 must be child of T1 in the type
+tree. The root type is always the number $0$. The difference between
 both hierarchies relies on the number of nodes: while the type
 hierarchy has only a few, the entities hierarchy may have millions
 depending on the number of containers in the trace.
+
+_Comment_:
+- You mention in the paragraph above that there are event definition
+  and type definition. Then, below, you state the division in two
+  sections. I think the paragraph below should come _before_, so the
+  reader has a global understanding of the trace organization before
+  going into the details. Still, the paragraph above could be simply
+  moved to the _Events_ subsection below.
 
 A trace file is divided in two sections: event definition and events
 list. The types hierarchy declaration is part of the events list.
@@ -587,37 +604,46 @@ changes to its value can be made.
 
 For a detailed list of all events in the Pajé format, refer to the
 appendix. The next section describes the implementation of the new
-generation of the Pajé simulator.
+generation of the Pajé simulator (PajeNG).
+
+_Comment_:
+- Which appendix? You should put a label there and a ref here.
 
 ** PajeNG
 \label{section.pajeng}
 
 The PajeNG implementation is the new generation of the Pajé
 Visualization Tool \cite{pajeng}. It was developed in C++ and follows
-the same architecture as the original Pajé. It comprises a library
-containing the core of the simulation (=libpaje=), a space-time
-visualization tool and some auxiliar tools to manage the trace
-files. The base for the implementation of this project was the
+the same architecture as the original Pajé, written in Objective-C. It
+comprises a library containing the core of the simulation (=libpaje=), a
+space-time visualization tool and some auxiliary tools to manage the
+trace files. The base for the implementation of this project was the
 =libpaje= library.
 
 The library has three main components forming a pipeline that results
-in complete simulated entities. These components are: FileReader,
-EventDecoder and PajeSimulator. First, the FileReader reads a chunk of
-data from the trace file and puts it in memory. Then, the EventDecoder
+in complete simulated entities. These components are: =FileReader=,
+=EventDecoder= and =PajeSimulator=. First, the =FileReader= reads a chunk of
+data from the trace file and puts it in memory. Then, the =EventDecoder=
 breaks it into events identifying, line by line, the event's fields
 and creating an object with all the necessary information. Last, the
-PajeSimulator receives this event object and addresses to the proper
+=PajeSimulator= receives this event object and addresses to the proper
 simulation. An illustration of this process is in figure
 \ref{fig.pajeparco}.
 
+_Comments_:
+- Again, you should present the Figure before in the paragraph.
+
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Image inspired in \cite{kergommeaux2000paje}}
+\caption{TODO: Say what the figure is then put the "inspired from" between brackets. Figure inspired in \cite{kergommeaux2000paje}}
 \centering
 \includegraphics[width=\linewidth]{./img/pajeparco.png}
 \label{fig.pajeparco}
 \end{figure}
 #+END_LaTeX
+
+_Comment about this figure_:
+- It is wrong. What is the cylinder?
 
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
@@ -626,7 +652,7 @@ accordingly. This flexibility is implemented by a class hierarchy,
 going from the most general, containing the basic fields common to
 every type and entity, to the most specific. Besides, the PajeNG tool
 supports extra fields in the events, which allows the simulation of
-extended entities. There are three main hierarchies that are
+extended entities. There are three main class hierarchies that are
 particularly important in this objective: one for events, one for
 types and one for entities. With this modular implementation, it is
 relatively easy to add a new type of event or entity and integrate it
@@ -638,7 +664,8 @@ An event object is what is passed as an argument to the simulator so
 that it can be processed. Therefore, it must contain all of the
 necessary information for the simulation. The first object created
 when a trace file is being parsed is of type =PajeTraceEvent=, which
-is a class containing all the fields read by the parser. The event
+is a class containing all the fields read by the =PajeEventDecoder=. As
+depicted in Figure \ref{fig.eventsHierarchy}, the event
 hierarchy starts with a simple =PajeEvent= class. This class has a
 trace event object, a container, a type and a timestamp. The immediate
 childs of PajeEvent are: =PajeCategorizedEvent=, =PajeVariableEvent=
@@ -648,6 +675,12 @@ categorized event is characterized by having a =PajeValue= associated
 to it, thus, =PajeStateEvent=, =PajeEventEvent=, =PajeLinkEvent=, and
 their respective childs inherit from it. See Figure
 \ref{fig.eventsHierarchy}.
+
+_Comments_:
+- Again, mention figure before.
+- I have changed the paragraph above to give you an example
+- Pay attention to the text margins, you are not respecting them here
+  when you export to PDF.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -684,6 +717,9 @@ illustrated in Figure \ref{fig.typesHierarchy}.
 
 *Class hierarchy for the Paje Entities*
 
+_Comments regarding par. below_:
+- is "origin" a verb?
+
 The =PajeEntity= is the first node of the entities tree. It origins a
 =PajeSingleTimedEntity= class, that describes entities with one single
 timestamp. The =PajeUserEvent= is the only entity with this
@@ -695,7 +731,7 @@ grouped together so a =PajeValuedEntity= is a child of the double timed
 entity, having =PajeUserState= and =PajeUserLink= as descendents. The
 double timed entity also has =PajeUserVariable= and =PajeNamedEntity=
 as childs. A =PajeContainer= inherits from the named entity. Figure
-\ref{entitiesHierarchy} represents this structure.
+\ref{fig.entitiesHierarchy} represents this structure.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -718,7 +754,7 @@ PajeContainer object is instantiated. All other events are always
 associated to a container, thus, they will be simulated in the
 appropriate container instance. The PajeContainer object will keep the
 entities until the program finishes. Since all the data from the
-simulation is kept in memory, the end timestamp is used to sinalize
+simulation is kept in memory, the end timestamp is used to signal
 that an entity no longer can be referred.
 
 The PajeSimulator class lists every type declared and container
@@ -777,7 +813,7 @@ simulation core more transparent for the performance analyst providing
 the created entities in a way that he can manipulate them without
 looking to the rest of the implementation. The program uses the
 concept of plugins attached to every type of event. The details of
-this approach will be detailed in the next chapter.
+this novel approach, developed in our work, will be detailed in the next chapter.
 
 * Aiyra - Java-based simulator
 \label{chapter.aiyra}
