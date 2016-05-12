@@ -140,15 +140,15 @@ Do as follows:
 * Introduction
 Observation of program behavior is particularly important in High
 Performance Computing since it enables an accurate performance
-analysis \cite{XXX}. A very common method of evaluation is registering
-program events in trace files that work as a log, so, whenever a
-relevant event happens, it will be logged in the trace file with the
-proper information \cite{XXX}. Then, these traces are replayed in
-simulation combining information that is spread across multiple events
-deriving new and richer entities \cite{XXX}. This event processing is
-usually done once and discarded, which can be very inconvenient
-considering that some trace files are very large. Therefore, it would
-be interesting to save these entities for further analysis.
+analysis. A very common method of evaluation is registering program
+events in trace files that work as a log, so, whenever a relevant
+event happens, it will be logged in the trace file with the proper
+information. Then, these traces are replayed in simulation combining
+information that is spread across multiple events deriving new and
+richer entities \cite{XXX}. This event processing is usually done once
+and discarded, which can be very inconvenient considering that some
+trace files are very large. Therefore, it would be interesting to save
+these entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
 Pajé Trace Simulator \cite{kergommeaux2000paje}, an open source
@@ -845,16 +845,16 @@ other valued entities, =PajeUserState= and =PajeUserLink=, inherit the
 =PajeValue= attribute from the =PajeValuedEntity= class. A
 =PajeUserVariable= object also has a =value= attribute but, unlike
 events, states and links, it is a double number. The =PajeUserLink=
-also has a string that defines the =key= and start and end containers
+has a string that defines the =key= and start and end containers
 identified by =startContainer= and =endContainer=.
 
 Every trace event simulation has an instrumentation point, which
 dispatches the entity objects generated to the plugin. These points
 are either in the =PajeSimulator= or in the =PajeContainer=, as
 illustrated in figure \ref{fig.aiyraCore}. In the =PajeSimulator= are
-all of the outputs regarding the definition of types and values and
-the creation of containers. Although in this point the containers are
-not complete objects, since they don't have ending timestamp or the
+the outputs regarding the definition of types and values and the
+creation of containers. Although in this point the containers are not
+complete objects, since they don't have ending timestamp or the
 related entities, they are forwarded anyway with the alias and type
 information. The =PajeContainer= is in charge of dispatching to the
 plugin the instances related to it, which involve the states, events,
@@ -894,26 +894,26 @@ differences are too little and not worth of a new class
 implementation.
 
 The entrances of the plugins comprise the definition of types and
-values, the creation of containers, the formation and completion of
-new entities. The *newType* entry point is a unique entrance for when
-a type of any kind is defined, having the =PajeType= object as
+values, the creation of containers, and the formation and completion
+of new entities. The *newType* entry point is a unique entrance for
+when a type of any kind is defined, having the =PajeType= object as
 argument. The =getNature()= method can be used to identify the exact
-type. The =newValue= method receives every =PajeValue= created.
+type. The *newValue* method receives every =PajeValue= created.
 
 When a container is created in the simulation, the instance is
 forwarded to the *newCreatedContainer* entry point, with the end
 timestamp set to =-1=. Whenever a method receives an entity that is
-not completed yet, the end timestamp will be set to =-1=. The
+not completed yet, the end timestamp will be =-1=. The
 *destroyedContainer* method takes in a complete container that has
 just been destroyed. Most of the entities are removed during
-simulation, but the destroyed container may have some remaining one
-that coundn't be excluded, such as variables.
+simulation, but the destroyed container may have some remaining ones
+that couldn't be excluded, such as variables.
 
 Link entities have three instrumentation points all receiving
 =PajeUserLink= objects: *startLink*, where the end time and end
 container of the communication link are unknown; *endLink*, when the
 instance has the end point of the link but not the start; and
-*newCompletedLink*, where the link entity has beginning and
+*newCompleteLink*, where the link entity has beginning and
 end. Anytime a variable is set or updated, there are three
 =PajeUserVariable= entities sent to the plugin: the =first=, which
 contains the first value of the variable; the =last=, which is the one
