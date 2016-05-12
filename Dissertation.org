@@ -249,14 +249,15 @@ context.
 ** The Java Compiler Compiler (JavaCC) tool
 \label{section.javacc}
 
-Java Compiler Compiler (JavaCC) is a lexical and parser generator that
-receives a set of regular expressions describing the tokens of a
-language and a grammar using these tokens. The output of the tool is a
-lexical analyser, that separates the input file into tokens, and a
-parser, which performs a syntax analysis.
+The Java Compiler Compiler (JavaCC) is a lexical and parser generator
+configured with a set of regular expressions describing the tokens of
+a language and a grammar using these tokens. As output, it generates a
+lexical and syntax parser in the Java language. The lexical code
+separates the input file into tokens; the parser code is responsible
+for the syntax analysis.
 
 What differentiates JavaCC from other parser generators that exist for
-the Java language is that it creates source code in Java, which
+the Java language is that it creates source code in Java. This
 facilitates the understanding and eliminates the need of having
 dependencies in the code. JavaCC has also shown itself to have a much
 better performance than other tools such as Another Tool For Language
@@ -266,36 +267,50 @@ generator, but it was soon discarded due to its very low performance.
 
 JavaCC can be downloaded, unzipped and added to the PATH. It also has
 a plugin for Eclipse. Once installed, JavaCC will process your grammar
-defined in a file with extension ".jj" using the command =javacc=.
-
+defined in a file with extension ``.jj'' using the command =javacc=.
+#+BEGIN_LaTeX
+%
+#+END_LaTeX
 For example, processing a file named =MyGrammar.jj= results in seven
 files: the parser in =MyGrammar.java=; the lexical analyser in
 =MyGrammarTokenManager.java= and some useful constants in
 =MyGrammarConstants.java=. The other four files generated:
 =Token.java=, =TokenMgrError.java=, =SimpleCharStream.java= and
 =ParseException.java= are boilerplate files that can be reused within
-parsers and are not affected by the grammar itself.  Once the
-corresponding Java source code for the scanner and parser are
-generated, you can compile them as usual with =javac=.
+parsers and are not affected by the grammar itself.  The
+corresponding Java source code for the scanner and parser can be
+compiled as usual with =javac=.
 
 The whole grammar will be in the =MyGrammar.jj= file and it is the
 only file that needs to be modified. There, the tokens used will be
 defined, the parser rules specified, and it is possible to even add
 Java code that has to be executed during the parsing.
 
+_Comment_:
+- Integrate this last paragraph in previous ones
+
 ** JDBC and MySQL
 
 The Java Database Connectivity (JDBC) API is a standard for
-connectivity between Java and a range of databases \cite{jdbc}. It
-comprises methods to query and update data in relational databases
-allowing the Java language to interact with several Database
-Management Systems (DBMS).
+connectivity between Java and a range of relational databases
+\cite{jdbc}. It comprises methods to query and update data, enabling
+the Java language to interact with several Database Management Systems
+(DBMS) in a standard manner.
+
+_Comment_:
+- Missing year in the citation
 
 MySQL is one of the most important open-source DBMS in the market. It
-is developed by Oracle and uses SQL language as interface. To enable
+has been developed by Oracle and uses SQL language as interface. To enable
 the use of MySQL with Java, Oracle provides a driver for JDBC, as well
-as a native C library to allow developers to embed MySQL directly in
+as a native C library to allow developers to SQL commands  directly in
 the application's code.
+
+_Comment_:
+- I see that one of the main's JBDC advantages is that you can do
+  standard SQL commands in the source code. If you change the DBMS,
+  there is no problem. So, you are not bounded to use a single DBMS
+  and can migrate from one to another very easily.
 
 ** Entity-Relationship and Relational Models
 \label{subsection.er_relational}
@@ -311,6 +326,9 @@ that entity. It is also possible for a relationship to have
 attributes. Besides, an entity can derive other more specialized
 entities, which is called *specialization*.
 
+_Comment_:
+- Fix citations
+
 A relationship between entities *A* and *B* can have one of the
 following patterns: *one-to-one*, where an object of the entity A can
 be associated to only one of type B and vice versa; *one-to-many*,
@@ -318,12 +336,19 @@ which means that an instance of the entity A can be associated to more
 than one entities of type B, but B entities can only relate to at most
 one of type A; *many-to-many*, where one object from the A entity can
 be associated to more than one entities of type B and vice
-versa. These characteristic also apply to self-referencing relations,
+versa. These characteristics also apply to self-referencing relations,
 where there is a relationship of an entity with itself. Besides, a
 connection can be an *identifying relationship*, which means that the
 relationship identifies an object. In these cases the entity is called
 a *weak entity*. Figure \ref{fig.ermodelex} exemplifies these
 concepts.
+
+_Comment_:
+- I think you should start with "Figure X explain the ER
+  concepts". Then you continue describing the concepts and making
+  references to the figure. It is much better when you write down
+  like this because you know the figure already exists when the
+  paragraph starts.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -370,7 +395,7 @@ table for all of the hierarchy, where the primary key would be the
 identifier of the most generic entity and there would be optional
 columns; and one table for each specialized entity, where all of them
 would have the identifier of the most generic entity composing the
-primary key. The first case, in figure \ref{fig.ermodelex}, would
+primary key. The first case, in Figure \ref{fig.ermodelex}, would
 generate a single =Person= table, with *personId* as primary key and
 *name*, *phone*, *studentId*, *course* and *salary* as attributes. In
 the second option, =Student= and =Teacher= become tables, with
@@ -378,20 +403,24 @@ the second option, =Student= and =Teacher= become tables, with
 
 ** Experimental Design
 
-Experimental design is a form of performance analysis that aims to
+Experimental design, in the context of performance analysis, aims to
 define a minimum number of experiments that will collect the maximum
 information necessary \cite{jain}. It also targets random variations
 that could affect the results, guaranteeing that the number of tests
 executed and the error margin calculated will be sufficient to avoid
 misleading conclusions.
 
-There is a specific terminology used in experimental design where
-=Response Variable= is the outcome of an experiment, =Factors= are all
+_Comments_:
+- Jain citation is completely wrong. Reference the second edition of
+  the book that appeared last year.
+
+There is a specific terminology used in experimental design. The term
+=Response Variable= is the outcome of an experiment; =Factors= are all
 of the variables that can have several different values affecting the
-response variable and =Levels= are the possible values that a factor
+response variable, and =Levels= are the possible values that a factor
 can assume. Also, the =Primary Factors= are the factors that need to
 be quantified, =Secondary Factors= are the factors whose impacts in
-the performance are not relevant for the analysis, =Replication= is
+the performance are irrelevant for the analysis, =Replication= is
 the number of repetition of all or some experiments and =Design= is
 the specification of total number of experiments based on factor level
 combination and number of replications for each experiment. The
@@ -400,22 +429,22 @@ be a computer, for example, and =Interaction= is when the levels of a
 fator affect the results of other factor.
 
 There are several types of experimental design modeling. One of them
-is the full factorial design, which consists in analysing every
+is the full factorial design, which consists in evaluating every
 possible combination at all levels of all factors. With this type of
-design, it is possible to evaluate factors with multiple numbers of
+design, it is possible to measure factors with multiple numbers of
 levels. The advantage of this model is that every possible combination
 will be analysed, generating richer results. However, depending on the
-number of factors, levels and replications, it may generate a very
-large total number of experiments, which can cost a lot of
+number of factors, levels and replications, it may generate too many
+experiments, which can cost a lot of
 time. Therefore, when using this technique, it is important to weight
 the relevance of each factor and level to generate an appropriate and
 accurate design. To calculate the total size of the sample you
 multiply the numbers of levels of the factors and the number of
 replications. For example, a design with a three-level factor, a
 two-level factor and 20 replications would have 120 experiments
-(3*2*20).
+(the result of $3*2*20$).
 
-When there is a large number of factors or levels, it may not be
+When there are too many factors and levels, it may not be
 possible to use the full factorial design. In these cases, one can use
 a fractional factorial design, which covers just a fraction of the
 full factorial design. In this type of experiment, a carefully chosen
@@ -423,7 +452,10 @@ subset of factors and levels is taken into consideration, based on the
 most important features the analyser wants to test. Although it saves
 time and expenses, the results provide less information.
 
-** R language
+_Comments_:
+- Was this (the text) yours? 
+
+** The R language
 
 R is a language for statistical computing and graphics generation. It
 can be very easily extended, by creating and using packages. With R,
@@ -431,7 +463,7 @@ it is possible to create full factorial or fractional designs using
 the =DoE.base= package. It contains the class *design* with several
 accessor functions to create different types of design. One particular
 important function is the *fac.design*, which creates full factorial
-designs with arbitrary numbers of levels. The function receives
+designs with an arbitrary numbers of levels. The function receives
 several arguments, including number of factors, levels and
 replication. The usage of the function is the following:
 #+BEGIN_LaTeX
@@ -455,6 +487,13 @@ in how many blocks the experiment will be subdivided, =randomize=
 informs the design is randomized, =seed= is the optional seed for the
 randomization, =nlevels= is a vector with the number of levels for
 each factor and =factor.names=: a list of vectors with factor levels.
+
+_Comments_
+- You should provide a better example. Give at least 2 factors, one
+  with 2 and another with 3 levels; 30 replications. You can take
+  exactly one of the FF designs you have adopted. And even mention by
+  the end of the paragraph that this example actually was used for
+  designing your experiments.
 
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
