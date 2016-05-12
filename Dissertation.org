@@ -850,18 +850,26 @@ identified by =startContainer= and =endContainer=.
 
 Every trace event simulation has an instrumentation point, which
 dispatches the entity objects generated to the plugin. These points
-are either in the =PajeSimulator= or in the =PajeContainer=. In the
-=PajeSimulator= are all of the outputs regarding the definition of
-types and values and the creation of containers. Although in this
-point the containers are not complete objects, since they don't have
-ending timestamp or the related entities, they are forwarded anyway
-with the alias and type information. The =PajeContainer= is in charge
-of dispatching to the plugin the instances related to it, which
-involve the states, events, links and variables. It also may send
-unfinished objects. When there is a =PajeDestroyContainerEvent=, the
-container object is sent again, now complete with an ending timestamp.
+are either in the =PajeSimulator= or in the =PajeContainer=, as
+illustrated in figure \ref{fig.aiyraCore}. In the =PajeSimulator= are
+all of the outputs regarding the definition of types and values and
+the creation of containers. Although in this point the containers are
+not complete objects, since they don't have ending timestamp or the
+related entities, they are forwarded anyway with the alias and type
+information. The =PajeContainer= is in charge of dispatching to the
+plugin the instances related to it, which involve the states, events,
+links and variables. It also may send unfinished objects. When there
+is a =PajeDestroyContainerEvent=, the container object is sent again,
+now complete with an ending timestamp.
 
-(image)
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Aiyra's Core Architecture}
+\centering
+\includegraphics[width=\linewidth]{./img/aiyraCore.png}
+\label{fig.aiyraCore}
+\end{figure}
+#+END_LaTeX
 
 The choice of creating an instrumentation point for each trace event
 is due to the intention of covering all of the diffent needs of the
@@ -927,7 +935,7 @@ chapter.
 * Plugins
 \label{chapter.plugins} 
 
-In this chapted, two plugins are described: =PajeDumpPlugin= and
+In this chapter, two plugins are described: =PajeDumpPlugin= and
 =PajeIsertDBPlugin=. The =PajeNullPlugin= is the default one. It does
 not make any treatment to the data so the objects are simply
 discarded. It is useful to verify the performance of the simulation
@@ -941,9 +949,9 @@ simulator. The implementation consists in inserting a =print= function
 in each instrumentation point that receives a complete entity. These
 points are: *destroyContainer*, *popState*, *newCompletedLink*, and
 *newEvent*. When it is a destroyed container, it is necessary to
-iterate over the entities left in the container. The variables are
-also printed in the destruction of the container, since they are not
-removed during simulation.
+iterate over the entities left in the container. The variables printed
+in the destruction of the container, since they are not removed during
+simulation.
 
 The difference between the =PajeDumpPlugin= and the =pj_dump= tool is
 that the first one outputs the information as soon as the entity is
@@ -993,70 +1001,95 @@ identifying relationship with =file=, which means that the file id is
 part of their identifier. The relationship is one-to-many, since a
 file can have multiple types and containers.
 
-The *Type* entity has =alias=, composing the identifier, =name= and =depth= as
-attributes. It also contains a self-referencing one to many relationship to
-indicate the =parent= type, as a type can have multiple children. It is
-associated to a *Value* entity, which describes the =PajeValue= class, with
-=alias=, =name=, =type= and =color=. Link and variable types have exclusive
-attributes that are not common to all types, thus, both are specializations of
-*Type*. *LinkType* adds a relationship with itself to represent a the start
-and end. This is a many-to-many relationship because the types can be the start
-and end to various communications. The =VariableType= has a color attribute.
+The *Type* entity has =alias=, composing the identifier, =name= and
+=depth= as attributes. It also contains a self-referencing one-to-many
+relationship to indicate the =parent= type, as a type can have
+multiple children. It is associated to a *Value* entity, which
+describes the =PajeValue= class, with =alias=, =name=, =type=
+(identifying relation) and =color=. Link and variable types have
+exclusive attributes that are not common to all types, thus, both are
+specializations of *Type*. *LinkType* adds a relationship with itself
+to represent a the start and end. This is a many-to-many relationship
+because the types can be the start and end to various
+communications. The =VariableType= has a color attribute.
 
 The *Container* entity has an identifying one-to-many relashionship
 with *Type*, as well as every other entity, since all of them are
 classified by a type. Containers have the same attributes as types,
-including the =parent= one-to-many relation. The *Value* entity has
-=alias= (identifier), =name= and =color= as attributes. 
-
-All of the entities that are related to a container, have an
-identifying one-to-many relation with *Container* entity. The relation
-of *Container* with *State* has =start= and =end= attributes, where
-=start= is identifier. *Link* has two relationships with *Container*, one for
-=startContainer= and one for =endContainer=. Since it has a unique
-=key= attribute, the containers are not identifiers. A *Variable*
-entity contains the =startTime= attribute identifiying it, as well as
-an =updateTime= in the relation with *Container*. Also, this relation
-has a =value= attribute. The *Event* entity has a =time= field.
+including the =parent= one-to-many relation. All of the entities that
+are related to a container, have an identifying one-to-many relation
+with *Container* entity. *State* has =startTime= and =endTime=
+attributes, where the first is identifier. *Link* has two one-to-many
+relationships with *Container*, one for =startContainer= and one for
+=endContainer=. A *Variable* entity contains the =Time= attribute, as
+well as an =updateTime= in the relation with *Container*. Also, this
+relation has a =value= attribute. The *Event* entity has a =time=
+field.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{ER Model for the Pajé format}
 \centering
-\includegraphics[width=\linewidth]{./img/pajeparco.png}
+\includegraphics[width=\linewidth]{./img/ermodel.png}
 \label{fig.ermodel}
 \end{figure}
 #+END_LaTeX
 
 *** Relational Model
 
-After the creation of the conceptual model, a translation to a logical model
-was made. In this conversion, besides applying the universally known rules
-presented in chapter \ref{chapter.basic_concepts}, we considered the usability
-of the schema, analysing the common consultations made in Pajé data. This
-reflection is a usual part of the process, where the needs of the client are
-contemplated.
+After the creation of the conceptual model, a translation to a logical
+model was made. In this conversion, besides applying the universally
+known rules presented in chapter \ref{chapter.basic_concepts}, we
+considered the usability of the schema, analysing the common
+consultations made in the Pajé data. This reflection is a usual part
+of the process, where the needs of the client are contemplated.
 
 The entities defined in the ER Model all became tables. For the *Type*
 specialization, we used the first option presented in
-\ref{subsection.er_model}: combining everything in a single table with the
-following fields: =file_id=, =alias=, =name=, =depth=, =parent_type_alias=,
-=start_link_type=, =end_link_type= and =color=. =file_id=, inherited from the
-identifying relation with *File*, and =alias= compose the primary key. The
-self-referencing relationships are described as foreign keys in their tables.
-The entities associated to the container all have at least three foreign keys
-that are also identifiers: =type_alias=, =container_alias= and =file_id=.
-*Link* has two foreign keys from *Container* but they don't belong to the
-identifier.
+\ref{subsection.er_relational}: combining everything in a single table
+with the following fields: =file_id=, =alias=, =name=, =depth=,
+=parent_type_alias=, =start_link_type=, =end_link_type= and
+=color=. =File_id=, inherited from the identifying relation with
+*File*, and =alias= compose the primary key. The self-referencing
+relationships are described as foreign keys in their tables.  The
+entities associated to the container all have at least three foreign
+keys that are also identifiers: =type_alias=, =container_alias= and
+=file_id=. Since the *Link* entity has a unique key, its two foreign
+keys from *Container* don't belong to the identifier.
 
-In our ER Model, the value is only associated to the *Type*, thus, if one
-wants to know the value of a state, for example, it needs to first get its
-type, then, go to *Type* table to retrieve the value. Since it is desirable to
-easily get an entity's value, we added a relationship between the valued
-entities (*State*, *Link* and *Variable*) with *Value*. =value_alias= is an
-identifying foreign key for all, except *Link*, where the identifier consists
-only in the =key=, =type= and =file_id=.
+In our ER Model, the value is only associated to the *Type*, thus, if
+one wants to know the value of a state, for example, it needs to first
+get its type, then, go to *Type* table to retrieve the value. Since it
+is desirable to easily get an entity's value, we added a relationship
+between the valued entities (*State*, *Link* and *Variable*) with
+*Value*. =value_alias= is an identifying foreign key for all, except
+*Link*, where the identifier consists only in the =key=, =type= and
+=file_id=. With the conceptual model of the *Variable* entity, it is
+required to retrieve two rows if one needs to know the beginning and
+ending timestamps of one entity. Since this information is very
+important, we changed the *Variable* table for the tuples to
+explicitly have =startTime= and =endTime=.
 
+*** Implementation
+
+In the =PajeInsertDBPlugin=, the following entry points were used:
+*newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
+*popState*, *newCompleteLink*, *updateVar* and *newEvent*. Types,
+values and containers are inserted in the database as soon as they are
+created due to the dependency of other entities on these ones. When a
+container is destroyed, its =endTime= is updated in the database.
+
+The insertion in the database costs time, hence, the approach of
+making an access every time a new entity is created has a very bad
+performance. To solve this problem, we used the mechanism of *batches*
+provided by JDBC, which sends a block of queries all at once, reducing
+the communication overhead. This functionality is optional and can be
+included by adding the (=-batch=) option with an integer as
+argument. This number will define how many queries it will store
+before inserting a batch in the database. This is only appliable to
+states, events, links and variables, since types, values and
+containers are immediately inserted. An analysis of the performance
+for different sizes of batch will be presented in the next chapter.
 
 
 * Performance Evaluation
@@ -1632,7 +1665,6 @@ method is already called in the constructor:
       checkOptionsHelper();	
   }
 #+END_EXAMPLE 
-
 
 
 * Paje File Format Parser for JavaCC
