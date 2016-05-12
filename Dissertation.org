@@ -824,14 +824,21 @@ memory, forwards every created entity to a common place where it can
 be manipulated freely. The architecture of the implementation contains
 three packages: *parser*, *simulator core* and *plugin*. Every event
 of a trace file always goes through all of the packages. First, the
-file is read by the parser, where a trace event object is
+trace file in the input is read by the parser, where a trace event object is
 created. This instance contains the type of event in question and the
 field values. Then, the simulator receives this object and executes
 the simulation based on the event type. The simulation always
 generates an entity, even if incomplete (with no end timestamp, for
-example). Last, this new entity is sent to the plugin, which contains
+example). Finally, this new entity is sent to the plugin, which contains
 specific entry points for every different kind of entity. Figure
 \ref{fig.aiyraArchitecture} illustrates this architecture.
+
+_Comment_:
+- mention figure in first hand
+- You should always (when talking about figures) explain the figure. 
+  - You did not explain the figure in this case. You should lead the
+    reader to check the figure from time to time during reading.
+  - This is valid for all figures (before and after this comment)
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -844,16 +851,29 @@ specific entry points for every different kind of entity. Figure
 
 The program receives arguments from the user in its execution. The
 *filename* option (=-f=) is the only mandatory one, which indicates
-what is the trace file to be replayed. There are other two general
+what is the trace file to be simulated. There are other two general
 options: *comment* (=-m=), a comment about the file; and *plugin*
 (=-p=), which indicates which plugin will be used in the
 simulation. The details about the already implemented plugins will be
 presented in chapter \ref{chapter.plugins} and a step-by-step for the
 execution of Aiyra can be found in the appendix.
 
+_Comment_
+- Which appendix?
+- Merge next one-line paragraph in the previous one.
+- Generally speaking (global comment), you should use the present
+  tense instead of the future. It reads much better.
+  - Simply put: remove all "will" from the text
+
 The following subsections will detail each one of the packages.
 
-** Parser
+** The Parser: Option Handling and JavaCC
+
+_Comment_:
+- Since this "Parser" package also contains option handling, maybe you
+  should change its name to something else, like "controller". I say
+  controller because the simulator itself is imbricated (embedded) in
+  the "Parser".
 
 The parser package is the entry point of the program, thus, it also
 handles the arguments passed by the user. For this processing, an
@@ -862,12 +882,20 @@ handling is centralized in one single class, =OptionsHandler=, to
 facilitate the inclusion of new ones. Refer to the appendix for more
 details about the library.
 
+_Comment_:
+- which appendix?
+
 A grammar (=PajeGrammar.jj=) describing the elements of the Pajé file
 format, presented in section \ref{section.pajeformat}, was created to
 be processed by the Java Compiler Compiler. The implementation uses
 the =JavaCC= syntax and can be viewed in the appendix. Each event
 definition is stored in an array, while the events are simulated as
 soon as they are identified.
+
+_Comment_:
+- which appendix?
+- Perhaps you should say see the appendix only once. It is too
+  repetitive as it is now.
 
 The parser package is composed by all of the =JavaCC= files described
 in section \ref{section.javacc} and the =OptionsHandler= class. The
@@ -879,6 +907,9 @@ simulator instance, which is the entry point of the simulator core
 package, is called to simulate that event. Next section will describe
 the simulator core package.
 
+_Comments_:
+- remove will: "Next section describes..."
+
 ** Aiyra's Core Simulator
 
 Aiyra's core simulator follows the exact same structure of the
@@ -889,6 +920,12 @@ not support extra fields in the events, which makes it more limited
 for extensions in the Pajé Trace file. As in the =PajeNG=, all of the
 events go through the =PajeSimulator= object, which forwards to the
 =PajeContainer= if it is an event associated to a container.
+
+_Comments_:
+- Why have you opted to leave extra fields out of your implementation?
+  - You could say that despite this negative difference on your side,
+    it is just a matter of changing everything so the plugins also get
+    that kind of information in a generic manner.
 
 Every entity generated is represented by an object with attributes
 representing its fields. The class hierarchy of the entities is the
@@ -905,6 +942,10 @@ attributes, which is an object with the values for red (=r=), green
 end containers of the communication. A value is represented by a
 =PajeValue= class, with =name=, =alias=, =type= and =color= as
 attributes.
+
+_Comments_:
+- Always pay attention to the margins when the PDF get exported.
+  - Nexts paragraphs for example have lots of problems such as this
 
 A container object (=PajeContainer=) has an =alias=, =name=, =type=
 and =parent= (another =PajeContainer=), besides the structures to
@@ -924,7 +965,7 @@ has a string that defines the =key= and start and end containers
 identified by =startContainer= and =endContainer=.
 
 Every trace event simulation has an instrumentation point, which
-dispatches the entity objects generated to the plugin. These points
+dispatches the entity objects generated to the plugin package. These points
 are either in the =PajeSimulator= or in the =PajeContainer=, as
 illustrated in figure \ref{fig.aiyraCore}. In the =PajeSimulator= are
 the outputs regarding the definition of types and values and the
@@ -983,6 +1024,9 @@ not completed yet, the end timestamp will be =-1=. The
 just been destroyed. Most of the entities are removed during
 simulation, but the destroyed container may have some remaining ones
 that couldn't be excluded, such as variables.
+
+_Comments_
+- Avoid things like "Couldn't". Write "could not" instead. More formal.
 
 Link entities have three instrumentation points all receiving
 =PajeUserLink= objects: *startLink*, where the end time and end
