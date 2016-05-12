@@ -303,7 +303,7 @@ the application's code.
 An Entity-Relationship (ER) model defines a database in a conceptual
 view \cite{heuser}. This model can be represented by an ER Diagram
 (ERD) and can be denoted by *schema*. It is based in the notion of
-*entities*, which can be real-world objects that are esiliy
+*entities*, which can be real-world objects that are easily
 identifiable \cite{ertutorial}, and the *relationship* between
 them. The entities have a set of attributes, where one or more are
 defined as the *identifier*, which will uniquely identify an object of
