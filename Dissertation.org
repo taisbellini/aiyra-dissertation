@@ -275,23 +275,27 @@ that has to be executed during the parsing.
 #+BEGIN_LaTeX
 %
 #+END_LaTeX
-For example, processing a file named =MyGrammar.jj= results in seven
-files: the parser in =MyGrammar.java=; the lexical analyser in
+In Figure \ref{fig.javaccex} we can see an example of the processing
+of a file named =MyGrammar.jj=, which results in seven files: the
+parser in =MyGrammar.java=; the lexical analyser in
 =MyGrammarTokenManager.java= and some useful constants in
 =MyGrammarConstants.java=. The other four files generated:
 =Token.java=, =TokenMgrError.java=, =SimpleCharStream.java= and
 =ParseException.java= are boilerplate files that can be reused within
-parsers and are not affected by the grammar itself.  The
-corresponding Java source code for the scanner and parser can be
-compiled as usual with =javac=.
+parsers and are not affected by the grammar itself.  The corresponding
+Java source code for the scanner and parser can be compiled as usual
+with =javac=.
 
-_Comments_:
-- A small figure here would be nice. You have JavaCC in the middle,
-  drawn as a component. On its left side you have the file
-  =MyGrammar.jj=; on its right, the different files as output. You mark
-  those that are just the boilerplates from those that are
-  important. Finally, you change the paragraph above to make reference
-  to this figure, mentioning the figure from the start.
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Example of ER Model}
+\centering
+\includegraphics[width=\linewidth]{./img/ermodelex.png}
+\label{fig.javaccex}
+\end{figure}
+#+END_LaTeX
+
+(IMAGE)
 
 ** JDBC and MySQL
 
@@ -452,9 +456,9 @@ time and expenses, the results provide less information.
 R is a language for statistical computing and graphics generation. It
 can be very easily extended, by creating and using packages. With R,
 it is possible to create full factorial or fractional designs using
-the =DoE.base= package. It contains the class *design* with several
+the =DoE.base= package. It contains the class =design= with several
 accessor functions to create different types of design. One particular
-important function is the *fac.design*, which creates full factorial
+important function is the =fac.design=, which creates full factorial
 designs with an arbitrary numbers of levels. The function receives
 several arguments, including number of factors, levels and
 replication. The usage of the function is the following:
@@ -477,18 +481,13 @@ fac.design(
 where =nfactors= represents the number of factors, =replications= is
 the number of replications, =repeat.only= tells if the replications of
 each run are grouped together, =blocks= is a prime-number telling in
-how many blocks the experiment is subdivided, =randomize=
-informs the design is randomized, =seed= is the optional seed for the
+how many blocks the experiment is subdivided, =randomize= informs the
+design is randomized, =seed= is the optional seed for the
 randomization, =nlevels= is a vector with the number of levels for
 each factor and =factor.names=: a list of vectors with factor levels.
 This example is one of the designs used for the performance evaluation
-in chapter \ref{chapter.performance}
+in chapter \ref{chapter.performance}.
 
-_Comment_:
-- You forgot the period in the last sentence. Pay attention to the PDF
-  output. It is easier to see this kind of mistakes there.
-- You have used both *this* and =this= here. Stick to a rule. Of course
-  you can use both, but use it always the same way.
 
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
@@ -509,33 +508,20 @@ simulation is performed.
 \label{section.pajeformat}
 
 _Comment_
-- You still have room for improvements. See structure change below.
-- When you write "refer to \ref{ap.pajeformat}", do this way "refer to
-  Appendix \ref{ap.pajeformat}". In the first form, reader has
-  absolutely no idea what is that.
-- Section about "Event Definition" is too small. You may extend a bit
-  without going to further details. Remove mention to the appendix
-  there, mention only _one time_ at the end of this section about the
-  paje file format. Or even better, mention in the beggining of this
-  section that here you just give an idea of the format, a full
-  description is on the appendix.
 - A figure C1 - C2, T1, T2 where you have on the left the type
   hierarchy and on the right the entities hierarchy. Align the levels
   of such hierarchies with dashed lines showing the
   correspondance. Pay attention to timestamped objects (you may
   represent horizontally).
 
-The Pajé Trace File Format \cite{pajetracefile} is a textual and
-generic format that describes the behaviour of parallel and
-distributed programs. The Pajé format describes five types of
-entities: containers, states, events, variables and links. Each entity
-is always associated to a container, even the containers
-themselves. (PUT NEXT PARAGRAPH HERE) It is divided in two segments: event definition and
-timestamped events, which will be detailed later in this
-section. (MOVE THIS LAST PHRASE TO JUST BEFORE "Events Definition"
-MARK, ADAPT IT ACCORDINGLY).
-
-A *container* can be any hardware or software entity, such as a
+This section gives an overview of the Pajé Trace File Format and its
+complete description is in Appendix \ref{ap.pajeformat}. The Pajé
+Trace File Format \cite{pajetracefile} is a textual and generic
+pattern that describes the behaviour of parallel and distributed
+programs. The Pajé format describes five types of entities:
+containers, states, events, variables and links. Each entity is always
+associated to a container, even the containers themselves. A
+*container* can be any hardware or software entity, such as a
 processor, a thread, a network link, etc. It is the only Pajé object
 that holds other objects, including containers, which makes it the
 main component to define the type hierarchy. A *state* is used to
@@ -548,14 +534,20 @@ represented by an object with a value and two timestamps, beginning
 and end, indicating how long the variable had that specific value. A
 *link* represents a relationship between two containers, such as a
 communication between processes. It contains two timestamps specifying
-the beginning and the end of the communication.
+the beginning and the end of the communication. A Pajé trace file is
+divided in two segments: event definition and timestamped events,
+which are described below.
 
 *Events Definition* 
 
 The first part of a trace file describes all of the possible events of
-the trace. An event definition has its kind, followed by a unique
-identifier and a set of fields. Each field has its name and type. See
-the appendix for details of the syntax and an example.
+the trace. This part is composed by a block where the first line
+contains the name of the event, like =PajeDefineContainerType=, for
+example, followed by a unique identifier. The identifier is what will
+be used later by the events to determine the type of event in
+question. After, there is a set of fields, one in each line. Each
+field comprises a name, and a type. The type of a filed can be a
+=string=, =double=, =int=, =date=, =hex= or =color=.
 
 *Events*
 \label{subsection.events} 
@@ -595,9 +587,6 @@ is a double precision floating-point number, which is different from
 the values of the other entities. A variable must be set before
 changes to its value can be made.
 
-For a detailed list of all events in the Pajé format, refer to the
-\ref{ap.pajeformat}. The next section describes the implementation of
-the new generation of the Pajé simulator (PajeNG).
 
 ** PajeNG
 \label{section.pajeng}
@@ -626,17 +615,10 @@ simulation. An illustration of this process is in figure
 \begin{figure}[!htb]
 \caption{PajeNG Architecture [inspired in \cite{kergommeaux2000paje}]}
 \centering
-\includegraphics[width=\linewidth]{./img/pajeparco.png}
+\includegraphics[width=\linewidth]{./img/pajeparco.pdf}
 \label{fig.pajeparco}
 \end{figure}
 #+END_LaTeX
-
-_Comments about figure_:
-- Much better now.
-- The drawing for the "File" is not connected to the =FileReader=.
-- Text is too small in some cases (specially on extreme right where
-  you have itemized text). You should print this page to have a
-  feeling of the size.
 
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
@@ -673,18 +655,11 @@ from it.
 \begin{figure}[!htb]
 \caption{Events class hierarchy}
 \centering
-\includegraphics[width=\linewidth]{./img/eventsHierarchy.png}
+\includegraphics[width=\linewidth]{./img/eventsHierarchy.pdf}
 \label{fig.eventsHierarchy}
 \end{figure}
 #+END_LaTeX
 
-_Comments about class hierarchy figures_
-- I am still not completely happy about these
-- Maybe because the size is not the same, I don't know.
-  - Perhaps is just a question of style
-  - If you are happy with them and the way they mix with the text, I'd
-    be ready to accept them.
-- All figures should be vectorized (not =png=, but =pdf=).
 
 *Class hierarchy for the Paje Types*
 
@@ -704,7 +679,7 @@ manipulate it. Its childs are the =PajeStateType=, =PajeEventType= and
 \caption{Events class hierarchy}
 \centering
 \includegraphics[width=.6
-\linewidth]{./img/typesHierarchy.png}
+\linewidth]{./img/typesHierarchy.pdf}
 \label{fig.typesHierarchy}
 \end{figure}
 #+END_LaTeX
@@ -729,7 +704,7 @@ entity. Figure \ref{fig.entitiesHierarchy} represents this structure.
 \begin{figure}[!htb]
 \caption{Entities class hierarchy}
 \centering
-\includegraphics[width=\linewidth]{./img/entitiesHierarchy.png}
+\includegraphics[width=\linewidth]{./img/entitiesHierarchy.pdf}
 \label{fig.entitiesHierarchy}
 \end{figure}
 #+END_LaTeX
@@ -789,8 +764,12 @@ _Comments_:
   is... ; Y is... ; and Z is ....
   - It seems that text is simply dumped right now, without structure.
 
-The focus of the Paje implementation is to allow the user to extend
-the Pajé format and adapt the simulator to it. When thinking about the
+The focus of the Pajé implementation is to allow the user to extend
+the Pajé format and adapt the simulator to it. Its support for extra
+fields allow the inclusion of different descriptions for the
+events. It is also very modular, which facilitates the integration of
+new classes. and then include
+methods to handle  When thinking about the
 handling of the simulated data, it requires a deeper understanding of
 the code structure.
 
@@ -1192,8 +1171,6 @@ before inserting a batch in the database. This is only appliable to
 states, events, links and variables, since types, values and
 containers are immediately inserted. An analysis of the performance
 for different sizes of batch will be presented in the next chapter.
-
-
 * Performance Evaluation
 \label{chapter.performance}
 * Conclusion
