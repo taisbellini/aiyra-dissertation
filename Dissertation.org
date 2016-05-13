@@ -454,7 +454,7 @@ fac.design(
 #+END_LaTeX
 where =nfactors= represents the number of factors, =replications= is
 the number of replications, =repeat.only= tells if the replications of
-each run are grouped together, =blocks= is a prime-number telling the
+each run are grouped together, =blocks= is a prime-number telling in
 how many blocks the experiment is subdivided, =randomize=
 informs the design is randomized, =seed= is the optional seed for the
 randomization, =nlevels= is a vector with the number of levels for
