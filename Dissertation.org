@@ -46,6 +46,7 @@
 \title{TCC da Tais}
 \author{Loureiro Bellini}{Tais}
 \advisor[Prof.~Dr.]{Mello Schnorr}{Lucas}
+
 \date{Junho}{2016}
 \location{Porto Alegre}{RS}
 
@@ -284,6 +285,14 @@ parsers and are not affected by the grammar itself.  The
 corresponding Java source code for the scanner and parser can be
 compiled as usual with =javac=.
 
+_Comments_:
+- A small figure here would be nice. You have JavaCC in the middle,
+  drawn as a component. On its left side you have the file
+  =MyGrammar.jj=; on its right, the different files as output. You mark
+  those that are just the boilerplates from those that are
+  important. Finally, you change the paragraph above to make reference
+  to this figure, mentioning the figure from the start.
+
 ** JDBC and MySQL
 
 The Java Database Connectivity (JDBC) API is a standard for
@@ -299,6 +308,9 @@ has been developed by Oracle and uses SQL language as interface. To enable
 the use of MySQL with Java, Oracle provides a driver for JDBC, as well
 as a native C library to allow developers to embed SQL commands directly in
 the application's code.
+
+_Comment_:
+- This section is too small. Wipe out or increase it?
 
 ** Entity-Relationship and Relational Models
 \label{subsection.er_relational}
@@ -335,6 +347,12 @@ a *weak entity*.
 \label{fig.ermodelex}
 \end{figure}
 #+END_LaTeX
+
+_Comment_:
+- The text in this figure is barely readable. Fix it please.
+- You should pay attention to colors, sometimes they are not well
+  fitted for gray tones usually used when printing.
+  - Consider this for all figures
 
 The ER Model is an overview of the structure of a database. To evolve
 to the implementation, a translation to a Relational Model must be
@@ -377,6 +395,10 @@ generate a single =Person= table, with *personId* as primary key and
 *name*, *phone*, *studentId*, *course* and *salary* as attributes. In
 the second option, =Student= and =Teacher= become tables, with
 *personId* composing their primary key.
+
+_Comments_:
+- Here you have used *this*, but below you have opted for =this=. Stick to
+  the same emphasising rule.
 
 ** Experimental Design
 
@@ -462,6 +484,12 @@ each factor and =factor.names=: a list of vectors with factor levels.
 This example is one of the designs used for the performance evaluation
 in chapter \ref{chapter.performance}
 
+_Comment_:
+- You forgot the period in the last sentence. Pay attention to the PDF
+  output. It is easier to see this kind of mistakes there.
+- You have used both *this* and =this= here. Stick to a rule. Of course
+  you can use both, but use it always the same way.
+
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
 
@@ -480,13 +508,32 @@ simulation is performed.
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
+_Comment_
+- You still have room for improvements. See structure change below.
+- When you write "refer to \ref{ap.pajeformat}", do this way "refer to
+  Appendix \ref{ap.pajeformat}". In the first form, reader has
+  absolutely no idea what is that.
+- Section about "Event Definition" is too small. You may extend a bit
+  without going to further details. Remove mention to the appendix
+  there, mention only _one time_ at the end of this section about the
+  paje file format. Or even better, mention in the beggining of this
+  section that here you just give an idea of the format, a full
+  description is on the appendix.
+- A figure C1 - C2, T1, T2 where you have on the left the type
+  hierarchy and on the right the entities hierarchy. Align the levels
+  of such hierarchies with dashed lines showing the
+  correspondance. Pay attention to timestamped objects (you may
+  represent horizontally).
+
 The Pajé Trace File Format \cite{pajetracefile} is a textual and
 generic format that describes the behaviour of parallel and
 distributed programs. The Pajé format describes five types of
 entities: containers, states, events, variables and links. Each entity
 is always associated to a container, even the containers
-themselves. It is divided in two segments: event definition and
-timestamped events, which will be detailed later in this section.
+themselves. (PUT NEXT PARAGRAPH HERE) It is divided in two segments: event definition and
+timestamped events, which will be detailed later in this
+section. (MOVE THIS LAST PHRASE TO JUST BEFORE "Events Definition"
+MARK, ADAPT IT ACCORDINGLY).
 
 A *container* can be any hardware or software entity, such as a
 processor, a thread, a network link, etc. It is the only Pajé object
@@ -584,6 +631,12 @@ simulation. An illustration of this process is in figure
 \end{figure}
 #+END_LaTeX
 
+_Comments about figure_:
+- Much better now.
+- The drawing for the "File" is not connected to the =FileReader=.
+- Text is too small in some cases (specially on extreme right where
+  you have itemized text). You should print this page to have a
+  feeling of the size.
 
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
@@ -624,6 +677,14 @@ from it.
 \label{fig.eventsHierarchy}
 \end{figure}
 #+END_LaTeX
+
+_Comments about class hierarchy figures_
+- I am still not completely happy about these
+- Maybe because the size is not the same, I don't know.
+  - Perhaps is just a question of style
+  - If you are happy with them and the way they mix with the text, I'd
+    be ready to accept them.
+- All figures should be vectorized (not =png=, but =pdf=).
 
 *Class hierarchy for the Paje Types*
 
@@ -718,6 +779,15 @@ that is associated to a container, adding and removing entities of
 these structures listed above.
 
 ** Issues of PajeNG
+
+_Comments_:
+- First paragraph is not clear enough. There is a misconnection
+  between first and second phrases. Ok. Paje allows the user to
+  extend. Great, but how he should do that? You did not explain.
+- I think you should structure more this section. For example: "There
+  are three issues with current's PajeNG implementation: X, Y and Z. X
+  is... ; Y is... ; and Z is ....
+  - It seems that text is simply dumped right now, without structure.
 
 The focus of the Paje implementation is to allow the user to extend
 the Pajé format and adapt the simulator to it. When thinking about the
