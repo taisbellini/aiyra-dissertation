@@ -267,7 +267,10 @@ generator, but it was soon discarded due to its very low performance.
 
 JavaCC can be downloaded, unzipped and added to the PATH. It also has
 a plugin for Eclipse. Once installed, JavaCC will process your grammar
-defined in a file with extension ``.jj'' using the command =javacc=.
+defined in a file with extension ``.jj'' using the command
+=javacc=. The whole grammar will be in this file and it is the only
+file that needs to be modified. It is also possible to add Java code
+that has to be executed during the parsing.
 #+BEGIN_LaTeX
 %
 #+END_LaTeX
@@ -281,53 +284,35 @@ parsers and are not affected by the grammar itself.  The
 corresponding Java source code for the scanner and parser can be
 compiled as usual with =javac=.
 
-The whole grammar will be in the =MyGrammar.jj= file and it is the
-only file that needs to be modified. There, the tokens used will be
-defined, the parser rules specified, and it is possible to even add
-Java code that has to be executed during the parsing.
-
-_Comment_:
-- Integrate this last paragraph in previous ones
-
 ** JDBC and MySQL
 
 The Java Database Connectivity (JDBC) API is a standard for
 connectivity between Java and a range of relational databases
 \cite{jdbc}. It comprises methods to query and update data, enabling
 the Java language to interact with several Database Management Systems
-(DBMS) in a standard manner.
-
-_Comment_:
-- Missing year in the citation
+(DBMS) in a standard manner. This API facilitates the migration from
+one database tool to another and unbounds your application from a
+DBMS.
 
 MySQL is one of the most important open-source DBMS in the market. It
 has been developed by Oracle and uses SQL language as interface. To enable
 the use of MySQL with Java, Oracle provides a driver for JDBC, as well
-as a native C library to allow developers to SQL commands  directly in
+as a native C library to allow developers to embed SQL commands directly in
 the application's code.
-
-_Comment_:
-- I see that one of the main's JBDC advantages is that you can do
-  standard SQL commands in the source code. If you change the DBMS,
-  there is no problem. So, you are not bounded to use a single DBMS
-  and can migrate from one to another very easily.
 
 ** Entity-Relationship and Relational Models
 \label{subsection.er_relational}
 
 An Entity-Relationship (ER) model defines a database in a conceptual
 view \cite{heuser}. This model can be represented by an ER Diagram
-(ERD) and can be denoted by *schema*. It is based in the notion of
-*entities*, which can be real-world objects that are easily
-identifiable \cite{ertutorial}, and the *relationship* between
-them. The entities have a set of attributes, where one or more are
-defined as the *identifier*, which will uniquely identify an object of
-that entity. It is also possible for a relationship to have
-attributes. Besides, an entity can derive other more specialized
-entities, which is called *specialization*.
-
-_Comment_:
-- Fix citations
+(ERD), illustrated in Figure \ref{fig.ermodel}, and can be denoted by
+*schema*. It is based in the notion of *entities*, which can be
+real-world objects that are easily identifiable \cite{ertutorial}, and
+the *relationship* between them. The entities have a set of
+attributes, where one or more are defined as the *identifier*, which
+will uniquely identify an object of that entity. It is also possible
+for a relationship to have attributes. Besides, an entity can derive
+other more specialized entities, which is called *specialization*.
 
 A relationship between entities *A* and *B* can have one of the
 following patterns: *one-to-one*, where an object of the entity A can
@@ -340,15 +325,7 @@ versa. These characteristics also apply to self-referencing relations,
 where there is a relationship of an entity with itself. Besides, a
 connection can be an *identifying relationship*, which means that the
 relationship identifies an object. In these cases the entity is called
-a *weak entity*. Figure \ref{fig.ermodelex} exemplifies these
-concepts.
-
-_Comment_:
-- I think you should start with "Figure X explain the ER
-  concepts". Then you continue describing the concepts and making
-  references to the figure. It is much better when you write down
-  like this because you know the figure already exists when the
-  paragraph starts.
+a *weak entity*. 
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -410,10 +387,6 @@ that could affect the results, guaranteeing that the number of tests
 executed and the error margin calculated will be sufficient to avoid
 misleading conclusions.
 
-_Comments_:
-- Jain citation is completely wrong. Reference the second edition of
-  the book that appeared last year.
-
 There is a specific terminology used in experimental design. The term
 =Response Variable= is the outcome of an experiment; =Factors= are all
 of the variables that can have several different values affecting the
@@ -435,25 +408,22 @@ design, it is possible to measure factors with multiple numbers of
 levels. The advantage of this model is that every possible combination
 will be analysed, generating richer results. However, depending on the
 number of factors, levels and replications, it may generate too many
-experiments, which can cost a lot of
-time. Therefore, when using this technique, it is important to weight
-the relevance of each factor and level to generate an appropriate and
-accurate design. To calculate the total size of the sample you
-multiply the numbers of levels of the factors and the number of
-replications. For example, a design with a three-level factor, a
-two-level factor and 20 replications would have 120 experiments
-(the result of $3*2*20$).
+experiments, which can cost a lot of time. Therefore, when using this
+technique, it is important to weight the relevance of each factor and
+level to generate an appropriate and accurate design. To calculate the
+total size of the sample you multiply the numbers of levels of the
+factors and the number of replications. For example, a design with a
+three-level factor, a two-level factor and 20 replications would have
+120 experiments (the result of $3*2*20$).
 
-When there are too many factors and levels, it may not be
-possible to use the full factorial design. In these cases, one can use
-a fractional factorial design, which covers just a fraction of the
-full factorial design. In this type of experiment, a carefully chosen
+When there are too many factors and levels, it may not be possible to
+use the full factorial design. In these cases, one can use a
+fractional factorial design, which covers just a fraction of the full
+factorial design. In this type of experiment, a carefully chosen
 subset of factors and levels is taken into consideration, based on the
 most important features the analyser wants to test. Although it saves
 time and expenses, the results provide less information.
 
-_Comments_:
-- Was this (the text) yours? 
 
 ** The R language
 
@@ -470,14 +440,16 @@ replication. The usage of the function is the following:
 \begin{lstlisting}
 require(DoE.base);
 fac.design(
-  nfactors=NULL,
-  replications=1,
+  nfactors=2,
+  replications=30,
   repeat.only=FALSE,
   blocks=1,
   randomize=TRUE,
-  seed=NULL,
-  nlevels=NULL,
-  factor.names= NULL);
+  seed=10373,
+  nlevels=(3,6),
+  factor.names= list(
+                input=c("small", "medium", "big"),
+                batch=c("A", "B", "C", "D", "E", "F")));
 \end{lstlisting}
 #+END_LaTeX
 where =nfactors= represents the number of factors, =replications= is
@@ -487,48 +459,34 @@ in how many blocks the experiment will be subdivided, =randomize=
 informs the design is randomized, =seed= is the optional seed for the
 randomization, =nlevels= is a vector with the number of levels for
 each factor and =factor.names=: a list of vectors with factor levels.
-
-_Comments_
-- You should provide a better example. Give at least 2 factors, one
-  with 2 and another with 3 levels; 30 replications. You can take
-  exactly one of the FF designs you have adopted. And even mention by
-  the end of the paragraph that this example actually was used for
-  designing your experiments.
+This example is one of the designs used for the performance evaluation
+in chapter \ref{chapter.performance}
 
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
 
-The Pajé Visualization Tool is an implementation to display the
-execution behavior of parallel and distributed programs. It reads
-information from trace files that describe the important events during
-the execution of a program and replays them through simulation.
-It has been developed
-to simulate trace files in the Pajé Trace File Format, thus, it is
-important to understand how the Pajé trace files are composed. Section
-\ref{section.pajeformat} describes this format and all entity types it
-contains. The next section describes the new generation of the Pajé
-Visualization Tool, the PajeNG, focusing on the =libpaje= module,
-which is where the core simulation is performed. Since the new
-generation (PajeNG) follows the exact same structure as the original
-Pajé, it will be the only one to be detailed.
-
-_Comment_:
-- this last phrase sound strange, because you haven't presented yet
-  PajeNG so reader has no idea there is an "old" version written in
-  Objective-C and a new one in C++. Still, you should mention there
-  (in the appropriate section) the source code language of each of
-  them, so the reader knows the "main" difference.
+The Pajé Visualization Tool is an implementation in Objective-C to
+display the execution behavior of parallel and distributed
+programs. It reads information from trace files that describe the
+important events during the execution of a program and replays them
+through simulation.  It has been developed to simulate trace files in
+the Pajé Trace File Format, thus, it is important to understand how
+the Pajé trace files are composed. Section \ref{section.pajeformat}
+describes this format and all entity types it contains. The next
+section describes the new generation of the Pajé Visualization Tool,
+the PajeNG, focusing on the =libpaje= module, which is where the core
+simulation is performed.
  
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
 The Pajé Trace File Format \cite{pajetracefile} is a textual and
-generic format that describes the behaviour of parallel and distributed
-programs. This format contains three segments: event definition, type
-hierarchy declaration and timestamped events. The Pajé format
-describes five types of entities: containers, states, events,
-variables and links. Each entity is always associated to a container,
-even the containers themselves.
+generic format that describes the behaviour of parallel and
+distributed programs. The Pajé format describes five types of
+entities: containers, states, events, variables and links. Each entity
+is always associated to a container, even the containers
+themselves. It is divided in two segments: event definition and
+timestamped events, which will be detailed later in this section.
 
 A *container* can be any hardware or software entity, such as a
 processor, a thread, a network link, etc. It is the only Pajé object
@@ -544,32 +502,6 @@ and end, indicating how long the variable had that specific value. A
 *link* represents a relationship between two containers, such as a
 communication between processes. It contains two timestamps specifying
 the beginning and the end of the communication.
-
-The Pajé objects are organized in two separated hierarchies: types and
-entities. These hierarchies are specific for each trace file, although
-it can be repeated in traces with the same scenario. In the structure
-of the trace file, the type hierarchy comes just after the event
-definition. There, each type of the program is defined and one of the
-fields is always the parent type. Each entity is always associated to
-a type and
-they must follow the same precedence as the types definition. For
-example, if the container C1, of type T1, is the parent of the
-container C2, of type T2, the type T2 must be child of T1 in the type
-tree. The root type is always the number $0$. The difference between
-both hierarchies relies on the number of nodes: while the type
-hierarchy has only a few, the entities hierarchy may have millions
-depending on the number of containers in the trace.
-
-_Comment_:
-- You mention in the paragraph above that there are event definition
-  and type definition. Then, below, you state the division in two
-  sections. I think the paragraph below should come _before_, so the
-  reader has a global understanding of the trace organization before
-  going into the details. Still, the paragraph above could be simply
-  moved to the _Events_ subsection below.
-
-A trace file is divided in two sections: event definition and events
-list. The types hierarchy declaration is part of the events list.
 
 *Events Definition* 
 
@@ -590,6 +522,20 @@ to be instantiated, since every entity belongs to a container. There
 are sets of events associated to each kind of entity described above,
 besides the events that define entity types.
 
+The Pajé objects are organized in two separated hierarchies: types and
+entities. These hierarchies are specific for each trace file, although
+it can be repeated in traces with the same scenario. In the structure
+of the trace file, the type hierarchy comes just after the event
+definition. There, each type of the program is defined and one of the
+fields is always the parent type. Each entity is always associated to
+a type and they must follow the same precedence as the types
+definition. For example, if the container C1, of type T1, is the
+parent of the container C2, of type T2, the type T2 must be child of
+T1 in the type tree. The root type is always the number $0$. The
+difference between both hierarchies relies on the number of nodes:
+while the type hierarchy has only a few, the entities hierarchy may
+have millions depending on the number of containers in the trace.
+
 Type definition events don't have a timestamp field and can occur at
 anytime in a trace file, as long as the type is not used before its
 definition. It is more common to have all the types defined in the
@@ -603,11 +549,8 @@ the values of the other entities. A variable must be set before
 changes to its value can be made.
 
 For a detailed list of all events in the Pajé format, refer to the
-appendix. The next section describes the implementation of the new
-generation of the Pajé simulator (PajeNG).
-
-_Comment_:
-- Which appendix? You should put a label there and a ref here.
+\ref{ap.pajeformat}. The next section describes the implementation of
+the new generation of the Pajé simulator (PajeNG).
 
 ** PajeNG
 \label{section.pajeng}
@@ -620,30 +563,27 @@ space-time visualization tool and some auxiliary tools to manage the
 trace files. The base for the implementation of this project was the
 =libpaje= library.
 
-The library has three main components forming a pipeline that results
-in complete simulated entities. These components are: =FileReader=,
-=EventDecoder= and =PajeSimulator=. First, the =FileReader= reads a chunk of
-data from the trace file and puts it in memory. Then, the =EventDecoder=
-breaks it into events identifying, line by line, the event's fields
-and creating an object with all the necessary information. Last, the
+The library, represented in Figure \ref{fig.pajeparco} has three main
+components forming a pipeline that results in complete simulated
+entities. These components are: =FileReader=, =EventDecoder= and
+=PajeSimulator=. First, the =FileReader= reads a chunk of data from
+the trace file and puts it in memory. Then, the =EventDecoder= breaks
+it into events identifying, line by line, the event's fields and
+creating an object with all the necessary information. Last, the
 =PajeSimulator= receives this event object and addresses to the proper
 simulation. An illustration of this process is in figure
 \ref{fig.pajeparco}.
 
-_Comments_:
-- Again, you should present the Figure before in the paragraph.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{TODO: Say what the figure is then put the "inspired from" between brackets. Figure inspired in \cite{kergommeaux2000paje}}
+\caption{PajeNG Architecture [inspired in \cite{kergommeaux2000paje}]}
 \centering
 \includegraphics[width=\linewidth]{./img/pajeparco.png}
 \label{fig.pajeparco}
 \end{figure}
 #+END_LaTeX
 
-_Comment about this figure_:
-- It is wrong. What is the cylinder?
 
 Pajé was idealized to be extensible, specially in terms of creating
 new types of events. Actually, the Pajé format itself is very
@@ -664,23 +604,17 @@ An event object is what is passed as an argument to the simulator so
 that it can be processed. Therefore, it must contain all of the
 necessary information for the simulation. The first object created
 when a trace file is being parsed is of type =PajeTraceEvent=, which
-is a class containing all the fields read by the =PajeEventDecoder=. As
-depicted in Figure \ref{fig.eventsHierarchy}, the event
-hierarchy starts with a simple =PajeEvent= class. This class has a
-trace event object, a container, a type and a timestamp. The immediate
-childs of PajeEvent are: =PajeCategorizedEvent=, =PajeVariableEvent=
-and =PajeDestroyContainerEvent=. The variable event is the parent of
-the specific events for variables, which are set, add and subtract. A
-categorized event is characterized by having a =PajeValue= associated
-to it, thus, =PajeStateEvent=, =PajeEventEvent=, =PajeLinkEvent=, and
-their respective childs inherit from it. See Figure
-\ref{fig.eventsHierarchy}.
-
-_Comments_:
-- Again, mention figure before.
-- I have changed the paragraph above to give you an example
-- Pay attention to the text margins, you are not respecting them here
-  when you export to PDF.
+is a class containing all the fields read by the
+=PajeEventDecoder=. As depicted in Figure \ref{fig.eventsHierarchy},
+the event hierarchy starts with a simple =PajeEvent= class. This class
+has a trace event object, a container, a type and a timestamp. The
+immediate childs of PajeEvent are: =PajeCategorizedEvent=,
+=PajeVariableEvent= and =PajeDestroyContainerEvent=. The variable
+event is the parent of the specific events for variables, which are
+set, add and subtract. A categorized event is characterized by having
+a =PajeValue= associated to it, thus, =PajeStateEvent=,
+=PajeEventEvent=, =PajeLinkEvent=, and their respective childs inherit
+from it.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -693,16 +627,16 @@ _Comments_:
 
 *Class hierarchy for the Paje Types*
 
-The first element of the type's class hierarchy is the =PajeType=. It
-has a name, an alias and a parent type, which is also a
-PajeType. These fields are the ones common to all the type definition
-events described in section \ref{section.pajeformat}. The immediate
-childs of this class are: =PajeCategorizedType=, =PajeVariableType=
-and =PajeContainerType=. As the events, the categorized types are
-associated to a value, hence, the PajeCategorizedType has a PajeValue
-field and methods to manipulate it. Its childs are the
-=PajeStateType=, =PajeEventType= and =PajeLinkType=. This hierarchy is
-illustrated in Figure \ref{fig.typesHierarchy}.
+Figure \ref{fig.typesHierarchy} portrays the type hierarchy, where the
+first element is the =PajeType=. It has a name, an alias and a parent
+type, which is also a PajeType. These fields are the ones common to
+all the type definition events described in section
+\ref{section.pajeformat}. The immediate childs of this class are:
+=PajeCategorizedType=, =PajeVariableType= and =PajeContainerType=. As
+the events, the categorized types are associated to a value, hence,
+the PajeCategorizedType has a PajeValue field and methods to
+manipulate it. Its childs are the =PajeStateType=, =PajeEventType= and
+=PajeLinkType=.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -714,24 +648,21 @@ illustrated in Figure \ref{fig.typesHierarchy}.
 \end{figure}
 #+END_LaTeX
 
-
 *Class hierarchy for the Paje Entities*
 
-_Comments regarding par. below_:
-- is "origin" a verb?
-
-The =PajeEntity= is the first node of the entities tree. It origins a
+As demonstrated in Figure \ref{fig.entitiesHierarchy}, the
+=PajeEntity= is the first node of the entities tree. It originates a
 =PajeSingleTimedEntity= class, that describes entities with one single
 timestamp. The =PajeUserEvent= is the only entity with this
 characteristic, but it is possible to add, in the future, more
 entities with just one timestamp. The =PajeDoubleTimedEntity= inherits
 from this class and represents entities with start and end
 timestamps. Like the other hierarchies, the valued entities are
-grouped together so a =PajeValuedEntity= is a child of the double timed
-entity, having =PajeUserState= and =PajeUserLink= as descendents. The
-double timed entity also has =PajeUserVariable= and =PajeNamedEntity=
-as childs. A =PajeContainer= inherits from the named entity. Figure
-\ref{fig.entitiesHierarchy} represents this structure.
+grouped together so a =PajeValuedEntity= is a child of the double
+timed entity, having =PajeUserState= and =PajeUserLink= as
+descendents. The double timed entity also has =PajeUserVariable= and
+=PajeNamedEntity= as childs. A =PajeContainer= inherits from the named
+entity. Figure \ref{fig.entitiesHierarchy} represents this structure.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -813,7 +744,8 @@ simulation core more transparent for the performance analyst providing
 the created entities in a way that he can manipulate them without
 looking to the rest of the implementation. The program uses the
 concept of plugins attached to every type of event. The details of
-this novel approach, developed in our work, will be detailed in the next chapter.
+this novel approach, developed in our work, will be detailed in the
+next chapter.
 
 * Aiyra - Java-based simulator
 \label{chapter.aiyra}
@@ -1442,7 +1374,9 @@ public class MyGrammar {
 
 PARSER_END(MyGrammar)
 #+END_EXAMPLE
+\label{ap.javacc}
 * Paje File Format Specification
+\label{ap.pajeformat}
 The format of the event definition part has the following format:
 
 - Every line of the event definition part of the Pajé format starts
@@ -1633,6 +1567,7 @@ end of a link of type _Type_, in container _Container_, ending in
 _EndContainer_, with value _Value_, and identified by key _Key_.
 
 * PajeNG structures
+\label{ap.pajeng}
 
 *Simulator*
 
@@ -1669,6 +1604,7 @@ ones. All of the variable and event objects are stored in this general
 list of entities.
 
 * Processing Command Line Arguments 
+\label{ap.optionshandler}
 
 Since handling command line arguments is not very straightforward in
 Java, an external library \cite{optionhandler} was used. The command
@@ -1785,6 +1721,5 @@ method is already called in the constructor:
   }
 #+END_EXAMPLE 
 
-
 * Paje File Format Parser for JavaCC
-
+\label{ap.grammar}

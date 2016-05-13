@@ -392,6 +392,63 @@ upgraded to a chapter's section, since it is independent of
 experimental designs. You just found out that using R to design
 experiments is neat.
 
+_Comment_:
+- I see that one of the main's JBDC advantages is that you can do
+  standard SQL commands in the source code. If you change the DBMS,
+  there is no problem. So, you are not bounded to use a single DBMS
+  and can migrate from one to another very easily.
+
+_Comment_:
+- I think you should start with "Figure X explain the ER
+  concepts". Then you continue describing the concepts and making
+  references to the figure. It is much better when you write down
+  like this because you know the figure already exists when the
+  paragraph starts.
+
+Comments_:
+- Jain. Reference the second edition of
+  the book that appeared last year.
+
+
+_Comments_:
+- Was this (the text) yours? 
+
+_Comments_
+- You should provide a better example. Give at least 2 factors, one
+  with 2 and another with 3 levels; 30 replications. You can take
+  exactly one of the FF designs you have adopted. And even mention by
+  the end of the paragraph that this example actually was used for
+  designing your experiments.
+
+ Since the new generation (PajeNG) follows the exact same
+structure as the original Pajé, it will be the only one to be
+detailed.
+
+_Comment_:
+- this last phrase sound strange, because you haven't presented yet
+  PajeNG so reader has no idea there is an "old" version written in
+  Objective-C and a new one in C++. Still, you should mention there
+  (in the appropriate section) the source code language of each of
+  them, so the reader knows the "main" difference.
+
+
+_Comment_:
+- You mention in the paragraph above that there are event definition
+  and type definition. Then, below, you state the division in two
+  sections. I think the paragraph below should come _before_, so the
+  reader has a global understanding of the trace organization before
+  going into the details. Still, the paragraph above could be simply
+  moved to the _Events_ subsection below. 
+_CommentonComment_ removed the three segments separation. I was afraid
+to change from the original document but I believe it is better to
+separate in only two.
+
+
+_Comment_:
+- Which appendix? You should put a label there and a ref here.
+
+
+
 ** Chapter 3:
 
  _Comments_:
@@ -469,6 +526,12 @@ _Comments_:
 _Comments_:
 - Correction. All entities are available always, no matter their end
   time.
+
+_Comments_:
+- Again, mention figure before.
+- I have changed the paragraph above to give you an example
+- Pay attention to the text margins, you are not respecting them here
+  when you export to PDF.
 
 
 
