@@ -266,9 +266,9 @@ Recognition (ANTLR), that requires a runtime library
 generator, but it was soon discarded due to its very low performance.
 
 JavaCC can be downloaded, unzipped and added to the PATH. It also has
-a plugin for Eclipse. Once installed, JavaCC will process your grammar
+a plugin for Eclipse. Once installed, JavaCC processes your grammar
 defined in a file with extension ``.jj'' using the command
-=javacc=. The whole grammar will be in this file and it is the only
+=javacc=. The whole grammar is kept in this file and it is the only
 file that needs to be modified. It is also possible to add Java code
 that has to be executed during the parsing.
 #+BEGIN_LaTeX
@@ -310,7 +310,7 @@ view \cite{heuser}. This model can be represented by an ER Diagram
 real-world objects that are easily identifiable \cite{ertutorial}, and
 the *relationship* between them. The entities have a set of
 attributes, where one or more are defined as the *identifier*, which
-will uniquely identify an object of that entity. It is also possible
+uniquely identify an object of that entity. It is also possible
 for a relationship to have attributes. Besides, an entity can derive
 other more specialized entities, which is called *specialization*.
 
@@ -355,7 +355,7 @@ relationship, the weak entity attaches the identifier of the other
 entity to its own primary key. A *one-to-one* relationship generates a
 merge of both tables involved. *One-to-many* links adds an attribute
 in one of the tables. The entity that can only be related to one of
-the instances of the other will receive the attribute, which will be
+the instances of the other receives the attribute, which is
 called *foreign key*. It also absorbs the attributes of the
 relationship. In the example of figure \ref{fig.ermodelex}, the table
 referencing the =School= entity would have the *stateName* and
@@ -363,7 +363,7 @@ referencing the =School= entity would have the *stateName* and
 attribute. The foreign key is what preserves the link between two
 entities. *Many-to-many* relationships have to be represented by a
 separate table with the primary keys of both entities involved, which
-will also work as foreign keys. In our illustration, the relationship
+also work as foreign keys. In our illustration, the relationship
 between =Grade= and =Student= would become a table, with *studentId*
 and *gradeId* as primary and foreign keys.
 
@@ -381,10 +381,10 @@ the second option, =Student= and =Teacher= become tables, with
 ** Experimental Design
 
 Experimental design, in the context of performance analysis, aims to
-define a minimum number of experiments that will collect the maximum
+define a minimum number of experiments that collects the maximum
 information necessary \cite{jain}. It also targets random variations
 that could affect the results, guaranteeing that the number of tests
-executed and the error margin calculated will be sufficient to avoid
+executed and the error margin calculated is sufficient to avoid
 misleading conclusions.
 
 There is a specific terminology used in experimental design. The term
@@ -406,7 +406,7 @@ is the full factorial design, which consists in evaluating every
 possible combination at all levels of all factors. With this type of
 design, it is possible to measure factors with multiple numbers of
 levels. The advantage of this model is that every possible combination
-will be analysed, generating richer results. However, depending on the
+is measured, generating richer results. However, depending on the
 number of factors, levels and replications, it may generate too many
 experiments, which can cost a lot of time. Therefore, when using this
 technique, it is important to weight the relevance of each factor and
@@ -455,7 +455,7 @@ fac.design(
 where =nfactors= represents the number of factors, =replications= is
 the number of replications, =repeat.only= tells if the replications of
 each run are grouped together, =blocks= is a prime-number telling the
-in how many blocks the experiment will be subdivided, =randomize=
+how many blocks the experiment is subdivided, =randomize=
 informs the design is randomized, =seed= is the optional seed for the
 randomization, =nlevels= is a vector with the number of levels for
 each factor and =factor.names=: a list of vectors with factor levels.
