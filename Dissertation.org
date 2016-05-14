@@ -159,8 +159,8 @@ entities: Containers, States, Events, Variables and Links. These
 concepts represent basic structures of computer programs executed in
 parallel or distributed systems, such as processes, threads, network
 links, hardware counters and so on. As a base for the implementation
-of this proposal, the new generation of Pajé, PajeNG \cite{XXX}, was
-used. Details of PajeNG, the types of entities and the Pajé File
+of this proposal, the new generation of Pajé, PajeNG \cite{pajeng},
+was used. Details of PajeNG, the types of entities and the Pajé File
 Format will be presented in Chapter \ref{chapter.paje}. Although it
 has a visualization functionality, we will focus on the simulation
 part of the Pajé implementation in this project. The most commonly
@@ -224,16 +224,17 @@ memory usage had more impact in the performance than the accesses to
 the database themselves, probably due to the Garbage Collector
 mechanism used by Java.
 
-This document is organized as follows. Chapter \ref{chapter.basic_concepts}
-provides the basic concepts of the technologies used throughout the project.
-Chapter \ref{chapter.paje} gives an overview of the existing simulator for the
-Pajé format and the problems with this current implementation. Chapter
+This document is organized as follows. Chapter
+\ref{chapter.basic_concepts} provides the basic concepts of the
+technologies used throughout the project.  Chapter \ref{chapter.paje}
+gives an overview of the existing simulator for the Pajé format and
+the problems with this current implementation. Chapter
 \ref{chapter.aiyra} describes the details of the extensible simulator
-developed in Java and Chapter \ref{chapter.plugins} characterize the plugins
-developed. Chapter \ref{chapter.performance} presents a performance analysis
-of the Pajé Insert Database Plugin and a comparison between Aiyra and PajeNG.
-The conclusion and final considerations are expressed in Chapter
-\ref{chapter.conclusion}.
+developed in Java and Chapter \ref{chapter.plugins} characterize the
+plugins developed. Chapter \ref{chapter.performance} presents a
+performance analysis of the Pajé Insert Database Plugin and a
+comparison between Aiyra and PajeNG.  The conclusion and final
+considerations are expressed in Chapter \ref{chapter.conclusion}.
 
 * Basic Concepts
 \label{chapter.basic_concepts}
@@ -755,46 +756,44 @@ these structures listed above.
 
 ** Issues of PajeNG
 
-_Comments_:
-- First paragraph is not clear enough. There is a misconnection
-  between first and second phrases. Ok. Paje allows the user to
-  extend. Great, but how he should do that? You did not explain.
-- I think you should structure more this section. For example: "There
-  are three issues with current's PajeNG implementation: X, Y and Z. X
-  is... ; Y is... ; and Z is ....
-  - It seems that text is simply dumped right now, without structure.
-
 The focus of the Pajé implementation is to allow the user to extend
 the Pajé format and adapt the simulator to it. Its support for extra
-fields allow the inclusion of different descriptions for the
-events. It is also very modular, which facilitates the integration of
-new classes. and then include
-methods to handle  When thinking about the
-handling of the simulated data, it requires a deeper understanding of
-the code structure.
+fields allow the inclusion of different descriptions for the events
+and its modularity facilitates the integration of new
+classes. Altering or adding simulation behavior can be done by
+modifying only the =PajeSimulator= and =PajeContainer=
+classes. _*some help to detail more this paragraph? Or should I join
+it with the next one?*_
 
-One of the tools of PajeNG is the =pj_dump=. The PajeSimulator
-instance maintains all of the simulated entities in memory, and the
-dump tool throws to the standard output all the information about each
-entity stored. If a user wants to see the resulted entities during the
-simulation, he would need to get into the PajeSimulator code to make
-the necessary changes. Technically, since all the results are stored
-in memory, it would be simple to add a new functionality, but it is
-limited to manipulation of the whole set of results, not each entity
-separately. Also, there is the need of understanding the classes and
-its hierarchies in order to build a new tool for the program.  Another
-problem with this implementation is the ephemerality of the results,
-since it is kept in memory during simulation and then discarded at the
-end.
+Although complying with its goal of extensibility in terms of
+extending the Pajé format, we identified three main issues in the
+current implementation of PajeNG: little flexibility in the
+manipulation of data, lack of partial outcomes and ephemeral
+results. When the entities are already simulated, a deeper
+understanding of the code structure is necessary if one wants to
+define another way of handling the results. Also, the user needs to
+manage a full set of entities, since there is no flexibility of
+discarding data that is not relevant. The second issue relies on the
+fact that the =PajeSimulator= instance maintains all of the simulated
+objects in memory. If a user wants to see the resulted entities during
+the simulation, he would need to get into the =PajeSimulator= code to
+make the necessary changes. Technically, since all the results are
+stored in memory, it would be simple to add a new functionality, but
+it is limited to the manipulation of the whole set of results, not
+each entity separately. Last, the results kept in memory during
+simulation are discarded at the end, which implies in executing all
+the simulation again if a trace file needs to be revisited.
 
 Considering the presented issues, an extensible simulator written in
 Java was developed. The intention of this proposal is to make the
 simulation core more transparent for the performance analyst providing
 the created entities in a way that he can manipulate them without
 looking to the rest of the implementation. The program uses the
-concept of plugins attached to every type of event. The details of
-this novel approach, developed in our work, will be detailed in the
-next chapter.
+concept of plugins that attached to every type of event. The simulator
+itself addresses the first issue presented, while the creation of new
+plugins provide a possible solution to the other two. The details of
+this novel approach, developed in our work, are detailed in the next
+chapter.
 
 * Aiyra - Java-based simulator
 \label{chapter.aiyra}
