@@ -493,17 +493,16 @@ in chapter \ref{chapter.performance}.
 * Pajé Visualization Tool - PajeNG 
 \label{chapter.paje}
 
-The Pajé Visualization Tool is an implementation in Objective-C to
-display the execution behavior of parallel and distributed
-programs. It reads information from trace files that describe the
-important events during the execution of a program and replays them
-through simulation.  It has been developed to simulate trace files in
-the Pajé Trace File Format, thus, it is important to understand how
-the Pajé trace files are composed. Section \ref{section.pajeformat}
-describes this format and all entity types it contains. The next
-section describes the new generation of the Pajé Visualization Tool,
-the PajeNG, focusing on the =libpaje= module, which is where the core
-simulation is performed.
+The Pajé Visualization Tool is an implementation to display the
+execution behavior of parallel and distributed programs. It reads
+information from trace files that describe the important events during
+the execution of a program and replays them through simulation.  It
+has been developed to simulate trace files in the Pajé Trace File
+Format, thus, it is important to understand how the Pajé trace files
+are composed. Section \ref{section.pajeformat} describes this format
+and all entity types it contains. The next section describes the new
+generation of the Pajé Visualization Tool, the PajeNG, focusing on the
+=libpaje= module, which is where the core simulation is performed.
  
 ** Pajé Trace File Format
 \label{section.pajeformat}
@@ -595,8 +594,8 @@ changes to its value can be made.
 The PajeNG implementation is the new generation of the Pajé
 Visualization Tool \cite{pajeng}. It was developed in C++ and follows
 the same architecture as the original Pajé, written in Objective-C. It
-comprises a library containing the core of the simulation (=libpaje=), a
-space-time visualization tool and some auxiliary tools to manage the
+comprises a library containing the core of the simulation (=libpaje=),
+a space-time visualization tool and some auxiliary tools to manage the
 trace files. The base for the implementation of this project was the
 =libpaje= library.
 
@@ -1172,6 +1171,39 @@ containers are immediately inserted. An analysis of the performance
 for different sizes of batch will be presented in the next chapter.
 * Performance Evaluation
 \label{chapter.performance}
+
+An evaluation of Aiyra's performance and its plugins was made to ...
+Two main tests were executed: a comparison between Aiyra and PajeNG
+and an analysis of the impact of different batch sizes in the
+=PajeInsertDBPlugin=. Since Aiyra is strongly based in the PajeNG
+implementation, it is valid to examine if the modifications and
+language transition have brought significant impact on the
+simulation. The plugin that inserts the data in a MySQL database is the
+only one that brings an extremely different functionality to the
+program. As it involves the connection with an external tool, the
+analysis of its performance and the study of the most efficient use of
+it is very important.
+
+** Methodology
+
+A full factorial experimental design was used to perform the
+tests. The different factor and levels for each 
+
+Performance Evaluation
+   + Overview of what is being evaluated and why 
+    - PajeNG. since it is a re implementation
+    - inset db plugin, it is the NEW feature. 
+    - characterize briefly
+   + Experimental Methodology
+     - Full factorial
+     - Description of each experiment with factors and resulting table
+        - null plugin / flex/ reader. hipotesis.
+        - batch sizes. why? hipotesis.  
+     - characterization of the platforms
+   + Results and grafics
+   + Possible explanations
+   + 
+
 * Conclusion
 \label{chapter.conclusion}
 
@@ -1186,8 +1218,11 @@ for different sizes of batch will be presented in the next chapter.
 
 \appendix
 * JavaCC Tutorial
+\label{ap.javacc}
 
-The structure of this file is the following:
+To build a grammar to be compiled by =JavaCC= you only need to create
+one file whith `.jj` extension. The structure of this file is the
+following:
 
 #+BEGIN_EXAMPLE
 options{
@@ -1401,9 +1436,10 @@ public class MyGrammar {
 
 PARSER_END(MyGrammar)
 #+END_EXAMPLE
-\label{ap.javacc}
 * Paje File Format Specification
 \label{ap.pajeformat}
+
+The Pajé Trace File Format has two parts: event definition and events.
 The format of the event definition part has the following format:
 
 - Every line of the event definition part of the Pajé format starts

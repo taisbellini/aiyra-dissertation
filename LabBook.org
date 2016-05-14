@@ -259,12 +259,20 @@ similar approaches.
      + arguments (batches, server, etc.)
 
 6. Performance Evaluation
-   + Overview of what is being evaluated and why (mysql is the only NEW feature)
+   + Overview of what is being evaluated and why 
+    - PajeNG. since it is a re implementation
+    - inset db plugin, it is the NEW feature. 
+    - characterize briefly
    + Experimental Methodology
      - Full factorial
+     - Description of each experiment with factors and resulting table
+        - null plugin / flex/ reader. hipotesis.
+        - batch sizes. why? hipotesis.  
+     - characterization of the platforms
    + Results and grafics
    + Possible explanations
    + 
+
 
 7. Conclusion
    - All efforts in the simulator optimization benefit all plugins.
