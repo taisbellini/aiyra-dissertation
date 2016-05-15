@@ -1064,9 +1064,9 @@ files in the same database.
 The plugin can be used by specifying =mysql= as argument for the =-p=
 option. It is necessary to have a MySQL connection and a database with
 the correct schema. To specify the server of the connection, there is
-the option =-s=. It is also possible to inform a username (=-u=), a
-password (=-pwd=) and a database name (=-d=). The default for these
-options is: *localhost*, *root*, *root* and *paje*, respectively.
+the option =-s=. It is also possible to inform a username (=-u=) and a
+password (=-pwd=). The default for these
+options is: *localhost*, *root* and *root*, respectively.
 
 To create a relational database for the Pajé format, first, we created
 an entity-relationship model that is described in the subsection
@@ -1172,6 +1172,7 @@ before inserting a batch in the database. This is only appliable to
 states, events, links and variables, since types, values and
 containers are immediately inserted. An analysis of the performance
 for different sizes of batch will be presented in the next chapter.
+
 * Performance Evaluation
 \label{chapter.performance}
 
@@ -2199,3 +2200,26 @@ String argument():
 
 * How to execute aiyra
 \label{ap.aiyraexecute}
+
+To execute aiyra navigat to the *workspace* folder and execute the
+command =source compile.sh=.  It will give you information about the
+usage.
+
+#+BEGIN_EXAMPLE
+java br.ufrgs.inf.tlbellini.PajeGrammar -f <path to input Paje tracefile> -p <plugin> <option> <argument> ...
+#+END_EXAMPLE
+
+Use the following notation:
+-f <path-to-filename>
+-m <comment> (optional)
+-p <plugin> (optional, default: null) 
+The available plugins and its respective inputs are as follows: 
+pjdump: PajeDump - dumps the data
+-l <number-of-lines> (optional): number of lines per dump if pjdump chosen, default: 100000
+mysql: MYSQL Database - sequential batches - insert data into a database using batches
+-s <server-name> (optional): server name for the database. Default: localhost
+-u <user-name> (optional): username to access database. Default: root
+-pwd <password> (optional): password to access database. Default: root
+-batch <max_size> (optional): Maximum size of batch to keep in memory
+
+The database for the mysql plugin is in the script pajeDB.sql.
