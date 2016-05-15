@@ -636,6 +636,11 @@ _Comment_:
   should change its name to something else, like "controller". I say
   controller because the simulator itself is imbricated (embedded) in
   the "Parser".
+_Comments_:
+- Why have you opted to leave extra fields out of your implementation?
+  - You could say that despite this negative difference on your side,
+    it is just a matter of changing everything so the plugins also get
+    that kind of information in a generic manner.
 
 
 
@@ -643,3 +648,4 @@ _Comment_:
 
 Importance of implementtion of plugins, to validade and to see flaws,
 such as which objects to send to the plugin. 
+Where the code is.
