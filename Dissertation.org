@@ -268,35 +268,32 @@ Recognition (ANTLR), that requires a runtime library
 generator, but it was soon discarded due to its very low performance.
 
 JavaCC can be downloaded, unzipped and added to the PATH. It also has
-a plugin for Eclipse. Once installed, JavaCC processes your grammar
-defined in a file with extension ``.jj'' using the command
-=javacc=. The whole grammar is kept in this file and it is the only
-file that needs to be modified. It is also possible to add Java code
-that has to be executed during the parsing.
-#+BEGIN_LaTeX
-%
-#+END_LaTeX
-In Figure \ref{fig.javaccex} we can see an example of the processing
-of a file named =MyGrammar.jj=, which results in seven files: the
-parser in =MyGrammar.java=; the lexical analyser in
-=MyGrammarTokenManager.java= and some useful constants in
-=MyGrammarConstants.java=. The other four files generated:
-=Token.java=, =TokenMgrError.java=, =SimpleCharStream.java= and
-=ParseException.java= are boilerplate files that can be reused within
-parsers and are not affected by the grammar itself.  The corresponding
-Java source code for the scanner and parser can be compiled as usual
-with =javac=.
+a plugin for Eclipse. Figure \ref{fig.javaccex} exemplifies how JavaCC
+works. Once installed, JavaCC processes your grammar defined in a file
+with extension ``.jj'' using the command =javacc=. The whole grammar
+is kept in this file and it is the only file that needs to be
+modified. It is also possible to add Java code that has to be executed
+during the parsing.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Example of ER Model}
+\caption{How JavaCC works}
 \centering
 \includegraphics[width=\linewidth]{./img/ermodelex.png}
 \label{fig.javaccex}
 \end{figure}
 #+END_LaTeX
 
-(IMAGE)
+In Figure \ref{fig.javaccex} we can see an example of the processing
+of a file named *MyGrammar.jj*, which results in seven files: the
+parser in *MyGrammar.java*; the lexical analyser in
+*MyGrammarTokenManager.java* and some useful constants in
+*MyGrammarConstants.java*.  The other four files generated:
+*Token.java*, *TokenMgrError.java*, *SimpleCharStream.java* and
+*ParseException.java* are boilerplate files that can be reused within
+parsers and are not affected by the grammar itself.  The corresponding
+Java source code for the scanner and parser can be compiled as usual
+with =javac=.
 
 ** JDBC and MySQL
 
@@ -308,28 +305,41 @@ the Java language to interact with several Database Management Systems
 one database tool to another and unbounds your application from a
 DBMS.
 
-MySQL is one of the most important open-source DBMS in the market. It
-has been developed by Oracle and uses SQL language as interface. To enable
-the use of MySQL with Java, Oracle provides a driver for JDBC, as well
-as a native C library to allow developers to embed SQL commands directly in
-the application's code.
+The JDBC architecture consists in two layers: JDBC API and JDBC Driver
+API. JDBC can support multiple heterogeneous databeses \cite{jdbctut}
+by using drivers connected to them. The JDBC Driver API manages these
+drivers to ensure that the correct one is being used. The JDBC API
+layer, in turn, administrates the communication between the
+application and the driver manager. JDBC API consists in classes and
+interfaces, such as *DriverManager*, which makes a connection between
+requests from the application and the proper database driver;
+*Connection*, containing all the methods necessary to contact the
+database; *Statement*, that creates objects that will be submited to
+the database; and *ResultSet*, where the retrieved objects are placed.
 
-_Comment_:
-- This section is too small. Wipe out or increase it?
+Among the possible DBMS that can be used in a Java application using
+JDBC is the MySQL system, one of the most important open-source DBMS
+in the market. It has been developed by Oracle and uses SQL language
+as interface. To enable the use of MySQL with Java, Oracle provides a
+driver for JDBC, as well as a native C library to allow developers to
+embed SQL commands directly in the application's code.
+
+_Comment_: *Better? bigger or wipe it?*
 
 ** Entity-Relationship and Relational Models
 \label{subsection.er_relational}
 
 An Entity-Relationship (ER) model defines a database in a conceptual
 view \cite{heuser}. This model can be represented by an ER Diagram
-(ERD), illustrated in Figure \ref{fig.ermodel}, and can be denoted by
-*schema*. It is based in the notion of *entities*, which can be
+(ERD), illustrated in Figure \ref{fig.ermodelex}, and can be denoted
+by *schema*. It is based in the notion of *entities*, which can be
 real-world objects that are easily identifiable \cite{ertutorial}, and
 the *relationship* between them. The entities have a set of
 attributes, where one or more are defined as the *identifier*, which
-uniquely identify an object of that entity. It is also possible
-for a relationship to have attributes. Besides, an entity can derive
-other more specialized entities, which is called *specialization*.
+uniquely identify an object of that entity. It is also possible for a
+relationship to have attributes, like the *Address* attribute in
+Figure \ref{fig.ermodelex}. Besides, an entity can derive other more
+specialized entities, which is called *specialization*.
 
 A relationship between entities *A* and *B* can have one of the
 following patterns: *one-to-one*, where an object of the entity A can
@@ -341,23 +351,22 @@ be associated to more than one entities of type B and vice
 versa. These characteristics also apply to self-referencing relations,
 where there is a relationship of an entity with itself. Besides, a
 connection can be an *identifying relationship*, which means that the
-relationship identifies an object. In these cases the entity is called
-a *weak entity*. 
+relationship identifies an object. In Figure \ref{fig.ermodelex} we
+can see the example of the relationship between a *City* and a
+*State*, where we define that a state can have more than one city,
+while a city belongs to only one state. Also, the state identifies a
+city along with its name, since there can be other cities with the
+same name but in different states. In these cases the entity is called
+a *weak entity*.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Example of ER Model}
 \centering
-\includegraphics[width=\linewidth]{./img/ermodelex.png}
+\includegraphics[width=\linewidth]{./img/ermodelex.pdf}
 \label{fig.ermodelex}
 \end{figure}
 #+END_LaTeX
-
-_Comment_:
-- The text in this figure is barely readable. Fix it please.
-- You should pay attention to colors, sometimes they are not well
-  fitted for gray tones usually used when printing.
-  - Consider this for all figures
 
 The ER Model is an overview of the structure of a database. To evolve
 to the implementation, a translation to a Relational Model must be
@@ -378,17 +387,17 @@ relationship, the weak entity attaches the identifier of the other
 entity to its own primary key. A *one-to-one* relationship generates a
 merge of both tables involved. *One-to-many* links adds an attribute
 in one of the tables. The entity that can only be related to one of
-the instances of the other receives the attribute, which is
-called *foreign key*. It also absorbs the attributes of the
-relationship. In the example of figure \ref{fig.ermodelex}, the table
-referencing the =School= entity would have the *stateName* and
-*cityName* (the primary key of City) as foreign keys and *address* as
-attribute. The foreign key is what preserves the link between two
-entities. *Many-to-many* relationships have to be represented by a
-separate table with the primary keys of both entities involved, which
-also work as foreign keys. In our illustration, the relationship
-between =Grade= and =Student= would become a table, with *studentId*
-and *gradeId* as primary and foreign keys.
+the instances of the other receives the attribute, which is called
+*foreign key*. It also absorbs the attributes of the relationship. In
+the example of figure \ref{fig.ermodelex}, the table referencing the
+*School* entity would have the *stateName* and *cityName* (the primary
+key of City) as foreign keys and *address* as attribute. The foreign
+key is what preserves the link between two entities. *Many-to-many*
+relationships have to be represented by a separate table with the
+primary keys of both entities involved, which also work as foreign
+keys. In our illustration, the relationship between *Grade* and
+*Student* would become a table, with *studentId* and *gradeId* as
+primary and foreign keys.
 
 The translation of specializations can be made in two ways: one single
 table for all of the hierarchy, where the primary key would be the
@@ -396,14 +405,10 @@ identifier of the most generic entity and there would be optional
 columns; and one table for each specialized entity, where all of them
 would have the identifier of the most generic entity composing the
 primary key. The first case, in Figure \ref{fig.ermodelex}, would
-generate a single =Person= table, with *personId* as primary key and
+generate a single *Person* table, with *personId* as primary key and
 *name*, *phone*, *studentId*, *course* and *salary* as attributes. In
-the second option, =Student= and =Teacher= become tables, with
+the second option, *Student* and *Teacher* become tables, with
 *personId* composing their primary key.
-
-_Comments_:
-- Here you have used *this*, but below you have opted for =this=. Stick to
-  the same emphasising rule.
 
 ** Experimental Design
 
@@ -415,17 +420,17 @@ executed and the error margin calculated is sufficient to avoid
 misleading conclusions.
 
 There is a specific terminology used in experimental design. The term
-=Response Variable= is the outcome of an experiment; =Factors= are all
+*Response Variable* is the outcome of an experiment; *Factors* are all
 of the variables that can have several different values affecting the
-response variable, and =Levels= are the possible values that a factor
-can assume. Also, the =Primary Factors= are the factors that need to
-be quantified, =Secondary Factors= are the factors whose impacts in
-the performance are irrelevant for the analysis, =Replication= is
-the number of repetition of all or some experiments and =Design= is
-the specification of total number of experiments based on factor level
+response variable, and *Levels* are the possible values that a factor
+can assume. Also, the *Primary Factors* are the factors that need to
+be quantified, *Secondary Factors* are the factors whose impacts in
+the performance are irrelevant for the analysis, *Replication* is the
+number of repetition of all or some experiments and *Design* is the
+specification of total number of experiments based on factor level
 combination and number of replications for each experiment. The
-=Experimental Unit= is the entity used for the experiment, which could
-be a computer, for example, and =Interaction= is when the levels of a
+*Experimental Unit* is the entity used for the experiment, which could
+be a computer, for example, and *Interaction* is when the levels of a
 fator affect the results of other factor.
 
 There are several types of experimental design modeling. One of them
@@ -487,7 +492,7 @@ design is randomized, =seed= is the optional seed for the
 randomization, =nlevels= is a vector with the number of levels for
 each factor and =factor.names=: a list of vectors with factor levels.
 This example is one of the designs used for the performance evaluation
-in chapter \ref{chapter.performance}.
+in Chapter \ref{chapter.performance}.
 
 
 * Pajé Visualization Tool - PajeNG 
@@ -575,6 +580,8 @@ difference between both hierarchies relies on the number of nodes:
 while the type hierarchy has only a few, the entities hierarchy may
 have millions depending on the number of containers in the trace.
 
+(image)
+
 Type definition events don't have a timestamp field and can occur at
 anytime in a trace file, as long as the type is not used before its
 definition. It is more common to have all the types defined in the
@@ -586,7 +593,6 @@ simulation by addition and subtraction events. The value of a variable
 is a double precision floating-point number, which is different from
 the values of the other entities. A variable must be set before
 changes to its value can be made.
-
 
 ** PajeNG
 \label{section.pajeng}
@@ -698,7 +704,7 @@ grouped together so a =PajeValuedEntity= is a child of the double
 timed entity, having =PajeUserState= and =PajeUserLink= as
 descendents. The double timed entity also has =PajeUserVariable= and
 =PajeNamedEntity= as childs. A =PajeContainer= inherits from the named
-entity. Figure \ref{fig.entitiesHierarchy} represents this structure.
+entity.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -729,7 +735,7 @@ created throughout the simulation by using map structures (=typeMap=
 and =contMap=) with the name or alias as key. There is always a
 pointer to the root type and another to the root container initialized
 in the beginning of the program.  The simulator contains one method
-for each type of event described in section \ref{subsection.events},
+for each type of event described in Appendix \ref{ap.events},
 which perform all the validations, besides the processing
 itself. Whenever there is an event that defines a type the entity
 generated is added to the =typeMap=.  =contMap= and the proper method
@@ -765,7 +771,7 @@ classes. _*some help to detail more this paragraph? Or should I join
 it with the next one?*_
 
 Although complying with its goal of extensibility in terms of
-extending the Pajé format, we identified three main issues in the
+expanding the Pajé format, we identified three main issues in the
 current implementation of PajeNG: little flexibility in the
 manipulation of data, lack of partial outcomes and ephemeral
 results. When the entities are already simulated, a deeper
@@ -806,16 +812,17 @@ packages: *parser*, *simulator core* and *plugin*. Every event of a
 trace file always goes through all of the packages. First, the trace
 file in the input is read by the parser, where a trace event object is
 created. This instance contains the type of event in question and the
-field values. Then, the simulator receives this object and executes
-the simulation based on the event type. The simulation always
-generates an entity, even if incomplete (with no end timestamp, for
-example). Finally, this new entity is sent to the plugin, which
-contains specific entry points for every different kind of
-entity. Figure \ref{fig.aiyraArchitecture} illustrates this
-architecture.
+field values. In the example of Figure \ref{fig.aiyraArchitecture},
+the event read is the creation of a container of type *P* with alias
+*P1* and parent *0*, which is root. Then, the simulator receives this
+object and executes the simulation based on the event type. The
+simulation always generates an entity, even if incomplete. In Figure
+\ref.{fig.aiyraArchitecture}, a *PajeContainer* is created without an
+ending timestamp. Finally, this new entity is sent to the plugin,
+which contains specific entry points for every different kind of
+entity. 
 
-_Comment_:
-- mention figure in first hand
+ _Comment_:
 - You should always (when talking about figures) explain the figure. 
   - You did not explain the figure in this case. You should lead the
     reader to check the figure from time to time during reading.
@@ -1178,8 +1185,8 @@ and an analysis of the impact of different batch sizes in the
 =PajeInsertDBPlugin=. Since Aiyra is strongly based in the PajeNG
 implementation, it is valid to examine if the modifications and
 language transition have brought significant impact on the
-simulation. The plugin that inserts the data in a MySQL database is the
-only one that brings an extremely different functionality to the
+simulation. The plugin that inserts the data in a MySQL database is
+the only one that brings an extremely different functionality to the
 program. As it involves the connection with an external tool, the
 analysis of its performance and the study of the most efficient use of
 it is very important.
@@ -1188,6 +1195,17 @@ it is very important.
 
 A full factorial experimental design was used to perform the
 tests. The different factor and levels for each 
+...
+
+_luiza_: OS X Yosemite 10.10.5
+Processador: 2.7 GHz Intel Core i7
+Memória: 16 GB 1600 MHz DDR3
+Gráficos: Intel HD Graphics 4000 1024 MB
+
+_guarani_: 
+
+_orion_: 
+
 
 Performance Evaluation
    + Overview of what is being evaluated and why 
@@ -1220,9 +1238,9 @@ Performance Evaluation
 * JavaCC Tutorial
 \label{ap.javacc}
 
-To build a grammar to be compiled by =JavaCC= you only need to create
-one file whith `.jj` extension. The structure of this file is the
-following:
+To build a grammar that will be compiled by =JavaCC= you only need to
+create one file whith `.jj` extension. The structure of this file is
+the following:
 
 #+BEGIN_EXAMPLE
 options{
@@ -1482,7 +1500,7 @@ An example of event definition:
 #+END_EXAMPLE
 
 *** Events
-\label{subsection.events} 
+\label{ap.events} 
 
 _Comments_: great, all this to the appendix. Keep here a very small
 fraction corresponding to an overview. Reference the appendix for

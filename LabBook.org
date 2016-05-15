@@ -471,6 +471,13 @@ _Comment_:
   you can use both, but use it always the same way.
 
 
+_Comment_:
+- The text in this figure is barely readable. Fix it please.
+- You should pay attention to colors, sometimes they are not well
+  fitted for gray tones usually used when printing.
+  - Consider this for all figures
+
+
 
 ** Chapter 3:
 
