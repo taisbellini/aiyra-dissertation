@@ -1205,9 +1205,45 @@ _luiza_: OS X Yosemite 10.10.5
   Memória:	16 GB
 Disco: 500 GB
 
-_guarani_: 
+_guarani_: Linux guarani 4.3.0-1-amd64 #1 SMP Debian 4.3.5-1
+(2016-02-06) x86_64 GNU/Linux
+
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                4
+On-line CPU(s) list:   0-3
+Thread(s) per core:    1
+Core(s) per socket:    4
+Socket(s):             1
+NUMA node(s):          1
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 42
+Model name:            Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
+Stepping:              7
+CPU MHz:               1601.222
+CPU max MHz:           3400.0000
+CPU min MHz:           1600.0000
+BogoMIPS:              6185.49
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              6144K
+
 
 _orion_: 
+
+guarani_orion: 
+
+traceroute to orion1 (143.54.12.114), 30 hops max, 60 byte packets
+ 1  143.54.13.1 (143.54.13.1)  0.619 ms  0.975 ms  1.329 ms
+ 2  orion1.inf.ufrgs.br (143.54.12.114)  0.547 ms  0.551 ms  0.544 ms
+
+ping: rtt min/avg/max/mdev = 0.280/0.510/0.559/0.065 ms
+
+rede do inf: 100MB
 
 
 Performance Evaluation
@@ -1727,10 +1763,10 @@ public class OptionsHandler {
 Options opt
 #+END_EXAMPLE
 
-The Options type is the core of the library used, and all of the argument's
-processing will be done in the =opt= instance. It is also in the
-constructor that we set all of the possible options that can be used
-by the user. To define a new one, we use the following line of
+The Options type is the core of the library used, and all of the
+argument's processing will be done in the =opt= instance. It is also
+in the constructor that we set all of the possible options that can be
+used by the user. To define a new one, we use the following line of
 code:
 
 #+BEGIN_EXAMPLE
