@@ -268,9 +268,9 @@ Recognition (ANTLR), that requires a runtime library
 generator, but it was soon discarded due to its very low performance.
 
 JavaCC can be downloaded, unzipped and added to the PATH. It also has
-a plugin for Eclipse. Figure \ref{fig.javaccex} exemplifies how JavaCC
-works. Once installed, JavaCC processes your grammar defined in a file
-with extension ``.jj'' using the command =javacc=. The whole grammar
+a plugin for Eclipse. Figure \ref{fig.javaccex} exemplifies the flow
+in JavaCC. Once installed, JavaCC processes your grammar defined in a file
+with extension =.jj= using the command =javacc=. The whole grammar
 is kept in this file and it is the only file that needs to be
 modified. It is also possible to add Java code that has to be executed
 during the parsing.
@@ -279,7 +279,7 @@ during the parsing.
 \begin{figure}[!htb]
 \caption{How JavaCC works}
 \centering
-\includegraphics[width=\linewidth]{./img/ermodelex.png}
+\includegraphics[width=\linewidth]{./img/javaccex.pdf}
 \label{fig.javaccex}
 \end{figure}
 #+END_LaTeX
@@ -305,17 +305,29 @@ the Java language to interact with several Database Management Systems
 one database tool to another and unbounds your application from a
 DBMS.
 
-The JDBC architecture consists in two layers: JDBC API and JDBC Driver
-API. JDBC can support multiple heterogeneous databeses \cite{jdbctut}
-by using drivers connected to them. The JDBC Driver API manages these
-drivers to ensure that the correct one is being used. The JDBC API
-layer, in turn, administrates the communication between the
-application and the driver manager. JDBC API consists in classes and
-interfaces, such as *DriverManager*, which makes a connection between
-requests from the application and the proper database driver;
-*Connection*, containing all the methods necessary to contact the
-database; *Statement*, that creates objects that will be submited to
-the database; and *ResultSet*, where the retrieved objects are placed.
+The JDBC architecture, depicted in Figure \ref{fig.jdbcex}, consists
+in two layers: JDBC API and JDBC Driver API. JDBC can support multiple
+heterogeneous databeses \cite{jdbctut} by using drivers connected to
+them. In the example of Figure \ref{fig.jdbcex}, we have an
+application communicating with three different databases.  The JDBC
+Driver API manages these drivers to ensure that the correct one is
+being used. The JDBC API layer, in turn, administrates the
+communication between the application and the driver manager. The JDBC
+API consists in classes and interfaces, such as *DriverManager*, which
+makes a connection between requests from the application and the
+proper database driver; *Connection*, containing all the methods
+necessary to contact the database; *Statement*, that creates objects
+that will be submited to the database; and *ResultSet*, where the
+retrieved objects are placed.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Architecture of JDBC. [Inspired in \cite{jdbctut}]}
+\centering
+\includegraphics[width=\linewidth]{./img/jdbcex.pdf}
+\label{fig.jdbcex}
+\end{figure}
+#+END_LaTeX
 
 Among the possible DBMS that can be used in a Java application using
 JDBC is the MySQL system, one of the most important open-source DBMS
@@ -324,22 +336,23 @@ as interface. To enable the use of MySQL with Java, Oracle provides a
 driver for JDBC, as well as a native C library to allow developers to
 embed SQL commands directly in the application's code.
 
-_Comment_: *Better? bigger or wipe it?*
 
 ** Entity-Relationship and Relational Models
 \label{subsection.er_relational}
 
 An Entity-Relationship (ER) model defines a database in a conceptual
 view \cite{heuser}. This model can be represented by an ER Diagram
-(ERD), illustrated in Figure \ref{fig.ermodelex}, and can be denoted
-by *schema*. It is based in the notion of *entities*, which can be
-real-world objects that are easily identifiable \cite{ertutorial}, and
-the *relationship* between them. The entities have a set of
-attributes, where one or more are defined as the *identifier*, which
-uniquely identify an object of that entity. It is also possible for a
-relationship to have attributes, like the *Address* attribute in
-Figure \ref{fig.ermodelex}. Besides, an entity can derive other more
-specialized entities, which is called *specialization*.
+(ERD) and can be denoted by *schema*. It is based in the notion of
+*entities*, which can be real-world objects that are easily
+identifiable \cite{ertutorial}, and the *relationship* between
+them. Figure \ref{fig.ermodelex} exemplifies a schema of a school
+system where the people and places involved are represented. The
+entities have a set of attributes, where one or more are defined as
+the *identifier*, which uniquely identify an object of that entity. It
+is also possible for a relationship to have attributes, like the
+*address* attribute in Figure \ref{fig.ermodelex}. Besides, an entity
+can derive other more specialized entities, which is called
+*specialization*.
 
 A relationship between entities *A* and *B* can have one of the
 following patterns: *one-to-one*, where an object of the entity A can
@@ -375,7 +388,7 @@ while the relational model is a logical representation
 \cite{heuser}. Relational databases are based in the concept of
 *tables* \cite{relationalmodel}, thus, the terminology used in this
 step involves *tables*, *rows* (or *tuples*) and *columns*. The
-identifier is called *primary key*. There are a set of rules to make
+identifier is called *primary key*. There is a set of rules to make
 this translation, although sometimes it is necessary to adapt the
 schema based on the user's needs.
 
@@ -384,27 +397,28 @@ model, while its attributes become the *columns* of the tables. Each
 instance of an entity is a row and its identifier can be one or more
 columns that compose the *primary key*. When there is an identifying
 relationship, the weak entity attaches the identifier of the other
-entity to its own primary key. A *one-to-one* relationship generates a
-merge of both tables involved. *One-to-many* links adds an attribute
-in one of the tables. The entity that can only be related to one of
-the instances of the other receives the attribute, which is called
-*foreign key*. It also absorbs the attributes of the relationship. In
-the example of figure \ref{fig.ermodelex}, the table referencing the
-*School* entity would have the *stateName* and *cityName* (the primary
-key of City) as foreign keys and *address* as attribute. The foreign
-key is what preserves the link between two entities. *Many-to-many*
-relationships have to be represented by a separate table with the
-primary keys of both entities involved, which also work as foreign
-keys. In our illustration, the relationship between *Grade* and
-*Student* would become a table, with *studentId* and *gradeId* as
-primary and foreign keys.
+entity to its own primary key. In Figure \ref{fig.ermodelex}, the
+*City* table has two columns as primary key: *stateName* and
+*cityName*. A *one-to-one* relationship generates a merge of both
+tables involved. *One-to-many* links adds an attribute in one of the
+tables. The entity that can only be related to one of the instances of
+the other receives the attribute, which is called *foreign key*. It
+also absorbs the attributes of the relationship. In the example of
+figure \ref{fig.ermodelex}, the table referencing the *School* entity
+would have the *stateName* and *cityName* as foreign keys and
+*address* as attribute. The foreign key is what preserves the link
+between two entities. *Many-to-many* relationships have to be
+represented by a separate table with the primary keys of both entities
+involved, which also work as foreign keys. In our illustration, the
+relationship between *Grade* and *Student* would become a table, with
+*studentId* and *gradeId* as primary and foreign keys.
 
 The translation of specializations can be made in two ways: one single
 table for all of the hierarchy, where the primary key would be the
 identifier of the most generic entity and there would be optional
 columns; and one table for each specialized entity, where all of them
 would have the identifier of the most generic entity composing the
-primary key. The first case, in Figure \ref{fig.ermodelex}, would
+primary key. In Figure \ref{fig.ermodelex}, the first case would
 generate a single *Person* table, with *personId* as primary key and
 *name*, *phone*, *studentId*, *course* and *salary* as attributes. In
 the second option, *Student* and *Teacher* become tables, with
@@ -462,9 +476,9 @@ time and expenses, the results provide less information.
 R is a language for statistical computing and graphics generation. It
 can be very easily extended, by creating and using packages. With R,
 it is possible to create full factorial or fractional designs using
-the =DoE.base= package. It contains the class =design= with several
+the *DoE.base* package. It contains the class *design* with several
 accessor functions to create different types of design. One particular
-important function is the =fac.design=, which creates full factorial
+important function is the *fac.design*, which creates full factorial
 designs with an arbitrary numbers of levels. The function receives
 several arguments, including number of factors, levels and
 replication. The usage of the function is the following:
@@ -484,13 +498,13 @@ fac.design(
                 batch=c("A", "B", "C", "D", "E", "F")));
 \end{lstlisting}
 #+END_LaTeX
-where =nfactors= represents the number of factors, =replications= is
-the number of replications, =repeat.only= tells if the replications of
-each run are grouped together, =blocks= is a prime-number telling in
-how many blocks the experiment is subdivided, =randomize= informs the
-design is randomized, =seed= is the optional seed for the
-randomization, =nlevels= is a vector with the number of levels for
-each factor and =factor.names=: a list of vectors with factor levels.
+where =nfactors= represents the number of factors, *replications* is
+the number of replications, *repeat.only* tells if the replications of
+each run are grouped together, *blocks* is a prime-number telling in
+how many blocks the experiment is subdivided, *randomize* informs the
+design is randomized, *seed* is the optional seed for the
+randomization, *nlevels* is a vector with the number of levels for
+each factor and *factor.names*: a list of vectors with factor levels.
 This example is one of the designs used for the performance evaluation
 in Chapter \ref{chapter.performance}.
 
@@ -507,19 +521,13 @@ Format, thus, it is important to understand how the Pajé trace files
 are composed. Section \ref{section.pajeformat} describes this format
 and all entity types it contains. The next section describes the new
 generation of the Pajé Visualization Tool, the PajeNG, focusing on the
-=libpaje= module, which is where the core simulation is performed.
+*libpaje* module, which is where the core simulation is performed.
  
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
-_Comment_
-- A figure C1 - C2, T1, T2 where you have on the left the type
-  hierarchy and on the right the entities hierarchy. Align the levels
-  of such hierarchies with dashed lines showing the
-  correspondance. Pay attention to timestamped objects (you may
-  represent horizontally).
 
-This section gives an overview of the Pajé Trace File Format and its
+This section gives an overview of the Pajé Trace File Format. Its
 complete description is in Appendix \ref{ap.pajeformat}. The Pajé
 Trace File Format \cite{pajetracefile} is a textual and generic
 pattern that describes the behaviour of parallel and distributed
@@ -529,7 +537,7 @@ associated to a container, even the containers themselves. A
 *container* can be any hardware or software entity, such as a
 processor, a thread, a network link, etc. It is the only Pajé object
 that holds other objects, including containers, which makes it the
-main component to define the type hierarchy. A *state* is used to
+main component to define a type hierarchy. A *state* is used to
 describe periods of time where a container stays at the same state,
 like a thread that is blocked, for example. It always has a beginning
 and an ending timestamps. An *event* has only one timestamp, and can
@@ -540,19 +548,21 @@ and end, indicating how long the variable had that specific value. A
 *link* represents a relationship between two containers, such as a
 communication between processes. It contains two timestamps specifying
 the beginning and the end of the communication. A Pajé trace file is
-divided in two segments: event definition and timestamped events,
-which are described below.
+divided in two segments: event definition and timestamped events. A
+brief description of these sections is provided below. For details and
+an example of an event definition, as well as a full list of events
+refer to Appendix \ref{ap.pajeformat}.
 
 *Events Definition* 
 
 The first part of a trace file describes all of the possible events of
 the trace. This part is composed by a block where the first line
-contains the name of the event, like =PajeDefineContainerType=, for
-example, followed by a unique identifier. The identifier is what will
-be used later by the events to determine the type of event in
+contains the name of the event, like *PajeDefineContainerType*, for
+example, followed by a unique identifier. The identifier is an integer
+and will be used later by the events to determine the type of event in
 question. After, there is a set of fields, one in each line. Each
 field comprises a name, and a type. The type of a filed can be a
-=string=, =double=, =int=, =date=, =hex= or =color=.
+string, double, int, date, hex or color.
 
 *Events*
 \label{subsection.events} 
@@ -573,14 +583,22 @@ of the trace file, the type hierarchy comes just after the event
 definition. There, each type of the program is defined and one of the
 fields is always the parent type. Each entity is always associated to
 a type and they must follow the same precedence as the types
-definition. For example, if the container C1, of type T1, is the
-parent of the container C2, of type T2, the type T2 must be child of
-T1 in the type tree. The root type is always the number $0$. The
-difference between both hierarchies relies on the number of nodes:
-while the type hierarchy has only a few, the entities hierarchy may
-have millions depending on the number of containers in the trace.
+definition. For example, as shown in Figure \ref{fig.hierarchyex}, if
+the container C1, of type T1, is the parent of the container C2, of
+type T2, the type T2 must be child of T1 in the type tree. The root
+type is always the number $0$. The difference between both hierarchies
+relies on the number of nodes: while the type hierarchy has only a
+few, the entities hierarchy may have millions depending on the number
+of containers in the trace.
 
-(image)
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Example of ER Model}
+\centering
+\includegraphics[width=\linewidth]{./img/hierarchyex.pdf}
+\label{fig.hierarchyex}
+\end{figure}
+#+END_LaTeX
 
 Type definition events don't have a timestamp field and can occur at
 anytime in a trace file, as long as the type is not used before its
@@ -600,22 +618,20 @@ changes to its value can be made.
 The PajeNG implementation is the new generation of the Pajé
 Visualization Tool \cite{pajeng}. It was developed in C++ and follows
 the same architecture as the original Pajé, written in Objective-C. It
-comprises a library containing the core of the simulation (=libpaje=),
+comprises a library containing the core of the simulation (*libpaje*),
 a space-time visualization tool and some auxiliary tools to manage the
 trace files. The base for the implementation of this project was the
-=libpaje= library.
+*libpaje* library.
 
 The library, represented in Figure \ref{fig.pajeparco} has three main
 components forming a pipeline that results in complete simulated
-entities. These components are: =FileReader=, =EventDecoder= and
-=PajeSimulator=. First, the =FileReader= reads a chunk of data from
-the trace file and puts it in memory. Then, the =EventDecoder= breaks
+entities. These components are: *FileReader*, *EventDecoder* and
+*PajeSimulator*. First, the *FileReader* reads a chunk of data from
+the trace file and puts it in memory. Then, the *EventDecoder* breaks
 it into events identifying, line by line, the event's fields and
 creating an object with all the necessary information. Last, the
-=PajeSimulator= receives this event object and addresses to the proper
-simulation. An illustration of this process is in figure
-\ref{fig.pajeparco}.
-
+*PajeSimulator* receives this event object and addresses to the proper
+simulation. 
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -644,18 +660,17 @@ with the rest of the code.
 An event object is what is passed as an argument to the simulator so
 that it can be processed. Therefore, it must contain all of the
 necessary information for the simulation. The first object created
-when a trace file is being parsed is of type =PajeTraceEvent=, which
-is a class containing all the fields read by the
-=PajeEventDecoder=. As depicted in Figure \ref{fig.eventsHierarchy},
-the event hierarchy starts with a simple =PajeEvent= class. This class
-has a trace event object, a container, a type and a timestamp. The
-immediate childs of PajeEvent are: =PajeCategorizedEvent=,
-=PajeVariableEvent= and =PajeDestroyContainerEvent=. The variable
-event is the parent of the specific events for variables, which are
-set, add and subtract. A categorized event is characterized by having
-a =PajeValue= associated to it, thus, =PajeStateEvent=,
-=PajeEventEvent=, =PajeLinkEvent=, and their respective childs inherit
-from it.
+when a trace file is being parsed is of type *PajeTraceEvent*, which
+is a class containing all the fields read by the *EventDecoder*. As
+depicted in Figure \ref{fig.eventsHierarchy}, the event hierarchy
+starts with a simple *PajeEvent* class. This class has a trace event
+object, a container, a type and a timestamp. The immediate childs of
+PajeEvent are: *PajeCategorizedEvent*, *PajeVariableEvent* and
+*PajeDestroyContainerEvent*. The variable event is the parent of the
+specific events for variables, which are set, add and subtract. A
+categorized event is characterized by having a *PajeValue* associated
+to it, thus, *PajeStateEvent*, *PajeEventEvent*, *PajeLinkEvent*, and
+their respective childs inherit from it.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -670,15 +685,15 @@ from it.
 *Class hierarchy for the Paje Types*
 
 Figure \ref{fig.typesHierarchy} portrays the type hierarchy, where the
-first element is the =PajeType=. It has a name, an alias and a parent
+first element is the *PajeType*. It has a name, an alias and a parent
 type, which is also a PajeType. These fields are the ones common to
 all the type definition events described in section
 \ref{section.pajeformat}. The immediate childs of this class are:
-=PajeCategorizedType=, =PajeVariableType= and =PajeContainerType=. As
+*PajeCategorizedType*, *PajeVariableType* and *PajeContainerType*. As
 the events, the categorized types are associated to a value, hence,
 the PajeCategorizedType has a PajeValue field and methods to
-manipulate it. Its childs are the =PajeStateType=, =PajeEventType= and
-=PajeLinkType=.
+manipulate it. Its childs are the *PajeStateType*, *PajeEventType* and
+*PajeLinkType*.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -693,17 +708,17 @@ manipulate it. Its childs are the =PajeStateType=, =PajeEventType= and
 *Class hierarchy for the Paje Entities*
 
 As demonstrated in Figure \ref{fig.entitiesHierarchy}, the
-=PajeEntity= is the first node of the entities tree. It originates a
-=PajeSingleTimedEntity= class, that describes entities with one single
-timestamp. The =PajeUserEvent= is the only entity with this
+*PajeEntity* is the first node of the entities tree. It originates a
+*PajeSingleTimedEntity* class, that describes entities with one single
+timestamp. The *PajeUserEvent* is the only entity with this
 characteristic, but it is possible to add, in the future, more
-entities with just one timestamp. The =PajeDoubleTimedEntity= inherits
+entities with just one timestamp. The *PajeDoubleTimedEntity* inherits
 from this class and represents entities with start and end
 timestamps. Like the other hierarchies, the valued entities are
-grouped together so a =PajeValuedEntity= is a child of the double
-timed entity, having =PajeUserState= and =PajeUserLink= as
-descendents. The double timed entity also has =PajeUserVariable= and
-=PajeNamedEntity= as childs. A =PajeContainer= inherits from the named
+grouped together so a *PajeValuedEntity* is a child of the double
+timed entity, having *PajeUserState* and *PajeUserLink* as
+descendents. The double timed entity also has *PajeUserVariable* and
+*PajeNamedEntity* as childs. A *PajeContainer* inherits from the named
 entity.
 
 #+BEGIN_LaTeX
@@ -717,29 +732,29 @@ entity.
 
 *The Core Simulator*
 
-All the simulation is performed in two classes: =PajeSimulator= and
-=PajeContainer=. A PajeSimulator object is instantiated in the
+All the simulation is performed in two classes: *PajeSimulator* and
+*PajeContainer*. A PajeSimulator object is instantiated in the
 beginning of the program and incorporates all the event processing of
 the simulation. The type definitions, container creations and entity
 value declarations are completed and stored in the PajeSimulator
-object. Every time there is an event of type =PajeCreateContainer=, a
+object. Every time there is an event of type *PajeCreateContainer*, a
 PajeContainer object is instantiated. All other events are always
 associated to a container, thus, they will be simulated in the
 appropriate container instance. The PajeContainer object will keep the
 entities until the program finishes. Since all the data from the
-simulation is kept in memory, the end timestamp is used to signal
-that an entity no longer can be referred.
+simulation is kept in memory, the end timestamp is used to signal that
+an entity no longer can be referred.
 
 The PajeSimulator class lists every type declared and container
 created throughout the simulation by using map structures (=typeMap=
 and =contMap=) with the name or alias as key. There is always a
 pointer to the root type and another to the root container initialized
 in the beginning of the program.  The simulator contains one method
-for each type of event described in Appendix \ref{ap.events},
-which perform all the validations, besides the processing
-itself. Whenever there is an event that defines a type the entity
-generated is added to the =typeMap=.  =contMap= and the proper method
-of the container object is called.
+for each type of event described in Appendix \ref{ap.events}, which
+perform all the validations, besides the processing itself. Whenever
+there is an event that defines a type the entity generated is added to
+the =typeMap=.  =contMap= and the proper method of the container
+object is called.
 
 The PajeContainer class also uses map structures to store all the
 entities that are related to it including other containers. Besides
@@ -779,9 +794,9 @@ understanding of the code structure is necessary if one wants to
 define another way of handling the results. Also, the user needs to
 manage a full set of entities, since there is no flexibility of
 discarding data that is not relevant. The second issue relies on the
-fact that the =PajeSimulator= instance maintains all of the simulated
+fact that the *PajeSimulator* instance maintains all of the simulated
 objects in memory. If a user wants to see the resulted entities during
-the simulation, he would need to get into the =PajeSimulator= code to
+the simulation, he would need to get into the *PajeSimulator* code to
 make the necessary changes. Technically, since all the results are
 stored in memory, it would be simple to add a new functionality, but
 it is limited to the manipulation of the whole set of results, not
@@ -808,8 +823,8 @@ files in the Pajé format and, instead of storing the results in
 memory, forwards every created entity to a common place where it can
 be manipulated freely. The architecture of the implementation,
 characterized in Figure \ref{fig.aiyraArchitecture}, contains three
-packages: *parser*, *simulator core* and *plugin*. Every event of a
-trace file always goes through all of the packages. First, the trace
+packages: *controller*, *simulator core* and *plugin*. Every event of
+a trace file always goes through all of the packages. First, the trace
 file in the input is read by the parser, where a trace event object is
 created. This instance contains the type of event in question and the
 field values. In the example of Figure \ref{fig.aiyraArchitecture},
@@ -820,13 +835,8 @@ simulation always generates an entity, even if incomplete. In Figure
 \ref.{fig.aiyraArchitecture}, a *PajeContainer* is created without an
 ending timestamp. Finally, this new entity is sent to the plugin,
 which contains specific entry points for every different kind of
-entity. 
+entity.
 
- _Comment_:
-- You should always (when talking about figures) explain the figure. 
-  - You did not explain the figure in this case. You should lead the
-    reader to check the figure from time to time during reading.
-  - This is valid for all figures (before and after this comment)
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -847,105 +857,91 @@ presented in chapter \ref{chapter.plugins} and a step-by-step for the
 execution of Aiyra can be found in \ref{ap.aiyraexecute}. The
 following subsections detail each one of the packages.
 
-** The Parser: Option Handling and JavaCC
+** The Controller: Option Handling and JavaCC
 
-_Comment_:
-- Since this "Parser" package also contains option handling, maybe you
-  should change its name to something else, like "controller". I say
-  controller because the simulator itself is imbricated (embedded) in
-  the "Parser".
 
-The parser package is the entry point of the program, thus, it also
-handles the arguments passed by the user. For this processing, an
+The controller package is the entry point of the program, thus, it
+also handles the arguments passed by the user. For this processing, an
 external library \cite{optionhandler} was used. The arguments handling
-is centralized in one single class, =OptionsHandler=, to facilitate
-the inclusion of new ones. Refer to \ref{ap.optionshandler} for more
-details about the library.
+is centralized in one single class, *OptionsHandler*, to facilitate
+the inclusion of new ones. A grammar (*PajeGrammar.jj*) describing the
+elements of the Pajé file format, presented in section
+\ref{section.pajeformat}, was created to be processed by the Java
+Compiler Compiler. The implementation uses the JavaCC syntax. Each
+event definition is stored in an array, while the events are simulated
+as soon as they are identified.
 
-A grammar (=PajeGrammar.jj=) describing the elements of the Pajé file
-format, presented in section \ref{section.pajeformat}, was created to
-be processed by the Java Compiler Compiler. The implementation uses
-the =JavaCC= syntax and the complete grammar is in appendix
-\ref{ap.grammar}. Each event definition is stored in an array, while
-the events are simulated as soon as they are identified.
-
-_Comment_:
-- which appendix?
-- Perhaps you should say see the appendix only once. It is too
-  repetitive as it is now.
-
-The parser package is composed by all of the =JavaCC= files described
-in section \ref{section.javacc} and the =OptionsHandler= class. The
-generated class =PajeGrammar.java= contains, besides the parsing
-component, all the necessary Java code for the program to run, such as
-the initialization of the simulator object, where all of the
+The controller package is composed by all of the JavaCC files
+described in section \ref{section.javacc} and the OptionsHandler
+class. The generated class *PajeGrammar.java* contains, besides the
+parsing component, all the necessary Java code for the program to run,
+such as the initialization of the simulator object, where all of the
 simulation will be placed. Every time an event is identified, the
 simulator instance, which is the entry point of the simulator core
 package, is called to simulate that event. Next section describes the
-simulator core package.
+simulator core package. For details about the OptionsHandler class and
+the complete grammar created for the Pajé Format refer to Appendix
+\ref{ap.optionshandler} and \ref{ap.grammar}, respectively.
 
 ** Aiyra's Core Simulator
 
 Aiyra's core simulator follows the exact same structure of the
-=PajeNG= implementation described in section \ref{section.pajeng},
+*PajeNG* implementation described in section \ref{section.pajeng},
 having the same class hierarchies. Thus, it is equally expandable in
 terms of creeating new types of events or entities. However, it does
-not support extra fields in the events, which makes it more limited
-for extensions in the Pajé Trace file.  As in the =PajeNG=, all of the
-events go through the =PajeSimulator= object, which forwards to the
-=PajeContainer= if it is an event associated to a container.
-
-_Comments_:
-- Why have you opted to leave extra fields out of your implementation?
-  - You could say that despite this negative difference on your side,
-    it is just a matter of changing everything so the plugins also get
-    that kind of information in a generic manner.
+not support extra fields in the events since the focus on the
+implementation was the extending the output of the simulator. This
+makes it more limited for extensions in the Pajé Trace file, but it is
+simple to adjust it and the changes would not affect the
+implementation of the plugins.  As in the *PajeNG*, all of the events
+go through the *PajeSimulator* object, which forwards to the
+*PajeContainer* if it is an event associated to a container.
 
 Every entity generated is represented by an object with attributes
 representing its fields. The class hierarchy of the entities is the
 same as the one presented in Figure \ref{fig.entitiesHierarchy}. All
-of the types derive from the =PajeType= class, which contains =alias=,
-=name=, =depth=, and =parent=, a =PajeType= as well, as attributes. It
+of the types derive from the *PajeType* class, which contains *alias*,
+*name*, *depth*, and *parent*, a *PajeType* as well, as attributes. It
 also provides the =getNature()= method, to identify which entity this
 type describes. The nature is an enumeration and can assume
 *ContainerType*, *StateType*, *EventType*, *LinkType* or
-*VariableType*. The =PajeVariableType= adds a =PajeColor= to its
+*VariableType*. The *PajeVariableType* adds a *PajeColor* to its
 attributes, which is an object with the values for red (=r=), green
-(=g=), blue(=b=) and alpha(=a=). The =PajeLinkType=, in turn, includes
-=startType= and =endType=, which stand for the type of the start and
+(=g=), blue(=b=) and alpha(=a=). The *PajeLinkType*, in turn, includes
+*startType* and *endType*, which stand for the type of the start and
 end containers of the communication. A value is represented by a
-=PajeValue= class, with =name=, =alias=, =type= and =color= as
+*PajeValue* class, with *name*, *alias*, *type* and *color* as
 attributes.
 
-A container object (=PajeContainer=) has an =alias=, =name=, =type=
-and =parent= (another =PajeContainer=), besides the structures to
+A container object (*PajeContainer*) has an *alias*, *name*, *type*
+and *parent* (another *PajeContainer*), besides the structures to
 store the entities related to it, as described in section
 \ref{section.pajeng}. Since the container class is a child of the
-=PajeDoubleTimedEntity=, it also has a =startTime= and an
-=endTime=. All other entities are associated to a container and a
-type, thus, they have a =container= and a =type= fields. The event
-entity (=PajeUserEvent=) is the only one that derives from
-=PajeSingleTimedEntity=, hence, it has a unique timestamp named
-=time=. Also, it has a =value= attribute, which is a =PajeValue=. The
-other valued entities, =PajeUserState= and =PajeUserLink=, inherit the
-=PajeValue= attribute from the =PajeValuedEntity= class. A
-=PajeUserVariable= object also has a =value= attribute but, unlike
-events, states and links, it is a double number. The =PajeUserLink=
-has a string that defines the =key= and start and end containers
-identified by =startContainer= and =endContainer=.
+*PajeDoubleTimedEntity*, it also has a *startTime* and an
+*endTime*. All other entities are associated to a container and a
+type, thus, they have a *container* and a *type* fields. The event
+entity (*PajeUserEvent*) is the only one that derives from
+*PajeSingleTimedEntity*, hence, it has a unique timestamp named
+*time*. Also, it has a *value* attribute, which is a *PajeValue*. The
+other valued entities, *PajeUserState* and *PajeUserLink*, inherit the
+*PajeValue* attribute from the *PajeValuedEntity* class. A
+*PajeUserVariable* object also has a *value* attribute but, unlike
+events, states and links, it is a double number. The *PajeUserLink*
+has a string that defines the *key* and start and end containers
+identified by *startContainer* and *endContainer*.
 
 Every trace event simulation has an instrumentation point, which
 dispatches the entity objects generated to the plugin package. These
-points are either in the =PajeSimulator= or in the =PajeContainer=, as
-illustrated in figure \ref{fig.aiyraCore}. In the =PajeSimulator= are
+points are either in the *PajeSimulator* or in the *PajeContainer*, as
+illustrated in figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
 the outputs regarding the definition of types and values and the
 creation of containers. Although in this point the containers are not
 complete objects, since they don't have ending timestamp or the
 related entities, they are forwarded anyway with the alias and type
-information. The =PajeContainer= is in charge of dispatching to the
+information. The *PajeContainer* is in charge of dispatching to the
 plugin the instances related to it, which involve the states, events,
 links and variables. It also may send unfinished objects. When there
-is a =PajeDestroyContainerEvent=, the container object is sent again,
+is a *PajeDestroyContainerEvent*, the container object is sent again,
 now complete with an ending timestamp.
 
 #+BEGIN_LaTeX
@@ -970,11 +966,11 @@ received in each one is presented in the next section.
 
 ** Plugin
 
-The plugin package is composed by an abstract class, the =PajePlugin=,
+The plugin package is composed by an abstract class, the *PajePlugin*,
 with one method for each instrumentation point. It also contains a
 method called *finish* where the user can perform some concluding
 actions after the simulation is completed. To create a new plugin, the
-user just needs to extend the =PajePlugin= class and override its
+user just needs to extend the *PajePlugin* class and override its
 functions. It is also possible to extend another plugin, if the
 differences are too little and not worth of a new class
 implementation.
@@ -982,54 +978,54 @@ implementation.
 The entrances of the plugins comprise the definition of types and
 values, the creation of containers, and the formation and completion
 of new entities. The *newType* entry point is a unique entrance for
-when a type of any kind is defined, having the =PajeType= object as
+when a type of any kind is defined, having the *PajeType* object as
 argument. The =getNature()= method can be used to identify the exact
-type. The *newValue* method receives every =PajeValue= created.
+type. The *newValue* method receives every *PajeValue* created.
 
 When a container is created in the simulation, the instance is
 forwarded to the *newCreatedContainer* entry point, with the end
-timestamp set to =-1=. Whenever a method receives an entity that is
-not completed yet, the end timestamp will be =-1=. The
+timestamp set to $-1$. Whenever a method receives an entity that is
+not completed yet, the end timestamp will be $-1$. The
 *destroyedContainer* method takes in a complete container that has
 just been destroyed. Most of the entities are removed during
 simulation, but the destroyed container may have some remaining ones
 that could not be excluded, such as variables.
 
 Link entities have three instrumentation points all receiving
-=PajeUserLink= objects: *startLink*, where the end time and end
+*PajeUserLink* objects: *startLink*, where the end time and end
 container of the communication link are unknown; *endLink*, when the
 instance has the end point of the link but not the start; and
 *newCompleteLink*, where the link entity has beginning and
 end. Anytime a variable is set or updated, there are three
-=PajeUserVariable= entities sent to the plugin: the =first=, which
-contains the first value of the variable; the =last=, which is the one
+*PajeUserVariable* entities sent to the plugin: the *first*, which
+contains the first value of the variable; the *last*, which is the one
 immediately before the variable in question; and the new variable
-which is not completed yet (=newVar=). The aditions and subtractions
+which is not completed yet (*newVar*). The aditions and subtractions
 are sent to the same point (*updateVar*). Since the previous variable
 objects are necessary to generate the new value, they are not removed
 from memory during simulation. The set, push and pop state events each
-have one method receiving a =PajeUserState=: *setState*, *pushState*
+have one method receiving a *PajeUserState*: *setState*, *pushState*
 and *popState*, the only one with an entity with beginning and end
-timestamps. The =PajeUserEvent= objects are sent to the *newEvent*
+timestamps. The *PajeUserEvent* objects are sent to the *newEvent*
 function.
 
 To validate the concept of the plugins and its entry points, three
-plugins were created: =PajeNullPlugin=, =PajeDumpPlugin= and
-=PajeInsertDBPlugin=. Their implementation is described in the next
+plugins were created: *PajeNullPlugin*, *PajeDumpPlugin* and
+*PajeInsertDBPlugin*. Their implementation is described in the next
 chapter.
   
 * Plugins
 \label{chapter.plugins} 
 
-In this chapter, two plugins are described: =PajeDumpPlugin= and
-=PajeIsertDBPlugin=. The =PajeNullPlugin= is the default one. It does
+In this chapter, two plugins are described: *PajeDumpPlugin* and
+*PajeIsertDBPlugin*. The *PajeNullPlugin* is the default one. It does
 not make any treatment to the data so the objects are simply
 discarded. It is useful to verify the performance of the simulation
 itself, whithout the interference of the other segments.
 
 ** Paje Dump Plugin
 
-The Dump plugin performs the same action as the =pj_dump= tool, which
+The Dump plugin performs the same action as the *pj_dump* tool, which
 dumps to the standard output the entities generated by the
 simulator. The implementation consists in inserting a =print= function
 in each instrumentation point that receives a complete entity. These
@@ -1039,9 +1035,9 @@ iterate over the entities left in the container. The variables printed
 in the destruction of the container, since they are not removed during
 simulation.
 
-The difference between the =PajeDumpPlugin= and the =pj_dump= tool is
+The difference between the *PajeDumpPlugin* and the *pj_dump* tool is
 that the first one outputs the information as soon as the entity is
-completed. The =pj_dump=, in turn, keeps everything in memory before
+completed. The *pj_dump*, in turn, keeps everything in memory before
 dumping it all at once. With this approach, it is possible to solve
 the issue regarding the need to wait for the program to end to have
 the results.
@@ -1058,19 +1054,19 @@ number of lines desired.
 
 ** Paje Insert Database Plugin
 
-The =PajeInsertDBPlugin= saves in a relational database all the
-results of the simulation. For the implementation, the JDBC driver was
+The *PajeInsertDBPlugin* saves in a relational database all the
+results of the simulation. For the implementation, the JDBC API was
 used to make a connection with the MySQL database. The schema used was
-specially designed for the Pajé format and will be presented in the
-next subsections. This plugin allows the user to save data from
-multiple files in the same database.
+specially designed for the Pajé format and is presented in the next
+subsections. This plugin allows the user to save data from multiple
+files in the same database.
 
 The plugin can be used by specifying =mysql= as argument for the =-p=
 option. It is necessary to have a MySQL connection and a database with
 the correct schema. To specify the server of the connection, there is
 the option =-s=. It is also possible to inform a username (=-u=), a
 password (=-pwd=) and a database name (=-d=). The default for these
-options is: =localhost=, =root=, =root= and =paje=, respectively.
+options is: *localhost*, *root*, *root* and *paje*, respectively.
 
 To create a relational database for the Pajé format, first, we created
 an entity-relationship model that is described in the subsection
@@ -1081,35 +1077,35 @@ below.
 The entity-relationship (ER) model, illustrated in Figure
 \ref{fig.ermodel}, contains one entity for each type of Pajé
 object. Also, to support multiple files, there is a *file* entity,
-which has the =name=, a =comment= and the =date= as attributes, as
-well as a =file_id=. The *Type* and *Container* entities have an
-identifying relationship with =file=, which means that the file id is
+which has the *name*, a *comment* and the *date* as attributes, as
+well as a *file_id*. The *Type* and *Container* entities have an
+identifying relationship with *file*, which means that the file id is
 part of their identifier. The relationship is one-to-many, since a
 file can have multiple types and containers.
 
-The *Type* entity has =alias=, composing the identifier, =name= and
-=depth= as attributes. It also contains a self-referencing one-to-many
-relationship to indicate the =parent= type, as a type can have
+The *Type* entity has *alias*, composing the identifier, *name* and
+*depth* as attributes. It also contains a self-referencing one-to-many
+relationship to indicate the *parent* type, as a type can have
 multiple children. It is associated to a *Value* entity, which
-describes the =PajeValue= class, with =alias=, =name=, =type=
-(identifying relation) and =color=. Link and variable types have
+describes the *PajeValue* class, with *alias*, *name*, *type*
+(identifying relation) and *color*. Link and variable types have
 exclusive attributes that are not common to all types, thus, both are
 specializations of *Type*. *LinkType* adds a relationship with itself
 to represent a the start and end. This is a many-to-many relationship
 because the types can be the start and end to various
-communications. The =VariableType= has a color attribute.
+communications. The *VariableType* has a color attribute.
 
 The *Container* entity has an identifying one-to-many relashionship
 with *Type*, as well as every other entity, since all of them are
 classified by a type. Containers have the same attributes as types,
-including the =parent= one-to-many relation. All of the entities that
+including the *parent* one-to-many relation. All of the entities that
 are related to a container, have an identifying one-to-many relation
-with *Container* entity. *State* has =startTime= and =endTime=
+with *Container* entity. *State* has *startTime* and *endTime*
 attributes, where the first is identifier. *Link* has two one-to-many
-relationships with *Container*, one for =startContainer= and one for
-=endContainer=. A *Variable* entity contains the =Time= attribute, as
-well as an =updateTime= in the relation with *Container*. Also, this
-relation has a =value= attribute. The *Event* entity has a =time=
+relationships with *Container*, one for *startContainer* and one for
+*endContainer*. A *Variable* entity contains the *Time* attribute, as
+well as an *updateTime* in the relation with *Container*. Also, this
+relation has a *value* attribute. The *Event* entity has a *time*
 field.
 
 #+BEGIN_LaTeX
@@ -1133,14 +1129,14 @@ of the process, where the needs of the client are contemplated.
 The entities defined in the ER Model all became tables. For the *Type*
 specialization, we used the first option presented in
 \ref{subsection.er_relational}: combining everything in a single table
-with the following fields: =file_id=, =alias=, =name=, =depth=,
-=parent_type_alias=, =start_link_type=, =end_link_type= and
-=color=. =File_id=, inherited from the identifying relation with
-*File*, and =alias= compose the primary key. The self-referencing
+with the following fields: *file_id*, *alias*, *name*, *depth*,
+*parent_type_alias*, *start_link_type*, *end_link_type* and
+*color*. *File_id*, inherited from the identifying relation with
+*File*, and *alias* compose the primary key. The self-referencing
 relationships are described as foreign keys in their tables.  The
 entities associated to the container all have at least three foreign
-keys that are also identifiers: =type_alias=, =container_alias= and
-=file_id=. Since the *Link* entity has a unique key, its two foreign
+keys that are also identifiers: *type_alias*, *container_alias* and
+*file_id*. Since the *Link* entity has a unique key, its two foreign
 keys from *Container* don't belong to the identifier.
 
 In our ER Model, the value is only associated to the *Type*, thus, if
@@ -1148,22 +1144,22 @@ one wants to know the value of a state, for example, it needs to first
 get its type, then, go to *Type* table to retrieve the value. Since it
 is desirable to easily get an entity's value, we added a relationship
 between the valued entities (*State*, *Link* and *Variable*) with
-*Value*. =value_alias= is an identifying foreign key for all, except
-*Link*, where the identifier consists only in the =key=, =type= and
-=file_id=. With the conceptual model of the *Variable* entity, it is
+*Value*. *value_alias* is an identifying foreign key for all, except
+*Link*, where the identifier consists only in the *key*, *type* and
+*file_id*. With the conceptual model of the *Variable* entity, it is
 required to retrieve two rows if one needs to know the beginning and
 ending timestamps of one entity. Since this information is very
 important, we changed the *Variable* table for the tuples to
-explicitly have =startTime= and =endTime=.
+explicitly have *startTime* and *endTime*.
 
 *** Implementation
 
-In the =PajeInsertDBPlugin=, the following entry points were used:
+In the *PajeInsertDBPlugin*, the following entry points were used:
 *newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
 *popState*, *newCompleteLink*, *updateVar* and *newEvent*. Types,
 values and containers are inserted in the database as soon as they are
 created due to the dependency of other entities on these ones. When a
-container is destroyed, its =endTime= is updated in the database.
+container is destroyed, its *endTime* is updated in the database.
 
 The insertion in the database costs time, hence, the approach of
 making an access every time a new entity is created has a very bad
@@ -1182,7 +1178,7 @@ for different sizes of batch will be presented in the next chapter.
 An evaluation of Aiyra's performance and its plugins was made to ...
 Two main tests were executed: a comparison between Aiyra and PajeNG
 and an analysis of the impact of different batch sizes in the
-=PajeInsertDBPlugin=. Since Aiyra is strongly based in the PajeNG
+*PajeInsertDBPlugin*. Since Aiyra is strongly based in the PajeNG
 implementation, it is valid to examine if the modifications and
 language transition have brought significant impact on the
 simulation. The plugin that inserts the data in a MySQL database is
@@ -1198,9 +1194,16 @@ tests. The different factor and levels for each
 ...
 
 _luiza_: OS X Yosemite 10.10.5
-Processador: 2.7 GHz Intel Core i7
-Memória: 16 GB 1600 MHz DDR3
-Gráficos: Intel HD Graphics 4000 1024 MB
+ Nome do Modelo:	MacBook Pro
+  Identificador do Modelo:	MacBookPro10,1
+  Nome do Processador:	Intel Core i7
+  Velocidade do Processador:	2.7 GHz
+  Número de Processadores:	1
+  Número Total de Núcleos:	4
+  Cache L2 (por Núcleo):	256 KB
+  Cache de L3:	6 MB
+  Memória:	16 GB
+Disco: 500 GB
 
 _guarani_: 
 
@@ -1499,17 +1502,13 @@ An example of event definition:
 %EndEventDef
 #+END_EXAMPLE
 
-*** Events
+** Events
 \label{ap.events} 
-
-_Comments_: great, all this to the appendix. Keep here a very small
-fraction corresponding to an overview. Reference the appendix for
-details.
 
 After the event definition, the events themselves are described, one
 in each line. Every event starts with the number that identifies it,
 which was defined previously. For the example above, every line that
-contains a =PajeNewEvent= event will start with the number 17. The
+contains a *PajeNewEvent* event will start with the number 17. The
 fields are separated by space or tab and must appear in the same order
 as it was declared in the definition. In the example below, there is a
 PajeNewEvent event with timestamp =3.14532=, of type =S=, in the
@@ -1525,130 +1524,133 @@ created, a hierarchy of types and containers must be defined and
 containers need to be intantiated, since every entity belongs to a
 container.
 
-**** Types
+*** Types
 Type doesn't have a timestamp and can be declared at anytime in a
 trace file, as long as it is not used before its definition. It is
 more common to have all the types defined in the beginning. There are
 6 different type definitions, one for each sort of entity and one for
 value objects:
 
-=PajeDefineContainerType=: Must have the fields _Name_ and _Type_, and
-can have an optional field _Alias_. Defines a new container type
-called _Name_, contained in a previously defined container of type
-_Type_.
+*PajeDefineContainerType*: Must have the fields *Name* and *Type*, and
+can have an optional field *Alias*. Defines a new container type
+called *Name*, contained in a previously defined container of type
+*Type*.
 
-=PajeDefineStateType=: Must have the fields _Name_ and _Type_, and can
-have an optional field _Alias_. Defines a new state type called
-_Name_, contained in a previously defined container of type _Type_.
+*PajeDefineStateType*: Must have the fields *Name* and *Type*, and can
+have an optional field *Alias*. Defines a new state type called
+*Name*, contained in a previously defined container of type *Type*.
 
-=PajeDefineEventType=: Must have the fields _Name_ and _Type_, and can
-have an optional field _Alias_. Defines a new event type called
-_Name_, contained in a previously defined container of type _Type_.
+*PajeDefineEventType*: Must have the fields *Name* and *Type*, and can
+have an optional field *Alias*. Defines a new event type called
+*Name*, contained in a previously defined container of type *Type*.
 
-=PajeDefineVariableType=: Must have the fields _Name_, _Type_ and
-_Color_, and can have an optional field _Alias_. Defines a new
-variable type called _Name_, contained in a previously defined
-container of type _Type_, with the color _Color_. Notice that the
-color is associated to the type, and not to the object. Therefore,
-every variable of determined type will have the same color.
+*PajeDefineVariableType*: Must have the fields *Name*, *Type* and
+*Color*, and can have an optional field *Alias*. Defines a new
+*variable type called *Name*, contained in a previously defined
+*container of type *Type*, with the color *Color*. Notice that the
+*color is associated to the type, and not to the object. Therefore,
+*every variable of determined type will have the same color.
 
-=PajeDefineLinkType=: Must have the fields _Name_, _Type_,
-_StartContainerType_ and _EndContainerType_, and can have an optional
-field _Alias_. Defines a new link type called _Name_, contained in a
-previously defined container of type _Type_, that connects the
-previously defined container type _StartContainerType_ to the
-previously defined _EndContainerType_. Also, the container type given
-in _Type_ must be an ancestral of both start and end container types.
+*PajeDefineLinkType*: Must have the fields *Name*, *Type*,
+*StartContainerType* and *EndContainerType*, and can have an optional
+*field *Alias*. Defines a new link type called *Name*, contained in a
+*previously defined container of type *Type*, that connects the
+*previously defined container type *StartContainerType* to the
+*previously defined *EndContainerType*. Also, the container type given
+*in *Type* must be an ancestral of both start and end container types.
 
-=PajeDefineEntityValue=: Must have the fields _Name_, _Type_ and
-_Color_, and can have an optional field _Alias_. This is an optional
-event that defines the possible values of an entity type, which can be
-a State, Link or Event. Defines a new value called _Name_ for the
-previously defined type _Type_ with color _Color_. Notice that this
-value is an entity, differently from the one indentifying a variable,
-which is a double value.
+*PajeDefineEntityValue*: Must have the fields *Name*, *Type* and
+*Color*, and can have an optional field *Alias*. This is an optional
+*event that defines the possible values of an entity type, which can
+*be a State, Link or Event. Defines a new value called *Name* for the
+*previously defined type *Type* with color *Color*. Notice that this
+*value is an entity, differently from the one indentifying a variable,
+*which is a double value.
 
-**** Containers
+*** Containers
 Intances of containers can be created and destroyed during the trace
 file. A container cannot be referenced after it was destroyed. The
 events associated to the containers are timestamped.
 
-=PajeCreateContainer=: Must have the fields _Time_, _Name_, _Type_ and
-_Container_, and can have an optional field _Alias_. Creates, at
-timestamp _Time_, a container instance called _Name_, of the container
-type _Type_ and that is a child of the previously created container
-_Container_.
+*PajeCreateContainer*: Must have the fields *Time*, *Name*, *Type* and
+*Container*, and can have an optional field *Alias*. Creates, at
+*timestamp *Time*, a container instance called *Name*, of the
+*container type *Type* and that is a child of the previously created
+*container Container*.
 
-=PajeDestroyContainer=: Must have the fields _Time_, _Name_ and
-_Type_. Destroys, at timestamp _Time_, a container instance called
-_Name_, of the container type _Type_.
+*PajeDestroyContainer*: Must have the fields *Time*, *Name* and
+*Type*. Destroys, at timestamp *Time*, a container instance called
+*Name*, of the container type *Type*.
 
-**** States
+*** States
 The state events change the values of a determined container's state,
 by setting, pushing, popping and reseting.
 
-=PajeSetState=: Must have the fields _Time_, _Type_, _Container_ and
-_Value_. Changes, at timestamp _Time_, to the value _Value_, the state
-type _Type_, of the container identified by _Container_.
+*PajeSetState*: Must have the fields *Time*, *Type*, *Container* and
+*Value*. Changes, at timestamp *Time*, to the value *Value*, the state
+*type *Type*, of the container identified by *Container*.
 
-=PajePushState=: Must have the fields _Time_, _Type_, _Container_ and
-_Value_. Pushes, at timestamp _Time_, the value _Value_ of the state
-type _Type_, in the container identified by _Container_. The push event
-saves the existing value of the same state.
+*PajePushState*: Must have the fields *Time*, *Type*, *Container* and
+*Value*. Pushes, at timestamp *Time*, the value *Value* of the state
+*type *Type*, in the container identified by *Container*. The push
+*event saves the existing value of the same state.
 
-=PajePopState=: Must have the fields _Time_, _Type_ and
-_Container_. Pops, at timestamp _Time_, the last state of type _Type_
-in the container identified by _Container_.
+*PajePopState*: Must have the fields *Time*, *Type* and
+*Container*. Pops, at timestamp *Time*, the last state of type *Type*
+*in the container identified by *Container*.
 
-=PajeResetState=: Must have the fields _Time_, _Type_ and
-_Container_. Clears, at timestamp _Time_, the state of type _Type_ in
-the container identified by _Container_. If the stack is empty, the
-event does nothing.
+*PajeResetState*: Must have the fields *Time*, *Type* and
+*Container*. Clears, at timestamp *Time*, the state of type *Type* in
+*the container identified by *Container*. If the stack is empty, the
+*event does nothing.
 
-**** Events
+*** Events
 An event is something that is relevant enough to be acknowledged and
 has a unique timestamp.
 
-=PajeNewEvent=: Must have the fields _Time_, _Type_, _Container_ and
-_Value_. Instantiates, at timestamp _Time_, a remarkable event of type
-_Type_, in the container _Container_, with value _Value_.
+*PajeNewEvent*: Must have the fields *Time*, *Type*, *Container* and
+*Value*. Instantiates, at timestamp *Time*, a remarkable event of type
+*Type*, in the container *Container*, with value *Value*.
 
-**** Variables
+*** Variables
 Variables are set at a specific timestamp and can have its value
 changed throughout the simulation. The value of a variable is a double
 precision floating-point number, which is different from the values of
 the other entities. A variable must be set before changes to its value
 can be made.
 
-=PajeSetVariable=: Must have the fields _Time_, _Type_, _Container_
-and _Value_. Instantiates, at timestamp _Time_, a variable of type
-_Type_, in the container _Container_, with value _Value_.
+*PajeSetVariable*: Must have the fields *Time*, *Type*, *Container*
+and *Value*. Instantiates, at timestamp *Time*, a variable of type
+*Type*, in the container *Container*, with value *Value*.
 
-=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_
-and _Value_. Adds, at timestamp _Time_, a value _Value_, to an existing
-variable of type _Type_, in the container _Container_.
+*PajeAddVariable*: Must have the fields *Time*, *Type*, *Container*
+and *Value*. Adds, at timestamp *Time*, a value *Value*, to an
+existing variable of type *Type*, in the container *Container*.
 
-=PajeAddVariable=: Must have the fields _Time_, _Type_, _Container_
-and _Value_. Subtracts, at timestamp _Time_, a value _Value_, of an
-existing variable of type _Type_, in the container _Container_.
+*PajeAddVariable*: Must have the fields *Time*, *Type*, *Container*
+and *Value*. Subtracts, at timestamp *Time*, a value *Value*, of an
+existing variable of type *Type*, in the container *Container*.
 
-**** Links
+*** Links
 A link can start at a container and end in another one. Every
 completed link is identified by a unique key.
 
-=PajeStartLink=: Must have the fields _Time_, _Type_, _Container_,
-_StartContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_,
-the beginning of a link of type _Type_, in container _Container_,
-starting from _StartContainer_, with value _Value_, and identified by
-key _Key_.
+*PajeStartLink*: Must have the fields *Time*, *Type*, *Container*,
+*StartContainer*, *Value* and *Key*. Indicates, at timestamp *Time*,
+*the beginning of a link of type _Type_, in container *Container*,
+*starting from *StartContainer*, with value *Value*, and identified by
+*key *Key*.
 
-=PajeEndLink=: Must have the fields _Time_, _Type_, _Container_,
-_EndContainer_, _Value_ and _Key_. Indicates, at timestamp _Time_, the
-end of a link of type _Type_, in container _Container_, ending in
-_EndContainer_, with value _Value_, and identified by key _Key_.
+*PajeEndLink*: Must have the fields *Time*, *Type*, *Container*,
+*EndContainer*, *Value* and *Key*. Indicates, at timestamp *Time*, the
+*end of a link of type *Type*, in container *Container*, ending in
+*EndContainer*, with value *Value*, and identified by key *Key*.
 
 * PajeNG structures
 \label{ap.pajeng}
+
+The main structures used by the PajeNG simulator to manipulate the
+entities are the following:
 
 *Simulator*
 
@@ -1661,8 +1663,8 @@ or alias.
 *Container*
 
 =stackStates=: a map identified by the type and with a vector of state
-entities as the value. Every event of type =PajePushState= will add a
-state entity to the end of the stack, while every =PajePopState= will
+entities as the value. Every event of type *PajePushState* will add a
+state entity to the end of the stack, while every *PajePopState* will
 "remove" the last state in the vector by setting its end time;
 
 =pendingLinks=: a map of pending links stores the communications that
@@ -1694,7 +1696,7 @@ simulator, such as the name of the file to be processed, or a comment
 about the trace.
 
 All of the arguments processing is done in one class:
-=OptionsHandler=. The options that are needed in the simulation core
+*OptionsHandler*. The options that are needed in the simulation core
 are stored in this single class. These are: 
 
 *filename*: a string that receives the name of the trace file to be
@@ -1804,5 +1806,360 @@ method is already called in the constructor:
 
 * Paje File Format Parser for JavaCC
 \label{ap.grammar}
+#+BEGIN_EXAMPLE
+options
+{
+  static = false;
+}
+
+PARSER_BEGIN(PajeGrammar)
+package br.ufrgs.inf.tlbellini;
+import br.ufrgs.inf.tlbellini.lib.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.ArrayList;
+import ml.options.*;
+import br.ufrgs.inf.tlbellini.plugins.*;
+
+public class PajeGrammar
+{
+
+  public static ArrayList<PajeEventDefinition> eventDefinitions = new ArrayList<PajeEventDefinition>(); 
+  public static PajeSimulator simulator = new PajeSimulator();
+  public static OptionsHandler options;
+ 
+  public static void main(String args []) throws ParseException, FileNotFoundException
+  {
+	FileInputStream input;
+	Scanner sc = new Scanner(System.in);
+	options = new OptionsHandler(args);
+	input = null;
+    if(args.length > 0)
+    {
+	input = new FileInputStream(options.opt.getSet().getOption("f").getResultValue(0));
+	options.checkEntry();
+    }else
+    {
+      options.checkOptionsHelper();
+    }
+
+    simulator.init();
+    PajeGrammar parser = new PajeGrammar(input);
+          
+      try
+      {
+        switch (parser.paje())
+        {
+          case 4 :
+          simulator.finish();
+          System.out.println("OK!");
+          case 1 : 
+          System.out.println("Goodbye.");
+          break;
+          default: 
+          break;
+        }
+      }
+      catch (Exception e)
+      {
+        System.out.println("NOK.");
+        System.out.println(e.getMessage());
+      }
+      catch (Error e)
+      {
+        System.out.println("Oops.");
+        System.out.println(e.getMessage());
+      }
+    }
+}
+
+PARSER_END(PajeGrammar)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"
+|  <  "#" (~["\r", "\n"])* ("\n" | "\r\n") >
+}
+
+TOKEN:
+{
+< BREAK: "\n" | "\r\n" >
+}
+
+TOKEN : /* EVENT DEFINITION */
+{
+  < EVENT_DEF_BEGIN : "%EventDef" >
+| < EVENT_DEF : "%" >
+| < EVENT_DEF_END : "%EndEventDef" >
+| < EVENT_DEF_ALIAS : "Alias" >
+| < EVENT_DEF_TYPE : "Type" | "ContainerType" | "EntityType" >
+| < EVENT_DEF_NAME : "Name" >
+| < EVENT_DEF_COLOR: "Color" >
+| < EVENT_DEF_START_CONTAINER_TYPE : "StartContainerType" | "SourceContainerType">
+| < EVENT_DEF_END_CONTAINER_TYPE : "EndContainerType" | "DestContainerType">
+| < EVENT_DEF_CONTAINER : "Container">
+| < EVENT_DEF_TIME : "Time">
+| < EVENT_DEF_START_CONTAINER : "StartContainer" | "SourceContainer">
+| < EVENT_DEF_END_CONTAINER : "EndContainer" | "DestContainer">
+| < EVENT_DEF_VALUE : "Value">
+| < EVENT_DEF_KEY : "Key">
+| < EVENT_DEF_LINE : "Line">
+| < EVENT_DEF_FILE : "File">
+}
+
+TOKEN :
+{
+  < EVENT_DEF_FIELD_TYPE_STRING : "string" >
+| < EVENT_DEF_FIELD_TYPE_FLOAT : "float" >
+| < EVENT_DEF_FIELD_TYPE_DOUBLE : "double" >
+| < EVENT_DEF_FIELD_TYPE_INT : "int" >
+| < EVENT_DEF_FIELD_TYPE_HEX : "hex" >
+| < EVENT_DEF_FIELD_TYPE_DATE : "date" >
+| < EVENT_DEF_FIELD_TYPE_COLOR : "color" >
+}
+
+TOKEN :
+{
+   < PAJE_DEFINE_CONTAINER_TYPE : "PajeDefineContainerType" >
+ | < PAJE_DEFINE_VARIABLE_TYPE : "PajeDefineVariableType" >
+ | < PAJE_DEFINE_STATE_TYPE : "PajeDefineStateType" >
+ | < PAJE_DEFINE_EVENT_TYPE : "PajeDefineEventType" >
+ | < PAJE_DEFINE_LINK_TYPE : "PajeDefineLinkType" >
+ | < PAJE_DEFINE_ENTITY_VALUE : "PajeDefineEntityValue" >
+}
+
+TOKEN :
+{
+   < PAJE_CREATE_CONTAINER : "PajeCreateContainer" >
+ | < PAJE_DESTROY_CONTAINER : "PajeDestroyContainer" >
+}
+
+TOKEN :
+{
+   < PAJE_SET_VARIABLE : "PajeSetVariable" >
+ | < PAJE_ADD_VARIABLE : "PajeAddVariable" >
+ | < PAJE_SUB_VARIABLE : "PajeSubVariable" >
+}
+
+TOKEN :
+{
+   < PAJE_SET_STATE : "PajeSetState" >
+ | < PAJE_PUSH_STATE : "PajePushState" >
+ | < PAJE_POP_STATE : "PajePopState" >
+ | < PAJE_RESET_STATE : "PajeResetState" >
+}
+
+TOKEN :
+{
+   < PAJE_START_LINK : "PajeStartLink" >
+ | < PAJE_END_LINK : "PajeEndLink" >
+ | < PAJE_NEW_EVENT : "PajeNewEvent" >
+}
+
+
+TOKEN :
+{
+  < INT : (< DIGIT >)+ >
+| < FLOAT : (< DIGIT >)+"."(< DIGIT >)+ >
+| < #DIGIT : [ "0"-"9" ] >
+| <STRING: "\"" (<LETTER> | < DIGIT > |  " ")* "\"" | (<LETTER> | <DIGIT>)+>
+| <CHAR : (~["\""] | "\\" (["n","r","\\","\'","\""])) >
+| < #LETTER : ["a"-"z", "A"-"Z", "-", "_", "."]  >
+}
+
+int paje() throws Exception:
+{}
+{
+  declarations() events() < EOF >
+  {
+    return 4;
+  }
+  
+}
+
+void declarations() :
+{PajeEventDefinition newDef;}
+{
+  (
+    newDef = declaration()
+  	{eventDefinitions.add(newDef);}
+  )*
+
+}
+
+void empty():
+{}
+{
+  < EOF >
+}
+
+PajeEventDefinition declaration():
+{
+  PajeEventId nameId;
+  int id;
+  ArrayList<PajeField> fieldsList;
+}
+{
+	< EVENT_DEF_BEGIN > nameId = event_name() id = event_id() < BREAK >
+	{ PajeEventDefinition def = new PajeEventDefinition(nameId, id); }
+	fieldsList = fields() < EVENT_DEF_END > < BREAK >
+	{
+	 	def.addFields(fieldsList);
+	 	return def;
+	 }
+}
+
+PajeEventId event_name():
+{}
+{
+  	< PAJE_DEFINE_CONTAINER_TYPE > { return PajeEventId.PajeDefineContainerType;} |
+	< PAJE_DEFINE_VARIABLE_TYPE > {return  PajeEventId.PajeDefineVariableType;} |
+	< PAJE_DEFINE_STATE_TYPE > { return PajeEventId.PajeDefineStateType;} |
+	< PAJE_DEFINE_EVENT_TYPE > { return PajeEventId.PajeDefineEventType;} |
+	< PAJE_DEFINE_LINK_TYPE >{ return PajeEventId.PajeDefineLinkType;} |
+	< PAJE_DEFINE_ENTITY_VALUE >{ return PajeEventId.PajeDefineEntityValue;} |
+	< PAJE_CREATE_CONTAINER >{ return PajeEventId.PajeCreateContainer;} |
+	< PAJE_DESTROY_CONTAINER >{ return PajeEventId.PajeDestroyContainer;} |
+	< PAJE_SET_VARIABLE >{ return PajeEventId.PajeSetVariable;} |
+	< PAJE_ADD_VARIABLE >{ return PajeEventId.PajeAddVariable;} |
+	< PAJE_SUB_VARIABLE >{ return PajeEventId.PajeSubVariable;} |
+	< PAJE_SET_STATE >{ return PajeEventId.PajeSetState;} |
+	< PAJE_PUSH_STATE >{ return PajeEventId.PajePushState;} |
+	< PAJE_POP_STATE >{ return PajeEventId.PajePopState;} |
+	< PAJE_RESET_STATE >{ return PajeEventId.PajeResetState;} |
+	< PAJE_START_LINK >{ return PajeEventId.PajeStartLink;} |
+	< PAJE_END_LINK >{ return PajeEventId.PajeEndLink;} |
+	< PAJE_NEW_EVENT >{ return PajeEventId.PajeNewEvent;}
+}
+int event_id():
+{Token value;}
+{
+  value = < INT > { return Integer.parseInt(value.image); }
+}
+
+ ArrayList<PajeField> fields():
+{ ArrayList<PajeField> fieldsList = new ArrayList<PajeField>();
+  PajeField newField; }
+{
+  (
+    newField = field()
+    {
+     	fieldsList.add(newField);
+   	}
+  )*
+  {return fieldsList;}
+}
+
+PajeField field():
+{
+  	PajeField newField = new PajeField();
+ 	PajeFieldName newFieldName;
+	PajeFieldType newFieldType;
+}
+
+{ 
+  < EVENT_DEF > newFieldName = field_name() newFieldType = field_type()
+  {
+    newField.setField(newFieldName);
+  	newField.setType(newFieldType);
+  }
+  < BREAK >
+  {return newField;}
+}
+
+PajeFieldName field_name() :
+{}
+{
+  
+< EVENT_DEF_ALIAS >{ return PajeFieldName.Alias; } |
+	< EVENT_DEF_TYPE >{ return PajeFieldName.Type; } |
+	< EVENT_DEF_NAME >{ return PajeFieldName.Name; } |
+	< EVENT_DEF_COLOR >{ return PajeFieldName.Color; } |
+	< EVENT_DEF_START_CONTAINER_TYPE >{ return PajeFieldName.StartContainerType; } |
+	< EVENT_DEF_END_CONTAINER_TYPE >{ return PajeFieldName.EndContainerType; } |
+	< EVENT_DEF_CONTAINER >{ return PajeFieldName.Container; } |
+	< EVENT_DEF_TIME >{ return PajeFieldName.Time; } |
+	< EVENT_DEF_START_CONTAINER >{ return PajeFieldName.StartContainer; } |
+	< EVENT_DEF_END_CONTAINER >{ return PajeFieldName.EndContainer; } |
+	< EVENT_DEF_VALUE >{ return PajeFieldName.Value; } |
+	< EVENT_DEF_KEY >{ return PajeFieldName.Key; } |
+    < EVENT_DEF_LINE >{ return PajeFieldName.Line; } |
+    < EVENT_DEF_FILE >{ return PajeFieldName.File; } |
+	< STRING >{ return PajeFieldName.Extra;}
+}
+
+PajeFieldType field_type():
+{}
+{
+	< EVENT_DEF_FIELD_TYPE_STRING >{ return PajeFieldType.PAJE_string; } |
+	< EVENT_DEF_FIELD_TYPE_FLOAT >{ return PajeFieldType.PAJE_float; } |
+	< EVENT_DEF_FIELD_TYPE_DOUBLE >{ return PajeFieldType.PAJE_double; } |
+	< EVENT_DEF_FIELD_TYPE_INT >{ return PajeFieldType.PAJE_int; } |
+	< EVENT_DEF_FIELD_TYPE_HEX >{ return PajeFieldType.PAJE_hex; } |
+	< EVENT_DEF_FIELD_TYPE_DATE >{ return PajeFieldType.PAJE_date; } |
+	< EVENT_DEF_FIELD_TYPE_COLOR >{ return PajeFieldType.PAJE_color; }
+}
+
+void events() throws Exception:
+{}
+{
+  (event())*
+}
+
+void event() throws Exception:
+{}
+{
+	non_empty_event() | < BREAK >
+}
+
+void non_empty_event() throws Exception:
+{
+	PajeTraceEvent event = new PajeTraceEvent();
+ 	Token id; 
+}
+{
+  id = < INT >
+  {
+  	ArrayList<String> fields;
+  	event.setPajeEventDef(Integer.parseInt(id.image), eventDefinitions);
+  	event.setLine(id.beginLine); 
+  } 
+  fields = arguments() <  BREAK >
+  {
+  	event.setFields(fields);
+  	simulator.simulate(event);
+  }
+}
+
+ArrayList<String> arguments():
+{
+	ArrayList<String> fields = new ArrayList<String>();
+	String field;
+}
+{
+  (
+  	field = argument()
+  	{
+  		fields.add(field);
+  	} 
+  )*
+  {return fields;}
+}
+
+String argument():
+{	Token arg;
+}
+{
+	arg = < STRING > {return arg.image.toString();}
+	|arg = < FLOAT > {return arg.image.toString();}
+	|arg = < INT > {return arg.image.toString();}
+
+} 
+#+END_EXAMPLE
+
+
 * How to execute aiyra
 \label{ap.aiyraexecute}

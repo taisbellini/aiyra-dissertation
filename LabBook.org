@@ -306,6 +306,9 @@ http://simgrid.gforge.inria.fr/
 
 
 
+** 14/05
+http://www.tutorialspoint.com/jdbc/jdbc-introduction.htm
+
 
 * Other points:
 - use the \label command in each chapter to mark (I give you an
@@ -479,6 +482,8 @@ _Comment_:
 
 
 
+
+
 ** Chapter 3:
 
  _Comments_:
@@ -525,6 +530,13 @@ details.
   paje file format. Or even better, mention in the beggining of this
   section that here you just give an idea of the format, a full
   description is on the appendix.
+
+_Comment_
+- A figure C1 - C2, T1, T2 where you have on the left the type
+  hierarchy and on the right the entities hierarchy. Align the levels
+  of such hierarchies with dashed lines showing the
+  correspondance. Pay attention to timestamped objects (you may
+  represent horizontally).
   
 *** Pajeng
 _Comments_:
@@ -611,6 +623,20 @@ _Comment_
 - Generally speaking (global comment), you should use the present
   tense instead of the future. It reads much better.
   - Simply put: remove all "will" from the text
+
+
+ _Comment_:
+- You should always (when talking about figures) explain the figure. 
+  - You did not explain the figure in this case. You should lead the
+    reader to check the figure from time to time during reading.
+  - This is valid for all figures (before and after this comment)
+
+_Comment_:
+- Since this "Parser" package also contains option handling, maybe you
+  should change its name to something else, like "controller". I say
+  controller because the simulator itself is imbricated (embedded) in
+  the "Parser".
+
 
 
 * Notes 
