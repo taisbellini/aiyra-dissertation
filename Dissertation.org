@@ -778,7 +778,7 @@ these structures listed above.
 
 The focus of the Pajé implementation is to allow the user to extend
 the Pajé format and adapt the simulator to it. Its support for extra
-fields allow the inclusion of different descriptions for the events
+fields allows the inclusion of different descriptions for the events
 and its modularity facilitates the integration of new
 classes. Altering or adding simulation behavior can be done by
 modifying only the =PajeSimulator= and =PajeContainer=
