@@ -782,8 +782,7 @@ fields allows the inclusion of different descriptions for the events
 and its modularity facilitates the integration of new
 classes. Altering or adding simulation behavior can be done by
 modifying only the =PajeSimulator= and =PajeContainer=
-classes. _*some help to detail more this paragraph? Or should I join
-it with the next one?*_
+classes.
 
 Although complying with its goal of extensibility in terms of
 expanding the Pajé format, we identified three main issues in the
