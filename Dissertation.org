@@ -788,7 +788,7 @@ it with the next one?*_
 Although complying with its goal of extensibility in terms of
 expanding the Pajé format, we identified three main issues in the
 current implementation of PajeNG: little flexibility in the
-manipulation of data, lack of partial outcomes and ephemeral
+manipulation of data, lack of partial outcomes, and ephemeral
 results. When the entities are already simulated, a deeper
 understanding of the code structure is necessary if one wants to
 define another way of handling the results. Also, the user needs to
