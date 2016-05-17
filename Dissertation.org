@@ -835,7 +835,7 @@ the event read is the creation of a container of type *P* with alias
 *P1* and parent *0*, which is root. Then, the simulator receives this
 object and executes the simulation based on the event type. The
 simulation always generates an entity, even if incomplete. In Figure
-\ref.{fig.aiyraArchitecture}, a *PajeContainer* is created without an
+\ref{fig.aiyraArchitecture}, a *PajeContainer* is created without an
 ending timestamp. Finally, this new entity is sent to the plugin,
 which contains specific entry points for every different kind of
 entity.
