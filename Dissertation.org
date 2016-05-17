@@ -284,6 +284,9 @@ during the parsing.
 \end{figure}
 #+END_LaTeX
 
+_Comments_:
+- Missing figure, can't give my opinion on it
+
 In Figure \ref{fig.javaccex} we can see an example of the processing
 of a file named *MyGrammar.jj*, which results in seven files: the
 parser in *MyGrammar.java*; the lexical analyser in
@@ -526,6 +529,8 @@ generation of the Pajé Visualization Tool, the PajeNG, focusing on the
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
+_Comments_
+- Remove the first two sentences.
 
 This section gives an overview of the Pajé Trace File Format. Its
 complete description is in Appendix \ref{ap.pajeformat}. The Pajé
@@ -553,7 +558,7 @@ brief description of these sections is provided below. For details and
 an example of an event definition, as well as a full list of events
 refer to Appendix \ref{ap.pajeformat}.
 
-*Events Definition* 
+*** Header section: events definition
 
 The first part of a trace file describes all of the possible events of
 the trace. This part is composed by a block where the first line
@@ -564,7 +569,7 @@ question. After, there is a set of fields, one in each line. Each
 field comprises a name, and a type. The type of a filed can be a
 string, double, int, date, hex or color.
 
-*Events*
+*** Body section: timestamped events
 \label{subsection.events} 
 
 After the events definition, the events themselves are described, one
@@ -655,7 +660,7 @@ types and one for entities. With this modular implementation, it is
 relatively easy to add a new type of event or entity and integrate it
 with the rest of the code.
 
-*Class Hierarchy for Paje Events*
+*** Class hierarchy for Paje events
 
 An event object is what is passed as an argument to the simulator so
 that it can be processed. Therefore, it must contain all of the
@@ -681,8 +686,7 @@ their respective childs inherit from it.
 \end{figure}
 #+END_LaTeX
 
-
-*Class hierarchy for the Paje Types*
+*** Class hierarchy for the Paje types
 
 Figure \ref{fig.typesHierarchy} portrays the type hierarchy, where the
 first element is the *PajeType*. It has a name, an alias and a parent
@@ -705,7 +709,7 @@ manipulate it. Its childs are the *PajeStateType*, *PajeEventType* and
 \end{figure}
 #+END_LaTeX
 
-*Class hierarchy for the Paje Entities*
+*** Class hierarchy for the Paje entities
 
 As demonstrated in Figure \ref{fig.entitiesHierarchy}, the
 *PajeEntity* is the first node of the entities tree. It originates a
@@ -730,7 +734,7 @@ entity.
 \end{figure}
 #+END_LaTeX
 
-*The Core Simulator*
+*** The core simulator
 
 All the simulation is performed in two classes: *PajeSimulator* and
 *PajeContainer*. A PajeSimulator object is instantiated in the
