@@ -860,45 +860,64 @@ presented in chapter \ref{chapter.plugins} and a step-by-step
 execution of Aiyra can be found in Appendix \ref{ap.aiyraexecute}. The
 following subsections detail each one of the packages.
 
-** The Controller: Option Handling and JavaCC
+** The controller: option handling and JavaCC
 
 
 The controller package is the entry point of the program, thus, it
 also handles the arguments passed by the user. For this processing, an
 external library \cite{optionhandler} was used. The arguments handling
-is centralized in one single class, *OptionsHandler*, to facilitate
-the inclusion of new ones. A grammar (*PajeGrammar.jj*) describing the
-elements of the Pajé file format, presented in section
-\ref{section.pajeformat}, was created to be processed by the Java
-Compiler Compiler. The implementation uses the JavaCC syntax. Each
-event definition is stored in an array, while the events are simulated
-as soon as they are identified.
+is centralized in one single class, *OptionsHandler*, to facilitate the
+inclusion of new ones. The Paje file format (see Section
+\ref{section.pajeformat}) is parsed by a grammar written using the
+JavaCC syntax. The file =PajeGrammar.jj= containing all the grammar
+rules of the format is processed by the Java Compiler Compiler
+(JavaCC) to generate the parser.  Each event definition is stored in
+an array, while the events are simulated as soon as they are obtained
+from the trace.
 
 The controller package is composed by all of the JavaCC files
-described in section \ref{section.javacc} and the OptionsHandler
-class. The generated class *PajeGrammar.java* contains, besides the
+described in Section \ref{section.javacc} and the OptionsHandler
+class. The generated class =PajeGrammar.java= contains, besides the
 parsing component, all the necessary Java code for the program to run,
 such as the initialization of the simulator object, where all of the
-simulation will be placed. Every time an event is identified, the
+simulation takes place. Every time an event is identified, the
 simulator instance, which is the entry point of the simulator core
-package, is called to simulate that event. Next section describes the
+package, is called to simulate that event. The next section describes the
 simulator core package. For details about the OptionsHandler class and
 the complete grammar created for the Pajé Format refer to Appendix
-\ref{ap.optionshandler} and \ref{ap.grammar}, respectively.
+\ref{ap.optionshandler} and \ref{ap.grammar}.
 
-** Aiyra's Core Simulator
+** Aiyra's core simulator
 
 Aiyra's core simulator follows the exact same structure of the
 *PajeNG* implementation described in section \ref{section.pajeng},
 having the same class hierarchies. Thus, it is equally expandable in
-terms of creeating new types of events or entities. However, it does
+terms of creating new types of events or entities. However, it does
 not support extra fields in the events since the focus on the
-implementation was the extending the output of the simulator. This
-makes it more limited for extensions in the Pajé Trace file, but it is
-simple to adjust it and the changes would not affect the
+implementation was extending the output of the simulator. This
+makes our solution more limited for changes in the Pajé Trace file,
+which happens not very often. Despite that, it would be simple 
+to adjust it since changes do not affect the
 implementation of the plugins.  As in the *PajeNG*, all of the events
 go through the *PajeSimulator* object, which forwards to the
 *PajeContainer* if it is an event associated to a container.
+
+_Comments_:
+- A figure explaining the behavior of the PajeSimulator and its
+  relationship with the PajeContainer would be nice. I think that from
+  here on you describe all the specific details of the implementation
+  without giving the reader a proper preparation stating how the
+  simulator actually _works_. Note that it is important to have an
+  abstract understanding of the behavior before diving in details. If
+  you start with details, nothing can be understood.
+- Input on the left; output on the right: on the center, the
+  PajeSimulator and on its right the multiple PajeContainers. You can
+  use a specific example with three containers and very few
+  timestamped events regarding states, for example.
+- I just figured out the existence of Figure \ref{fig.aiyraCore}. It
+  is exactly that, but focused on an example regarding the behavior of
+  your simulator (you can even use a component to represent your
+  grammar) in particular. You would have here another figure then.
 
 Every entity generated is represented by an object with attributes
 representing its fields. The class hierarchy of the entities is the
@@ -947,6 +966,15 @@ links and variables. It also may send unfinished objects. When there
 is a *PajeDestroyContainerEvent*, the container object is sent again,
 now complete with an ending timestamp.
 
+_Comments_:
+- Remove all future tense, replace by present (generic comment valid
+  for the whole text)
+- Do not use "don't", since its informal. Please stick to the more
+  formal form "do not".
+- I still have to do a complete review on your implementation, but I
+  have the feeling that =aliases= should be left apart from the plugins
+  sector.
+
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Aiyra's Core Architecture}
@@ -956,9 +984,14 @@ now complete with an ending timestamp.
 \end{figure}
 #+END_LaTeX
 
+_Comments_:
+- Figure is too big
+- Remember that you can have multiple containers instances. Maybe
+  represent that somehow on this figure.
+
 The choice of creating an instrumentation point for each trace event
-is due to the intention of covering all of the diffent needs of the
-user. One may need the alias of a container before it can process the
+is due to the intention of covering all of the different needs of the
+user. One may need the container name before it can process the
 entities related to it, for example, which cannot be achieved by
 receiving the container only when it is completed. Or else, may be a
 situation where the push state events need to be measured, instead of
@@ -967,16 +1000,24 @@ predict all of the use cases, it is desirable to have a broad
 approach. A full list of the plugin entrances and the information
 received in each one is presented in the next section.
 
-** Plugin
+_Comment_:
+- when you send a complete "state" object, you already have the
+  reference for the container, right?
+
+** The plugin package
 \label{section.plugin}
+
+_Comment_:
+- Give an overview first! Please!
+- By reading the first phrase you already have details.
 
 The plugin package is composed by an abstract class, the *PajePlugin*,
 with one method for each instrumentation point. It also contains a
 method called *finish* where the user can perform some concluding
 actions after the simulation is completed. To create a new plugin, the
 user just needs to extend the *PajePlugin* class and override its
-methods. It is also possible to extend another plugin, if the
-differences are too little and not worth of a new class
+methods. It is also possible to extend another existing plugin, if the
+differences are small and not worth of a new class
 implementation.
 
 The entrances of the plugins comprise the definition of types and
@@ -985,6 +1026,9 @@ of new entities. The *newType* entry point is a unique entrance for
 when a type of any kind is defined, having the *PajeType* object as
 argument. The =getNature()= method can be used to identify the exact
 type. The *newValue* method receives every *PajeValue* created.
+
+_Comment_:
+- Do you mean that the plugin has to call =getNature=?
 
 When a container is created in the simulation, the instance is
 forwarded to the *newCreatedContainer* entry point, with the end
