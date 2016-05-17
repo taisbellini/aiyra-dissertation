@@ -41,6 +41,7 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
+* Front page preparation                                             :ignore:
 
 #+BEGIN_LaTeX
 \title{TCC da Tais}
@@ -67,32 +68,95 @@
 % \renewcommand{\nominataChefeINT}{Prof.~Leila Ribeiro}
 % \renewcommand{\nominataChefeINTname}{Chefe do \deptINT}
 
-
+%
+% TODO: provide these keywords
+%
 % \keyword{formatação eletrônica de documentos}
 % \keyword{\LaTeX}
 % \keyword{ABNT}
 % \keyword{UFRGS}
-
-
-
-\maketitle
-
-
-
 #+END_LaTeX
 
+* Front page                                                         :ignore:
+#+BEGIN_LaTeX
+\maketitle
+#+END_LaTeX
+* Dedicatory                                                         :ignore:
+
+#+BEGIN_LaTeX
+% \clearpage
+% \begin{flushright}
+%     \mbox{}\vfill
+%     {\sffamily\itshape
+%       ``If I have seen farther than others,\\
+%       it is because I stood on the shoulders of giants.''\\}
+%     --- \textsc{Sir~Isaac Newton}
+% \end{flushright}
+#+END_LaTeX
+
+* Acknowledgements                                                   :ignore:
+
+#+BEGIN_LaTeX
+% agradecimentos
+%\chapter*{Agradecimentos}
+%Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
+#+END_LaTeX
+
+* Abstract                                                           :ignore:
                                                       
-# #+BEGIN_LaTeX
-# \begin{abstract}
-# #+END_LaTeX
+#+BEGIN_LaTeX
+\begin{abstract}
+#+END_LaTeX
+
+Put your English abstract here.
+
+#+BEGIN_LaTeX
+\end{abstract}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+% resumo na outra língua
+% como parametros devem ser passados o titulo e as palavras-chave
+% na outra língua, separadas por vírgulas
+\begin{englishabstract}{Titulo em pt-br.}{Palavra-chave 1. Palavra-chave 2.}
+#+END_LaTeX
+
+Put your Portuguese abstract here.
+
+#+BEGIN_LaTeX
+\end{englishabstract}
+#+END_LaTeX
+* Lists                                                              :ignore:
+
+#+BEGIN_LaTeX
+\listoffigures
+\listoftables
+
+% lista de abreviaturas e siglas
+% o parametro deve ser a abreviatura mais longa
+\begin{listofabbrv}{SPMD}
+    \item[SMP] Symmetric Multi-Processor
+    \item[NUMA] Non-Uniform Memory Access
+    \item[SIMD] Single Instruction Multiple Data
+    \item[SPMD] Single Program Multiple Data
+    \item[ABNT] Associação Brasileira de Normas Técnicas
+\end{listofabbrv}
 
 
-# #+BEGIN_LaTeX
-# \end{abstract}
-# #+END_LaTeX
+% idem para a lista de símbolos
+% \begin{listofsymbols}{$\alpha\beta\pi\omega$}
+%     \item[$\sum{\frac{a}{b}}$] Somatório do produtório
+%     \item[$\alpha\beta\pi\omega$] Fator de inconstância do resultado
+% \end{listofsymbols}
+#+END_LaTeX
 
+* Sumário                                                            :ignore:
 
-* Configuring Emacs to correctly export to PDF			   :noexport:
+#+BEGIN_LaTeX
+\tableofcontents
+#+END_LaTeX
+
+* Configuring Emacs to correctly export to PDF                     :noexport:
 
 Org mode is configured by default to export only the base classes.
 
