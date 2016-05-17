@@ -47,7 +47,7 @@
 \author{Loureiro Bellini}{Tais}
 \advisor[Prof.~Dr.]{Mello Schnorr}{Lucas}
 
-\date{Junho}{2016}
+\date{Maio}{2016}
 \location{Porto Alegre}{RS}
 
 % \renewcommand{\nominataReit}{Prof\textsuperscript{a}.~Wrana Maria Panizzi}
