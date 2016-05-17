@@ -1138,6 +1138,8 @@ function of Java costs time. For it to be possible, a =StringBuilder=
 is used as a buffer keeping all of the output until it reaches the
 number of lines desired.
 
+*I AM HERE.*
+
 ** Paje Insert Database Plugin
 
 The *PajeInsertDBPlugin* saves in a relational database all the
