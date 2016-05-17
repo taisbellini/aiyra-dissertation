@@ -1109,6 +1109,10 @@ iterate over the entities left in the container. The variables printed
 in the destruction of the container, since they are not removed during
 simulation.
 
+_Comment_:
+- if in the trace are only sets, you send "popStates"?
+- I think we should think about better names for all points
+
 The difference between the *PajeDumpPlugin* and the *pj_dump* tool is
 that the first one outputs the information as soon as the entity is
 completed. The *pj_dump*, in turn, keeps everything in memory before
