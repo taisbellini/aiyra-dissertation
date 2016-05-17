@@ -1009,6 +1009,11 @@ _Comment_:
 
 _Comment_:
 - Give an overview first! Please!
+  - For example, a list of all points. Mention that you will start
+    describing them in order.
+    - Perhaps grouping them by variable, state, event, link, container
+      would be nice. But explicit this group before describing
+      details.
 - By reading the first phrase you already have details.
 
 The plugin package is composed by an abstract class, the *PajePlugin*,
