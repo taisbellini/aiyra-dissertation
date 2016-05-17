@@ -251,7 +251,7 @@ context.
 ** The Java Compiler Compiler (JavaCC) tool
 \label{section.javacc}
 
-The Java Compiler Compiler (JavaCC) is a lexical and parser generator
+The Java Compiler Compiler (JavaCC) is a scanner and parser generator
 configured with a set of regular expressions describing the tokens of
 a language and a grammar using these tokens. As output, it generates a
 lexical and syntax parser in the Java language. The lexical code
@@ -1176,29 +1176,54 @@ for different sizes of batch will be presented in the next chapter.
 * Performance Evaluation
 \label{chapter.performance}
 
-An evaluation of Aiyra's performance and its plugins was made to ...
-Two main tests were executed: a comparison between Aiyra and PajeNG
-and an analysis of the impact of different batch sizes in the
-*PajeInsertDBPlugin*. Since Aiyra is strongly based in the PajeNG
-implementation, it is valid to examine if the modifications and
-language transition have brought significant impact on the
-simulation. The plugin that inserts the data in a MySQL database is
-the only one that brings an extremely different functionality to the
-program. As it involves the connection with an external tool, the
-analysis of its performance and the study of the most efficient use of
-it is very important.
+An evaluation of Aiyra's performance was made to have a concrete
+results about the outcome of this proposal. Two main tests were
+executed: a comparison between Aiyra and PajeNG and an analysis of the
+impact of different batch sizes in the *PajeInsertDBPlugin*. Since
+Aiyra is strongly based in the PajeNG implementation, it is valid to
+examine if the modifications and language transition have brought
+significant performance impact on the simulation. The plugin that
+inserts the data in a MySQL database is the only one that brings an
+extremely different functionality to the program, hence it was chosen
+to be studied. As it involves the connection with an external tool,
+the analysis of its performance and the study of the most efficient
+use of it is very important.
+
+We used full factorial experimental design, using the R language with
+*DoE.base* package, to define the tests to be performed. The package
+generates a *.csv* file with one column for each factor. It creates
+one row for each possible combination of the different levels and
+multiplies it by the number of replications. We created *bash* scripts
+to execute the experiments of the design generating another *.csv*
+sheet including the response variables defined for the
+experiments. The details about the factors and levels for each test
+are described in the next section.
 
 ** Methodology
 
-A full factorial experimental design was used to perform the
-tests. The different factor and levels for each 
-...
+The experiments were performed in three different machines: *luiza*,
+with a Mac OSX environment, *guarani*, and *orion1*, both running
+Linux. The details about the experimental units are described in table
+\ref{tab.machines}. We generated three input trace files with
+different sizes identified by *small*, *medium*, and *big*, of sizes
+128K, 128M, and 1G, respectively.
 
-*Cpp*
-
-*Batch*
-
-the test options: platform, -test, etc.
+#+BEGIN_LaTeX
+\begin{table}[h!]
+  \centering
+  \caption{Description of the machines}
+  \label{tab.machines}
+  \begin{tabular}{ccc}
+    \toprule
+     luiza & guarani & orion1\\
+    \midrule
+    OSX Yosemite 10.10.5 & Linux Debian 4.3.5-1 & Linux Ubuntu\\
+    as & well & as\\
+    using & the & booktabs package\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+#+END_LaTeX
 
 _luiza_: OS X Yosemite 10.10.5
  Nome do Modelo:	MacBook Pro
@@ -1240,7 +1265,32 @@ L2 cache:              256K
 L3 cache:              6144K
 
 
-_orion_: 
+_orion_: Linux orion1 3.13.0-85-generic #129~precise1-Ubuntu SMP Fri Mar 18 17:38:08 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux 
+
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                24
+On-line CPU(s) list:   0-23
+Thread(s) per core:    2
+Core(s) per socket:    6
+Socket(s):             2
+NUMA node(s):          2
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 45
+Stepping:              7
+CPU MHz:               2000.000
+BogoMIPS:              4601.07
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              15360K
+NUMA node0 CPU(s):     0,2,4,6,8,10,12,14,16,18,20,22
+NUMA node1 CPU(s):     1,3,5,7,9,11,13,15,17,19,21,23
+
+model name      : Intel(R) Xeon(R) CPU E5-2630 0 @ 2.30GHz
 
 guarani_orion: 
 
@@ -1250,23 +1300,171 @@ traceroute to orion1 (143.54.12.114), 30 hops max, 60 byte packets
 
 ping: rtt min/avg/max/mdev = 0.280/0.510/0.559/0.065 ms
 
-rede do inf: 100MB
+rede do inf: 100Mb
+
+*Comparison between Aiyra and PajeNG* 
+
+This experiment evaluates the performance of Aiyra using the
+*PajeNullPlugin* and two versions of the *pj_dump* tool: *pj* and
+*pjflex*. The difference between the versions is in the parsing of the
+trace file, while the first one uses the standard C++ parsing, the
+second uses a scanner and parser generator (*flex* and *bison*). The
+executions of the *pj_dump* tool received =--quiet= as a parameter to
+avoid the actual dumping of the information in the standard output,
+since we only needed the execution time. It is important to highlight
+that Aiyra does not perform any action in the resulted entities and
+discards most of them.
+
+Two factors were chosen for this experiment: *input* and
+*version*. The first assumed the values *small*, *medium*, and
+*big*. The second, *aiyra*, *pj* and *pjflex*. The number of
+replications chosen was $30$, which is the recommended for full
+factorial design _*?? help on references*_. Since we have two factors,
+each with three levels, we have a total of 270 experiments (the
+product of $3*3*30$). The execution of the design added a column for
+the platform and another for the execution time in the resulting
+*.csv*. This design was run in each one of the platforms, thus, we had
+three files each with $270$ rows.
+
+(header of the design?)
+
+*PajeInsertDBPlugin evaluation*
+
+The *PajeInsertDBPlugin* provides an option for the user to define a
+batch size for the insertion in the database. The size defines the
+number of entities to be inserted at once. This means that the queries
+are stored in a buffer until a counter reaches the specified
+value. Although this approach reduces the number of accesses to the
+database, reducing the execution time, it occupies a significant
+amount of memory. Our evaluation aims to define what is the best
+choice of batch size for different scenarios.
+
+For this experiment we used the same experimental units as the first
+one, but we added a fourth experiment which consists in the remote
+access between *guarani* and *orion1*. In the experiment, we had the
+simulator running in *guarani* and accessing the database in
+*orion1*. Figure \ref{fig.infnetwork} represents the network
+connecting the machines. Both are in _*INF em ingles ou portugues? e
+ufrgs?*_, where the bandwidth is 100Mb/s. There is one switch between
+both endpoints, which is what limits the network speed. 
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{ER Model for the Pajé format}
+\centering
+\includegraphics[width=\linewidth]{./img/infnetwork.pdf}
+\label{fig.infnetwork}
+\end{figure}
+#+END_LaTeX
+
+The factors for this evaluation consist in the *input*, the same as
+the ones described above, and *batch*, which assumes five different
+values. The *batch* factor consists in the size of the batch to be
+ineserted in the database. The number is not fixed and varies among
+the different input sizes. The levels are classified from *A* to *E*,
+where *A* represents the highest number possible for a batch, meaning
+one single insertion. The other four levels consist in dividing the
+previous one by half. The *A* value for each input size was previously
+calculated and the rest were generated by the dividing the first one.
+
+To complement this analysis, we also implemented a trace for the batch
+insertions. Every time there was an insertion in the database, we
+collected the *start time*, *end time* and *size* of that specific
+batch. This data is useful to obtain richer information about the
+impacts of the batch mechanism in the performance. Next section
+demonstrates the results for the experiments described above.
 
 
-Performance Evaluation
-   + Overview of what is being evaluated and why 
-    - PajeNG. since it is a re implementation
-    - inset db plugin, it is the NEW feature. 
-    - characterize briefly
-   + Experimental Methodology
-     - Full factorial
-     - Description of each experiment with factors and resulting table
-        - null plugin / flex/ reader. hipotesis.
-        - batch sizes. why? hipotesis.  
-     - characterization of the platforms
-   + Results and grafics
-   + Possible explanations
-   + 
+
+** Results and Graphics
+
+We used the R language to merge the data from the different files
+generated and to plot significant graphics of the results. The
+hipotesis made before the execution of the experiments and the
+observed results are presented below.
+
+*Comparison between Aiyra and PajeNG*
+
+For the experiment of comparison between Aiyra and PajeNG, we used the
+average execution time among the $30$ replications as a mesurement. We
+considered the standard error to be three standard deviations of the
+mean, which cover 99.7% of the cases in a normal distribution
+\cite{normaldistribution}.
+
+/Expected/ It is universally known that C++ is a language with better
+performance than Java. We suppose that Aiyra will be slower than
+PajeNG, but with an acceptable execution time. It is also expected
+that the version *pj_flex* will be slower than *pj*, since *flex* has
+the characteristic of having lower performance.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of comparison between Aiyra and PajeNG}
+\centering
+\includegraphics[width=\linewidth]{./img/aiyra-pj-pjflex_overview.pdf}
+\label{fig.cppoverview}
+\end{figure}
+#+END_LaTeX
+
+/Observed/ We can see in Figure \ref{fig.cppoverview} that, for the
+*medium* and *big* inputs, Aiyra was actually faster than both
+versions of PajeNG. To understand this results it is crucial to
+recognize the difference between the implementation and configuration
+of both programs. Aiyra is designed to get rid of the entities as soon
+as they are finished. Thus, with the *PajeNullPlugin*, very little is
+kept in memory. One of Java's biggest overhead is the memory handling,
+specially the Garbage Collector. Since we have an implementation that
+stores as few objects as possible, Java may have a chance in this
+case. Likewise, the *pj_dump* implementation carries the overhead of
+storing everything. As expected, the *pj_flex* version was slower than
+*pj*.
+
+Notice that the execution in *luiza* had a bigger variability in the
+execution the *pj* version with the *big* input. The average execution
+time for the big file in the *aiyra* version was around $80$ seconds,
+but there was an outlier experiment that executed in $2888$
+seconds. This particular row was removed from the data set. Even with
+this particular case deleted, an instability can still be
+perceived. The experiments are randomized in the design, so if there
+was any disturbance in the environment during the experiment, it
+should have affected other configurations as well. Besides, we can
+notice the variability only in this particular configuration. There is
+no confirmed explanation for this situation, it may be because *luiza*
+is the weakest machine in the experiment and did not handle well the
+C++ parsing with the biggest file. Considering that it does not affect
+the overall analysis, the experiment was considered valid.
+
+So far, we have analysed the execution time of the *medium* and *big*
+inputs. In Figure \ref{fig.cppoverview}, we don't have a clear view of
+the difference between the results of the *small* input in the
+different platforms. Figure \ref{fig.cppsmall} portrays a closer sight
+of the graphic, where we can see that the bahavior for the *small*
+input is different from the others. In this case, we observe the
+expected result. This is probably because it is a very small file,
+with very few entities, so there is no memory overhead in either
+versions and C++ is naturally faster than Java.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of comparison between Aiyra and PajeNG for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/aiyra-pj-pjflex_small.pdf}
+\label{fig.cppsmall}
+\end{figure}
+#+END_LaTeX
+
+This results are particularly important to assure the relevance of
+this proposal. By deattaching the core simulation from the data
+handling, we perceive that there is room for performance improvements
+in the replay of large Pajé trace files. It is possible to observe
+that the fewer we retain in memory, the better our performance will
+be. The implementation of Aiyra gives the user more flexibility to
+manage the memory usage of his program and space to develop high
+performance implementations.
+
+*PajeInsertDBPlugin evaluation*
+
+the test options: platform, -test to not interfere with memory, etc.
 
 * Conclusion
 \label{chapter.conclusion}

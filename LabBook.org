@@ -265,10 +265,10 @@ similar approaches.
     - characterize briefly
    + Experimental Methodology
      - Full factorial
+     - Characterization of the platforms
      - Description of each experiment with factors and resulting table
         - null plugin / flex/ reader. hipotesis.
         - batch sizes. why? hipotesis.  
-     - characterization of the platforms
    + Results and grafics
    + Possible explanations
    + 
