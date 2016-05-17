@@ -1113,7 +1113,10 @@ _Comment_:
 - if in the trace are only sets, you send "popStates"?
 - I think we should think about better names for all points
 
-The difference between the *PajeDumpPlugin* and the *pj_dump* tool is
+_Comment_:
+- Stick to a =standard=, not using *sometimes this*, =then this=.
+
+The difference between the *PajeDumpPlugin* and the =pj_dump= tool is
 that the first one outputs the information as soon as the entity is
 completed. The *pj_dump*, in turn, keeps everything in memory before
 dumping it all at once. With this approach, it is possible to solve
