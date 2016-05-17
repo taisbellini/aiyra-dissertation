@@ -975,7 +975,7 @@ with one method for each instrumentation point. It also contains a
 method called *finish* where the user can perform some concluding
 actions after the simulation is completed. To create a new plugin, the
 user just needs to extend the *PajePlugin* class and override its
-functions. It is also possible to extend another plugin, if the
+methods. It is also possible to extend another plugin, if the
 differences are too little and not worth of a new class
 implementation.
 
