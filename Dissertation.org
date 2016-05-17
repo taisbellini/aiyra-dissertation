@@ -958,7 +958,7 @@ points are either in the *PajeSimulator* or in the *PajeContainer*, as
 illustrated in figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
 the outputs regarding the definition of types and values and the
 creation of containers. Although in this point the containers are not
-complete objects, since they don't have ending timestamp or the
+complete objects, since they do not have ending timestamp or the
 related entities, they are forwarded anyway with the alias and type
 information. The *PajeContainer* is in charge of dispatching to the
 plugin the instances related to it, which involve the states, events,
@@ -969,8 +969,6 @@ now complete with an ending timestamp.
 _Comments_:
 - Remove all future tense, replace by present (generic comment valid
   for the whole text)
-- Do not use "don't", since its informal. Please stick to the more
-  formal form "do not".
 - I still have to do a complete review on your implementation, but I
   have the feeling that =aliases= should be left apart from the plugins
   sector.
@@ -1002,7 +1000,7 @@ received in each one is presented in the next section.
 
 _Comment_:
 - when you send a complete "state" object, you already have the
-  reference for the container, right?
+  reference for the container, right? 
 
 ** The plugin package
 \label{section.plugin}
@@ -1016,14 +1014,24 @@ _Comment_:
       details.
 - By reading the first phrase you already have details.
 
+The plugin package is a common place where all entities created
+throughout simulation are sent. It has sets of entry points specific
+for each type of entity and event. The entrances consist in:
+*newType*, embracing type definitions; *newValue*, for the *PajeValue*
+objects; *startLink*, *endLink* and *newCompleteLink*, for link
+entities; *newCreatedContainer* and *destroyedContainer*, to
+manipulate the containers; *setState*, *pushState*, *popState* and
+*resetState*, receiving states; *setVar* and *updateVar*, for variable
+manipulation; and *newEvent* to handle event entities. The details of
+each point is detailed in this section.
+
 The plugin package is composed by an abstract class, the *PajePlugin*,
 with one method for each instrumentation point. It also contains a
 method called *finish* where the user can perform some concluding
 actions after the simulation is completed. To create a new plugin, the
 user just needs to extend the *PajePlugin* class and override its
 methods. It is also possible to extend another existing plugin, if the
-differences are small and not worth of a new class
-implementation.
+differences are small and not worth of a new class implementation.
 
 The entrances of the plugins comprise the definition of types and
 values, the creation of containers, and the formation and completion
@@ -1044,23 +1052,23 @@ just been destroyed. Most of the entities are removed during
 simulation, but the destroyed container may have some remaining ones
 that could not be excluded, such as variables.
 
-Link entities have three instrumentation points all receiving
-*PajeUserLink* objects: *startLink*, where the end time and end
-container of the communication link are unknown; *endLink*, when the
-instance has the end point of the link but not the start; and
-*newCompleteLink*, where the link entity has beginning and
-end. Anytime a variable is set or updated, there are three
-*PajeUserVariable* entities sent to the plugin: the *first*, which
-contains the first value of the variable; the *last*, which is the one
-immediately before the variable in question; and the new variable
-which is not completed yet (*newVar*). The aditions and subtractions
-are sent to the same point (*updateVar*). Since the previous variable
-objects are necessary to generate the new value, they are not removed
-from memory during simulation. The set, push and pop state events each
-have one method receiving a *PajeUserState*: *setState*, *pushState*
-and *popState*, the only one with an entity with beginning and end
-timestamps. The *PajeUserEvent* objects are sent to the *newEvent*
-function.
+_*Need to rewrite since the points were cited above*_ Link entities
+have three instrumentation points all receiving *PajeUserLink*
+objects: *startLink*, where the end time and end container of the
+communication link are unknown; *endLink*, when the instance has the
+end point of the link but not the start; and *newCompleteLink*, where
+the link entity has beginning and end. Anytime a variable is set or
+updated, there are three *PajeUserVariable* entities sent to the
+plugin: the *first*, which contains the first value of the variable;
+the *last*, which is the one immediately before the variable in
+question; and the new variable which is not completed yet
+(*newVar*). The aditions and subtractions are sent to the same point
+(*updateVar*). Since the previous variable objects are necessary to
+generate the new value, they are not removed from memory during
+simulation. The set, push and pop state events each have one method
+receiving a *PajeUserState*: *setState*, *pushState* and *popState*,
+the only one with an entity with beginning and end timestamps. The
+*PajeUserEvent* objects are sent to the *newEvent* function.
 
 To validate the concept of the plugins and its entry points, three
 plugins were created: *PajeNullPlugin*, *PajeDumpPlugin* and
