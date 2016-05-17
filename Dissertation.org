@@ -1070,11 +1070,29 @@ chapter.
 * Plugins
 \label{chapter.plugins} 
 
+_Comment_
+- about previous and this chapter.
+- perhaps in the "plugin" section (or even before) of previous chapter
+  you could introduce a figure with a standard plugin visual
+  representation.
+- Then here, for each plugin, you would copy that standard plugin
+  visual representation and keep only things that are part of that
+  specific plugin. It would be very easy to understand, and you'd have
+  a figure for each plugin below.
+
 In this chapter, two plugins are described: *PajeDumpPlugin* and
 *PajeIsertDBPlugin*. The *PajeNullPlugin* is the default one. It does
 not make any treatment to the data so the objects are simply
 discarded. It is useful to verify the performance of the simulation
 itself, whithout the interference of the other segments.
+
+_Comment_:
+- In the last paragraph of previous chapter you say there are three
+  plugins. Now you say there are two. In fact, there are three! It's
+  just that one of them do nothing.
+- Perhaps the =dump= plugin should be the default, because it does
+  something useful for an eventual user.
+- What is a "segment"? A new word you just introduced in this par.
 
 ** Paje Dump Plugin
 
