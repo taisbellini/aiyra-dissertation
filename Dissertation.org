@@ -827,7 +827,7 @@ memory, forwards every created entity to a common place where it can
 be manipulated freely. The architecture of the implementation,
 characterized in Figure \ref{fig.aiyraArchitecture}, contains three
 packages: *controller*, *simulator core* and *plugin*. Every event of
-a trace file always goes through all of the packages. First, the trace
+a trace file always goes through all packages. First, the trace
 file in the input is read by the parser, where a trace event object is
 created. This instance contains the type of event in question and the
 field values. In the example of Figure \ref{fig.aiyraArchitecture},
