@@ -1146,8 +1146,6 @@ function of Java costs time. For it to be possible, a =StringBuilder=
 is used as a buffer keeping all of the output until it reaches the
 number of lines desired.
 
-*I AM HERE.*
-
 ** Paje Insert Database Plugin
 
 The *PajeInsertDBPlugin* saves in a relational database all the
@@ -1215,6 +1213,12 @@ field.
 
 *** Relational Model
 
+_Comments_:
+- Invert the first phrase
+- "consultations" => "requests"
+- every time there is a ref command, don't forget to say what it is
+  - Figure ref, instead of "ref".
+
 After the creation of the conceptual model, a translation to a logical
 model was made. In this conversion, besides applying the universally
 known rules presented in chapter \ref{chapter.basic_concepts}, we
@@ -1223,8 +1227,8 @@ consultations made in the Pajé data. This reflection is a usual part
 of the process, where the needs of the client are contemplated.
 
 The entities defined in the ER Model all became tables. For the *Type*
-specialization, we used the first option presented in
-\ref{subsection.er_relational}: combining everything in a single table
+specialization, we used the first option presented in Section
+\ref{subsection.er_relational}, combining everything in a single table
 with the following fields: *file_id*, *alias*, *name*, *depth*,
 *parent_type_alias*, *start_link_type*, *end_link_type* and
 *color*. *File_id*, inherited from the identifying relation with
@@ -1248,7 +1252,18 @@ ending timestamps of one entity. Since this information is very
 important, we changed the *Variable* table for the tuples to
 explicitly have *startTime* and *endTime*.
 
+_Comments_
+- Why do you have an "implementation" subsection here and not for the
+  other plugins. Structure should be homogeneous, otherwise the reader
+  will ask "why have you done this way?"; or even worse: "what is that
+  you are hiding?"
+
 *** Implementation
+
+_Comment_
+- Invert your phrases: write in English.
+- Example:
+  - "The following entry points were used in the PajeInsertDBPlugin: ..."
 
 In the *PajeInsertDBPlugin*, the following entry points were used:
 *newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
@@ -1256,6 +1271,14 @@ In the *PajeInsertDBPlugin*, the following entry points were used:
 values and containers are inserted in the database as soon as they are
 created due to the dependency of other entities on these ones. When a
 container is destroyed, its *endTime* is updated in the database.
+
+_Comment_:
+- Say that this "bad" performance was observed in some preliminary
+  experimental trials you have done before conducting the rigorous
+  performance evaluation of Chapter X.
+- appliable => applicable
+- An analysis of the performance =>  A performance analysis
+- Remove Will, use _is_ (present tense) as previously recommended
 
 The insertion in the database costs time, hence, the approach of
 making an access every time a new entity is created has a very bad
