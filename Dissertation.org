@@ -1123,6 +1123,11 @@ dumping it all at once. With this approach, it is possible to solve
 the issue regarding the need to wait for the program to end to have
 the results.
 
+_Comment about text below_:
+- what you mean =pjdump=, perhaps the Plugin identifier should be the
+  classname, without the "Plugin". For example, =PajeDump=. By using
+  =pjdump=, you may confuse the non attentive reader.
+
 This plugin can be called with the argument =pjdump= in the =-p=
 option and adds a new argument (=-l=) that can group together a
 certain number of entities before dumping it. The option receives an
