@@ -1093,6 +1093,9 @@ _Comment_:
 - Perhaps the =dump= plugin should be the default, because it does
   something useful for an eventual user.
 - What is a "segment"? A new word you just introduced in this par.
+- Create a section about the null plugin. Then, explain a little more
+  why you have developed it (motivate). Move the two phrases about it
+  from the paragraph above to it.
 
 ** Paje Dump Plugin
 
