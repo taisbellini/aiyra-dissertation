@@ -102,6 +102,9 @@ See for details:
 Execute the following code (with C-c C-c) prior to export this file to PDF.
 
 #+BEGIN_SRC emacs-lisp :results silent :exports none
+(add-to-list 'load-path ".")
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
 (add-to-list 'org-latex-classes
              '("iiufrgs"
                "\\documentclass{iiufrgs}"
