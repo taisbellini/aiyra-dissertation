@@ -1295,6 +1295,30 @@ sheet including the response variables defined for the
 experiments. The details about the factors and levels for each test
 are described in the next section.
 
+#+BEGIN_LaTeX
+\begin{table}[!htb]
+\caption{Experimental platform description.}
+\label{tab:platform}
+\centering
+\begin{tabularx}{\linewidth}{lXX}\toprule
+                          & {\bf Orion}          & {\bf Bree}    \\\toprule
+Processor                 & Xeon E5-2630         & i7-4770        \\
+N of procs. (NUMA)        & 2 (two)              & 1 (one)        \\
+Cores per proc.           & 6 (12 Hyper. T.)     & 4 (8 Hyper. T.)  \\
+Max. Core Freq.           & 2.30GHz              & 3.40Ghz       \\
+L1 Cache                  & 32/32KBytes          & 32/32KBytes  \\     
+L2 Cache                  & 256KBytes            & 256KBytes    \\
+L3 Cache                  & 15MBytes             & 8MBytes         \\
+Main memory               & 32GBytes             & 8GBytes      \\
+Accelerator \#1           & \xeonphi 3120A        & GTX760        \\
+Accelerator \#2           & Nvidia K20           &              \\\midrule
+OS                        & CentOS Linux7        & Ubuntu 14.04 \\
+Kernel                    & 3.10.0 (x86\_64)     & 3.13.0       \\
+MPSS / CUDA               & 3.4.1 / 6.5          & NA / 5.5             \\
+\bottomrule\end{tabularx}
+\end{table}
+#+END_LaTeX
+
 ** Methodology
 
 The experiments were performed in three different machines: *luiza*,
