@@ -855,7 +855,7 @@ The program receives arguments from the user in its execution. The
 what is the trace file to be simulated. There are other two general
 options: *comment* (=-m=), a comment about the file; and *plugin*
 (=-p=), which indicates which plugin will be used in the
-simulation. The details about the already implemented plugins are be
+simulation. The details about the already implemented plugins are 
 presented in chapter \ref{chapter.plugins} and a step-by-step for the
 execution of Aiyra can be found in \ref{ap.aiyraexecute}. The
 following subsections detail each one of the packages.
