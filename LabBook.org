@@ -795,6 +795,8 @@ _Comment about text below_:
 
 * Notes 
 
-Importance of implementtion of plugins, to validade and to see flaws,
+Importance of implementation of plugins, to validade and to see flaws,
 such as which objects to send to the plugin. 
 Where the code is.
+
+http://stackoverflow.com/questions/4935590/is-it-normal-for-mysql-to-be-slow-when-connecting-to-a-remote-host
