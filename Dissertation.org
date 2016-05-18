@@ -41,7 +41,7 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
-* Front page preparation                                             :ignore:
+* Front page preparation                                           :noexport:
 
 #+BEGIN_LaTeX
 \title{TCC da Tais}
@@ -77,11 +77,11 @@
 % \keyword{UFRGS}
 #+END_LaTeX
 
-* Front page                                                         :ignore:
+* Front page                                                       :noexport:
 #+BEGIN_LaTeX
 \maketitle
 #+END_LaTeX
-* Dedicatory                                                         :ignore:
+* Dedicatory                                                       :noexport:
 
 #+BEGIN_LaTeX
 % \clearpage
@@ -94,7 +94,7 @@
 % \end{flushright}
 #+END_LaTeX
 
-* Acknowledgements                                                   :ignore:
+* Acknowledgements                                                 :noexport:
 
 #+BEGIN_LaTeX
 % agradecimentos
@@ -102,7 +102,7 @@
 %Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
 #+END_LaTeX
 
-* Abstract                                                           :ignore:
+* Abstract                                                         :noexport:
                                                       
 #+BEGIN_LaTeX
 \begin{abstract}
@@ -126,7 +126,7 @@ Put your Portuguese abstract here.
 #+BEGIN_LaTeX
 \end{englishabstract}
 #+END_LaTeX
-* Lists                                                              :ignore:
+* Lists                                                            :noexport:
 
 #+BEGIN_LaTeX
 \listoffigures
@@ -150,7 +150,7 @@ Put your Portuguese abstract here.
 % \end{listofsymbols}
 #+END_LaTeX
 
-* Sumário                                                            :ignore:
+* Sumário                                                          :noexport:
 
 #+BEGIN_LaTeX
 \tableofcontents
@@ -600,16 +600,11 @@ generation of the Pajé Visualization Tool, the PajeNG, focusing on the
 ** Pajé Trace File Format
 \label{section.pajeformat}
 
-_Comments_
-- Remove the first two sentences.
-
-This section gives an overview of the Pajé Trace File Format. Its
-complete description is in Appendix \ref{ap.pajeformat}. The Pajé
-Trace File Format \cite{pajetracefile} is a textual and generic
-pattern that describes the behaviour of parallel and distributed
-programs. The Pajé format describes five types of entities:
-containers, states, events, variables and links. Each entity is always
-associated to a container, even the containers themselves. A
+The Pajé Trace File Format \cite{pajetracefile} is a textual and
+generic pattern that describes the behaviour of parallel and
+distributed programs. The Pajé format describes five types of
+entities: containers, states, events, variables and links. Each entity
+is always associated to a container, even the containers themselves. A
 *container* can be any hardware or software entity, such as a
 processor, a thread, a network link, etc. It is the only Pajé object
 that holds other objects, including containers, which makes it the
@@ -856,8 +851,7 @@ the Pajé format and adapt the simulator to it. Its support for extra
 fields allows the inclusion of different descriptions for the events
 and its modularity facilitates the integration of new
 classes. Altering or adding simulation behavior can be done by
-modifying only the =PajeSimulator= and =PajeContainer=
-classes.
+modifying only the =PajeSimulator= and =PajeContainer= classes.
 
 Although complying with its goal of extensibility in terms of
 expanding the Pajé format, we identified three main issues in the
@@ -960,20 +954,25 @@ the complete grammar created for the Pajé Format refer to Appendix
 
 ** Aiyra's core simulator
 
-Aiyra's core simulator follows the exact same structure of the
-*PajeNG* implementation described in section \ref{section.pajeng},
-having the same class hierarchies. Thus, it is equally expandable in
-terms of creating new types of events or entities. However, it does
-not support extra fields in the events since the focus on the
-implementation was extending the output of the simulator. This
-makes our solution more limited for changes in the Pajé Trace file,
-which happens not very often. Despite that, it would be simple 
-to adjust it since changes do not affect the
-implementation of the plugins.  As in the *PajeNG*, all of the events
-go through the *PajeSimulator* object, which forwards to the
-*PajeContainer* if it is an event associated to a container.
+Aiyra's core simulator, depicted in Figure \ref{fig.aiyraCore},
+follows the exact same structure of the *PajeNG* implementation
+described in section \ref{section.pajeng}. Every event read by the
+parser and sent to the core by the controller goes through the
+*PajeSimulator* component, which is then forwarded to a
+*PajeContainer* if necessary. In the example of Figure
+\ref{fig.aiyraCore}, the simulator receives a *PajePopStateEvent*,
+that is validated in the *PajeSimulator*, forwarded to the *C1*
+container, and then dispatched to the proper instrumentation
+point. The class hierarchy follows the same organization as the
+PajeNG, thus, it is equally expandable in terms of creating new types
+of events or entities. However, it does not support extra fields in
+the events since the focus on the implementation was extending the
+output of the simulator. This makes our solution more limited for
+changes in the Pajé Trace file, which happens not very often. Despite
+that, it would be simple to adjust it since changes do not affect the
+implementation of the plugins.
 
-_Comments_:
+  _Comments_:
 - A figure explaining the behavior of the PajeSimulator and its
   relationship with the PajeContainer would be nice. I think that from
   here on you describe all the specific details of the implementation
@@ -984,7 +983,7 @@ _Comments_:
 - Input on the left; output on the right: on the center, the
   PajeSimulator and on its right the multiple PajeContainers. You can
   use a specific example with three containers and very few
-  timestamped events regarding states, for example.
+  timestamped events regarding states, for example. SEE DESCRIPTION ABOVE.
 - I just figured out the existence of Figure \ref{fig.aiyraCore}. It
   is exactly that, but focused on an example regarding the behavior of
   your simulator (you can even use a component to represent your
@@ -1037,13 +1036,6 @@ links and variables. It also may send unfinished objects. When there
 is a *PajeDestroyContainerEvent*, the container object is sent again,
 now complete with an ending timestamp.
 
-_Comments_:
-- Remove all future tense, replace by present (generic comment valid
-  for the whole text)
-- I still have to do a complete review on your implementation, but I
-  have the feeling that =aliases= should be left apart from the plugins
-  sector.
-
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Aiyra's Core Architecture}
@@ -1052,11 +1044,6 @@ _Comments_:
 \label{fig.aiyraCore}
 \end{figure}
 #+END_LaTeX
-
-_Comments_:
-- Figure is too big
-- Remember that you can have multiple containers instances. Maybe
-  represent that somehow on this figure.
 
 The choice of creating an instrumentation point for each trace event
 is due to the intention of covering all of the different needs of the
@@ -1069,38 +1056,22 @@ predict all of the use cases, it is desirable to have a broad
 approach. A full list of the plugin entrances and the information
 received in each one is presented in the next section.
 
-_Comment_:
-- when you send a complete "state" object, you already have the
-  reference for the container, right? 
 
 ** The plugin package
 \label{section.plugin}
 
-_Comment_:
-- Give an overview first! Please!
-  - For example, a list of all points. Mention that you will start
-    describing them in order.
-    - Perhaps grouping them by variable, state, event, link, container
-      would be nice. But explicit this group before describing
-      details.
-- By reading the first phrase you already have details.
-
 The plugin package is a common place where all entities created
 throughout simulation are sent. It has sets of entry points specific
 for each type of entity and event. The entrances consist in:
-*newType*, embracing type definitions; *newValue*, for the *PajeValue*
-objects; *startLink*, *endLink* and *newCompleteLink*, for link
-entities; *newCreatedContainer* and *destroyedContainer*, to
-manipulate the containers; *setState*, *pushState*, *popState* and
-*resetState*, receiving states; *setVar* and *updateVar*, for variable
-manipulation; and *newEvent* to handle event entities. The details of
-each point is detailed in this section.
-
-The plugin package is composed by an abstract class, the *PajePlugin*,
-with one method for each instrumentation point. It also contains a
-method called *finish* where the user can perform some concluding
-actions after the simulation is completed. To create a new plugin, the
-user just needs to extend the *PajePlugin* class and override its
+*newType*, *newValue*, *startLink*, *endLink*, *newCompleteLink*,
+*newCreatedContainer*, *destroyedContainer*, *setState*, *pushState*,
+*popState*, *resetState*, *setVar*, *updateVar*, and *newEvent*. The
+details of each point are presented later in this section. The plugin
+package is composed by an abstract class, the *PajePlugin*, with one
+method for each instrumentation point. It also contains a method
+called *finish* where the user can perform some concluding actions
+after the simulation is completed. To create a new plugin, the user
+just needs to extend the *PajePlugin* class and override its
 methods. It is also possible to extend another existing plugin, if the
 differences are small and not worth of a new class implementation.
 
@@ -1111,9 +1082,6 @@ when a type of any kind is defined, having the *PajeType* object as
 argument. The =getNature()= method can be used to identify the exact
 type. The *newValue* method receives every *PajeValue* created.
 
-_Comment_:
-- Do you mean that the plugin has to call =getNature=?
-
 When a container is created in the simulation, the instance is
 forwarded to the *newCreatedContainer* entry point, with the end
 timestamp set to $-1$. Whenever a method receives an entity that is
@@ -1123,23 +1091,22 @@ just been destroyed. Most of the entities are removed during
 simulation, but the destroyed container may have some remaining ones
 that could not be excluded, such as variables.
 
-_*Need to rewrite since the points were cited above*_ Link entities
-have three instrumentation points all receiving *PajeUserLink*
-objects: *startLink*, where the end time and end container of the
-communication link are unknown; *endLink*, when the instance has the
-end point of the link but not the start; and *newCompleteLink*, where
-the link entity has beginning and end. Anytime a variable is set or
-updated, there are three *PajeUserVariable* entities sent to the
-plugin: the *first*, which contains the first value of the variable;
-the *last*, which is the one immediately before the variable in
-question; and the new variable which is not completed yet
-(*newVar*). The aditions and subtractions are sent to the same point
-(*updateVar*). Since the previous variable objects are necessary to
-generate the new value, they are not removed from memory during
-simulation. The set, push and pop state events each have one method
-receiving a *PajeUserState*: *setState*, *pushState* and *popState*,
-the only one with an entity with beginning and end timestamps. The
-*PajeUserEvent* objects are sent to the *newEvent* function.
+The link entry points receive *PajeUserLink* objects. In the
+*startLink*, the end time and end container of the communication link
+are unknown, while in the *endLink*, instance has the end point of the
+link but not the start. The *newCompleteLink* method takes in a link
+entity with beginning and end. Anytime a variable is set or updated,
+there are three *PajeUserVariable* entities sent to the plugin: the
+*first*, which contains the first value of the variable; the *last*,
+which is the one immediately before the variable in question; and the
+new variable which is not completed yet (*newVar*). The aditions and
+subtractions are sent to the same point (*updateVar*). Since the
+previous variable objects are necessary to generate the new value,
+they are not removed from memory during simulation. The set, push and
+pop state instrumentation points all receive a *PajeUserState*. The
+only one with an entity with beginning and end timestamps is the
+*popState*. The *PajeUserEvent* objects are sent to the *newEvent*
+function.
 
 To validate the concept of the plugins and its entry points, three
 plugins were created: *PajeNullPlugin*, *PajeDumpPlugin* and
@@ -1159,22 +1126,18 @@ _Comment_
   specific plugin. It would be very easy to understand, and you'd have
   a figure for each plugin below.
 
-In this chapter, two plugins are described: *PajeDumpPlugin* and
-*PajeIsertDBPlugin*. The *PajeNullPlugin* is the default one. It does
-not make any treatment to the data so the objects are simply
-discarded. It is useful to verify the performance of the simulation
-itself, whithout the interference of the other segments.
+Three plugins are described in this Chapter: *PajeDumpPlugin*,
+*PajeIsertDBPlugin*, and *PajeNullPlugin*.
 
-_Comment_:
-- In the last paragraph of previous chapter you say there are three
-  plugins. Now you say there are two. In fact, there are three! It's
-  just that one of them do nothing.
-- Perhaps the =dump= plugin should be the default, because it does
-  something useful for an eventual user.
-- What is a "segment"? A new word you just introduced in this par.
-- Create a section about the null plugin. Then, explain a little more
-  why you have developed it (motivate). Move the two phrases about it
-  from the paragraph above to it.
+** Paje Null Plugin
+
+The *PajeNullPlugin* is the default plugin option. It does not make
+any treatment to the data so the objects are simply discarded. The
+utility of this plugin relies on the need to verify the performance of
+the simulation itself, whithout the interference of data
+manipulation. Since the main goal of this proposal is to deattach the
+core simulation from the data handling, it is desirable to be able to
+execute the core alone.
 
 ** Paje Dump Plugin
 
@@ -1188,26 +1151,14 @@ iterate over the entities left in the container. The variables printed
 in the destruction of the container, since they are not removed during
 simulation.
 
-_Comment_:
-- if in the trace are only sets, you send "popStates"?
-- I think we should think about better names for all points
-
-_Comment_:
-- Stick to a =standard=, not using *sometimes this*, =then this=.
-
-The difference between the *PajeDumpPlugin* and the =pj_dump= tool is
+The difference between the *PajeDumpPlugin* and the *pj_dump* tool is
 that the first one outputs the information as soon as the entity is
 completed. The *pj_dump*, in turn, keeps everything in memory before
 dumping it all at once. With this approach, it is possible to solve
 the issue regarding the need to wait for the program to end to have
 the results.
 
-_Comment about text below_:
-- what you mean =pjdump=, perhaps the Plugin identifier should be the
-  classname, without the "Plugin". For example, =PajeDump=. By using
-  =pjdump=, you may confuse the non attentive reader.
-
-This plugin can be called with the argument =pjdump= in the =-p=
+This plugin can be called with the argument =PajeDump= in the =-p=
 option and adds a new argument (=-l=) that can group together a
 certain number of entities before dumping it. The option receives an
 integer as parameter defining the number of lines it should reach
@@ -1232,6 +1183,28 @@ the correct schema. To specify the server of the connection, there is
 the option =-s=. It is also possible to inform a username (=-u=) and a
 password (=-pwd=). The default for these options is: *localhost*,
 *root* and *root*, respectively.
+
+The following entry points were used in the *PajeInsertDBPlugin*:
+*newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
+*popState*, *newCompleteLink*, *updateVar* and *newEvent*. Types,
+values and containers are inserted in the database as soon as they are
+created due to the dependency of other entities on these ones. When a
+container is destroyed, its *endTime* is updated in the database.
+
+The first approach of this implementation consisted in inserting the
+entities in the database at the time they were created. Database
+accesses cost time and, by executing some preliminary tests, we
+observed a very bad performance, that took an unnaceptable amount of
+time (over $24$ hours for 1 Gigabyte trace files). To solve this
+problem, we used the mechanism of *batches* provided by JDBC, which
+sends a block of queries all at once, reducing the communication
+overhead. This functionality is optional and can be included by adding
+the (=-batch=) option with an integer as argument. This number will
+define how many queries it will store before inserting a batch in the
+database. This is only applicable to states, events, links and
+variables, since types, values and containers are immediately
+inserted. performance analysis for different sizes of batch is
+presented in the next chapter.
 
 To create a relational database for the Pajé format, first, we created
 an entity-relationship model that is described in the subsection
@@ -1284,18 +1257,13 @@ field.
 
 *** Relational Model
 
-_Comments_:
-- Invert the first phrase
-- "consultations" => "requests"
-- every time there is a ref command, don't forget to say what it is
-  - Figure ref, instead of "ref".
 
-After the creation of the conceptual model, a translation to a logical
-model was made. In this conversion, besides applying the universally
-known rules presented in chapter \ref{chapter.basic_concepts}, we
-considered the usability of the schema, analysing the common
-consultations made in the Pajé data. This reflection is a usual part
-of the process, where the needs of the client are contemplated.
+A translation to a logical model was made after the creation of the
+conceptual model. In this conversion, besides applying the universally
+known rules presented in Chapter \ref{chapter.basic_concepts}, we
+considered the usability of the schema, analysing the common requests
+made in the Pajé data. This reflection is a usual part of the process,
+where the needs of the client are contemplated.
 
 The entities defined in the ER Model all became tables. For the *Type*
 specialization, we used the first option presented in Section
@@ -1323,95 +1291,32 @@ ending timestamps of one entity. Since this information is very
 important, we changed the *Variable* table for the tuples to
 explicitly have *startTime* and *endTime*.
 
-_Comments_
-- Why do you have an "implementation" subsection here and not for the
-  other plugins. Structure should be homogeneous, otherwise the reader
-  will ask "why have you done this way?"; or even worse: "what is that
-  you are hiding?"
-
-*** Implementation
-
-_Comment_
-- Invert your phrases: write in English.
-- Example:
-  - "The following entry points were used in the PajeInsertDBPlugin: ..."
-
-In the *PajeInsertDBPlugin*, the following entry points were used:
-*newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
-*popState*, *newCompleteLink*, *updateVar* and *newEvent*. Types,
-values and containers are inserted in the database as soon as they are
-created due to the dependency of other entities on these ones. When a
-container is destroyed, its *endTime* is updated in the database.
-
-_Comment_:
-- Say that this "bad" performance was observed in some preliminary
-  experimental trials you have done before conducting the rigorous
-  performance evaluation of Chapter X.
-- appliable => applicable
-- An analysis of the performance =>  A performance analysis
-- Remove Will, use _is_ (present tense) as previously recommended
-
-The insertion in the database costs time, hence, the approach of
-making an access every time a new entity is created has a very bad
-performance. To solve this problem, we used the mechanism of *batches*
-provided by JDBC, which sends a block of queries all at once, reducing
-the communication overhead. This functionality is optional and can be
-included by adding the (=-batch=) option with an integer as
-argument. This number will define how many queries it will store
-before inserting a batch in the database. This is only appliable to
-states, events, links and variables, since types, values and
-containers are immediately inserted. An analysis of the performance
-for different sizes of batch will be presented in the next chapter.
 
 * Performance Evaluation
 \label{chapter.performance}
 
-An evaluation of Aiyra's performance was made to have a concrete
-results about the outcome of this proposal. Two main tests were
+An evaluation of Aiyra's performance was made to have concrete
+conclusions about the outcome of this proposal. Two main tests were
 executed: a comparison between Aiyra and PajeNG and an analysis of the
 impact of different batch sizes in the *PajeInsertDBPlugin*. Since
 Aiyra is strongly based in the PajeNG implementation, it is valid to
 examine if the modifications and language transition have brought
 significant performance impact on the simulation. The plugin that
 inserts the data in a MySQL database is the only one that brings an
-extremely different functionality to the program, hence it was chosen
+extremely different functionality to the program, hence, it was chosen
 to be studied. As it involves the connection with an external tool,
 the analysis of its performance and the study of the most efficient
 use of it is very important.
 
-We used full factorial experimental design, using the R language with
-*DoE.base* package, to define the tests to be performed. The package
-generates a *.csv* file with one column for each factor. It creates
-one row for each possible combination of the different levels and
-multiplies it by the number of replications. We created *bash* scripts
-to execute the experiments of the design generating another *.csv*
-sheet including the response variables defined for the
+We created full factorial experimental designs, using the R language
+with *DoE.base* package, to define the tests to be performed. The
+package generates a *.csv* file with one column for each factor. It
+creates one row for each possible combination of the different levels
+and multiplies it by the number of replications. We created *bash*
+scripts to execute the experiments of the design generating another
+*.csv* sheet including the response variables defined for the
 experiments. The details about the factors and levels for each test
 are described in the next section.
-
-#+BEGIN_LaTeX
-\begin{table}[!htb]
-\caption{Experimental platform description.}
-\label{tab:platform}
-\centering
-\begin{tabularx}{\linewidth}{lXX}\toprule
-                          & {\bf Orion}          & {\bf Bree}    \\\toprule
-Processor                 & Xeon E5-2630         & i7-4770        \\
-N of procs. (NUMA)        & 2 (two)              & 1 (one)        \\
-Cores per proc.           & 6 (12 Hyper. T.)     & 4 (8 Hyper. T.)  \\
-Max. Core Freq.           & 2.30GHz              & 3.40Ghz       \\
-L1 Cache                  & 32/32KBytes          & 32/32KBytes  \\     
-L2 Cache                  & 256KBytes            & 256KBytes    \\
-L3 Cache                  & 15MBytes             & 8MBytes         \\
-Main memory               & 32GBytes             & 8GBytes      \\
-Accelerator \#1           & \xeonphi 3120A        & GTX760        \\
-Accelerator \#2           & Nvidia K20           &              \\\midrule
-OS                        & CentOS Linux7        & Ubuntu 14.04 \\
-Kernel                    & 3.10.0 (x86\_64)     & 3.13.0       \\
-MPSS / CUDA               & 3.4.1 / 6.5          & NA / 5.5             \\
-\bottomrule\end{tabularx}
-\end{table}
-#+END_LaTeX
 
 ** Methodology
 
@@ -1420,107 +1325,33 @@ with a Mac OSX environment, *guarani*, and *orion1*, both running
 Linux. The details about the experimental units are described in table
 \ref{tab.machines}. We generated three input trace files with
 different sizes identified by *small*, *medium*, and *big*, of sizes
-128K, 128M, and 1G, respectively.
+128Kilobytes, 128Megabytes, and 1Gigabytes, respectively.
 
 #+BEGIN_LaTeX
-\begin{table}[h!]
-  \centering
-  \caption{Description of the machines}
-  \label{tab.machines}
-  \begin{tabular}{ccc}
-    \toprule
-     luiza & guarani & orion1\\
-    \midrule
-    OSX Yosemite 10.10.5 & Linux Debian 4.3.5-1 & Linux Ubuntu\\
-    as & well & as\\
-    using & the & booktabs package\\
-    \bottomrule
-  \end{tabular}
+\begin{table}[!htb]
+\caption{Experimental Units description.}
+\label{tab.machines}
+\centering
+\begin{tabularx}{\linewidth}{lXXX}\toprule
+                         &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
+Processor                &  Intel Core i7        & Xeon E5-2630         & Intel Core i5-2400   \\
+CPU(s)                   &  1                    & 24                   & 4       \\
+Cores per proc.          &  4                    & 6                    & 4             \\
+Max. Core Freq.          &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
+L1 Cache                 & 32/32KBytes           & 32/32KBytes          & 32/32KBytes  \\     
+L2 Cache                 & 256KBytes             & 256KBytes            & 256KBytes    \\
+L3 Cache                 & 6 MBytes              & 6MBytes              & 6MBytes         \\
+Main memory              & 16GByte               & 32GBytes             & 20GBytes      \\\midrule
+OS                       & OSX Yosemite 10.10.5  & Ubuntu 12.04.5       & Debian 4.3.5-1 \\
+\bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
 
-_luiza_: OS X Yosemite 10.10.5
- Nome do Modelo:	MacBook Pro
-  Identificador do Modelo:	MacBookPro10,1
-  Nome do Processador:	Intel Core i7
-  Velocidade do Processador:	2.7 GHz
-  Número de Processadores:	1
-  Número Total de Núcleos:	4
-  Cache L2 (por Núcleo):	256 KB
-  Cache de L3:	6 MB
-  Memória:	16 GB
-Disco: 500 GB
-
-_guarani_: Linux guarani 4.3.0-1-amd64 #1 SMP Debian 4.3.5-1
-(2016-02-06) x86_64 GNU/Linux
-
-Architecture:          x86_64
-CPU op-mode(s):        32-bit, 64-bit
-Byte Order:            Little Endian
-CPU(s):                4
-On-line CPU(s) list:   0-3
-Thread(s) per core:    1
-Core(s) per socket:    4
-Socket(s):             1
-NUMA node(s):          1
-Vendor ID:             GenuineIntel
-CPU family:            6
-Model:                 42
-Model name:            Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
-Stepping:              7
-CPU MHz:               1601.222
-CPU max MHz:           3400.0000
-CPU min MHz:           1600.0000
-BogoMIPS:              6185.49
-Virtualization:        VT-x
-L1d cache:             32K
-L1i cache:             32K
-L2 cache:              256K
-L3 cache:              6144K
-
-
-_orion_: Linux orion1 3.13.0-85-generic #129~precise1-Ubuntu SMP Fri Mar 18 17:38:08 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux 
-
-Architecture:          x86_64
-CPU op-mode(s):        32-bit, 64-bit
-Byte Order:            Little Endian
-CPU(s):                24
-On-line CPU(s) list:   0-23
-Thread(s) per core:    2
-Core(s) per socket:    6
-Socket(s):             2
-NUMA node(s):          2
-Vendor ID:             GenuineIntel
-CPU family:            6
-Model:                 45
-Stepping:              7
-CPU MHz:               2000.000
-BogoMIPS:              4601.07
-Virtualization:        VT-x
-L1d cache:             32K
-L1i cache:             32K
-L2 cache:              256K
-L3 cache:              15360K
-NUMA node0 CPU(s):     0,2,4,6,8,10,12,14,16,18,20,22
-NUMA node1 CPU(s):     1,3,5,7,9,11,13,15,17,19,21,23
-
-model name      : Intel(R) Xeon(R) CPU E5-2630 0 @ 2.30GHz
-
-guarani_orion: 
-
-traceroute to orion1 (143.54.12.114), 30 hops max, 60 byte packets
- 1  143.54.13.1 (143.54.13.1)  0.619 ms  0.975 ms  1.329 ms
- 2  orion1.inf.ufrgs.br (143.54.12.114)  0.547 ms  0.551 ms  0.544 ms
-
-ping: rtt min/avg/max/mdev = 0.280/0.510/0.559/0.065 ms
-
-rede do inf: 100Mb
-
-*Comparison between Aiyra and PajeNG* 
+*** Comparison between Aiyra and PajeNG 
 
 This experiment evaluates the performance of Aiyra using the
 *PajeNullPlugin* and two versions of the *pj_dump* tool: *pj* and
-*pjflex*. The difference between the versions is in the parsing of the
+*pjflex*. The difference between the versions is in the reading of the
 trace file, while the first one uses the standard C++ parsing, the
 second uses a scanner and parser generator (*flex* and *bison*). The
 executions of the *pj_dump* tool received =--quiet= as a parameter to
@@ -1532,35 +1363,36 @@ discards most of them.
 Two factors were chosen for this experiment: *input* and
 *version*. The first assumed the values *small*, *medium*, and
 *big*. The second, *aiyra*, *pj* and *pjflex*. The number of
-replications chosen was $30$, which is the recommended for full
-factorial design _*?? help on references*_. Since we have two factors,
-each with three levels, we have a total of 270 experiments (the
-product of $3*3*30$). The execution of the design added a column for
-the platform and another for the execution time in the resulting
-*.csv*. This design was run in each one of the platforms, thus, we had
-three files each with $270$ rows.
+replications chosen was $30$. This value was selected after a few test
+experiments where we noticed very little variability. As the
+executions take a significant amount time, $30$ repetitions is enough
+to have reliable results. Since we have two factors, each with three
+levels, we have a total of $270$ experiments (the product of
+$3*3*30$). The outcome of this experiment is the *execution* time for
+each combination of input and version. This design was run in each one
+of the platforms, thus, we had three files each with $270$ rows.
 
 (header of the design?)
 
-*PajeInsertDBPlugin evaluation*
+*** PajeInsertDBPlugin evaluation
 
 The *PajeInsertDBPlugin* provides an option for the user to define a
 batch size for the insertion in the database. The size defines the
 number of entities to be inserted at once. This means that the queries
 are stored in a buffer until a counter reaches the specified
-value. Although this approach reduces the number of accesses to the
-database, reducing the execution time, it occupies a significant
-amount of memory. Our evaluation aims to define what is the best
-choice of batch size for different scenarios.
+value. Although this approach reduces the execution time, compared to
+the first attempt described in Chapter \ref{chapter.plugins}, it
+occupies a significant amount of memory. Our evaluation aims to define
+what is the best choice of batch size for different scenarios.
 
 For this experiment we used the same experimental units as the first
 one, but we added a fourth experiment which consists in the remote
 access between *guarani* and *orion1*. In the experiment, we had the
-simulator running in *guarani* and accessing the database in
+simulator running in *guarani* accessing the database in
 *orion1*. Figure \ref{fig.infnetwork} represents the network
-connecting the machines. Both are in _*INF em ingles ou portugues? e
-ufrgs?*_, where the bandwidth is 100Mb/s. There is one switch between
-both endpoints, which is what limits the network speed. 
+connecting the machines. Both are placed in _*INF em ingles ou
+portugues? e ufrgs?*_, where the bandwidth is 100Mb/s. There is one
+switch between both endpoints, which is what limits the network speed.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1572,22 +1404,24 @@ both endpoints, which is what limits the network speed.
 #+END_LaTeX
 
 The factors for this evaluation consist in the *input*, the same as
-the ones described above, and *batch*, which assumes five different
+the ones described above, and *batch*, which assumes six different
 values. The *batch* factor consists in the size of the batch to be
 ineserted in the database. The number is not fixed and varies among
-the different input sizes. The levels are classified from *A* to *E*,
+the different input sizes. The levels are classified from *A* to *F*,
 where *A* represents the highest number possible for a batch, meaning
-one single insertion. The other four levels consist in dividing the
-previous one by half. The *A* value for each input size was previously
-calculated and the rest were generated by the dividing the first one.
+one single insertion. The other five levels consist in dividing the
+previous one in half. The *A* value for each input size was previously
+calculated and the rest was generated by the dividing the first
+one. In this design, we have a six-levels factor, a three-levels
+factor and $30$ replications, which results in $540$ experiments to
+run in each of the four experimental units.
 
 To complement this analysis, we also implemented a trace for the batch
-insertions. Every time there was an insertion in the database, we
+executions. Every time there was an insertion in the database, we
 collected the *start time*, *end time* and *size* of that specific
 batch. This data is useful to obtain richer information about the
 impacts of the batch mechanism in the performance. Next section
 demonstrates the results for the experiments described above.
-
 
 
 ** Results and Graphics
@@ -1597,12 +1431,13 @@ generated and to plot significant graphics of the results. The
 hipotesis made before the execution of the experiments and the
 observed results are presented below.
 
-*Comparison between Aiyra and PajeNG*
+*** Comparison between Aiyra and PajeNG
 
 For the experiment of comparison between Aiyra and PajeNG, we used the
-average execution time among the $30$ replications as a mesurement. We
-considered the standard error to be three standard deviations of the
-mean, which cover 99.7% of the cases in a normal distribution
+average execution time among the $30$ replications as a
+mesurement. The time is measured in seconds. We considered the
+standard error to be three standard deviations of the mean, which
+cover 99.7% of the cases in a normal distribution
 \cite{normaldistribution}.
 
 /Expected/ It is universally known that C++ is a language with better
@@ -1615,7 +1450,7 @@ the characteristic of having lower performance.
 \begin{figure}[!htb]
 \caption{Results of comparison between Aiyra and PajeNG}
 \centering
-\includegraphics[width=\linewidth]{./img/aiyra-pj-pjflex_overview.pdf}
+\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_overview.pdf}
 \label{fig.cppoverview}
 \end{figure}
 #+END_LaTeX
@@ -1627,30 +1462,40 @@ recognize the difference between the implementation and configuration
 of both programs. Aiyra is designed to get rid of the entities as soon
 as they are finished. Thus, with the *PajeNullPlugin*, very little is
 kept in memory. One of Java's biggest overhead is the memory handling,
-specially the Garbage Collector. Since we have an implementation that
-stores as few objects as possible, Java may have a chance in this
-case. Likewise, the *pj_dump* implementation carries the overhead of
-storing everything. As expected, the *pj_flex* version was slower than
-*pj*.
+specially the Garbage Collector(GC). Since we have an implementation
+that stores as few objects as possible, and the less alive objects in
+the program, the faster is GC \cite{garbagecollector}, Java may have a
+chance in this case. Likewise, the *pj_dump* implementation carries
+the overhead of storing everything. Another important difference among
+Aiyra and PajeNG is the process of reading the trace file, parsing it
+and then sending to the simulator. As seen in Chapter
+\ref{chapter.paje}, the PajeNG tool first reads from the file a chunk
+of data, then the a decoder that breaks it into events and then the
+simulator receives this block *(?)*. The next segment of data is only
+read after the first is completely decoded. On the other hand, Aiyra's
+controller sends each event read immediately to the simulator. Since
+the memory allocation is not usually a problem in C++ implementations,
+it is more likely that this result relies on the architectural
+difference. As expected, the *pj_flex* version was slower than *pj*.
 
-Notice that the execution in *luiza* had a bigger variability in the
-execution the *pj* version with the *big* input. The average execution
-time for the big file in the *aiyra* version was around $80$ seconds,
-but there was an outlier experiment that executed in $2888$
-seconds. This particular row was removed from the data set. Even with
-this particular case deleted, an instability can still be
-perceived. The experiments are randomized in the design, so if there
-was any disturbance in the environment during the experiment, it
-should have affected other configurations as well. Besides, we can
-notice the variability only in this particular configuration. There is
-no confirmed explanation for this situation, it may be because *luiza*
-is the weakest machine in the experiment and did not handle well the
-C++ parsing with the biggest file. Considering that it does not affect
-the overall analysis, the experiment was considered valid.
+Notice that the experiment in *luiza* had a bigger variability with
+the *pj* version and the *big* input. The average execution time for
+the big file in the *aiyra* version was around $80$ seconds, but there
+was an outlier experiment that executed in $2888$ seconds. This
+particular row was removed from the data set. Even with this
+particular case deleted, an instability can still be perceived. The
+experiments are randomized in the design so, if there was any
+disturbance in the environment during the experiment, it should have
+affected other configurations as well, but we can notice the
+variability only in this particular configuration. There is no
+confirmed explanation for this situation, it may be because *luiza* is
+the weakest machine in the experiment and did not handle well the C++
+parsing with the biggest file. Considering that it does not affect the
+overall analysis, the experiment was considered valid.
 
 So far, we have analysed the execution time of the *medium* and *big*
-inputs. In Figure \ref{fig.cppoverview}, we don't have a clear view of
-the difference between the results of the *small* input in the
+inputs. In Figure \ref{fig.cppoverview}, we do not have a clear view
+of the difference between the results of the *small* input in the
 different platforms. Figure \ref{fig.cppsmall} portrays a closer sight
 of the graphic, where we can see that the bahavior for the *small*
 input is different from the others. In this case, we observe the
@@ -1662,23 +1507,1558 @@ versions and C++ is naturally faster than Java.
 \begin{figure}[!htb]
 \caption{Results of comparison between Aiyra and PajeNG for the small input}
 \centering
-\includegraphics[width=\linewidth]{./img/aiyra-pj-pjflex_small.pdf}
+\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_small.pdf}
 \label{fig.cppsmall}
 \end{figure}
 #+END_LaTeX
 
-This results are particularly important to assure the relevance of
+These results are particularly important to assure the relevance of
 this proposal. By deattaching the core simulation from the data
 handling, we perceive that there is room for performance improvements
 in the replay of large Pajé trace files. It is possible to observe
 that the fewer we retain in memory, the better our performance will
 be. The implementation of Aiyra gives the user more flexibility to
 manage the memory usage of his program and space to develop high
-performance implementations.
+performance implementations. It is also possible to notice that
+changes architectural approach may have significan impacts in the
+performance of the program.
 
-*PajeInsertDBPlugin evaluation*
+*** PajeInsertDBPlugin evaluation
 
-the test options: platform, -test to not interfere with memory, etc.
+The objective of this experiment is to measure what is the best
+balance between number of database accesses and memory usage. We have
+already discarded inserting each entity at a time, so it is necessary
+to keep entities temporarily in memory. We tested the simulation time
+and memory usage for different combinations of input and batch size.
+The response variables were: *execution time*, which is the total
+duration of the execution; *insertion time*, the time it took to
+insert the data in the database; and *maximum memory*, the maximum
+usage of the memory during the simulation. For the execution and
+simulation time, we used the average value as in the experiment
+above. The memory value used was the maximum observed in the
+replications. As this experiment consists in storing data of $540$
+executions in memory, we used a =-test= flag, which drops the database
+and recreates it after each simulation.
+
+Since we had a very large number of experiments, it took
+approximatedly $48$ hours to execute the design in each platform. In
+the preliminary tests, we noticed that *orion1* was taking too long to
+execute. This may have happened for several reasons, specially because
+it is a machine shared by the students in the _*INF
+UFRGS(??)*_. Although we locked the machine for the experiment, it was
+out of our hands to stop eventual programs that could be running in
+other students' users and affecting the performance. Likewise, it was
+not desirable to unable other users from using the machine for longer
+than two or three days. For these reasons, the experiment in *orion1*
+had $10$ replications. The observation of little variability among the
+executions in the exploratory tests support our decision.
+
+/Expected/ According to the observation of bad performance when
+executing excessive accesses to the database, we expect that the
+bigger the batch, the better the performance, since it will make fewer
+requests to MySQL. Naturally, this would also cause a higher memory
+usage, so the maximum memory utilization will be larger for bigger
+batches. We have three experiments making an access to a local
+database, and one performing a remote connection. It is logical to
+expect that the remote connection will take longer than the local
+ones.  (improve)
+
+/Observed/ As the values for A, B, C, D, E and F vary among the
+different input sizes, it is consistent to analyze each input
+separatedly. Figure \ref{fig.batchbig} illustrates the behavior of the
+execution using the big input. We do not have results for batch size A
+because we used the default values for the JVM, and it did not have
+enough heap space to store the data. The *guarani* platform also did
+not handle the B size. Although having less results, it is still
+possible to observe a pattern which is the opposite as we imagined. We
+can see that the smaller the batch size, the better the
+performance. This is easily explained by the fact that Java's memory
+management may be very slow, specially when there are many alive
+objects in the program. By these results, we see that the memory usage
+overhead is higher than the connection cost. With the medium input,
+presented in Figure \ref{fig.batchmedium}, we observe the same
+behavior as the big one for *luiza* and *guarani* platforms. *orion1*
+results are inconclusive, probably due to the same problems mentioned
+previously.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for big input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_big_v2.pdf}
+\label{fig.batchbig}
+\end{figure}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for medium input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_medium_v1.pdf}
+\label{fig.batchmedium}
+\end{figure}
+#+END_LaTeX
+
+Going further on the analysis, we see in Figures \ref{fig.mem_big} and
+\ref{fig.mem_medium} the memory usage for the scenarios presented
+above. Naturally, the memory usage peak is higher for bigger batches.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for the big input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_mem_big_v1.pdf}
+\label{fig.batchbig}
+\end{figure}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for the mediuminput}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v1.pdf}
+\label{fig.batchmedium}
+\end{figure}
+#+END_LaTeX
+
+For smaller inputs, however, we see (in Figure \ref{fig.batchsmall})
+that the behavior is what we predicted. It is also explained by the
+very little memory usage, that is too irrelevant to impact the
+performance. It is worth mentioning that 128 Kilobytes, which is the
+size of the *small* input, is very uncommon and that the usual traces
+are at least in the Megabytes order of magnitude.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_small_v1.pdf}
+\label{fig.batchsmall}
+\end{figure}
+#+END_LaTeX
+
+(analysis on the remote, slower indeed?)
+
+By analysing the results, we observed that the number of accesses to
+the database did not impact on the performance of *big* and *medium*
+traces. To support our conclusions, we generated traces for the batch
+executions. These traces logged the duration of every batch insertion
+for each experiment. It is depicted, in Figures \ref{fig.batchtimebig}
+and \ref{fig.batchtimemedium}, $10$ replications of the executions,
+for each batch size, represented in a timeline. It is possible to see
+through these graphics that bigger batches take longer to execute, a
+detail that we had not considered in the hipotesis. In this way, we
+see that the insertion time does not significantly change between
+configurations for the same input size, as the number of queries is
+always the same, while the simulation itself is what impacts the run
+time. As we have seen before, the memory usage is what penalizes the
+performance.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v1.pdf}
+\label{fig.batchtimebig}
+\end{figure}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v1.pdf}
+\label{fig.batchtimemedium}
+\end{figure}
+#+END_LaTeX
+
+For the small input, we can observe, in Figure \ref{fig.batchtimesmall},
+the opposite behavior. 
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v1.pdf}
+\label{fig.batchtimesmall}
+\end{figure}
+#+END_LaTeX
+
+
+
+
+
+* 2016-05-16 CPP Comparison (figures)                   :noexport:Lucas:Tais:
+
+Merge everything in a single CSV file:
+
+#+begin_src sh :results output :session :exports both
+cd results/cpp_comparison
+head -n1 cpp_guarani_bateria01.csv > all_but_first.csv
+for i in `ls -1 *.csv | grep -v _cpp_c`; do
+  tail -n+2 $i
+done >> all_but_first.csv
+#+end_src
+
+#+RESULTS:
+
+Now, let's read the file =all_but_first.csv=.
+
+#+begin_src R :results output :session :exports both
+df <- read.csv ("results/cpp_comparison/all_but_first.csv");
+df[df$version == "aiyra",]$time = df[df$version == "aiyra",]$time/1000000;
+summary(df);
+head(df);
+#+end_src
+
+#+RESULTS:
+#+begin_example
+      name       run.no.in.std.order     run.no      run.no.std.rp  
+ Min.   :  1.0   Min.   :1           Min.   :  1.0   Min.   :1.100  
+ 1st Qu.: 68.0   1st Qu.:3           1st Qu.: 68.0   1st Qu.:3.160  
+ Median :135.5   Median :5           Median :135.5   Median :5.225  
+ Mean   :135.5   Mean   :5           Mean   :135.5   Mean   :5.290  
+ 3rd Qu.:203.0   3rd Qu.:7           3rd Qu.:203.0   3rd Qu.:7.300  
+ Max.   :270.0   Max.   :9           Max.   :270.0   Max.   :9.900  
+   version       input          time              platform  
+ aiyra :270   big   :270   Min.   :   0.0245   guarani:270  
+ pj    :270   medium:270   1st Qu.:   0.1738   luiza  :270  
+ pjflex:270   small :270   Median :  25.7898   orion1 :270  
+                           Mean   :  76.8609                
+                           3rd Qu.: 123.2365                
+                           Max.   :2888.0565
+  name run.no.in.std.order run.no run.no.std.rp version  input       time
+1    1                   4      1           4.1   aiyra medium  13.199061
+2    2                   9      2           9.1  pjflex    big 280.152443
+3    3                   2      3           2.1      pj  small   0.049384
+4    4                   5      4           5.1      pj medium  33.616784
+5    5                   7      5           7.1   aiyra    big 111.191072
+6    6                   6      6           6.1  pjflex medium  35.570650
+  platform
+1   orion1
+2   orion1
+3   orion1
+4   orion1
+5   orion1
+6   orion1
+#+end_example
+
+Let's average measurements:
+
+#+begin_src R :results output :session :exports both
+library(dplyr);
+k <- df %>%
+     select(version, input, time, platform) %>%
+     group_by(version, input, platform) %>%
+     summarize(N = n(),
+               time_avg = mean(time),
+               time_se = 3*sd(time)/sqrt(N)) %>%
+     as.data.frame();
+k
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+   version  input platform  N     time_avg      time_se
+1    aiyra    big  guarani 30 124.24501307 1.152943e+00
+2    aiyra    big    luiza 30 176.45010810 2.805133e+02
+3    aiyra    big   orion1 30 111.78373253 1.012192e+00
+4    aiyra medium  guarani 30  13.62979877 2.309004e-01
+5    aiyra medium    luiza 30   9.38572857 1.159134e-01
+6    aiyra medium   orion1 30  13.08560363 1.239769e-01
+7    aiyra  small  guarani 30   0.17240930 1.343752e-03
+8    aiyra  small    luiza 30   0.18415197 1.450459e-03
+9    aiyra  small   orion1 30   0.22622977 9.292423e-03
+10      pj    big  guarani 30 232.04630737 5.956094e-01
+11      pj    big    luiza 30 207.43421557 9.992199e+00
+12      pj    big   orion1 30 259.72360747 1.115893e+00
+13      pj medium  guarani 30  29.97373843 1.207393e-01
+14      pj medium    luiza 30  24.92862427 2.842269e-01
+15      pj medium   orion1 30  33.47163073 1.253937e-01
+16      pj  small  guarani 30   0.04223553 6.087253e-03
+17      pj  small    luiza 30   0.02562413 7.886749e-04
+18      pj  small   orion1 30   0.04607153 2.206699e-03
+19  pjflex    big  guarani 30 248.65192840 1.108033e+00
+20  pjflex    big    luiza 30 215.79006593 2.822790e+00
+21  pjflex    big   orion1 30 279.74462510 9.249580e-01
+22  pjflex medium  guarani 30  32.14986230 1.422113e-01
+23  pjflex medium    luiza 30  25.85007707 2.419624e-01
+24  pjflex medium   orion1 30  36.08434247 1.588962e-01
+25  pjflex  small  guarani 30   0.04453450 5.719485e-03
+26  pjflex  small    luiza 30   0.02540013 4.037376e-04
+27  pjflex  small   orion1 30   0.04819160 2.599552e-03
+#+end_example
+
+#+begin_src R :results output graphics :file img/cpp/first_plot_1.png :exports both :width 600 :height 400 :session
+library(ggplot2);
+ggplot(k, aes(x=version, y=time_avg, color=input)) +
+  geom_point() +
+  scale_colour_manual(values = c("red","blue", "green")) +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  theme_bw() + facet_wrap(~platform);
+#+end_src
+
+#+RESULTS:
+[[file:img/cpp/first_plot_1.png]]
+
+There is something really strange with =luiza= =aiyra= =big=, let's look to
+the measurements.
+
+#+begin_src R :results output :session :exports both
+df[df$platform == "luiza" & df$version == "aiyra" & df$input == "big",];
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    name run.no.in.std.order run.no run.no.std.rp version input       time
+275    5                   7      5          7.10   aiyra   big   82.81775
+281   11                   7     11          7.20   aiyra   big   86.17196
+296   26                   7     26          7.30   aiyra   big 2888.05648
+299   29                   7     29          7.40   aiyra   big   80.86330
+314   44                   7     44          7.50   aiyra   big   82.80871
+321   51                   7     51          7.60   aiyra   big   80.60814
+325   55                   7     55          7.70   aiyra   big   81.70027
+335   65                   7     65          7.80   aiyra   big   81.60717
+346   76                   7     76          7.90   aiyra   big   81.75732
+359   89                   7     89          7.10   aiyra   big   81.35299
+364   94                   7     94          7.11   aiyra   big   83.07451
+372  102                   7    102          7.12   aiyra   big   86.38635
+382  112                   7    112          7.13   aiyra   big   84.73248
+394  124                   7    124          7.14   aiyra   big   84.30511
+403  133                   7    133          7.15   aiyra   big   83.61456
+406  136                   7    136          7.16   aiyra   big   87.41428
+422  152                   7    152          7.17   aiyra   big   82.55839
+430  160                   7    160          7.18   aiyra   big   83.14233
+433  163                   7    163          7.19   aiyra   big   82.74059
+443  173                   7    173          7.20   aiyra   big   80.96755
+455  185                   7    185          7.21   aiyra   big   83.47831
+461  191                   7    191          7.22   aiyra   big   82.58781
+474  204                   7    204          7.23   aiyra   big   80.05653
+483  213                   7    213          7.24   aiyra   big   80.95360
+487  217                   7    217          7.25   aiyra   big   84.05692
+500  230                   7    230          7.26   aiyra   big   84.04072
+509  239                   7    239          7.27   aiyra   big   88.34312
+518  248                   7    248          7.28   aiyra   big   81.86359
+525  255                   7    255          7.29   aiyra   big   80.94467
+533  263                   7    263          7.30   aiyra   big   80.49776
+    platform
+275    luiza
+281    luiza
+296    luiza
+299    luiza
+314    luiza
+321    luiza
+325    luiza
+335    luiza
+346    luiza
+359    luiza
+364    luiza
+372    luiza
+382    luiza
+394    luiza
+403    luiza
+406    luiza
+422    luiza
+430    luiza
+433    luiza
+443    luiza
+455    luiza
+461    luiza
+474    luiza
+483    luiza
+487    luiza
+500    luiza
+509    luiza
+518    luiza
+525    luiza
+533    luiza
+#+end_example
+
+We need to remove the outlier where execution time took $2888.05648$
+seconds. To do so, we modify the =df= dataframe:
+
+#+begin_src R :results output :session :exports both
+df2 <- df[df$time < 2000,]
+df2[df2$platform == "luiza" & df2$version == "aiyra" & df2$input == "big",];
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    name run.no.in.std.order run.no run.no.std.rp version input     time
+275    5                   7      5          7.10   aiyra   big 82.81775
+281   11                   7     11          7.20   aiyra   big 86.17196
+299   29                   7     29          7.40   aiyra   big 80.86330
+314   44                   7     44          7.50   aiyra   big 82.80871
+321   51                   7     51          7.60   aiyra   big 80.60814
+325   55                   7     55          7.70   aiyra   big 81.70027
+335   65                   7     65          7.80   aiyra   big 81.60717
+346   76                   7     76          7.90   aiyra   big 81.75732
+359   89                   7     89          7.10   aiyra   big 81.35299
+364   94                   7     94          7.11   aiyra   big 83.07451
+372  102                   7    102          7.12   aiyra   big 86.38635
+382  112                   7    112          7.13   aiyra   big 84.73248
+394  124                   7    124          7.14   aiyra   big 84.30511
+403  133                   7    133          7.15   aiyra   big 83.61456
+406  136                   7    136          7.16   aiyra   big 87.41428
+422  152                   7    152          7.17   aiyra   big 82.55839
+430  160                   7    160          7.18   aiyra   big 83.14233
+433  163                   7    163          7.19   aiyra   big 82.74059
+443  173                   7    173          7.20   aiyra   big 80.96755
+455  185                   7    185          7.21   aiyra   big 83.47831
+461  191                   7    191          7.22   aiyra   big 82.58781
+474  204                   7    204          7.23   aiyra   big 80.05653
+483  213                   7    213          7.24   aiyra   big 80.95360
+487  217                   7    217          7.25   aiyra   big 84.05692
+500  230                   7    230          7.26   aiyra   big 84.04072
+509  239                   7    239          7.27   aiyra   big 88.34312
+518  248                   7    248          7.28   aiyra   big 81.86359
+525  255                   7    255          7.29   aiyra   big 80.94467
+533  263                   7    263          7.30   aiyra   big 80.49776
+    platform
+275    luiza
+281    luiza
+299    luiza
+314    luiza
+321    luiza
+325    luiza
+335    luiza
+346    luiza
+359    luiza
+364    luiza
+372    luiza
+382    luiza
+394    luiza
+403    luiza
+406    luiza
+422    luiza
+430    luiza
+433    luiza
+443    luiza
+455    luiza
+461    luiza
+474    luiza
+483    luiza
+487    luiza
+500    luiza
+509    luiza
+518    luiza
+525    luiza
+533    luiza
+#+end_example
+
+Great, it has worked.
+
+Recalculate the averages, do the plot again.
+
+#+begin_src R :results output :session :exports both
+library(dplyr);
+k2 <- df2 %>%
+     select(version, input, time, platform) %>%
+     group_by(version, input, platform) %>%
+     summarize(N = n(),
+               time_avg = mean(time),
+               time_se = 3*sd(time)/sqrt(N)) %>%
+     as.data.frame();
+k2
+#+end_src
+
+#+RESULTS:
+#+begin_example
+   version  input platform  N     time_avg      time_se
+1    aiyra    big  guarani 30 124.24501307 1.1529429416
+2    aiyra    big    luiza 29  82.94644007 1.1744753970
+3    aiyra    big   orion1 30 111.78373253 1.0121923958
+4    aiyra medium  guarani 30  13.62979877 0.2309003501
+5    aiyra medium    luiza 30   9.38572857 0.1159133555
+6    aiyra medium   orion1 30  13.08560363 0.1239768599
+7    aiyra  small  guarani 30   0.17240930 0.0013437523
+8    aiyra  small    luiza 30   0.18415197 0.0014504593
+9    aiyra  small   orion1 30   0.22622977 0.0092924233
+10      pj    big  guarani 30 232.04630737 0.5956093796
+11      pj    big    luiza 30 207.43421557 9.9921988357
+12      pj    big   orion1 30 259.72360747 1.1158926857
+13      pj medium  guarani 30  29.97373843 0.1207393162
+14      pj medium    luiza 30  24.92862427 0.2842269263
+15      pj medium   orion1 30  33.47163073 0.1253936889
+16      pj  small  guarani 30   0.04223553 0.0060872534
+17      pj  small    luiza 30   0.02562413 0.0007886749
+18      pj  small   orion1 30   0.04607153 0.0022066994
+19  pjflex    big  guarani 30 248.65192840 1.1080330952
+20  pjflex    big    luiza 30 215.79006593 2.8227903219
+21  pjflex    big   orion1 30 279.74462510 0.9249579906
+22  pjflex medium  guarani 30  32.14986230 0.1422112908
+23  pjflex medium    luiza 30  25.85007707 0.2419624421
+24  pjflex medium   orion1 30  36.08434247 0.1588962252
+25  pjflex  small  guarani 30   0.04453450 0.0057194849
+26  pjflex  small    luiza 30   0.02540013 0.0004037376
+27  pjflex  small   orion1 30   0.04819160 0.0025995518
+#+end_example
+
+#+begin_src R :results output graphics :file img/cpp/aiyra-pj-pjflex_overview.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2, aes(x=version, y=time_avg, color=input)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  scale_colour_manual(values = c("red","blue", "green"), name="Input Size") +
+  theme_bw() + facet_wrap(~platform) +
+  ylab("Average Execution Time (s)") +
+  xlab("Version") +
+  ggtitle ("Comparing Aiyra against two versions of PajeNG") +
+  theme_bw() + ylim(0,NA) + 
+  theme(legend.position="right"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/cpp/aiyra-pj-pjflex_overview.pdf]]
+
+You have to explain the larger variability during the =luiza=, =pj=,
+=big=. Maybe because something was disturbing the experiment during that
+time. But remember we have randomize the design, so, it should have
+affected other configurations as well.
+
+#+begin_src R :results output :session :exports both
+df[df$platform == "luiza" & df$version == "pj" & df$input == "big",];
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    name run.no.in.std.order run.no run.no.std.rp version input     time
+279    9                   8      9          8.10      pj   big 203.8820
+282   12                   8     12          8.20      pj   big 303.2675
+297   27                   8     27          8.30      pj   big 208.4385
+301   31                   8     31          8.40      pj   big 202.1743
+311   41                   8     41          8.50      pj   big 203.3942
+322   52                   8     52          8.60      pj   big 204.3809
+330   60                   8     60          8.70      pj   big 205.7884
+334   64                   8     64          8.80      pj   big 202.2098
+351   81                   8     81          8.90      pj   big 205.4249
+354   84                   8     84          8.10      pj   big 203.5652
+367   97                   8     97          8.11      pj   big 206.1473
+377  107                   8    107          8.12      pj   big 203.0834
+384  114                   8    114          8.13      pj   big 205.3515
+393  123                   8    123          8.14      pj   big 204.3712
+401  131                   8    131          8.15      pj   big 203.8469
+408  138                   8    138          8.16      pj   big 203.6601
+419  149                   8    149          8.17      pj   big 204.7679
+425  155                   8    155          8.18      pj   big 200.8791
+440  170                   8    170          8.19      pj   big 199.3703
+449  179                   8    179          8.20      pj   big 204.9851
+454  184                   8    184          8.21      pj   big 206.1524
+466  196                   8    196          8.22      pj   big 202.3681
+472  202                   8    202          8.23      pj   big 206.3542
+479  209                   8    209          8.24      pj   big 204.6642
+491  221                   8    221          8.25      pj   big 205.7807
+503  233                   8    233          8.26      pj   big 209.4978
+505  235                   8    235          8.27      pj   big 198.3630
+515  245                   8    245          8.28      pj   big 203.5347
+530  260                   8    260          8.29      pj   big 203.6857
+539  269                   8    269          8.30      pj   big 203.6370
+    platform
+279    luiza
+282    luiza
+297    luiza
+301    luiza
+311    luiza
+322    luiza
+330    luiza
+334    luiza
+351    luiza
+354    luiza
+367    luiza
+377    luiza
+384    luiza
+393    luiza
+401    luiza
+408    luiza
+419    luiza
+425    luiza
+440    luiza
+449    luiza
+454    luiza
+466    luiza
+472    luiza
+479    luiza
+491    luiza
+503    luiza
+505    luiza
+515    luiza
+530    luiza
+539    luiza
+#+end_example
+
+You can see a =300= seconds measurement that probably is the explanation
+for the higher standard error. We don't know, we could remove it, but
+you can keep it and explain with something. Maybe mention that is
+unrelated, because the experimental execution order was 12 for this
+one..., with the other outlier you have seen also in =luiza= (see
+above).
+
+Ok.
+
+Aiyra wins for big and medium. What about small? We can't see, let's
+do a plot only about it.
+
+
+#+begin_src R :results output graphics :file img/cpp/first_plot_3.png :exports both :width 600 :height 400 :session
+library(ggplot2);
+ggplot(k2[k2$input == "small",], aes(x=version, y=time_avg, color=input)) +
+  geom_point() +
+  scale_colour_manual(values = c("green")) +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  theme_bw() + facet_wrap(~platform);
+#+end_src
+
+#+RESULTS:
+[[file:img/cpp/first_plot_3.png]]
+
+Aiyra loses. But pay the attention to the colors now (also .
+
+Let's do this same plot in PDF so you can include in your
+dissertation.
+
+#+begin_src R :results output graphics :file img/cpp/aiyra-pj-pjflex_small.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2[k2$input == "small",], aes(x=version, y=time_avg, color=input)) +
+  geom_point() +
+  scale_colour_manual(values = c("green"), name="Input") +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Version") +
+  ggtitle ("Comparing Aiyra against two versions\n of PajeNG for a small input") +
+  theme_bw() + ylim(0,NA) + 
+  facet_wrap(~platform) +
+#  title ("teste") +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/cpp/aiyra-pj-pjflex_small.pdf]]
+
+
+* 2016-05-17 Batch size (figures)                       :noexport:Lucas:Tais:
+
+For local analysis:
+
+#+begin_src sh :results output :session :exports both
+  head -n1 results/batch_size/bateria03_orion1_batch.csv > results/batch_size/local.csv
+  for file in "results/batch_size/bateria03_orion1_batch.csv results/batch_size/last_guarani_batch.csv results/batch_size/ultimabat_luiza_batch.csv"; do
+      tail -n+2 $file
+  done >> results/batch_size/local.csv
+#+end_src
+
+#+RESULTS:
+
+For remote against local analysis:
+
+#+begin_src sh :results output :session :exports both
+  head -n1 results/batch_size/bateria03_orion1_batch.csv > results/batch_size/remote.csv
+  for file in "results/batch_size/bateria03_orion1_batch.csv results/batch_size/last_guarani_batch.csv results/batch_size/ultimabat_luiza_batch.csv results/batch_size/bateria01_batch_guarani_orion.csv"; do
+      tail -n+2 $file
+  done >> results/batch_size/remote.csv
+#+end_src
+
+#+RESULTS:
+
+_Local_
+
+Now, let's read the file =local.csv=.
+
+#+begin_src R :results output :session :exports both
+df <- read.csv ("results/batch_size/local.csv");
+df <- df[complete.cases(df),];
+df$sim_time <- as.numeric(as.character(df$sim_time));
+df$insert_time <- as.numeric(as.character(df$insert_time));
+df$sim_time = df$sim_time/1000000;
+df$insert_time = df$insert_time/1000000;
+df$max_mem = df$max_mem/1024/1024;
+head(df);
+#+end_src
+
+#+RESULTS:
+#+begin_example
+  name run.no.in.std.order run.no run.no.std.rp  input batch   sim_time
+2    1                   7      1           7.1  small     D   0.983336
+3    2                  15      2          15.1    big     F 950.015134
+4    3                   4      3           4.1  small     C   0.872588
+5    4                  10      4          10.1  small     E   1.231774
+6    5                  13      5          13.1  small     F   1.633785
+7    6                  11      6          11.1 medium     E  93.070116
+  insert_time    max_mem platform
+2    0.202030   3.073425   orion1
+3  401.292651 257.339241   orion1
+4    0.227659   3.226997   orion1
+5    0.256816   3.005371   orion1
+6    0.285011   2.969864   orion1
+7   52.138141  67.714127   orion1
+#+end_example
+
+Let's average measurements:
+
+#+begin_src R :results output :session :exports both
+library(dplyr);
+k <- df %>%
+     group_by(input, batch, platform) %>%
+     summarize(N = n(),
+               time_avg = mean(sim_time),
+               time_se = 3*sd(sim_time)/sqrt(N)) %>%
+     as.data.frame();
+k
+#+end_src
+
+#+RESULTS:
+#+begin_example
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+    input batch platform  N     time_avg      time_se
+1     big     B   orion1 10 1107.3227606 6.658932e+00
+2     big     C  guarani 30  824.7546429 2.852808e+00
+3     big     C    luiza 30  772.6744859 2.081221e+00
+4     big     C   orion1 10 1061.8112710 5.241099e+00
+5     big     D  guarani 30  798.8587828 2.957737e+00
+6     big     D    luiza 30  796.5267459 1.858931e+02
+7     big     D   orion1 10 1026.6392053 5.417082e+00
+8     big     E  guarani 30  780.5554274 2.658481e+00
+9     big     E    luiza 30  718.6369158 1.532428e+00
+10    big     E   orion1 10  997.8075534 5.549207e+00
+11    big     F  guarani 30  771.4025417 2.914140e+00
+12    big     F    luiza 30  711.4194856 1.529460e+00
+13    big     F   orion1 10  946.2533760 3.886924e+00
+14 medium     A  guarani 30  100.3892080 4.840424e-01
+15 medium     A    luiza 30   93.9088443 1.835017e-01
+16 medium     B  guarani 30   99.2527799 4.786725e-01
+17 medium     B    luiza 30   93.1713426 1.855400e-01
+18 medium     B   orion1 10  106.2926635 3.040111e+00
+19 medium     C  guarani 30   95.0724998 5.849231e-01
+20 medium     C    luiza 30   88.3279745 2.877727e-01
+21 medium     C   orion1 10  111.3229354 9.112576e-01
+22 medium     D  guarani 30   96.9286011 5.696124e-01
+23 medium     D    luiza 30   87.5662485 2.059891e-01
+24 medium     D   orion1 10  117.2014197 8.836928e-01
+25 medium     E  guarani 30   92.5820661 5.123305e-01
+26 medium     E    luiza 30   86.1899532 1.962095e-01
+27 medium     E   orion1 10   97.4553447 7.025395e+00
+28 medium     F  guarani 30   92.4204530 4.873207e-01
+29 medium     F    luiza 30   82.4328944 2.428668e-01
+30 medium     F   orion1 10  109.6810972 9.403754e-01
+31  small     A  guarani 30    0.4956575 6.162893e-03
+32  small     A    luiza 30    0.4502067 3.531458e-03
+33  small     B  guarani 30    0.5281257 9.840373e-03
+34  small     B    luiza 30    0.4528172 2.666560e-03
+35  small     B   orion1 10    0.7557264 2.225693e-02
+36  small     C  guarani 30    0.5544556 1.253729e-02
+37  small     C    luiza 30    0.4709659 2.894954e-03
+38  small     C   orion1 10    0.8611910 2.868396e-02
+39  small     D  guarani 30    0.5818487 1.325817e-02
+40  small     D    luiza 30    0.5158810 3.757003e-03
+41  small     D   orion1 10    0.9929203 2.956740e-02
+42  small     E  guarani 30    0.6681839 1.538822e-02
+43  small     E    luiza 30    0.6011176 3.310887e-03
+44  small     E   orion1 10    1.2279947 2.983281e-02
+45  small     F  guarani 30    0.8698209 9.727556e-03
+46  small     F    luiza 30    0.7695288 8.467496e-03
+47  small     F   orion1 10    1.6951738 3.660555e-02
+#+end_example
+
+
+#+begin_src R :results output graphics :file img/batch_size/local_big_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k[k$input == "big",], aes(x=batch, y=time_avg)) +
+  geom_point(size=.3) +
+#  scale_colour_manual(values = c("green"), name="Input") +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_grid(input~platform) +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_v1.pdf]]
+
+Very strange behavior on =luiza=, batch =D= because of the high
+variability. Let's see the data:
+
+#+begin_src R :results output :session :exports both
+df[df$input == "big" & df$platform == "luiza" & df$batch == "D",];
+#+end_src
+
+#+RESULTS:
+#+begin_example
+     name run.no.in.std.order run.no run.no.std.rp input batch  sim_time
+697     4                  12      4         12.10   big     D  734.4769
+720    27                  12     27         12.20   big     D  731.5318
+736    43                  12     43         12.30   big     D  732.5503
+751    58                  12     58         12.40   big     D  739.5146
+780    87                  12     87         12.50   big     D  727.4080
+784    91                  12     91         12.60   big     D  733.0804
+813   120                  12    120         12.70   big     D  737.1977
+829   136                  12    136         12.80   big     D  732.3844
+843   150                  12    150         12.90   big     D  734.6302
+864   171                  12    171         12.10   big     D  730.9828
+884   191                  12    191         12.11   big     D  736.7343
+901   208                  12    208         12.12   big     D  732.6899
+922   229                  12    229         12.13   big     D  732.8134
+931   238                  12    238         12.14   big     D  734.9025
+956   263                  12    263         12.15   big     D  739.9419
+974   281                  12    281         12.16   big     D  738.1100
+982   289                  12    289         12.17   big     D  732.5317
+1017  324                  12    324         12.18   big     D  737.1109
+1026  333                  12    333         12.19   big     D 2593.4167
+1044  351                  12    351         12.20   big     D  736.5624
+1054  361                  12    361         12.21   big     D  734.8892
+1076  383                  12    383         12.22   big     D  727.3046
+1095  402                  12    402         12.23   big     D  734.8349
+1123  430                  12    430         12.24   big     D  733.0345
+1141  448                  12    448         12.25   big     D  740.3488
+1157  464                  12    464         12.26   big     D  735.1516
+1175  482                  12    482         12.27   big     D  736.5852
+1187  494                  12    494         12.28   big     D  734.3452
+1200  507                  12    507         12.29   big     D  737.0423
+1224  531                  12    531         12.30   big     D  733.6951
+     insert_time  max_mem platform
+697     423.1795 1020.664    luiza
+720     419.9057 1020.664    luiza
+736     419.1899 1020.664    luiza
+751     422.4795 1020.666    luiza
+780     415.7618 1020.663    luiza
+784     420.4074 1020.666    luiza
+813     422.9430 1020.663    luiza
+829     419.7894 1020.663    luiza
+843     420.1070 1020.665    luiza
+864     419.8785 1020.667    luiza
+884     422.2966 1020.664    luiza
+901     421.6495 1020.664    luiza
+922     421.8006 1020.664    luiza
+931     420.3353 1020.663    luiza
+956     426.4439 1020.665    luiza
+974     419.1994 1020.664    luiza
+982     421.6567 1020.663    luiza
+1017    420.3747 1020.664    luiza
+1026   2279.5546 1020.664    luiza
+1044    423.0635 1020.663    luiza
+1054    421.1642 1020.667    luiza
+1076    417.9471 1020.664    luiza
+1095    424.2948 1020.663    luiza
+1123    416.0131 1020.664    luiza
+1141    421.1605 1020.663    luiza
+1157    422.0469 1020.663    luiza
+1175    419.2871 1020.663    luiza
+1187    421.2706 1020.664    luiza
+1200    420.1514 1020.663    luiza
+1224    421.4753 1020.664    luiza
+#+end_example
+
+Looks like there was a problem when inserting in the database. We'll
+manually remove this outlier. You should mention this on the text.
+
+#+begin_src R :results output :session :exports both
+dff <- df[df$name != 333,];
+k2 <- dff %>%
+     group_by(input, batch, platform) %>%
+     summarize(N = n(),
+               time_avg = mean(sim_time),
+               time_se = 3*sd(sim_time)/sqrt(N)) %>%
+     as.data.frame();
+k2
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    input batch platform  N     time_avg     time_se
+1     big     B   orion1 10 1107.3227606 6.658931757
+2     big     C  guarani 30  824.7546429 2.852807810
+3     big     C    luiza 30  772.6744859 2.081221420
+4     big     C   orion1 10 1061.8112710 5.241098578
+5     big     D  guarani 29  798.5691785 2.926487070
+6     big     D    luiza 29  734.5650227 1.771873261
+7     big     D   orion1 10 1026.6392053 5.417082452
+8     big     E  guarani 30  780.5554274 2.658481151
+9     big     E    luiza 30  718.6369158 1.532427809
+10    big     E   orion1 10  997.8075534 5.549207079
+11    big     F  guarani 30  771.4025417 2.914139674
+12    big     F    luiza 30  711.4194856 1.529459777
+13    big     F   orion1 10  946.2533760 3.886923906
+14 medium     A  guarani 30  100.3892080 0.484042387
+15 medium     A    luiza 30   93.9088443 0.183501686
+16 medium     B  guarani 30   99.2527799 0.478672535
+17 medium     B    luiza 30   93.1713426 0.185540020
+18 medium     B   orion1 10  106.2926635 3.040111400
+19 medium     C  guarani 30   95.0724998 0.584923080
+20 medium     C    luiza 30   88.3279745 0.287772713
+21 medium     C   orion1 10  111.3229354 0.911257568
+22 medium     D  guarani 30   96.9286011 0.569612415
+23 medium     D    luiza 30   87.5662485 0.205989135
+24 medium     D   orion1 10  117.2014197 0.883692783
+25 medium     E  guarani 30   92.5820661 0.512330528
+26 medium     E    luiza 30   86.1899532 0.196209532
+27 medium     E   orion1 10   97.4553447 7.025394616
+28 medium     F  guarani 30   92.4204530 0.487320713
+29 medium     F    luiza 30   82.4328944 0.242866845
+30 medium     F   orion1 10  109.6810972 0.940375391
+31  small     A  guarani 30    0.4956575 0.006162893
+32  small     A    luiza 30    0.4502067 0.003531458
+33  small     B  guarani 30    0.5281257 0.009840373
+34  small     B    luiza 30    0.4528172 0.002666560
+35  small     B   orion1 10    0.7557264 0.022256931
+36  small     C  guarani 30    0.5544556 0.012537292
+37  small     C    luiza 30    0.4709659 0.002894954
+38  small     C   orion1 10    0.8611910 0.028683959
+39  small     D  guarani 30    0.5818487 0.013258166
+40  small     D    luiza 30    0.5158810 0.003757003
+41  small     D   orion1 10    0.9929203 0.029567395
+42  small     E  guarani 30    0.6681839 0.015388218
+43  small     E    luiza 30    0.6011176 0.003310887
+44  small     E   orion1 10    1.2279947 0.029832810
+45  small     F  guarani 30    0.8698209 0.009727556
+46  small     F    luiza 30    0.7695288 0.008467496
+47  small     F   orion1 10    1.6951738 0.036605546
+#+end_example
+
+#+begin_src R :results output graphics :file img/batch_size/local_big_v2.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2[k2$input == "big",], aes(x=batch, y=time_avg, color=input)) +
+  geom_point(size=.3) +
+  scale_colour_manual(values = c("red","blue", "green"), name="Input Size") +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_wrap(~platform) +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_big_v2.pdf]]
+
+Much better now.
+
+Let's look to the =medium= size.
+
+#+begin_src R :results output graphics :file img/batch_size/local_medium_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2[k2$input == "medium",], aes(x=batch, y=time_avg, color=input)) +
+  geom_point(size=.3) +
+  scale_colour_manual(values = c("blue"), name="Input") +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_grid(~platform) +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_medium_v1.pdf]]
+
+#+begin_src R :results output graphics :file img/batch_size/local_small_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2[k2$input == "small",], aes(x=batch, y=time_avg, color=input)) +
+  geom_point(size=.3) +
+  scale_colour_manual(values = c("green"), name="Input") +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_grid(~platform) +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_small_v1.pdf]]
+
+It's different for small. Maybe it should be interesting to plot in
+the graph the three inputs, so we can see the different trend for
+small.
+
+#+begin_src R :results output graphics :file img/batch_size/local_all_inputs_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2, aes(x=batch, y=time_avg, color=input)) +
+  geom_point(size=.3) +
+  scale_colour_manual(values = c("red", "blue", "green"), name="Input Size") +
+  geom_errorbar(aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_grid(input~platform, scales="free_y") +
+  theme(legend.position="right"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_all_inputs_v1.pdf]]
+
+Great, Tais will write in the text that she explains all three first
+plots, then to show the different trend, she uses =local_all_inputs_v1=
+plot.
+
+Remember =pdfcrop=.
+
+_Remote_
+
+Now, let's read the file =remote.csv=.
+
+#+begin_src R :results output :session :exports both
+df <- read.csv ("results/batch_size/remote.csv");
+df <- df[complete.cases(df),];
+df$sim_time <- as.numeric(as.character(df$sim_time));
+df$insert_time <- as.numeric(as.character(df$insert_time));
+df$sim_time = df$sim_time/1000000;
+df$insert_time = df$insert_time/1000000;
+df$max_mem = df$max_mem/1024/1024;
+head(df);
+
+dft1 <- df[df$platform != "guarani_orion",];
+dft2 <- df[df$platform == "guarani_orion",];
+dft2$platform <- "remote";
+df <- rbind(dft2, dft1);
+head(df);
+#+end_src
+
+#+RESULTS:
+#+begin_example
+  name run.no.in.std.order run.no run.no.std.rp  input batch   sim_time
+2    1                   7      1           7.1  small     D   0.983336
+3    2                  15      2          15.1    big     F 950.015134
+4    3                   4      3           4.1  small     C   0.872588
+5    4                  10      4          10.1  small     E   1.231774
+6    5                  13      5          13.1  small     F   1.633785
+7    6                  11      6          11.1 medium     E  93.070116
+  insert_time    max_mem platform
+2    0.202030   3.073425   orion1
+3  401.292651 257.339241   orion1
+4    0.227659   3.226997   orion1
+5    0.256816   3.005371   orion1
+6    0.285011   2.969864   orion1
+7   52.138141  67.714127   orion1
+     name run.no.in.std.order run.no run.no.std.rp  input batch  sim_time
+1235    1                   8      1           8.1 medium     C  95.72919
+1236    2                  18      2          18.1    big     F 765.60935
+1237    3                   5      3           5.1 medium     B  98.47585
+1238    4                  12      4          12.1    big     D 792.44906
+1239    5                  16      5          16.1  small     F   0.90444
+1241    7                  15      7          15.1    big     E 775.00969
+     insert_time     max_mem platform
+1235    63.87650  264.647064   remote
+1236   480.09590  257.338707   remote
+1237    62.73813  527.779396   remote
+1238   482.47624 1020.575333   remote
+1239     0.20935    2.970314   remote
+1241   482.44408  513.167862   remote
+#+end_example
+
+Let's average measurements:
+
+#+begin_src R :results output :session :exports both
+library(dplyr);
+k <- df %>%
+     group_by(input, batch, platform) %>%
+     summarize(N = n(),
+               time_avg = mean(sim_time),
+               time_se = 3*sd(sim_time)/sqrt(N)) %>%
+     as.data.frame();
+k[k$platform =="remote",]
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    input batch platform  N    time_avg     time_se
+5     big     C   remote 30 822.9541185 3.072009855
+9     big     D   remote 30 793.6288847 2.793609013
+13    big     E   remote 30 776.9857812 3.234269351
+17    big     F   remote 30 765.5748142 2.850922209
+20 medium     A   remote 30 100.0850588 0.438621535
+24 medium     B   remote 30  98.6565419 0.657277641
+28 medium     C   remote 30  94.7818702 0.528655405
+32 medium     D   remote 30  96.5232222 0.502179305
+36 medium     E   remote 30  92.0910381 0.393890608
+40 medium     F   remote 30  92.0036549 0.480806287
+43  small     A   remote 30   0.4990605 0.007578415
+47  small     B   remote 30   0.5296416 0.009928985
+51  small     C   remote 30   0.5577120 0.010474202
+55  small     D   remote 30   0.5934754 0.016890922
+59  small     E   remote 30   0.6592223 0.014014033
+63  small     F   remote 30   0.8761198 0.015386276
+#+end_example
+
+For =remote=, guarani had aiyra; orion1 had the database. Tais will
+check the scripts to confirm and check since this is very important.
+
+So, since =guarani= was involved, let's compare =remote= agains it because
+it means we took out the database from guarani and put in another
+machine (in this case =orion=). The objective of our analysis here is to
+see the network impact in the execution comparing with a situation
+where everything resides in the same machine.
+
+Future work idea:
+- create a producer/consumer version where insert requests are put in
+  a queue; another thread will be responsible for insertion. We could
+  implement another plugin that is threaded.
+
+So, let's take only =guarani= and =remote= measurements.
+
+#+begin_src R :results output :session :exports both
+k2 <- k[k$platform == "guarani" | k$platform == "remote",];
+k2
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    input batch platform  N    time_avg     time_se
+2     big     C  guarani 30 824.7546429 2.852807810
+5     big     C   remote 30 822.9541185 3.072009855
+6     big     D  guarani 30 798.8587828 2.957736903
+9     big     D   remote 30 793.6288847 2.793609013
+10    big     E  guarani 30 780.5554274 2.658481151
+13    big     E   remote 30 776.9857812 3.234269351
+14    big     F  guarani 30 771.4025417 2.914139674
+17    big     F   remote 30 765.5748142 2.850922209
+18 medium     A  guarani 30 100.3892080 0.484042387
+20 medium     A   remote 30 100.0850588 0.438621535
+21 medium     B  guarani 30  99.2527799 0.478672535
+24 medium     B   remote 30  98.6565419 0.657277641
+25 medium     C  guarani 30  95.0724998 0.584923080
+28 medium     C   remote 30  94.7818702 0.528655405
+29 medium     D  guarani 30  96.9286011 0.569612415
+32 medium     D   remote 30  96.5232222 0.502179305
+33 medium     E  guarani 30  92.5820661 0.512330528
+36 medium     E   remote 30  92.0910381 0.393890608
+37 medium     F  guarani 30  92.4204530 0.487320713
+40 medium     F   remote 30  92.0036549 0.480806287
+41  small     A  guarani 30   0.4956575 0.006162893
+43  small     A   remote 30   0.4990605 0.007578415
+44  small     B  guarani 30   0.5281257 0.009840373
+47  small     B   remote 30   0.5296416 0.009928985
+48  small     C  guarani 30   0.5544556 0.012537292
+51  small     C   remote 30   0.5577120 0.010474202
+52  small     D  guarani 30   0.5818487 0.013258166
+55  small     D   remote 30   0.5934754 0.016890922
+56  small     E  guarani 30   0.6681839 0.015388218
+59  small     E   remote 30   0.6592223 0.014014033
+60  small     F  guarani 30   0.8698209 0.009727556
+63  small     F   remote 30   0.8761198 0.015386276
+#+end_example
+
+
+#+begin_src R :results output graphics :file img/batch_size/remote_big_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2[k2$input == "big",], aes(x=batch, y=time_avg, color=platform)) +
+  geom_point(position=position_dodge(width=0.3)) +
+  scale_colour_manual(values = c("red", "blue", "green"), name="Platform") +
+  geom_errorbar(position=position_dodge(width=0.3), aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() +
+  theme(legend.position="right"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/remote_big_v1.pdf]]
+
+
+#+begin_src R :results output graphics :file img/batch_size/remote_medium_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2[k2$input == "medium",], aes(x=batch, y=time_avg, color=platform)) +
+  geom_point(position=position_dodge(width=0.3)) +
+  scale_colour_manual(values = c("red", "blue", "green"), name="Platform") +
+  geom_errorbar(position=position_dodge(width=0.3), aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() +
+  theme(legend.position="right"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/remote_medium_v1.pdf]]
+
+
+#+begin_src R :results output graphics :file img/batch_size/remote_small_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k2[k2$input == "small",], aes(x=batch, y=time_avg, color=platform)) +
+  geom_point(position=position_dodge(width=0.3)) +
+  scale_colour_manual(values = c("red", "blue", "green"), name="Platform") +
+  geom_errorbar(position=position_dodge(width=0.3), aes(ymin=time_avg-time_se, ymax=time_avg+time_se), width=.1) +
+  ylab("Average Execution Time (s)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() +
+  theme(legend.position="right"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/remote_small_v1.pdf]]
+
+Tais just found out that =guarani= is fact =remote=. She will do the
+experiment again so we can correctly compare a local against a remove
+experiment. All plots regarding batch size will have to be re-plotted.
+
+#+begin_src R :results output :session :exports both
+k2[k2$platform == "guarani",];
+sum(10 * k2$time_avg)/60/60/24;
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    input batch platform  N    time_avg     time_se
+2     big     C  guarani 30 824.7546429 2.852807810
+6     big     D  guarani 30 798.8587828 2.957736903
+10    big     E  guarani 30 780.5554274 2.658481151
+14    big     F  guarani 30 771.4025417 2.914139674
+18 medium     A  guarani 30 100.3892080 0.484042387
+21 medium     B  guarani 30  99.2527799 0.478672535
+25 medium     C  guarani 30  95.0724998 0.584923080
+29 medium     D  guarani 30  96.9286011 0.569612415
+33 medium     E  guarani 30  92.5820661 0.512330528
+37 medium     F  guarani 30  92.4204530 0.487320713
+41  small     A  guarani 30   0.4956575 0.006162893
+44  small     B  guarani 30   0.5281257 0.009840373
+48  small     C  guarani 30   0.5544556 0.012537292
+52  small     D  guarani 30   0.5818487 0.013258166
+56  small     E  guarani 30   0.6681839 0.015388218
+60  small     F  guarani 30   0.8698209 0.009727556
+[1] 0.8672356
+#+end_example
+
+* 2016-05-17 Batch traces (figures)                     :noexport:Lucas:Tais:
+
+Ok.
+
+#+begin_src sh :results output :session :exports both
+cd results/batch_time
+#for each scenario
+for scenario in `ls -1 | cut -d"_" -f1-3 | sort | uniq`; do
+  #for each execution in temporal order
+  CONTADOR=0
+  for execution in `ls -1 ${scenario}* | sort --version-sort`; do
+     NOME=`echo $execution | cut -d"_" -f1-3`_$CONTADOR.csv
+     echo "$execution => $NOME"
+     git mv $execution $NOME
+     CONTADOR=$(($CONTADOR + 1))
+  done
+done
+#+end_src
+
+Let's commit this.
+
+#+begin_src sh :results output :session :exports both
+cd results/batch_time
+#for each scenario/execution
+head -n1 trace-1G.paje_611585_luiza_19.csv | \
+   sed -e "s/(microseconds)//g" \
+       -e "s/(Operations)//" \
+       -e "s/(Bytes)//" \
+       -e "s/Size/Operations/" \
+       -e "s/$/, input, parsize, platform, execution/" \
+       -e "s/Time//g" \
+       -e "s/Number//" \
+       -e "s/ //g" | \
+       tr '[:upper:]' '[:lower:]' > batch_traces.csv
+for i in `ls -1 trace-*.csv`; do
+  #input
+  INPUT=`echo $i | cut -d"." -f1 | sed -e "s/trace-//"`
+  if [ $INPUT = "1G" ]; then
+    INPUT="big"
+  elif [ $INPUT = "128M" ]; then
+    INPUT="medium"
+  elif [ $INPUT = "128K" ]; then
+    INPUT="small"
+  else
+    echo "Error #1"
+    exit
+  fi
+
+  #size
+  SIZE=`echo $i | cut -d"_" -f2`
+  
+  #platform
+  PLATFORM=`echo $i | cut -d"_" -f3`
+
+  #platform
+  EXECUTION=`echo $i | cut -d"_" -f4 | sed "s/\.csv//"`
+
+  #echo $i $INPUT $SIZE $PLATFORM $EXECUTION
+
+  tail -n+2 $i | sed -e "s/$/,$INPUT,$SIZE,$PLATFORM,$EXECUTION/" \
+                     -e "s/small,85,/small,F,/" \
+                     -e "s/small,170,/small,E,/" \
+                     -e "s/small,340,/small,D,/" \
+                     -e "s/small,681,/small,C,/" \
+                     -e "s/small,1363,/small,B,/" \
+                     -e "s/small,2727,/small,A,/" \
+                     -e "s/medium,78957,/medium,F,/" \
+                     -e "s/medium,157914,/medium,E,/" \
+                     -e "s/medium,315828,/medium,D,/" \
+                     -e "s/medium,631657,/medium,C,/" \
+                     -e "s/medium,1263314,/medium,B,/" \
+                     -e "s/medium,2526628,/medium,A,/" \
+                     -e "s/big,611585,/big,F,/" \
+                     -e "s/big,1223170,/big,E,/" \
+                     -e "s/big,2446340,/big,D,/" \
+                     -e "s/big,4892680,/big,C,/" \
+                     -e "s/big,9785361,/big,B,/"
+done >> batch_traces.csv
+#+end_src
+
+#+RESULTS:
+
+Great, finally.
+
+Let's read the =batch_traces.csv= with R.
+
+#+begin_src R :results output :session :exports both
+df <- read.csv ("results/batch_time/batch_traces.csv");
+df$start = df$start / 1000000;
+df$end = df$end / 1000000;
+head(df);
+#+end_src
+
+#+RESULTS:
+#+begin_example
+  batch    start      end duration operations  size input parsize      platform
+1     1 0.260947 0.325175    64228       1363 47115 small       B guarani-orion
+2     2 0.438277 0.494230    55953       1363 49281 small       B guarani-orion
+3     3 0.514935 0.520468     5533          2   579 small       B guarani-orion
+4     1 0.264858 0.331881    67023       1363 47115 small       B guarani-orion
+5     2 0.455022 0.511381    56359       1363 49281 small       B guarani-orion
+6     3 0.534869 0.536691     1822          2   579 small       B guarani-orion
+  execution
+1         0
+2         0
+3         0
+4        10
+5        10
+6        10
+#+end_example
+
+#+begin_src R :results output graphics :file img/batch_time/batch_time_small_v1.pdf :exports both :width 9 :height 5 :session
+library(ggplot2);
+ggplot(df[df$input == "small" & df$execution <= 9,], aes(x=start, xend=end, y=execution, yend=execution, color=input)) +
+  geom_segment(size=1.1) +
+  theme_bw() + facet_grid (parsize~platform) +
+  scale_colour_manual(values = c("green"), name="Input Size") +
+  scale_y_continuous(breaks=c(0,3,6,9)) +
+  ylab("Run (order)") +
+  xlab("Time (s)") +
+  ggtitle ("TBD") +
+  theme_bw() +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_time/batch_time_small_v1.pdf]]
+
+
+#+begin_src R :results output graphics :file img/batch_time/batch_time_medium_v1.pdf :exports both :width 9 :height 5 :session
+library(ggplot2);
+ggplot(df[df$input == "medium" & df$execution <= 9,], aes(x=start, xend=end, y=execution, yend=execution, color=input)) +
+  geom_segment(size=1.1) +
+  theme_bw() + facet_grid (parsize~platform) +
+  scale_colour_manual(values = c("blue"), name="Input Size") +
+  scale_y_continuous(breaks=c(0,3,6,9)) +
+  ylab("Run (order)") +
+  xlab("Time (s)") +
+  ggtitle ("TBD") +
+  theme_bw() +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_time/batch_time_medium_v1.pdf]]
+
+
+#+begin_src R :results output graphics :file img/batch_time/batch_time_big_v1.pdf :exports both :width 9 :height 5 :session
+library(ggplot2);
+ggplot(df[df$input == "big" & df$execution <= 9,], aes(x=start, xend=end, y=execution, yend=execution, color=input)) +
+  geom_segment(size=1.1) +
+  theme_bw() + facet_grid (parsize~platform) +
+  scale_colour_manual(values = c("red"), name="Input Size") +
+  scale_y_continuous(breaks=c(0,3,6,9)) +
+  ylab("Run (order)") +
+  xlab("Time (s)") +
+  ggtitle ("TBD") +
+  theme_bw() +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_time/batch_time_big_v1.pdf]]
+
+
+
+* 2016-05-17 Batch mem (figures)                        :noexport:Lucas:Tais:
+
+Let's use =local= measurements.
+
+#+begin_src R :results output :session :exports both
+df <- read.csv ("results/batch_size/local.csv");
+df <- df[complete.cases(df),];
+df$sim_time <- as.numeric(as.character(df$sim_time));
+df$insert_time <- as.numeric(as.character(df$insert_time));
+df$sim_time = df$sim_time/1000000;
+df$insert_time = df$insert_time/1000000;
+df$max_mem = df$max_mem/1024/1024;
+head(df);
+#+end_src
+
+#+RESULTS:
+#+begin_example
+  name run.no.in.std.order run.no run.no.std.rp  input batch   sim_time
+2    1                   7      1           7.1  small     D   0.983336
+3    2                  15      2          15.1    big     F 950.015134
+4    3                   4      3           4.1  small     C   0.872588
+5    4                  10      4          10.1  small     E   1.231774
+6    5                  13      5          13.1  small     F   1.633785
+7    6                  11      6          11.1 medium     E  93.070116
+  insert_time    max_mem platform
+2    0.202030   3.073425   orion1
+3  401.292651 257.339241   orion1
+4    0.227659   3.226997   orion1
+5    0.256816   3.005371   orion1
+6    0.285011   2.969864   orion1
+7   52.138141  67.714127   orion1
+#+end_example
+
+Let's take the max of the max:
+
+#+begin_src R :results output :session :exports both
+library(dplyr);
+k <- df %>%
+     group_by(input, batch, platform) %>%
+     summarize(N = n(),
+               mem_max = max(max_mem)) %>%
+     as.data.frame();
+k
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    input batch platform  N     mem_max
+1     big     B   orion1 10 4085.928391
+2     big     C  guarani 30 2041.474709
+3     big     C    luiza 30 2041.564964
+4     big     C   orion1 10 2041.475166
+5     big     D  guarani 30 1020.575508
+6     big     D    luiza 30 1020.667267
+7     big     D   orion1 10 1020.575981
+8     big     E  guarani 30  513.167862
+9     big     E    luiza 30  513.259621
+10    big     E   orion1 10  513.168320
+11    big     F  guarani 30  257.338882
+12    big     F    luiza 30  257.430183
+13    big     F   orion1 10  257.339264
+14 medium     A  guarani 30 1036.056984
+15 medium     A    luiza 30 1036.147446
+16 medium     B  guarani 30  527.779579
+17 medium     B    luiza 30  528.854622
+18 medium     B   orion1 10  527.780113
+19 medium     C  guarani 30  264.647240
+20 medium     C    luiza 30  264.737885
+21 medium     C   orion1 10  264.647789
+22 medium     D  guarani 30  133.295044
+23 medium     D    luiza 30  133.386436
+24 medium     D   orion1 10  133.295593
+25 medium     E  guarani 30   67.714485
+26 medium     E    luiza 30   67.806183
+27 medium     E   orion1 10   67.714890
+28 medium     F  guarani 30   35.100777
+29 medium     F    luiza 30   35.979355
+30 medium     F   orion1 10   35.101166
+31  small     A  guarani 30    4.062813
+32  small     A    luiza 30    4.160812
+33  small     B  guarani 30    5.068680
+34  small     B    luiza 30    3.606918
+35  small     B   orion1 10    3.508286
+36  small     C  guarani 30    3.227562
+37  small     C    luiza 30    3.325630
+38  small     C   orion1 10    3.227089
+39  small     D  guarani 30    4.634178
+40  small     D    luiza 30    3.172089
+41  small     D   orion1 10    3.073601
+42  small     E  guarani 30    4.566124
+43  small     E    luiza 30    3.104179
+44  small     E   orion1 10    3.005554
+45  small     F  guarani 30    2.970490
+46  small     F    luiza 30    3.068680
+47  small     F   orion1 10    2.970024
+#+end_example
+
+#+begin_src R :results output graphics :file img/batch_size/local_mem_big_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k[k$input == "big",], aes(x=batch, y=mem_max, fill=input)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values = c("red","blue", "green"), name="Input Size") +
+  ylab("Maximum Memory Utilization (Megabytes)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_grid(~platform) +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_mem_big_v1.pdf]]
+
+
+#+begin_src R :results output graphics :file img/batch_size/local_mem_medium_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k[k$input == "medium",], aes(x=batch, y=mem_max, fill=input)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values = c("blue"), name="Input Size") +
+  ylab("Maximum Memory Utilization (Megabytes)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_grid(~platform) +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_mem_medium_v1.pdf]]
+
+
+#+begin_src R :results output graphics :file img/batch_size/local_mem_small_v1.pdf :exports both :width 6 :height 4 :session
+library(ggplot2);
+ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
+  geom_bar(stat="identity") +
+  scale_fill_manual(values = c("green"), name="Input Size") +
+  ylab("Maximum Memory Utilization (Megabytes)") +
+  xlab("Batch Size") +
+  ggtitle ("TBD") +
+  theme_bw() + ylim(0,NA) + 
+  facet_grid(~platform) +
+  theme(legend.position="none"); # no legend since we have only small
+#+end_src
+
+#+RESULTS:
+[[file:img/batch_size/local_mem_small_v1.pdf]]
+
+
 
 * Conclusion
 \label{chapter.conclusion}

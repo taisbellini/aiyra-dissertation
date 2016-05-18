@@ -347,6 +347,85 @@ wants to handle only state entities, he can create a plugin attached
 only to the points that are related to states. The other entities
 created will be discarded by the simulator.
 
+* Machines info
+
+_luiza_: OS X Yosemite 10.10.5
+ Nome do Modelo:	MacBook Pro
+  Identificador do Modelo:	MacBookPro10,1
+  Nome do Processador:	Intel Core i7
+  Velocidade do Processador:	2.7 GHz
+  Número de Processadores:	1
+  Número Total de Núcleos:	4
+  Cache L2 (por Núcleo):	256 KB
+  Cache de L3:	6 MB
+  Memória:	16 GB
+Disco: 500 GB
+
+_guarani_: Linux guarani 4.3.0-1-amd64 #1 SMP Debian 4.3.5-1
+(2016-02-06) x86_64 GNU/Linux
+
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                4
+On-line CPU(s) list:   0-3
+Thread(s) per core:    1
+Core(s) per socket:    4
+Socket(s):             1
+NUMA node(s):          1
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 42
+Model name:            Intel(R) Core(TM) i5-2400 CPU @ 3.10GHz
+Stepping:              7
+CPU MHz:               1601.222
+CPU max MHz:           3400.0000
+CPU min MHz:           1600.0000
+BogoMIPS:              6185.49
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              6144K
+
+
+_orion_: Linux orion1 3.13.0-85-generic #129~precise1-Ubuntu SMP Fri Mar 18 17:38:08 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux 
+
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                24
+On-line CPU(s) list:   0-23
+Thread(s) per core:    2
+Core(s) per socket:    6
+Socket(s):             2
+NUMA node(s):          2
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 45
+Stepping:              7
+CPU MHz:               2000.000
+BogoMIPS:              4601.07
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              15360K
+NUMA node0 CPU(s):     0,2,4,6,8,10,12,14,16,18,20,22
+NUMA node1 CPU(s):     1,3,5,7,9,11,13,15,17,19,21,23
+
+model name      : Intel(R) Xeon(R) CPU E5-2630 0 @ 2.30GHz
+
+
+guarani_orion: 
+
+traceroute to orion1 (143.54.12.114), 30 hops max, 60 byte packets
+ 1  143.54.13.1 (143.54.13.1)  0.619 ms  0.975 ms  1.329 ms
+ 2  orion1.inf.ufrgs.br (143.54.12.114)  0.547 ms  0.551 ms  0.544 ms
+
+ping: rtt min/avg/max/mdev = 0.280/0.510/0.559/0.065 ms
+
+rede do inf: 100Mb
 
 * Comments
 
@@ -641,6 +720,76 @@ _Comments_:
   - You could say that despite this negative difference on your side,
     it is just a matter of changing everything so the plugins also get
     that kind of information in a generic manner.
+
+_Comment_:
+- when you send a complete "state" object, you already have the
+  reference for the container, right? 
+
+_Comments_:
+- Remove all future tense, replace by present (generic comment valid
+  for the whole text)
+- I still have to do a complete review on your implementation, but I
+  have the feeling that =aliases= should be left apart from the plugins
+  sector.
+
+_Comment_:
+- Give an overview first! Please!
+  - For example, a list of all points. Mention that you will start
+    describing them in order.
+    - Perhaps grouping them by variable, state, event, link, container
+      would be nice. But explicit this group before describing
+      details.
+- By reading the first phrase you already have details.
+
+_Comment_:
+- Do you mean that the plugin has to call =getNature=?
+
+* Chapter 5
+
+_Comment_:
+- if in the trace are only sets, you send "popStates"?
+- I think we should think about better names for all points
+
+_Comment_
+- Invert your phrases: write in English.
+- Example:
+  - "The following entry points were used in the PajeInsertDBPlugin:
+    ..."
+
+_Comments_
+- Why do you have an "implementation" subsection here and not for the
+  other plugins. Structure should be homogeneous, otherwise the reader
+  will ask "why have you done this way?"; or even worse: "what is that
+  you are hiding?"
+
+_Comment_:
+- Say that this "bad" performance (unnaceptable, over 24 hours) was
+  observed in some preliminary experimental trials you have done
+  before conducting the rigorous performance evaluation of Chapter X.
+- appliable => applicable
+
+_Comments_:
+- Invert the first phrase
+- "consultations" => "requests"
+- every time there is a ref command, don't forget to say what it is
+  - Figure ref, instead of "ref".
+_Comment_:
+- In the last paragraph of previous chapter you say there are three
+  plugins. Now you say there are two. In fact, there are three! It's
+  just that one of them do nothing.
+- Perhaps the =dump= plugin should be the default, because it does
+  something useful for an eventual user.
+- What is a "segment"? A new word you just introduced in this par.
+- Create a section about the null plugin. Then, explain a little more
+  why you have developed it (motivate). Move the two phrases about it
+  from the paragraph above to it.
+
+_Comment about text below_:
+- what you mean =pjdump=, perhaps the Plugin identifier should be the
+  classname, without the "Plugin". For example, =PajeDump=. By using
+  =pjdump=, you may confuse the non attentive reader.
+
+
 
 
 
