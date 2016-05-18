@@ -958,10 +958,10 @@ following subsections detail each one of the packages.
 The controller package is the entry point of the program, thus, it
 also handles the arguments passed by the user. For this processing, an
 external library \cite{optionhandler} was used. The arguments handling
-is centralized in one single class, *OptionsHandler*, to facilitate the
-inclusion of new ones. The Paje file format (see Section
+is centralized in one single class, *OptionsHandler*, to facilitate
+the inclusion of new ones. The Paje file format (see Section
 \ref{section.pajeformat}) is parsed by a grammar written using the
-JavaCC syntax. The file =PajeGrammar.jj= containing all the grammar
+JavaCC syntax. The file *PajeGrammar.jj* containing all the grammar
 rules of the format is processed by the Java Compiler Compiler
 (JavaCC) to generate the parser.  Each event definition is stored in
 an array, while the events are simulated as soon as they are obtained
@@ -969,7 +969,7 @@ from the trace.
 
 The controller package is composed by all of the JavaCC files
 described in Section \ref{section.javacc} and the OptionsHandler
-class. The generated class =PajeGrammar.java= contains, besides the
+class. The generated class *PajeGrammar.java* contains, besides the
 parsing component, all the necessary Java code for the program to run,
 such as the initialization of the simulator object, where all of the
 simulation takes place. Every time an event is identified, the
