@@ -1482,28 +1482,28 @@ the characteristic of having lower performance.
 \end{figure}
 #+END_LaTeX
 
-/Observed/ We can see in Figure \ref{fig.cppoverview} that, for the
-*medium* and *big* inputs, Aiyra was actually faster than both
-versions of PajeNG. To understand this results it is crucial to
-recognize the difference between the implementation and configuration
-of both programs. Aiyra is designed to get rid of the entities as soon
-as they are finished. Thus, with the *PajeNullPlugin*, very little is
-kept in memory. One of Java's biggest overhead is the memory handling,
-specially the Garbage Collector(GC). Since we have an implementation
-that stores as few objects as possible, and the less alive objects in
-the program, the faster is GC \cite{garbagecollector}, Java may have a
-chance in this case. Likewise, the *pj_dump* implementation carries
-the overhead of storing everything. Another important difference among
-Aiyra and PajeNG is the process of reading the trace file, parsing it
-and then sending to the simulator. As seen in Chapter
-\ref{chapter.paje}, the PajeNG tool first reads from the file a chunk
-of data, then the a decoder that breaks it into events and then the
-simulator receives this block *(?)*. The next segment of data is only
-read after the first is completely decoded. On the other hand, Aiyra's
-controller sends each event read immediately to the simulator. Since
-the memory allocation is not usually a problem in C++ implementations,
-it is more likely that this result relies on the architectural
-difference. As expected, the *pj_flex* version was slower than *pj*.
+/Observed/ We can see in Figure \ref{fig.cppoverview} that, for the *medium*
+and *big* inputs, Aiyra was actually faster than both versions of PajeNG. To
+understand this results it is crucial to recognize the difference between the
+implementation and configuration of both programs. Aiyra is designed to get
+rid of the entities as soon as they are finished. Thus, with the
+*PajeNullPlugin*, very little is kept in memory. One of Java's biggest
+overhead is the memory handling, specially the Garbage Collector(GC). Since we
+have an implementation that stores as few objects as possible, and the less
+alive objects in the program, the faster is GC \cite{garbagecollector}, Java
+may have a chance in this case. Another important difference among Aiyra and
+PajeNG is the process of reading the trace file, parsing it and then sending
+to the simulator. As seen in Chapter \ref{chapter.paje}, the PajeNG file
+reader first reads from the file a chunk of data, then the decoder, which has
+predominant execution time, breaks it into events and sends them to the
+simulator. The next segment of data is only read after the first is completely
+decoded. On the other hand, Aiyra's controller sends each event read
+immediately to the simulator. The controller package performs the reading and
+parsing simultaneously and is probably faster than the decoding process of
+PajeNG. Since the memory allocation is not usually a problem in C++
+implementations, it is more likely that this result relies on the
+architectural difference. As expected, the *pj_flex* version was slower than
+*pj*, thus, slower than *aiyra*.
 
 Notice that the experiment in *luiza* had a bigger variability with
 the *pj* version and the *big* input. The average execution time for
@@ -1547,7 +1547,7 @@ that the fewer we retain in memory, the better our performance will
 be. The implementation of Aiyra gives the user more flexibility to
 manage the memory usage of his program and space to develop high
 performance implementations. It is also possible to notice that
-changes architectural approach may have significan impacts in the
+changes in the architectural approach may have significan impacts in the
 performance of the program.
 
 *** PajeInsertDBPlugin evaluation
