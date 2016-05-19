@@ -1082,7 +1082,8 @@ identified by *startContainer* and *endContainer*.
 Every trace event simulation has an instrumentation point, which
 dispatches the entity objects generated to the plugin package. These
 points are either in the *PajeSimulator* or in the *PajeContainer*, as
-illustrated in figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
+illustrated in figure \ref{fig.aiyraCore}. *REFER BETTER TO THE
+EXAMPLE OF FIGURE* In the *PajeSimulator* are
 the outputs regarding the definition of types and values and the
 creation of containers. Although in this point the containers are not
 complete objects, since they do not have ending timestamp or the
