@@ -1168,7 +1168,7 @@ plugins were created: *PajeNullPlugin*, *PajeDumpPlugin* and
 *PajeInsertDBPlugin*. Their implementation is described in the next
 chapter.
   
-* Plugins
+* Aiyra's Standard Plugins
 \label{chapter.plugins} 
 
 _Comment_
