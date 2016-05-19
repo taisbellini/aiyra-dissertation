@@ -41,7 +41,7 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
-* Front page preparation                                           :noexport:
+* Front page preparation                                           :ignore:
 
 #+BEGIN_LaTeX
 \title{Extensible Simulator for Replay of Trace Files in the Pajé format}
@@ -77,11 +77,11 @@
 % \keyword{UFRGS}
 #+END_LaTeX
 
-* Front page                                                       :noexport:
+* Front page                                                       :ignore:
 #+BEGIN_LaTeX
 \maketitle
 #+END_LaTeX
-* Dedicatory                                                       :noexport:
+* Dedicatory                                                       :ignore:
 
 #+BEGIN_LaTeX
 % \clearpage
@@ -94,7 +94,7 @@
 % \end{flushright}
 #+END_LaTeX
 
-* Acknowledgements                                                 :noexport:
+* Acknowledgements                                                 :ignore:
 
 #+BEGIN_LaTeX
 % agradecimentos
@@ -102,7 +102,7 @@
 %Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
 #+END_LaTeX
 
-* Abstract                                                         :noexport:
+* Abstract                                                         :ignore:
                                                       
 #+BEGIN_LaTeX
 \begin{abstract}
@@ -153,7 +153,7 @@ Put your Portuguese abstract here.
 #+BEGIN_LaTeX
 \end{englishabstract}
 #+END_LaTeX
-* Lists                                                            :noexport:
+* Lists                                                            :ignore:
 
 #+BEGIN_LaTeX
 \listoffigures
@@ -177,7 +177,7 @@ Put your Portuguese abstract here.
 % \end{listofsymbols}
 #+END_LaTeX
 
-* Sumário                                                          :noexport:
+* Sumário                                                          :ignore:
 
 #+BEGIN_LaTeX
 \tableofcontents
