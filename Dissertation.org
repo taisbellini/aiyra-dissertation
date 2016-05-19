@@ -1445,7 +1445,9 @@ to have reliable results. Since we have two factors, each with three
 levels, we have a total of $270$ experiments (the product of
 $3*3*30$). The outcome of this experiment is the *execution* time for
 each combination of input and version. This design was run in each one
-of the platforms, thus, we had three files each with $270$ rows.
+of the platforms, thus, we had three files each with $270$ rows. The
+total number of experiments considering the three platforms is
+therefore $810$.
 
 (header of the design?)
 
