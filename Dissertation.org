@@ -699,17 +699,23 @@ of the trace file, the type hierarchy comes just after the event
 definition. There, each type of the program is defined and one of the
 fields is always the parent type. Each entity is always associated to
 a type and they must follow the same precedence as the types
-definition. For example, as shown in Figure \ref{fig.hierarchyex}, if
-the container C1, of type T1, is the parent of the container C2, of
-type T2, the type T2 must be child of T1 in the type tree. The root
-type is always the number $0$. The difference between both hierarchies
-relies on the number of nodes: while the type hierarchy has only a
-few, the entities hierarchy may have millions depending on the number
-of containers in the trace.
+definition. In Figure \ref{fig.hierarchyex}, we have a type hierarchy
+on the left, and a corresponding entities hierarchy on the right. The
+only kind of entity that holds other entities is the container, thus,
+the rounded entities are container types, while the squared ones
+represent states. On the right, the *M* type stands for machine, *C*
+is core, *P* is process and *Sp* and *Sc* are states. On the left, we
+have one machine, *M1*, with two cores: *C1*, running a process *P1*;
+and *C2*, running a process *P2*. The processes and the cores have a
+stack of states organized by the timestamp. Notice that the entities
+tree respect the precedences set on the left. The difference between
+both hierarchies relies on the number of nodes: while the type
+hierarchy has only a few, the entities hierarchy may have millions
+depending on the number of containers in the trace.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Example of ER Model}
+\caption{Example of Entities Hierarchy}
 \centering
 \includegraphics[width=\linewidth]{./img/hierarchyex.pdf}
 \label{fig.hierarchyex}
