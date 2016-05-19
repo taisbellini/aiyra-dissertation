@@ -419,16 +419,16 @@ The JDBC architecture, depicted in Figure \ref{fig.jdbcex}, consists
 in two layers: JDBC API and JDBC Driver API. JDBC can support multiple
 heterogeneous databeses \cite{jdbctut} by using drivers connected to
 them. In the example of Figure \ref{fig.jdbcex}, we have an
-application communicating with three different databases.  The JDBC
-Driver API manages these drivers to ensure that the correct one is
-being used. The JDBC API layer, in turn, administrates the
-communication between the application and the driver manager. The JDBC
-API consists in classes and interfaces, such as *DriverManager*, which
-makes a connection between requests from the application and the
-proper database driver; *Connection*, containing all the methods
-necessary to contact the database; *Statement*, that creates objects
-that will be submited to the database; and *ResultSet*, where the
-retrieved objects are placed.
+application communicating with three different databases: A, B and C.
+The JDBC Driver API manages the corresponding drivers to ensure that
+the correct one is being used. The JDBC API layer, in turn,
+administrates the communication between the application and the driver
+manager. The JDBC API consists in classes and interfaces, such as
+*DriverManager*, which makes a connection between requests from the
+application and the proper database driver; *Connection*, containing
+all the methods necessary to contact the database; *Statement*, that
+creates objects that will be submited to the database; and
+*ResultSet*, where the retrieved objects are placed.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -628,12 +628,7 @@ each factor and *factor.names*: a list of vectors with factor levels.
 This example is one of the designs used for the performance evaluation
 in Chapter \ref{chapter.performance}.
 
-<<<<<<< HEAD
-* Pajé Visualization Tool - PajeNG 
-=======
-
 * The PajeNG Framework
->>>>>>> d2e951b7050d1fe49c7469be21349aa039da5183
 \label{chapter.paje}
 
 The Pajé Visualization Tool is an implementation to display the
@@ -961,7 +956,7 @@ entity.
 \begin{figure}[!htb]
 \caption{Aiyra Architecture}
 \centering
-\includegraphics[width=\linewidth]{./img/aiyraArchitecture.png}
+\includegraphics[width=\linewidth]{./img/aiyraArchitecture.pdf}
 \label{fig.aiyraArchitecture}
 \end{figure}
 #+END_LaTeX
