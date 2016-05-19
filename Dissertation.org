@@ -236,6 +236,10 @@ Do as follows:
 
 _Global Comment_
 - Check the PDF to respect all margins
+- Compile latex manually with =pdflatex= after export to latex
+  - Pay attention to these warnings: they are in fact errors
+    - LaTeX Warning: There were undefined references.
+    - LaTeX Warning: There were multiply-defined labels.
 
 Observation of program behavior is particularly important in High
 Performance Computing since it enables an accurate performance
