@@ -956,6 +956,11 @@ entity.
 \end{figure}
 #+END_LaTeX
 
+_Comment_:
+- For some reason, there is a lot of vertical space just below Figure
+  4.1 (aiyra arch.). Please remote it since it looks strange. Perhaps
+  it is just a bounding box issue with your PNG.
+
 The program receives arguments from the user in its execution. The
 *filename* option (=-f=) is the only mandatory one, which indicates
 what is the trace file to be simulated. There are other two general
