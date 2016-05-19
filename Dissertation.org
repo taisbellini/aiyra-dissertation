@@ -1451,6 +1451,9 @@ therefore $810$.
 
 (header of the design?)
 
+_Comment_:
+- What do you mean by header of the design?
+
 *** PajeInsertDBPlugin evaluation
 
 The *PajeInsertDBPlugin* provides an option for the user to define a
