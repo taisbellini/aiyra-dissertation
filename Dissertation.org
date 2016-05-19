@@ -1095,6 +1095,10 @@ now complete with an ending timestamp.
 \end{figure}
 #+END_LaTeX
 
+_Comment_
+- This figure also has a large white margin on the bottom. Remote it
+  please.
+
 The choice of creating an instrumentation point for each trace event
 is due to the intention of covering all of the different needs of the
 user. One may need the container name before it can process the
