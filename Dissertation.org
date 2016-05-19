@@ -1318,6 +1318,9 @@ field.
 \end{figure}
 #+END_LaTeX
 
+_Comment_
+- You should take extra care with this figure. Reorganize.
+
 *** Relational Model
 
 
