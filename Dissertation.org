@@ -1667,52 +1667,65 @@ The response variables were: *execution time*, which is the total
 duration of the execution; *insertion time*, the time it took to
 insert the data in the database; and *maximum memory*, the maximum
 usage of the memory during the simulation. For the execution and
-simulation time, we used the average value as in the experiment
-above. The memory value used was the maximum observed in the
+simulation time, we used the average value as in the previous
+experiment.
+The memory value used was the maximum observed in the
 replications. As this experiment consists in storing data of $540$
 executions in memory, we used a =-test= flag, which drops the database
 and recreates it after each simulation.
+
+_Comment_:
+- Again, state that you have used averages should be a global assertion
 
 Since we had a very large number of experiments, it took
 approximatedly $48$ hours to execute the design in each platform. In
 the preliminary tests, we noticed that *orion1* was taking too long to
 execute. This may have happened for several reasons, specially because
-it is a machine shared by the students in the _*INF
-UFRGS(??)*_. Although we locked the machine for the experiment, it was
+it is a machine shared by the students in the Informatics Institute of
+the Federal University of Rio Grande do Sul.
+Although we have locked the machine for the experiment, it was
 out of our hands to stop eventual programs that could be running in
 other students' users and affecting the performance. Likewise, it was
-not desirable to unable other users from using the machine for longer
+not desirable to disable other users from using the machine for longer
 than two or three days. For these reasons, the experiment in *orion1*
-had $10$ replications. The observation of little variability among the
-executions in the exploratory tests support our decision.
+had only $10$ replications. Even so, we have observed very little
+variability among the executions in the exploratory tests.
 
-/Expected/ According to the observation of bad performance when
-executing excessive accesses to the database, we expect that the
-bigger the batch, the better the performance, since it will make fewer
-requests to MySQL. Naturally, this would also cause a higher memory
+**** Expected behavior
+
+According to the observation of bad performance when executing
+excessive accesses to the database, we expect that the bigger the
+batch, the better the performance, since it will make fewer requests
+to the MySQL server. Naturally, this would also cause a higher memory
 usage, so the maximum memory utilization will be larger for bigger
 batches. We have three experiments making an access to a local
-database, and one performing a remote connection. It is logical to
-expect that the remote connection will take longer than the local
-ones.  (improve)
+database, and one performing remote request in another machine in the
+same network. It is logical to expect that the remote case takes
+longer than the local experiment.
 
-/Observed/ As the values for A, B, C, D, E and F vary among the
+**** Observed
+
+As the values for A, B, C, D, E and F vary among the
 different input sizes, it is consistent to analyze each input
-separatedly. Figure \ref{fig.batchbig} illustrates the behavior of the
-execution using the big input. We do not have results for batch size A
-because we used the default values for the JVM, and it did not have
-enough heap space to store the data. The *guarani* platform also did
+separately. Figure \ref{fig.batchbig} illustrates the behavior of the
+execution using the big input. We have results for all batch sizes
+except A. The reason for this is that Aiyra exceed the heap space to
+store data in memory, mainly because we have adopted default
+values for heap allocation in the JVM. The *guarani* platform also did
 not handle the B size. Although having less results, it is still
-possible to observe a pattern which is the opposite as we imagined. We
+possible to observe a pattern which is the opposite of what we have imagined. We
 can see that the smaller the batch size, the better the
-performance. This is easily explained by the fact that Java's memory
+performance. In fact, this is easily explained since Java's memory
 management may be very slow, specially when there are many alive
 objects in the program. By these results, we see that the memory usage
 overhead is higher than the connection cost. With the medium input,
 presented in Figure \ref{fig.batchmedium}, we observe the same
 behavior as the big one for *luiza* and *guarani* platforms. *orion1*
 results are inconclusive, probably due to the same problems mentioned
-previously.
+previously related to external interferences.
+
+_Comment_:
+- What do you mean by "connection cost"?
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
