@@ -1492,7 +1492,7 @@ _Comment_:
 The factors for this evaluation consist in the *input*, the same as
 the ones described previously, and *batch*, which assumes six different
 values. The *batch* factor consists in the size of the batch to be
-inserted in the database. The number is not fixed and varies among
+inserted in the database. The number is not fixed and varies depending on
 the different input sizes. The levels are classified from *A* to *F*,
 where *A* represents the highest number possible for a batch, meaning
 one single insertion. The other five levels consist in dividing the
