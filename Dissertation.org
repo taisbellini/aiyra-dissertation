@@ -1475,6 +1475,10 @@ switch between both endpoints, which is what limits the network speed.
 \end{figure}
 #+END_LaTeX
 
+_Comment_:
+- Wrong caption (pay attention to this please)
+  - It is better if made right from the start (to avoid finalization problems)
+
 The factors for this evaluation consist in the *input*, the same as
 the ones described above, and *batch*, which assumes six different
 values. The *batch* factor consists in the size of the batch to be
