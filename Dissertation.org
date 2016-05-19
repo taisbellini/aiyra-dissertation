@@ -1410,43 +1410,55 @@ each of these cases are
                          &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
 Processor                &  Intel Core i7        & Xeon E5-2630         & Intel Core i5-2400   \\
 CPU(s)                   &  1                    & 24                   & 4       \\
-Cores per proc.          &  4                    & 6                    & 4             \\
-Max. Core Freq.          &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
+Cores per CPU            &  4                    & 6                    & 4             \\
+Max. Freq.               &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
 L1 Cache                 & 32/32KBytes           & 32/32KBytes          & 32/32KBytes  \\     
 L2 Cache                 & 256KBytes             & 256KBytes            & 256KBytes    \\
-L3 Cache                 & 6 MBytes              & 6MBytes              & 6MBytes         \\
-Main memory              & 16GByte               & 32GBytes             & 20GBytes      \\\midrule
-OS                       & OSX Yosemite 10.10.5  & Ubuntu 12.04.5       & Debian 4.3.5-1 \\
+L3 Cache                 & 6MBytes               & 6MBytes              & 6MBytes         \\
+Memory                   & 16GBytes              & 32GBytes             & 20GBytes      \\\midrule
+OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian 4.3.5-1 \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
 
-*** Comparison between Aiyra and PajeNG 
+_Comment_:
+- Are you sure L1, L2 and L3 cache sizes are the same for all of them?
+- =Orion1= has only 2 CPUs, each one with 6 cores
+- =guarani= has only 1 CPU with 4 cores.
+
+*** Aiyra and PajeNG Comparison Methodology
 
 This experiment evaluates the performance of Aiyra using the
-*PajeNullPlugin* and two versions of the *pj_dump* tool: *pj* and
-*pjflex*. The difference between the versions is in the reading of the
-trace file, while the first one uses the standard C++ parsing, the
-second uses a scanner and parser generator (*flex* and *bison*). The
+*PajeNullPlugin* against two versions of the *pj_dump* tool (*pj* and
+*pjflex)*, both part of PajeNG. The difference between the
+=pj_dump= versions is in the reading of the
+trace file: while the first (*pj*) uses the standard C++ parsing, the
+second (*pjflex*) uses a scanner and parser generator (based on the
+standard *flex* and *bison* from GNU). The
 executions of the *pj_dump* tool received =--quiet= as a parameter to
 avoid the actual dumping of the information in the standard output,
-since we only needed the execution time. It is important to highlight
-that Aiyra does not perform any action in the resulted entities and
-discards most of them.
+since we only need the execution time to carry out the comparison.
+It is important to highlight that Aiyra does not perform any action
+in the resulted entities and discards all of them.
 
-Two factors were chosen for this experiment: *input* and
+Concerning the experimental design, two factors are chosen: *input* and
 *version*. The first assumed the values *small*, *medium*, and
 *big*. The second, *aiyra*, *pj* and *pjflex*. The number of
-replications chosen was $30$. This value was selected after a few test
-experiments where we noticed very little variability. As the
+replications chosen was $30$. This value was selected after a few preliminary
+experiments where we have noticed very little experimental variability. As the
 executions take a significant amount time, $30$ repetitions is enough
 to have reliable results. Since we have two factors, each with three
 levels, we have a total of $270$ experiments (the product of
 $3*3*30$). The outcome of this experiment is the *execution* time for
 each combination of input and version. This design was run in each one
-of the platforms, thus, we had three files each with $270$ rows.
+of the platforms, thus, we had three files each with $270$ rows. The
+total number of experiments considering the three platforms is
+therefore $810$.
 
 (header of the design?)
+
+_Comment_:
+- What do you mean by header of the design?
 
 *** PajeInsertDBPlugin evaluation
 
@@ -1456,17 +1468,19 @@ number of entities to be inserted at once. This means that the queries
 are stored in a buffer until a counter reaches the specified
 value. Although this approach reduces the execution time, compared to
 the first attempt described in Chapter \ref{chapter.plugins}, it
-occupies a significant amount of memory. Our evaluation aims to define
+occupies a significant amount of memory. We want to define
 what is the best choice of batch size for different scenarios.
 
-For this experiment we used the same experimental units as the first
+For this experiment we have used the same experimental platforms as the first
 one, but we added a fourth experiment which consists in the remote
 access between *guarani* and *orion1*. In the experiment, we had the
-simulator running in *guarani* accessing the database in
-*orion1*. Figure \ref{fig.infnetwork} represents the network
-connecting the machines. Both are placed in _*INF em ingles ou
-portugues? e ufrgs?*_, where the bandwidth is 100Mb/s. There is one
-switch between both endpoints, which is what limits the network speed.
+simulator running in *guarani* inserting data in the database hosted by
+*orion1*. Figure \ref{fig.infnetwork} represents the network topology
+connecting the two machines. Both are placed at the Informatics Institute
+of the Federal University of Rio Grande do Sul. Albeit the platforms
+are equipped with gigabit network cards, the theoretical
+bandwidth is only 100Mb/s. We believe this is due the existence of a
+100Mb/s switch between both endpoints limiting the network speed.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1482,9 +1496,9 @@ _Comment_:
   - It is better if made right from the start (to avoid finalization problems)
 
 The factors for this evaluation consist in the *input*, the same as
-the ones described above, and *batch*, which assumes six different
+the ones described previously, and *batch*, which assumes six different
 values. The *batch* factor consists in the size of the batch to be
-ineserted in the database. The number is not fixed and varies among
+inserted in the database. The number is not fixed and varies depending on
 the different input sizes. The levels are classified from *A* to *F*,
 where *A* represents the highest number possible for a batch, meaning
 one single insertion. The other five levels consist in dividing the
@@ -1492,22 +1506,20 @@ previous one in half. The *A* value for each input size was previously
 calculated and the rest was generated by the dividing the first
 one. In this design, we have a six-levels factor, a three-levels
 factor and $30$ replications, which results in $540$ experiments to
-run in each of the four experimental units.
+run in each of the four experimental units (total of $2160$ experiments).
 
-To complement this analysis, we also implemented a trace for the batch
-executions. Every time there was an insertion in the database, we
+To complement this analysis, we have also implemented a trace for the batch
+executions. Every time there is an insertion in the database, we
 collected the *start time* and *end time* of that specific batch. This
 data is useful to obtain richer information about the impacts of the
-batch mechanism in the performance. Next section demonstrates the
-results for the experiments described above.
-
+batch mechanism in the performance. The next section demonstrates the
+results and our interpretation of the experiments.
 
 ** Results and Graphics
 
-We used the R language to merge the data from the different files
-generated and to plot significant graphics of the results. The
-hipotesis made before the execution of the experiments and the
-observed results are presented below.
+We have used the R language to merge the data from the different files
+generated and to plot results. We describe below our expectation about
+each experimental setup and the interpretation of the measurements.
 
 *** Comparison between Aiyra and PajeNG
 
@@ -1603,7 +1615,7 @@ performance implementations. It is also possible to notice that
 changes in the architectural approach may have significan impacts in
 the performance of the program.
 
-*** PajeInsertDBPlugin evaluation
+*** PajeInsertDBPlugin Evaluation
 
 The objective of this experiment is to measure what is the best
 balance between number of database accesses and memory usage. We have
