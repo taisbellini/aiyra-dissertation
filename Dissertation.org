@@ -266,7 +266,7 @@ was used. Details of PajeNG, the types of entities and the Pajé File
 Format will be presented in Chapter \ref{chapter.paje}. Although it
 has a visualization functionality, we will focus on the simulation
 part of the Pajé implementation in this project. The most commonly
-used tool of PajeNG is the Pajé Dump (=pj_dump=) \cite{XXX}, that
+used tool of PajeNG is the Pajé Dump\footnote{http://github.com/schnorr/pajeng/} (=pj_dump=), that
 dumps to the standard output all information regarding entities
 created throughout the simulation.
 
