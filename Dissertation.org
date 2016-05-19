@@ -1435,7 +1435,7 @@ since we only need the execution time to carry out the comparison.
 It is important to highlight that Aiyra does not perform any action
 in the resulted entities and discards all of them.
 
-Two factors were chosen for this experiment: *input* and
+Concerning the experimental design, two factors are chosen: *input* and
 *version*. The first assumed the values *small*, *medium*, and
 *big*. The second, *aiyra*, *pj* and *pjflex*. The number of
 replications chosen was $30$. This value was selected after a few test
