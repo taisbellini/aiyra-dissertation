@@ -744,7 +744,7 @@ _Comment_:
 _Comment_:
 - Do you mean that the plugin has to call =getNature=?
 
-* Chapter 5
+** Chapter 5
 
 _Comment_:
 - if in the trace are only sets, you send "popStates"?
@@ -788,6 +788,14 @@ _Comment about text below_:
 - what you mean =pjdump=, perhaps the Plugin identifier should be the
   classname, without the "Plugin". For example, =PajeDump=. By using
   =pjdump=, you may confuse the non attentive reader.
+
+** Chapter 6
+_Comment_:
+- This paragraph should be moved to the "global part" of the
+  methodology. It is always the same for all analysis, right?
+
+_Comment_:
+- Again, state that you have used averages should be a global assertion
 
 
 

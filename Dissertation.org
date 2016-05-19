@@ -391,8 +391,6 @@ during the parsing.
 \end{figure}
 #+END_LaTeX
 
-_Comments_:
-- Missing figure, can't give my opinion on it
 
 In Figure \ref{fig.javaccex} we can see an example of the processing
 of a file named *MyGrammar.jj*, which results in seven files: the
@@ -438,10 +436,6 @@ creates objects that will be submited to the database; and
 \label{fig.jdbcex}
 \end{figure}
 #+END_LaTeX
-
-_Comment_
-- Identify each "database" drawing with A B C, say that they are
-  DB. Same for the corresponding JDBC drivers.
 
 Among the possible DBMS that can be used in a Java application using
 JDBC is the MySQL system, one of the most important open-source DBMS
@@ -722,7 +716,7 @@ depending on the number of containers in the trace.
 \end{figure}
 #+END_LaTeX
 
-Type definition events don't have a timestamp field and can occur at
+Type definition events do not have a timestamp field and can occur at
 anytime in a trace file, as long as the type is not used before its
 definition. It is more common to have all the types defined in the
 beginning. The events associated to the containers are timestamped and
@@ -1383,14 +1377,14 @@ use of it is very important.
 
 We created full factorial experimental designs, using the R language
 with the *DoE.base* package, to define the tests to be performed. The
-package generates a Comma-Separated Values (*CSV)* file with one column for each factor. Each row
-of the file represents each possible combination of the different levels
-and multiplies it by the number of replications. We created *bash*
-scripts to execute the experiments of the design generating another
-*CSV* sheet including the response variables defined for the
-experiments. The details about the factors and levels for each test
-are described in the next section. The remainder of this chapter
-comprises the analysis results.
+package generates a Comma-Separated Values (*CSV)* file with one
+column for each factor. Each row of the file represents each possible
+combination of the different levels and multiplies it by the number of
+replications. We created *bash* scripts to execute the experiments of
+the design generating another *CSV* sheet including the response
+variables defined for the experiments. The details about the factors
+and levels for each test are described in the next section. The
+remainder of this chapter comprises the analysis results.
 
 ** Methodology
 
@@ -1469,32 +1463,30 @@ number of entities to be inserted at once. This means that the queries
 are stored in a buffer until a counter reaches the specified
 value. Although this approach reduces the execution time, compared to
 the first attempt described in Chapter \ref{chapter.plugins}, it
-occupies a significant amount of memory. We want to define
-what is the best choice of batch size for different scenarios.
+occupies a significant amount of memory. We want to define what is the
+best choice of batch size for different scenarios.
 
-For this experiment we have used the same experimental platforms as the first
-one, but we added a fourth experiment which consists in the remote
-access between *guarani* and *orion1*. In the experiment, we had the
-simulator running in *guarani* inserting data in the database hosted by
-*orion1*. Figure \ref{fig.infnetwork} represents the network topology
-connecting the two machines. Both are placed at the Informatics Institute
-of the Federal University of Rio Grande do Sul. Albeit the platforms
-are equipped with gigabit network cards, the theoretical
-bandwidth is only 100Mb/s. We believe this is due the existence of a
-100Mb/s switch between both endpoints limiting the network speed.
+For this experiment we have used the same experimental platforms as
+the first one, but we added a fourth experiment which consists in the
+remote access between *guarani* and *orion1*. In the experiment, we
+had the simulator running in *guarani* inserting data in the database
+hosted by *orion1*. Figure \ref{fig.infnetwork} represents the network
+topology connecting the two machines. Both are placed at the
+Informatics Institute of the Federal University of Rio Grande do
+Sul. Albeit the platforms are equipped with gigabit network cards, the
+theoretical bandwidth is only 100Mb/s. We believe this is due the
+existence of a 100Mb/s switch between both endpoints limiting the
+network speed.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{ER Model for the Pajé format}
+\caption{Network topology}
 \centering
 \includegraphics[width=\linewidth]{./img/infnetwork.pdf}
 \label{fig.infnetwork}
 \end{figure}
 #+END_LaTeX
 
-_Comment_:
-- Wrong caption (pay attention to this please)
-  - It is better if made right from the start (to avoid finalization problems)
 
 The factors for this evaluation consist in the *input*, the same as
 the ones described previously, and *batch*, which assumes six different
@@ -1519,21 +1511,17 @@ results and our interpretation of the experiments.
 ** Results and Graphics
 
 We have used the R language to merge the data from the different files
-generated and to plot results. We describe below our expectation about
+generated and to plot results. For the experiments we have used the
+average execution time among the $30$ replications as a
+mesurement. For *PajeInsertDBPlugin*, there is also the average
+insertion time. The time is measured in seconds. We considered the
+standard error to be three standard deviations of the mean, which
+cover 99.7% of the cases in a normal distribution
+\cite{normaldistribution}. We describe below our expectation about
 each experimental setup and the interpretation of the measurements.
 
 *** Comparison between Aiyra and PajeNG
 
-For the experiment of comparison between Aiyra and PajeNG, we have used the
-average execution time among the $30$ replications as a
-mesurement. The time is measured in seconds. We considered the
-standard error to be three standard deviations of the mean, which
-cover 99.7% of the cases in a normal distribution
-\cite{normaldistribution}.
-
-_Comment_:
-- This paragraph should be moved to the "global part" of the
-  methodology. It is always the same for all analysis, right?
 
 \noindent
 _Expectation_
@@ -1550,16 +1538,20 @@ _Comment_:
   took a look to understand why. So, I'd say the expectations would be
     different, but that doesn't really matter from your perspective.
 
+*_Comment_*: But when we started the experiments, we already knew that
+*pj_flex* was slower, so we knew this results. Or should we ommit that
+and say we expected flex to be faster?
+
 \noindent
 _Observed Results_
 
-We can see in Figure \ref{fig.cppoverview} that, for the
-*medium* and *big* inputs, Aiyra was actually faster than both
-versions of PajeNG. To understand this results it is crucial to
-recognize the difference between the implementation and configuration
-of both programs. Aiyra is designed to get rid of the entities as soon
-as they are finished. Thus, with the *PajeNullPlugin*, very little is
-kept in memory. One of Java's biggest overhead is the memory handling,
+We can see in Figure \ref{fig.cppoverview} that, for the *medium* and
+*big* inputs, Aiyra was actually faster than both versions of
+PajeNG. To understand this results it is crucial to recognize the
+difference between the implementation and configuration of both
+programs. Aiyra is designed to get rid of the entities as soon as they
+are finished. Thus, with the *PajeNullPlugin*, very little is kept in
+memory. One of Java's biggest overhead is the memory handling,
 specially the Garbage Collector(GC). Since we have an implementation
 that stores as few objects as possible, and the less alive objects in
 the program, the faster is GC \cite{garbagecollector}, Java may have a
@@ -1573,14 +1565,14 @@ after the first is completely decoded. On the other hand, Aiyra's
 controller sends each event read immediately to the simulator. The
 controller package performs the reading and parsing simultaneously and
 is probably faster than the decoding process of PajeNG. Since the
-memory allocation is not usually a problem in C++ implementations, it
-is more likely that this result relies on the architectural
-difference. As expected, the *pj_flex* version was slower than *pj*,
-thus, slower than *aiyra*.
+memory allocation is not usually a problem in C++ programs, it is more
+likely that this result relies on the implementation difference. As
+expected, the *pj_flex* version was slower than *pj*, thus, slower
+than *aiyra*.
 
 _Comment_:
-- What do you mean by "architectural difference"?
-- What do you mean by "C++ implementation"? That from gcc?
+- What do you mean by "architectural difference"? *implementation difference*
+- What do you mean by "C++ implementation"? That from gcc? *General C++ programs*
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1648,12 +1640,13 @@ These results are particularly important to assure the relevance of
 this proposal. By deattaching the core simulation from the data
 handling, we perceive that there is room for performance improvements
 in the replay of large Pajé trace files. It is possible to observe
-that the fewer data we retain in memory, the better our performance will
-be. The implementation of Aiyra gives the user more flexibility to
-manage the memory usage of his program and space to develop high
+that the fewer data we retain in memory, the better our performance
+will be. The implementation of Aiyra gives the user more flexibility
+to manage the memory usage of his program and space to develop high
 performance implementations. It is also possible to notice that
-changes in the architectural approach may have significant impacts in
-the performance of the program.
+changes in the design of the program, specially the handling of
+detected events, may have significant impacts in the performance of
+the program.
 
 _Comment_:
 - What do you mean by "architectural approach"?
@@ -1668,16 +1661,11 @@ and memory usage for different combinations of input and batch size.
 The response variables were: *execution time*, which is the total
 duration of the execution; *insertion time*, the time it took to
 insert the data in the database; and *maximum memory*, the maximum
-usage of the memory during the simulation. For the execution and
-simulation time, we used the average value as in the previous
-experiment.
-The memory value used was the maximum observed in the
-replications. As this experiment consists in storing data of $540$
-executions in memory, we used a =-test= flag, which drops the database
-and recreates it after each simulation.
+usage of the memory during the simulation. The memory value used was
+the maximum observed in the replications. As this experiment consists
+in storing data of $540$ executions in memory, we used a =-test= flag,
+which drops the database and recreates it after each simulation.
 
-_Comment_:
-- Again, state that you have used averages should be a global assertion
 
 Since we had a very large number of experiments, it took
 approximatedly $48$ hours to execute the design in each platform. In
@@ -1709,27 +1697,27 @@ longer than the local experiment.
 \noindent
 _Observed Results_
 
-As the values for A, B, C, D, E and F vary among the
-different input sizes, it is consistent to analyze each input
-separately. Figure \ref{fig.batchbig} illustrates the behavior of the
-execution using the big input. We have results for all batch sizes
-except A. The reason for this is that Aiyra exceed the heap space to
-store data in memory, mainly because we have adopted default
-values for heap allocation in the JVM. The *guarani* platform also did
-not handle the B size. Although having less results, it is still
-possible to observe a pattern which is the opposite of what we have imagined. We
-can see that the smaller the batch size, the better the
-performance. In fact, this is easily explained since Java's memory
-management may be very slow, specially when there are many alive
-objects in the program. By these results, we see that the memory usage
-overhead is higher than the connection cost. With the medium input,
-presented in Figure \ref{fig.batchmedium}, we observe the same
-behavior as the big one for *luiza* and *guarani* platforms. The *orion1*
-results are inconclusive for the *medium* input size, probably due
-to the same problems mentioned previously related to external interferences.
+As the values for A, B, C, D, E and F vary among the different input
+sizes, it is consistent to analyze each input separately. Figure
+\ref{fig.batchbig} illustrates the behavior of the execution using the
+big input. We have results for all batch sizes except A. The reason
+for this is that Aiyra exceed the heap space to store data in memory,
+mainly because we have adopted default values for heap allocation in
+the JVM. The *guarani* platform also did not handle the B
+size. Although having less results, it is still possible to observe a
+pattern which is the opposite of what we have imagined. We can see
+that the smaller the batch size, the better the performance. In fact,
+this is easily explained since Java's memory management may be very
+slow, specially when there are many alive objects in the program. By
+these results, we see that the memory usage overhead is higher than
+the database access cost. With the medium input, presented in Figure
+\ref{fig.batchmedium}, we observe the same behavior as the big one for
+*luiza*, *guarani* and *orion1* platforms. The *orion1* results are
+inconclusive for the *medium* input size, probably due to the same
+problems mentioned previously related to external interferences.
 
 _Comment_:
-- What do you mean by "connection cost"?
+- What do you mean by "connection cost"? *database access*
 - Java "may be very slow" if the heap size is big
 - *orion1* is inconclusive, but this variability is not present in *big*, right?
 
