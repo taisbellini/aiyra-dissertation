@@ -1597,7 +1597,7 @@ Notice that the experiment in *luiza* had a bigger variability with
 the *pj* version and the *big* input. The average execution time for
 the big file in the *aiyra* version was around $80$ seconds, but there
 was an outlier experiment that executed in $2888$ seconds. This
-particular row was removed from the data set. Even with this
+particular measurement has been manually removed from the data set. Even with this
 particular case deleted, an instability can still be perceived. The
 experiments are randomized in the design so, if there was any
 disturbance in the environment during the experiment, it should have
@@ -1646,11 +1646,11 @@ These results are particularly important to assure the relevance of
 this proposal. By deattaching the core simulation from the data
 handling, we perceive that there is room for performance improvements
 in the replay of large Pajé trace files. It is possible to observe
-that the fewer we retain in memory, the better our performance will
+that the fewer data we retain in memory, the better our performance will
 be. The implementation of Aiyra gives the user more flexibility to
 manage the memory usage of his program and space to develop high
 performance implementations. It is also possible to notice that
-changes in the architectural approach may have significan impacts in
+changes in the architectural approach may have significant impacts in
 the performance of the program.
 
 _Comment_:
