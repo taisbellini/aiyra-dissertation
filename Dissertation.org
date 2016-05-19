@@ -1420,7 +1420,7 @@ _Comment_:
 - =Orion1= has only 2 CPUs, each one with 6 cores
 - =guarani= has only 1 CPU with 4 cores.
 
-*** Comparison between Aiyra and PajeNG 
+*** Aiyra and PajeNG Comparison Methodology
 
 This experiment evaluates the performance of Aiyra using the
 *PajeNullPlugin* and two versions of the *pj_dump* tool: *pj* and
