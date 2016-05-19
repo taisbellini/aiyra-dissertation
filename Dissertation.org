@@ -1415,6 +1415,11 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 \end{table}
 #+END_LaTeX
 
+_Comment_:
+- Are you sure L1, L2 and L3 cache sizes are the same for all of them?
+- =Orion1= has only 2 CPUs, each one with 6 cores
+- =guarani= has only 1 CPU with 4 cores.
+
 *** Comparison between Aiyra and PajeNG 
 
 This experiment evaluates the performance of Aiyra using the
