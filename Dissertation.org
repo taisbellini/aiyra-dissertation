@@ -624,7 +624,7 @@ This example is one of the designs used for the performance evaluation
 in Chapter \ref{chapter.performance}.
 
 
-* Pajé Visualization Tool - PajeNG 
+* The PajeNG Framework
 \label{chapter.paje}
 
 The Pajé Visualization Tool is an implementation to display the
@@ -924,7 +924,7 @@ plugins provide a possible solution to the other two. The details of
 this novel approach, developed in our work, are detailed in the next
 chapter.
 
-* Aiyra - Java-based simulator
+* Aiyra - a Java-based simulator for Paje trace files
 \label{chapter.aiyra}
 
 Aiyra is an extensible simulator written in Java that reads trace
