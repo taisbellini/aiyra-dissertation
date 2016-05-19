@@ -638,7 +638,7 @@ and all entity types it contains. The next section describes the new
 generation of the Pajé Visualization Tool, the PajeNG, focusing on the
 *libpaje* module, which is where the core simulation is performed.
  
-** Pajé Trace File Format
+** The Pajé Trace File Format
 \label{section.pajeformat}
 
 The Pajé Trace File Format \cite{pajetracefile} is a textual and
@@ -724,7 +724,7 @@ is a double precision floating-point number, which is different from
 the values of the other entities. A variable must be set before
 changes to its value can be made.
 
-** PajeNG
+** PajeNG Tools and Simulation Library 
 \label{section.pajeng}
 
 The PajeNG implementation is the new generation of the Pajé
@@ -885,7 +885,7 @@ completed. The PajeContainer class contains a method for each event
 that is associated to a container, adding and removing entities of
 these structures listed above.
 
-** Issues of PajeNG
+** Current Issues Regarding PajeNG
 
 The focus of the Pajé implementation is to allow the user to extend
 the Pajé format and adapt the simulator to it. Its support for extra
