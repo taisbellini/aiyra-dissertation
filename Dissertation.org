@@ -184,7 +184,6 @@ Hope this helps.
 #+BEGIN_LaTeX
 \begin{abstract}
 #+END_LaTeX
-
 Tracing is a very common method to observe program behavior, where
 interesting program events are registered in trace files. Replaying
 these trace files through simulation is used to analyze the data. The
@@ -213,7 +212,6 @@ usage. The memory usage had more impact in the performance than the
 accesses to the database themselves, probably due to the Garbage
 Collector mechanism used by Java, the language used for the
 implementation.
-
 #+BEGIN_LaTeX
 \end{abstract}
 #+END_LaTeX
