@@ -1410,7 +1410,7 @@ L1 Cache                 & 32/32KBytes           & 32/32KBytes          & 32/32K
 L2 Cache                 & 256KBytes             & 256KBytes            & 256KBytes    \\
 L3 Cache                 & 6 MBytes              & 6MBytes              & 6MBytes         \\
 Main memory              & 16GByte               & 32GBytes             & 20GBytes      \\\midrule
-OS                       & OSX Yosemite 10.10.5  & Ubuntu 12.04.5       & Debian 4.3.5-1 \\
+OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian 4.3.5-1 \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
