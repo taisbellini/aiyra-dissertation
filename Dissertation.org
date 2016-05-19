@@ -252,10 +252,10 @@ events in trace files that work as a log, so, whenever a relevant
 event happens, it will be logged in the trace file with the proper
 information. Then, these traces are replayed in simulation combining
 information that is spread across multiple events deriving new and
-richer entities \cite{XXX}. This event processing is usually done once
-and discarded, which can be very inconvenient considering that some
-trace files are very large. Therefore, it would be interesting to save
-these entities for further analysis.
+richer entities. This event processing is usually done once and
+discarded, which can be very inconvenient considering that some trace
+files are very large. Therefore, it would be interesting to save these
+entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
 Pajé Trace Simulator \cite{kergommeaux2000paje}, an open source
@@ -270,7 +270,8 @@ was used. Details of PajeNG, the types of entities and the Pajé File
 Format will be presented in Chapter \ref{chapter.paje}. Although it
 has a visualization functionality, we will focus on the simulation
 part of the Pajé implementation in this project. The most commonly
-used tool of PajeNG is the Pajé Dump\footnote{http://github.com/schnorr/pajeng/} (=pj_dump=), that
+used tool of PajeNG is the Pajé
+Dump\footnote{http://github.com/schnorr/pajeng/} (=pj_dump=), that
 dumps to the standard output all information regarding entities
 created throughout the simulation.
 
@@ -433,7 +434,7 @@ retrieved objects are placed.
 \begin{figure}[!htb]
 \caption{Architecture of JDBC. [Inspired in \cite{jdbctut}]}
 \centering
-\includegraphics[width=\linewidth]{./img/jdbcex.pdf}
+\includegraphics[width=.5\linewidth]{./img/jdbcex.pdf}
 \label{fig.jdbcex}
 \end{figure}
 #+END_LaTeX
@@ -627,8 +628,12 @@ each factor and *factor.names*: a list of vectors with factor levels.
 This example is one of the designs used for the performance evaluation
 in Chapter \ref{chapter.performance}.
 
+<<<<<<< HEAD
+* Pajé Visualization Tool - PajeNG 
+=======
 
 * The PajeNG Framework
+>>>>>>> d2e951b7050d1fe49c7469be21349aa039da5183
 \label{chapter.paje}
 
 The Pajé Visualization Tool is an implementation to display the
@@ -1484,10 +1489,10 @@ run in each of the four experimental units.
 
 To complement this analysis, we also implemented a trace for the batch
 executions. Every time there was an insertion in the database, we
-collected the *start time*, *end time* and *size* of that specific
-batch. This data is useful to obtain richer information about the
-impacts of the batch mechanism in the performance. Next section
-demonstrates the results for the experiments described above.
+collected the *start time* and *end time* of that specific batch. This
+data is useful to obtain richer information about the impacts of the
+batch mechanism in the performance. Next section demonstrates the
+results for the experiments described above.
 
 
 ** Results and Graphics
@@ -1521,28 +1526,30 @@ the characteristic of having lower performance.
 \end{figure}
 #+END_LaTeX
 
-/Observed/ We can see in Figure \ref{fig.cppoverview} that, for the *medium*
-and *big* inputs, Aiyra was actually faster than both versions of PajeNG. To
-understand this results it is crucial to recognize the difference between the
-implementation and configuration of both programs. Aiyra is designed to get
-rid of the entities as soon as they are finished. Thus, with the
-*PajeNullPlugin*, very little is kept in memory. One of Java's biggest
-overhead is the memory handling, specially the Garbage Collector(GC). Since we
-have an implementation that stores as few objects as possible, and the less
-alive objects in the program, the faster is GC \cite{garbagecollector}, Java
-may have a chance in this case. Another important difference among Aiyra and
-PajeNG is the process of reading the trace file, parsing it and then sending
-to the simulator. As seen in Chapter \ref{chapter.paje}, the PajeNG file
-reader first reads from the file a chunk of data, then the decoder, which has
-predominant execution time, breaks it into events and sends them to the
-simulator. The next segment of data is only read after the first is completely
-decoded. On the other hand, Aiyra's controller sends each event read
-immediately to the simulator. The controller package performs the reading and
-parsing simultaneously and is probably faster than the decoding process of
-PajeNG. Since the memory allocation is not usually a problem in C++
-implementations, it is more likely that this result relies on the
-architectural difference. As expected, the *pj_flex* version was slower than
-*pj*, thus, slower than *aiyra*.
+/Observed/ We can see in Figure \ref{fig.cppoverview} that, for the
+*medium* and *big* inputs, Aiyra was actually faster than both
+versions of PajeNG. To understand this results it is crucial to
+recognize the difference between the implementation and configuration
+of both programs. Aiyra is designed to get rid of the entities as soon
+as they are finished. Thus, with the *PajeNullPlugin*, very little is
+kept in memory. One of Java's biggest overhead is the memory handling,
+specially the Garbage Collector(GC). Since we have an implementation
+that stores as few objects as possible, and the less alive objects in
+the program, the faster is GC \cite{garbagecollector}, Java may have a
+chance in this case. Another important difference among Aiyra and
+PajeNG is the process of reading the trace file, parsing it and then
+sending to the simulator. As seen in Chapter \ref{chapter.paje}, the
+PajeNG file reader first reads from the file a chunk of data, then the
+decoder, which has predominant execution time, breaks it into events
+and sends them to the simulator. The next segment of data is only read
+after the first is completely decoded. On the other hand, Aiyra's
+controller sends each event read immediately to the simulator. The
+controller package performs the reading and parsing simultaneously and
+is probably faster than the decoding process of PajeNG. Since the
+memory allocation is not usually a problem in C++ implementations, it
+is more likely that this result relies on the architectural
+difference. As expected, the *pj_flex* version was slower than *pj*,
+thus, slower than *aiyra*.
 
 Notice that the experiment in *luiza* had a bigger variability with
 the *pj* version and the *big* input. The average execution time for
@@ -1586,8 +1593,8 @@ that the fewer we retain in memory, the better our performance will
 be. The implementation of Aiyra gives the user more flexibility to
 manage the memory usage of his program and space to develop high
 performance implementations. It is also possible to notice that
-changes in the architectural approach may have significan impacts in the
-performance of the program.
+changes in the architectural approach may have significan impacts in
+the performance of the program.
 
 *** PajeInsertDBPlugin evaluation
 
@@ -1665,8 +1672,8 @@ previously.
 \end{figure}
 #+END_LaTeX
 
-Going further on the analysis, we see in Figures \ref{fig.mem_big} and
-\ref{fig.mem_medium} the memory usage for the scenarios presented
+Going further on the analysis, we see in Figures \ref{fig.membig} and
+\ref{fig.memmedium} the memory usage for the scenarios presented
 above. Naturally, the memory usage peak is higher for bigger batches.
 
 #+BEGIN_LaTeX
@@ -1674,7 +1681,7 @@ above. Naturally, the memory usage peak is higher for bigger batches.
 \caption{Results of batch sizes variability for the big input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_big_v1.pdf}
-\label{fig.batchbig}
+\label{fig.membig}
 \end{figure}
 #+END_LaTeX
 
@@ -1683,7 +1690,7 @@ above. Naturally, the memory usage peak is higher for bigger batches.
 \caption{Results of batch sizes variability for the mediuminput}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v1.pdf}
-\label{fig.batchmedium}
+\label{fig.memmedium}
 \end{figure}
 #+END_LaTeX
 
@@ -1738,8 +1745,8 @@ performance.
 \end{figure}
 #+END_LaTeX
 
-For the small input, we can observe, in Figure \ref{fig.batchtimesmall},
-the opposite behavior. 
+For the small input, we can observe, in Figure
+\ref{fig.batchtimesmall}, the opposite behavior.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1749,9 +1756,6 @@ the opposite behavior.
 \label{fig.batchtimesmall}
 \end{figure}
 #+END_LaTeX
-
-
-
 
 
 * 2016-05-16 CPP Comparison (figures)                   :noexport:Lucas:Tais:
@@ -3129,7 +3133,42 @@ ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
 * Conclusion
 \label{chapter.conclusion}
 
-- not only the simulator
++ proposal: extensible, more flexibility. deattach core.
++ other issues
+
+   - implementation of plugins
+   - pjdump - problem of outputting the states before container. space
+     for improvements.
+   - database:
+       - results of batches. 
++ importance of implementation of plugins.
+Creating plugins for the solution was extremely important to validate
+the proposal. The first approach consisted in having instrumentation
+points only for the events that generated complete entities, which was
+soon discarded during the implementation of the
+*PajeInsertDBPlugin*. We saw that, for example, to insert a state
+entity, with foreign keys reffering a container and a type, the object
+referenced must be already in the database. Thus, we noticed that, for
+the extensibility to apply to the maximum number of potential
+scenarios, it needed to give access to every type of event possible in
+the Pajé format. Implementing this plugin took a lot of time, and
+changes to it were made very frequently. It was interesting to observe
+that the modificatons were only performed in the *PajeInsertDBPlugin*
+class, demonstrating clearly that the handling of the results was
+totally deattached from the core simulation.
+
+For future work, it would be interesting to provide an interface for
+the plugin package such as it could support multiple languages. 
+of plugins, like .
+
++future work
+ - improvement of entry points: variable for ex.
+ - interface for plugins in other languages.
+ - plugin to parallelize
+ - options handler
+ 
+
+not only the simulator
 - plugins are important
 
 *Future Work*
