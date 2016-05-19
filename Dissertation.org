@@ -1097,7 +1097,7 @@ now complete with an ending timestamp.
 \begin{figure}[!htb]
 \caption{Aiyra's Core Architecture}
 \centering
-\includegraphics[width=\linewidth]{./img/aiyraCore.png}
+\includegraphics[width=\linewidth]{./img/aiyraCore.pdf}
 \label{fig.aiyraCore}
 \end{figure}
 #+END_LaTeX
@@ -1319,7 +1319,7 @@ field.
 \begin{figure}[!htb]
 \caption{ER Model for the Pajé format}
 \centering
-\includegraphics[width=\linewidth]{./img/ermodel.png}
+\includegraphics[width=\linewidth]{./img/ermodel.pdf}
 \label{fig.ermodel}
 \end{figure}
 #+END_LaTeX
