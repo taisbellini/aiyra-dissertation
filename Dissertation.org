@@ -1502,13 +1502,12 @@ one. In this design, we have a six-levels factor, a three-levels
 factor and $30$ replications, which results in $540$ experiments to
 run in each of the four experimental units (total of $2160$ experiments).
 
-To complement this analysis, we also implemented a trace for the batch
-executions. Every time there was an insertion in the database, we
+To complement this analysis, we have also implemented a trace for the batch
+executions. Every time there is an insertion in the database, we
 collected the *start time* and *end time* of that specific batch. This
 data is useful to obtain richer information about the impacts of the
-batch mechanism in the performance. Next section demonstrates the
-results for the experiments described above.
-
+batch mechanism in the performance. The next section demonstrates the
+results and our interpretation of the experiments.
 
 ** Results and Graphics
 
