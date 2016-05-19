@@ -434,6 +434,10 @@ retrieved objects are placed.
 \end{figure}
 #+END_LaTeX
 
+_Comment_
+- Identify each "database" drawing with A B C, say that they are
+  DB. Same for the corresponding JDBC drivers.
+
 Among the possible DBMS that can be used in a Java application using
 JDBC is the MySQL system, one of the most important open-source DBMS
 in the market. It has been developed by Oracle and uses SQL language
