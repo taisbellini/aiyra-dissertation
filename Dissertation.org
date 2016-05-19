@@ -895,6 +895,7 @@ that is associated to a container, adding and removing entities of
 these structures listed above.
 
 ** Current Issues Regarding PajeNG
+\label{sec.pajeng_issues}
 
 The focus of the Pajé implementation is to allow the user to extend
 the Pajé format and adapt the simulator to it. Its support for extra
@@ -1172,7 +1173,7 @@ plugins were created: *PajeNullPlugin*, *PajeDumpPlugin* and
 *PajeInsertDBPlugin*. Their implementation is described in the next
 chapter.
   
-* Plugins
+* Aiyra's Standard Plugins
 \label{chapter.plugins} 
 
 _Comment_
@@ -1185,8 +1186,16 @@ _Comment_
   specific plugin. It would be very easy to understand, and you'd have
   a figure for each plugin below.
 
-Three plugins are described in this Chapter: *PajeDumpPlugin*,
-*PajeIsertDBPlugin*, and *PajeNullPlugin*.
+To address traditional uses of Paje trace files, we have implemented
+three plugins for the Aiyra framework: the *PajeDumpPlugin*, the
+*PajeInsertDBPlugin*, and the *PajeNullPlugin*. The first one is used to
+match the behavior of the existing =pj_dump= tool but without the issues
+we have mentioned in Section \ref{sec.pajeng_issues}; the second one
+can be used to insert the trace file in a relationa database, allowing
+the user to use SQL commands to inspect simulated traces; and finally,
+the third can be used to evaluate the Aiyra's performance for any kind
+of input. We detail each of them in the following, from the one that
+presents the lowest to the highest complexity.
 
 ** Paje Null Plugin
 
