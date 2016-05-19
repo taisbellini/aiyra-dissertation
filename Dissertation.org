@@ -490,6 +490,12 @@ a *weak entity*.
 \end{figure}
 #+END_LaTeX
 
+_Comment_:
+- Figure improved a lot. Thanks. Unfortunately, text still looks like
+  very small when comparing to the ordinary surrounding text. Can you
+  print to see if it is readable? Maybe it's just a bad feeling from
+  my side.
+
 The ER Model is an overview of the structure of a database. To evolve
 to the implementation, a translation to a Relational Model must be
 performed. The ER model is a conceptual description of the database,
