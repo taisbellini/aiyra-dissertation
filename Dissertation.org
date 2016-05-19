@@ -1836,6 +1836,114 @@ For the small input, we can observe, in Figure
 \end{figure}
 #+END_LaTeX
 
+* Data                                                             :noexport:
+
+#+begin_src sh :results output :session :exports both
+find data
+#+end_src
+
+#+RESULTS:
+: data
+: data/batch_size.csv
+
+#+begin_src R :results output :session :exports both
+# read data
+df <- read.csv ("data/batch_size.csv");
+
+# get rid of rows with NA
+df <- df[complete.cases(df),];
+
+# transform data types
+df$sim_time <- as.numeric(as.character(df$sim_time));
+df$insert_time <- as.numeric(as.character(df$insert_time));
+
+# transform to metrics we adopt
+df$sim_time = df$sim_time/1000000;
+df$insert_time = df$insert_time/1000000;
+df$max_mem = df$max_mem/1024/1024;
+
+# mark remote
+dft1 <- df[df$platform != "guarani_orion",];
+dft2 <- df[df$platform == "guarani_orion",];
+dft2$platform <- "remote";
+df <- rbind(dft2, dft1);
+
+# average things
+library(dplyr);
+k <- df %>%
+     group_by(input, batch, platform) %>%
+     summarize(N = n(),
+               time_avg = mean(sim_time),
+               time_se = 3*sd(sim_time)/sqrt(N)) %>%
+     as.data.frame();
+k
+#+end_src
+
+#+RESULTS:
+#+begin_example
+    input batch platform  N     time_avg      time_se
+1     big     B   orion1 10 1107.3227606 6.658932e+00
+2     big     C  guarani 10  872.7257096 4.335207e+00
+3     big     C    luiza 30  772.6744859 2.081221e+00
+4     big     C   orion1 10 1061.8112710 5.241099e+00
+5     big     C   remote 30  822.9541185 3.072010e+00
+6     big     D  guarani 10  847.1885084 5.042744e+00
+7     big     D    luiza 30  796.5267459 1.858931e+02
+8     big     D   orion1 10 1026.6392053 5.417082e+00
+9     big     D   remote 30  793.6288847 2.793609e+00
+10    big     E  guarani 10  823.6926476 4.388586e+00
+11    big     E    luiza 30  718.6369158 1.532428e+00
+12    big     E   orion1 10  997.8075534 5.549207e+00
+13    big     E   remote 30  776.9857812 3.234269e+00
+14    big     F  guarani 10  812.7665036 5.007015e+00
+15    big     F    luiza 30  711.4194856 1.529460e+00
+16    big     F   orion1 10  946.2533760 3.886924e+00
+17    big     F   remote 30  765.5748142 2.850922e+00
+18 medium     A    luiza 30   93.9088443 1.835017e-01
+19 medium     A   remote 30  100.0850588 4.386215e-01
+20 medium     B  guarani 10  108.8424911 2.057405e+00
+21 medium     B    luiza 30   93.1713426 1.855400e-01
+22 medium     B   orion1 10  106.2926635 3.040111e+00
+23 medium     B   remote 30   98.6565419 6.572776e-01
+24 medium     C  guarani 10  103.9807552 8.741281e-01
+25 medium     C    luiza 30   88.3279745 2.877727e-01
+26 medium     C   orion1 10  111.3229354 9.112576e-01
+27 medium     C   remote 30   94.7818702 5.286554e-01
+28 medium     D  guarani 10  105.3337499 1.950162e+00
+29 medium     D    luiza 30   87.5662485 2.059891e-01
+30 medium     D   orion1 10  117.2014197 8.836928e-01
+31 medium     D   remote 30   96.5232222 5.021793e-01
+32 medium     E  guarani 10  100.5071578 1.524136e+00
+33 medium     E    luiza 30   86.1899532 1.962095e-01
+34 medium     E   orion1 10   97.4553447 7.025395e+00
+35 medium     E   remote 30   92.0910381 3.938906e-01
+36 medium     F  guarani 10   96.9679865 1.292744e+00
+37 medium     F    luiza 30   82.4328944 2.428668e-01
+38 medium     F   orion1 10  109.6810972 9.403754e-01
+39 medium     F   remote 30   92.0036549 4.808063e-01
+40  small     A    luiza 30    0.4502067 3.531458e-03
+41  small     A   remote 30    0.4990605 7.578415e-03
+42  small     B  guarani 10    2.2563874 1.603131e-01
+43  small     B    luiza 30    0.4528172 2.666560e-03
+44  small     B   orion1 10    0.7557264 2.225693e-02
+45  small     B   remote 30    0.5296416 9.928985e-03
+46  small     C  guarani 10    2.1407330 2.863513e-01
+47  small     C    luiza 30    0.4709659 2.894954e-03
+48  small     C   orion1 10    0.8611910 2.868396e-02
+49  small     C   remote 30    0.5577120 1.047420e-02
+50  small     D  guarani 10    2.3501718 2.211636e-01
+51  small     D    luiza 30    0.5158810 3.757003e-03
+52  small     D   orion1 10    0.9929203 2.956740e-02
+53  small     D   remote 30    0.5934754 1.689092e-02
+54  small     E  guarani 10    2.6943502 1.836338e-01
+55  small     E    luiza 30    0.6011176 3.310887e-03
+56  small     E   orion1 10    1.2279947 2.983281e-02
+57  small     E   remote 30    0.6592223 1.401403e-02
+58  small     F  guarani 10    3.6281551 2.751580e-01
+59  small     F    luiza 30    0.7695288 8.467496e-03
+60  small     F   orion1 10    1.6951738 3.660555e-02
+61  small     F   remote 30    0.8761198 1.538628e-02
+#+end_example
 
 * 2016-05-16 CPP Comparison (figures)                   :noexport:Lucas:Tais:
 
