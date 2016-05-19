@@ -1439,7 +1439,7 @@ Concerning the experimental design, two factors are chosen: *input* and
 *version*. The first assumed the values *small*, *medium*, and
 *big*. The second, *aiyra*, *pj* and *pjflex*. The number of
 replications chosen was $30$. This value was selected after a few preliminary
-experiments where we noticed very little variability. As the
+experiments where we have noticed very little experimental variability. As the
 executions take a significant amount time, $30$ repetitions is enough
 to have reliable results. Since we have two factors, each with three
 levels, we have a total of $270$ experiments (the product of
