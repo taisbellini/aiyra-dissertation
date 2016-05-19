@@ -1531,7 +1531,13 @@ standard error to be three standard deviations of the mean, which
 cover 99.7% of the cases in a normal distribution
 \cite{normaldistribution}.
 
-/Expected/ It is universally known that C++ is a language with better
+_Comment_:
+- This paragraph should be moved to the "global part" of the
+  methodology. It is always the same for all analysis, right?
+
+**** Comparison expectation
+
+It is universally known that C++ is a language with better
 performance than Java. We suppose that Aiyra will be slower than
 PajeNG, but with an acceptable execution time. It is also expected
 that the version *pj_flex* will be slower than *pj*, since *flex* has
@@ -1545,8 +1551,9 @@ the characteristic of having lower performance.
 \label{fig.cppoverview}
 \end{figure}
 #+END_LaTeX
+**** Observed behavior in the experimentation
 
-/Observed/ We can see in Figure \ref{fig.cppoverview} that, for the
+We can see in Figure \ref{fig.cppoverview} that, for the
 *medium* and *big* inputs, Aiyra was actually faster than both
 versions of PajeNG. To understand this results it is crucial to
 recognize the difference between the implementation and configuration
