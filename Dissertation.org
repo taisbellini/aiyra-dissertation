@@ -1424,7 +1424,7 @@ _Comment_:
 
 This experiment evaluates the performance of Aiyra using the
 *PajeNullPlugin* and two versions of the *pj_dump* tool: *pj* and
-*pjflex*. The difference between the versions is in the reading of the
+*pjflex*, part of PajeNG. The difference between the versions is in the reading of the
 trace file, while the first one uses the standard C++ parsing, the
 second uses a scanner and parser generator (*flex* and *bison*). The
 executions of the *pj_dump* tool received =--quiet= as a parameter to
