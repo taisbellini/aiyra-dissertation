@@ -1511,10 +1511,9 @@ results and our interpretation of the experiments.
 
 ** Results and Graphics
 
-We used the R language to merge the data from the different files
-generated and to plot significant graphics of the results. The
-hipotesis made before the execution of the experiments and the
-observed results are presented below.
+We have used the R language to merge the data from the different files
+generated and to plot results. We describe below our expectation about
+each experimental setup and the interpretation of the measurements.
 
 *** Comparison between Aiyra and PajeNG
 
