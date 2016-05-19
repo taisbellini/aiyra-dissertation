@@ -1524,7 +1524,7 @@ each experimental setup and the interpretation of the measurements.
 
 *** Comparison between Aiyra and PajeNG
 
-For the experiment of comparison between Aiyra and PajeNG, we used the
+For the experiment of comparison between Aiyra and PajeNG, we have used the
 average execution time among the $30$ replications as a
 mesurement. The time is measured in seconds. We considered the
 standard error to be three standard deviations of the mean, which
