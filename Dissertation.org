@@ -1610,7 +1610,7 @@ performance implementations. It is also possible to notice that
 changes in the architectural approach may have significan impacts in
 the performance of the program.
 
-*** PajeInsertDBPlugin evaluation
+*** PajeInsertDBPlugin Evaluation
 
 The objective of this experiment is to measure what is the best
 balance between number of database accesses and memory usage. We have
