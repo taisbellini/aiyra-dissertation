@@ -1395,9 +1395,10 @@ comprises the analysis results.
 The experiments are performed in three different machines: *luiza*,
 with a Mac OSX environment, *guarani*, and *orion1*, both running
 Linux. The details about the experimental platforms are described in Table
-\ref{tab.machines}. We generated three input trace files with
-different sizes identified by *small*, *medium*, and *big*, of sizes
-128Kilobytes, 128Megabytes, and 1Gigabytes, respectively.
+\ref{tab.machines}. We have created three input trace files with
+different sizes identified by *small*, *medium*, and *big*. The sizes for
+each of these cases are
+128 Kilobytes, 128 Megabytes, and 1 Gigabytes, respectively.
 
 #+BEGIN_LaTeX
 \begin{table}[!htb]
