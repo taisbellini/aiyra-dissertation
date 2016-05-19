@@ -1764,7 +1764,7 @@ above. Naturally, the memory usage peak is higher for bigger batches.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the mediuminput}
+\caption{Results of batch sizes variability for the medium input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v1.pdf}
 \label{fig.memmedium}
@@ -1772,7 +1772,7 @@ above. Naturally, the memory usage peak is higher for bigger batches.
 #+END_LaTeX
 
 For smaller inputs, however, we see (in Figure \ref{fig.batchsmall})
-that the behavior is what we predicted. It is also explained by the
+that the behavior is what we have predicted. It is also explained by the
 very little memory usage, that is too irrelevant to impact the
 performance. It is worth mentioning that 128 Kilobytes, which is the
 size of the *small* input, is very uncommon and that the usual traces
