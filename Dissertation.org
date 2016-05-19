@@ -1535,7 +1535,8 @@ _Comment_:
 - This paragraph should be moved to the "global part" of the
   methodology. It is always the same for all analysis, right?
 
-**** Comparison expectation
+\noindent
+_Expectation_
 
 It is universally known that C++ is a language with better
 performance than Java. We suppose that Aiyra will be slower than
@@ -1547,9 +1548,10 @@ _Comment_:
 - Actually, when *pjflex* was proposed, we through it would provide
   better performance than *pj*. That's was not the case, but we never
   took a look to understand why. So, I'd say the expectations would be
-  different, but that doesn't really matter from your perspective.
+    different, but that doesn't really matter from your perspective.
 
-**** Observed behavior in the experimentation
+\noindent
+_Observed Results_
 
 We can see in Figure \ref{fig.cppoverview} that, for the
 *medium* and *big* inputs, Aiyra was actually faster than both
@@ -1691,7 +1693,8 @@ than two or three days. For these reasons, the experiment in *orion1*
 had only $10$ replications. Even so, we have observed very little
 variability among the executions in the exploratory tests.
 
-**** Expected behavior
+\noindent
+_Expected_
 
 According to the observation of bad performance when executing
 excessive accesses to the database, we expect that the bigger the
@@ -1703,7 +1706,8 @@ database, and one performing remote request in another machine in the
 same network. It is logical to expect that the remote case takes
 longer than the local experiment.
 
-**** Observed
+\noindent
+_Observed Results_
 
 As the values for A, B, C, D, E and F vary among the
 different input sizes, it is consistent to analyze each input
