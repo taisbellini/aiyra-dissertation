@@ -1375,14 +1375,15 @@ the analysis of its performance and the study of the most efficient
 use of it is very important.
 
 We created full factorial experimental designs, using the R language
-with *DoE.base* package, to define the tests to be performed. The
-package generates a *.csv* file with one column for each factor. It
-creates one row for each possible combination of the different levels
+with the *DoE.base* package, to define the tests to be performed. The
+package generates a Comma-Separated Values (*CSV)* file with one column for each factor. Each row
+of the file represents each possible combination of the different levels
 and multiplies it by the number of replications. We created *bash*
 scripts to execute the experiments of the design generating another
-*.csv* sheet including the response variables defined for the
+*CSV* sheet including the response variables defined for the
 experiments. The details about the factors and levels for each test
-are described in the next section.
+are described in the next section. The remainder of this chapter
+comprises the analysis results.
 
 ** Methodology
 
@@ -1468,6 +1469,10 @@ switch between both endpoints, which is what limits the network speed.
 \label{fig.infnetwork}
 \end{figure}
 #+END_LaTeX
+
+_Comment_:
+- Wrong caption (pay attention to this please)
+  - It is better if made right from the start (to avoid finalization problems)
 
 The factors for this evaluation consist in the *input*, the same as
 the ones described above, and *batch*, which assumes six different
