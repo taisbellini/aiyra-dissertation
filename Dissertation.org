@@ -1381,7 +1381,7 @@ use of it is very important.
 
 We created full factorial experimental designs, using the R language
 with the *DoE.base* package, to define the tests to be performed. The
-package generates a *CSV* file with one column for each factor. Each row
+package generates a Comma-Separated Values (*CSV)* file with one column for each factor. Each row
 of the file represents each possible combination of the different levels
 and multiplies it by the number of replications. We created *bash*
 scripts to execute the experiments of the design generating another
