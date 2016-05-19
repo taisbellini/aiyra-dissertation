@@ -1543,14 +1543,6 @@ PajeNG, but with an acceptable execution time. It is also expected
 that the version *pj_flex* will be slower than *pj*, since *flex* has
 the characteristic of having lower performance.
 
-#+BEGIN_LaTeX
-\begin{figure}[!htb]
-\caption{Results of comparison between Aiyra and PajeNG}
-\centering
-\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_overview.pdf}
-\label{fig.cppoverview}
-\end{figure}
-#+END_LaTeX
 **** Observed behavior in the experimentation
 
 We can see in Figure \ref{fig.cppoverview} that, for the
@@ -1577,6 +1569,15 @@ memory allocation is not usually a problem in C++ implementations, it
 is more likely that this result relies on the architectural
 difference. As expected, the *pj_flex* version was slower than *pj*,
 thus, slower than *aiyra*.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of comparison between Aiyra and PajeNG}
+\centering
+\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_overview.pdf}
+\label{fig.cppoverview}
+\end{figure}
+#+END_LaTeX
 
 Notice that the experiment in *luiza* had a bigger variability with
 the *pj* version and the *big* input. The average execution time for
