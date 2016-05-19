@@ -1387,7 +1387,8 @@ and multiplies it by the number of replications. We created *bash*
 scripts to execute the experiments of the design generating another
 *CSV* sheet including the response variables defined for the
 experiments. The details about the factors and levels for each test
-are described in the next section.
+are described in the next section. The remainder of this chapter
+comprises the analysis results.
 
 ** Methodology
 
