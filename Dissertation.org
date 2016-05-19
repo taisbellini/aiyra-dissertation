@@ -1189,7 +1189,8 @@ we have mentioned in Section \ref{sec.pajeng_issues}; the second one
 can be used to insert the trace file in a relationa database, allowing
 the user to use SQL commands to inspect simulated traces; and finally,
 the third can be used to evaluate the Aiyra's performance for any kind
-of input.
+of input. We detail each of them in the following, from the one that
+presents the lowest to the highest complexity.
 
 ** Paje Null Plugin
 
