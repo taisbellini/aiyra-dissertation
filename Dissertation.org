@@ -597,6 +597,7 @@ designs with an arbitrary numbers of levels. The function receives
 several arguments, including number of factors, levels and
 replication. The usage of the function is the following:
 #+BEGIN_LaTeX
+\lstsetForR
 \begin{lstlisting}
 require(DoE.base);
 fac.design(
@@ -3354,35 +3355,40 @@ To build a grammar that will be compiled by =JavaCC= you only need to
 create one file whith `.jj` extension. The structure of this file is
 the following:
 
-#+BEGIN_EXAMPLE
-options{
+#+BEGIN_LaTeX
+\lstsetForJavaCC
 
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{lstlisting}
+options{
 }
-#+END_EXAMPLE
+\end{lstlisting}
+#+END_LaTeX
 
 A set of optional flags. An example, is the flag =STATIC=, which means
 that there is only one parser for the JVM when set to true.
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
+\begin{lstlisting}
 PARSER_BEGIN(MyGrammar)
-
 public class MyGrammar {
-
 }
-
 PARSER_END(MyGrammar)
-#+END_EXAMPLE
+\end{lstlisting}
+#+END_LaTeX
 
 In this part, the Java code will be placed and it's the main class of
 the program. Notice that the class must have the same name as the
 generated parser.
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 TOKEN_MGR_DECLS:
 {
 
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 The declarations used by the lexical analyser are placed in the
 TOKEN_MGR_DECLS function.
@@ -3397,16 +3403,16 @@ declarations come first, then the assignments. No verification will be
 performed since it is just an example to clarify the JavaCC syntax. To
 declare tokens, we use the following notation:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 TOKEN: 
 {
   < [NAME] : [EXPRESSION] >  
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 For our example of language we will have the following tokens: 
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 /* Integer Literals */
 TOKEN : 
 {
@@ -3426,7 +3432,7 @@ TOKEN:
   < INTEGER_TYPE : "int" >
   < CHAR_TYPE: "char" >
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 As we can see in the definitions above, it is not necessary to
 explicit the word TOKEN for each one. It is usually separated to be
@@ -3438,26 +3444,26 @@ regular expression production, which is the SKIP. Whatever matches the
 regular expression defined in the SKIP scope will not be treated by
 the parser.  Example:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 SKIP: 
 {
   "\n" 
   \| "\t"
 
 } 
-#+END_EXAMPLE
+#+END_LaTeX
 
 After the token declaration, comes the grammar rules. The rules are
 declared as methods, that can have return values or not. The structure
 of a method is the following:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 [type] [name] ()
 {}
 { 
   /* Rules */
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 The empty braces in the beginning of the method can be filled with
 variable declarations in Java. More Java code can be added in the
@@ -3466,26 +3472,26 @@ possible to assign tokens, regular expressions or even methods to the
 variables declared earlier. To refer to the tokens, we use its name
 between angular brackets. Example:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 void parser()
 { int number; }
 {
   number = <INTEGER>
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 The first method defined will be the entrance to the parser and it can
 contain methods inside that will be expanded later in the rules. The
 entrance for the language we are using as an example would be as
 follows:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 void start()
 {}
 {
   declarations() assignments() <EOF>
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 EOF is a default token. It is important to guarantee that the file
 will be parsed until the end. By the definition of our first method,
@@ -3493,7 +3499,7 @@ we assure that the declarations will obligatorily be in the beginning,
 and the assignments at the end. Next, we expand the two methods to
 address all the possibilities:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 void declarations()
 {}
 {
@@ -3506,7 +3512,7 @@ void assignments()
   (<VARIABLE> <ASSIGNMENT> (<CHAR> | <INTEGER>))*
 }
 
-#+END_EXAMPLE
+#+END_LaTeX
 
 The multiplicity can be defined with the standard characters "*", "?",
 "+", just as in the lexer. This example is just one possible approach
@@ -3514,7 +3520,7 @@ to define these rules. For example, you can use another non-terminal
 to describe a value that will be assigned to a variable. In this case,
 the assignments() rule would be expanded as follows:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 void assignments()
 {}
 {
@@ -3526,29 +3532,29 @@ void assignable():
 {
   <CHAR> | <INTEGER> 
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 *** Usage with Java
 
 In order to call the parser in a Java program, an object of the
 MyGrammar class needs to be instantiated:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 MyGrammar parser = new MyGrammar(input);
-#+END_EXAMPLE
+#+END_LaTeX
 
 Then, once there is an instance of the parser, it is possible to call
 the first method of the parser:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 parser.start();
-#+END_EXAMPLE
+#+END_LaTeX
 
 This code has a Java syntax and is placed in the main class presented
 previously. Between the declarations of PARSER_BEGIN and PARSER_END,
 any Java code can be placed to manipulate the results of the parsing.
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 PARSER_BEGIN(MyGrammar)
 /* Imports */
 public class MyGrammar {
@@ -3565,7 +3571,7 @@ public class MyGrammar {
 }
 
 PARSER_END(MyGrammar)
-#+END_EXAMPLE
+#+END_LaTeX
 * Paje File Format Specification
 \label{ap.pajeformat}
 
@@ -3821,7 +3827,7 @@ The constructor of this class receives the list of arguments that was
 passed in the execution of the program and creates an object =opt= of
 type =Options= with the arguments as parameter. 
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 import ml.options.Options;
 
 public class OptionsHandler {
@@ -3834,7 +3840,7 @@ public class OptionsHandler {
 }
 
 Options opt
-#+END_EXAMPLE
+#+END_LaTeX
 
 The Options type is the core of the library used, and all of the
 argument's processing will be done in the =opt= instance. It is also
@@ -3842,9 +3848,9 @@ in the constructor that we set all of the possible options that can be
 used by the user. To define a new one, we use the following line of
 code:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 opt.getSet().addOption("<alias>", Options.Separator.<SEPARATOR>, Options.Multiplicity.<MULTIPLICITY>);
-#+END_EXAMPLE
+#+END_LaTeX
 
 =<alias>=: the alias that will be used to identify the option;
 
@@ -3860,11 +3866,11 @@ The default for the prefix is a dash and is the one chosen for the
 program. The constructor of Aiyra's OptionsHandler class has the
 following definitions:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
 opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
 opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);		
-#+END_EXAMPLE
+#+END_LaTeX
 
 =-f=: required field that indicates the file to be parsed;
 
@@ -3875,15 +3881,15 @@ opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_O
 To check if the user has passed the arguments properly, the Options
 class provides a simple method thet returns a boolean:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 opt.check
-#+END_EXAMPLE
+#+END_LaTeX
 
 In the OptionsHandler class, this verification is done in the
 =checkOptionsHelper= method, which prints a helper text to the user in
 case the check fails.
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 public void checkOptionsHelper() {
 	// true=ignoreUnmatched false=requireLast
 	if (!this.opt.check(true, false)) {
@@ -3896,12 +3902,12 @@ public void checkOptionsHelper() {
 		System.exit(1);
 	}
 }
-#+END_EXAMPLE
+#+END_LaTeX
 
 This validation must be done before the program continues, thus, this
 method is already called in the constructor:
 
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
  public OptionsHandler(String args[]) {
 	  opt = new Options(args);
 
@@ -3911,11 +3917,11 @@ method is already called in the constructor:
 
       checkOptionsHelper();	
   }
-#+END_EXAMPLE 
+#+END_LaTeX 
 
 * Paje File Format Parser for JavaCC
 \label{ap.grammar}
-#+BEGIN_EXAMPLE
+#+BEGIN_LaTeX
 options
 {
   static = false;
@@ -4267,7 +4273,7 @@ String argument():
 	|arg = < INT > {return arg.image.toString();}
 
 } 
-#+END_EXAMPLE
+#+END_LaTeX
 
 
 * How to execute aiyra
