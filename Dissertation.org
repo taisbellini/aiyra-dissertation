@@ -1789,7 +1789,7 @@ are at least in the Megabytes order of magnitude.
 
 (analysis on the remote, slower indeed?)
 
-By analysing the results, we observed that the number of accesses to
+By analyzing the results, we observed that the number of accesses to
 the database did not impact on the performance of *big* and *medium*
 traces. To support our conclusions, we generated traces for the batch
 executions. These traces logged the duration of every batch insertion
