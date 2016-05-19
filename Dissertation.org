@@ -1724,12 +1724,14 @@ management may be very slow, specially when there are many alive
 objects in the program. By these results, we see that the memory usage
 overhead is higher than the connection cost. With the medium input,
 presented in Figure \ref{fig.batchmedium}, we observe the same
-behavior as the big one for *luiza* and *guarani* platforms. *orion1*
-results are inconclusive, probably due to the same problems mentioned
-previously related to external interferences.
+behavior as the big one for *luiza* and *guarani* platforms. The *orion1*
+results are inconclusive for the *medium* input size, probably due
+to the same problems mentioned previously related to external interferences.
 
 _Comment_:
 - What do you mean by "connection cost"?
+- Java "may be very slow" if the heap size is big
+- *orion1* is inconclusive, but this variability is not present in *big*, right?
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
