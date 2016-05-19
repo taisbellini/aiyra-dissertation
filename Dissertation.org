@@ -1392,7 +1392,7 @@ comprises the analysis results.
 
 ** Methodology
 
-The experiments were performed in three different machines: *luiza*,
+The experiments are performed in three different machines: *luiza*,
 with a Mac OSX environment, *guarani*, and *orion1*, both running
 Linux. The details about the experimental units are described in Table
 \ref{tab.machines}. We generated three input trace files with
