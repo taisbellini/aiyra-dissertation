@@ -234,6 +234,17 @@ Do as follows:
 
 * Introduction
 
+_Global Comment_
+- Check the PDF to respect all margins
+- Compile latex manually with =pdflatex= after export to latex
+  - Pay attention to these warnings: they are in fact errors
+    - LaTeX Warning: There were undefined references.
+    - LaTeX Warning: There were multiply-defined labels.
+- All figures should be included as PDF (export to PDF with your
+  figure editing tool), then include them here as PDF. That way, your
+  figures will probably be vectorial, smaller and render much nicely
+  in the final PDF.
+
 Observation of program behavior is particularly important in High
 Performance Computing since it enables an accurate performance
 analysis. A very common method of evaluation is registering program
@@ -259,7 +270,8 @@ was used. Details of PajeNG, the types of entities and the Pajé File
 Format will be presented in Chapter \ref{chapter.paje}. Although it
 has a visualization functionality, we will focus on the simulation
 part of the Pajé implementation in this project. The most commonly
-used tool of PajeNG is the Pajé Dump (=pj_dump=) \cite{pajeng}, that
+used tool of PajeNG is the Pajé
+Dump\footnote{http://github.com/schnorr/pajeng/} (=pj_dump=), that
 dumps to the standard output all information regarding entities
 created throughout the simulation.
 
@@ -427,6 +439,10 @@ retrieved objects are placed.
 \end{figure}
 #+END_LaTeX
 
+_Comment_
+- Identify each "database" drawing with A B C, say that they are
+  DB. Same for the corresponding JDBC drivers.
+
 Among the possible DBMS that can be used in a Java application using
 JDBC is the MySQL system, one of the most important open-source DBMS
 in the market. It has been developed by Oracle and uses SQL language
@@ -478,6 +494,12 @@ a *weak entity*.
 \label{fig.ermodelex}
 \end{figure}
 #+END_LaTeX
+
+_Comment_:
+- Figure improved a lot. Thanks. Unfortunately, text still looks like
+  very small when comparing to the ordinary surrounding text. Can you
+  print to see if it is readable? Maybe it's just a bad feeling from
+  my side.
 
 The ER Model is an overview of the structure of a database. To evolve
 to the implementation, a translation to a Relational Model must be
@@ -606,7 +628,12 @@ each factor and *factor.names*: a list of vectors with factor levels.
 This example is one of the designs used for the performance evaluation
 in Chapter \ref{chapter.performance}.
 
+<<<<<<< HEAD
 * Pajé Visualization Tool - PajeNG 
+=======
+
+* The PajeNG Framework
+>>>>>>> d2e951b7050d1fe49c7469be21349aa039da5183
 \label{chapter.paje}
 
 The Pajé Visualization Tool is an implementation to display the
@@ -620,7 +647,7 @@ and all entity types it contains. The next section describes the new
 generation of the Pajé Visualization Tool, the PajeNG, focusing on the
 *libpaje* module, which is where the core simulation is performed.
  
-** Pajé Trace File Format
+** The Pajé Trace File Format
 \label{section.pajeformat}
 
 The Pajé Trace File Format \cite{pajetracefile} is a textual and
@@ -706,7 +733,7 @@ is a double precision floating-point number, which is different from
 the values of the other entities. A variable must be set before
 changes to its value can be made.
 
-** PajeNG
+** PajeNG Tools and Simulation Library 
 \label{section.pajeng}
 
 The PajeNG implementation is the new generation of the Pajé
@@ -867,7 +894,7 @@ completed. The PajeContainer class contains a method for each event
 that is associated to a container, adding and removing entities of
 these structures listed above.
 
-** Issues of PajeNG
+** Current Issues Regarding PajeNG
 
 The focus of the Pajé implementation is to allow the user to extend
 the Pajé format and adapt the simulator to it. Its support for extra
@@ -906,7 +933,7 @@ plugins provide a possible solution to the other two. The details of
 this novel approach, developed in our work, are detailed in the next
 chapter.
 
-* Aiyra - Java-based simulator
+* Aiyra - a Java-based simulator for Paje trace files
 \label{chapter.aiyra}
 
 Aiyra is an extensible simulator written in Java that reads trace
@@ -937,6 +964,11 @@ entity.
 \label{fig.aiyraArchitecture}
 \end{figure}
 #+END_LaTeX
+
+_Comment_:
+- For some reason, there is a lot of vertical space just below Figure
+  4.1 (aiyra arch.). Please remote it since it looks strange. Perhaps
+  it is just a bounding box issue with your PNG.
 
 The program receives arguments from the user in its execution. The
 *filename* option (=-f=) is the only mandatory one, which indicates
@@ -1067,6 +1099,10 @@ now complete with an ending timestamp.
 \label{fig.aiyraCore}
 \end{figure}
 #+END_LaTeX
+
+_Comment_
+- This figure also has a large white margin on the bottom. Remote it
+  please.
 
 The choice of creating an instrumentation point for each trace event
 is due to the intention of covering all of the different needs of the
