@@ -1462,7 +1462,7 @@ number of entities to be inserted at once. This means that the queries
 are stored in a buffer until a counter reaches the specified
 value. Although this approach reduces the execution time, compared to
 the first attempt described in Chapter \ref{chapter.plugins}, it
-occupies a significant amount of memory. Our evaluation aims to define
+occupies a significant amount of memory. We want to define
 what is the best choice of batch size for different scenarios.
 
 For this experiment we used the same experimental units as the first
