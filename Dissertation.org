@@ -1837,15 +1837,9 @@ For the small input, we can observe, in Figure
 #+END_LaTeX
 
 * Data                                                             :noexport:
+** Load batch size measurements
 
-#+begin_src sh :results output :session :exports both
-find data
-#+end_src
-
-#+RESULTS:
-: data
-: data/batch_size.csv
-
+#+name: load_batch_size
 #+begin_src R :results output :session :exports both
 # read data
 df <- read.csv ("data/batch_size.csv");
