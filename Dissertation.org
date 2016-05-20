@@ -41,6 +41,83 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
+* Export to PDF (org-mode installation + emacs configuration)      :noexport:
+
+_org-mode installation_
+
+Use the org-version =8.3.4=. To check, run M-x then type org-version,
+then hit the enter key. You should see the current version. If your
+version is older, or if the command you just type is unrecognized, you
+have to install the latest version of org by following these steps:
+
+#+BEGIN_SRC sh :results silent :exports none
+git clone git://orgmode.org/org-mode.git; cd org-mode;
+git checkout release_8.3.4; make
+#+END_SRC
+
+Then, edit the file =local.mk= changing the variable =prefix=. I
+suggest you install in your HOME directory by putting something like:
+
+=/home/schnorr/install/org-mode/=
+
+For me, I have this (just an example):
+
+#+BEGIN_EXAMPLE
+prefix  = /home/schnorr/install/org-mode/
+#+END_EXAMPLE
+
+Finally, within the org-mode directory, just type:
+
+#+BEGIN_SRC sh :results silent :exports none
+make install
+#+END_SRC
+
+_Emacs configuration_
+
+Now, you need to configure emacs.
+
+Create a directory =.emacs.d= in your HOME directory.
+
+Make sure your version of emacs is at least 24.4. Mine is:
+
+#+begin_src sh :results output :session :exports both
+emacs --version
+#+end_src
+
+#+RESULTS:
+: GNU Emacs 24.4.1
+: Copyright (C) 2014 Free Software Foundation, Inc.
+: GNU Emacs comes with ABSOLUTELY NO WARRANTY.
+: You may redistribute copies of Emacs
+: under the terms of the GNU General Public License.
+: For more information about these matters, see the file named COPYING.
+
+Then, create (in =.emacs.d= directory) a =init.el= file with the following:
+
+#+BEGIN_EXAMPLE
+(add-to-list 'load-path "~/install/org-mode/emacs/site-lisp/org")
+(mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))
+#+END_EXAMPLE
+
+To have the shortcuts and facilities I employ when coding in org, you
+might want to put in the =.emacs.d= directory the contents described here:
+
+http://mescal.imag.fr/membres/arnaud.legrand/misc/init.php
+
+Or, just execute the following sequence of commands:
+
+#+begin_src sh :results output :session :exports both
+cd $HOME/.emacs.d/
+wget http://mescal.imag.fr/membres/arnaud.legrand/misc/init.org -O mine.org
+#+end_src
+
+Note that the name has to be different from =init.org=, otherwise in the
+first run of =emacs=, the initialization process will destroy the
+configuration file you have just created. In this example, I have then
+called the file =mine.org=.
+
+Hope this helps.
+
 * Front page preparation                                           :ignore:
 
 #+BEGIN_LaTeX
