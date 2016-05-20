@@ -41,6 +41,147 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
+* Front page preparation                                             :ignore:
+
+#+BEGIN_LaTeX
+\title{Extensible Simulator for Replay of Trace Files in the Pajé format}
+\author{Loureiro Bellini}{Tais}
+\advisor[Prof.~Dr.]{Mello Schnorr}{Lucas}
+
+\date{Maio}{2016}
+\location{Porto Alegre}{RS}
+
+% \renewcommand{\nominataReit}{Prof\textsuperscript{a}.~Wrana Maria Panizzi}
+% \renewcommand{\nominataReitname}{Reitora}
+% \renewcommand{\nominataPRE}{Prof.~Jos{\'e} Carlos Ferraz Hennemann}
+% \renewcommand{\nominataPREname}{Pr{\'o}-Reitor de Ensino}
+% \renewcommand{\nominataPRAPG}{Prof\textsuperscript{a}.~Joc{\'e}lia Grazia}
+% \renewcommand{\nominataPRAPGname}{Pr{\'o}-Reitora Adjunta de P{\'o}s-Gradua{\c{c}}{\~a}o}
+% \renewcommand{\nominataDir}{Prof.~Philippe Olivier Alexandre Navaux}
+% \renewcommand{\nominataDirname}{Diretor do Instituto de Inform{\'a}tica}
+% \renewcommand{\nominataCoord}{Prof.~Carlos Alberto Heuser}
+% \renewcommand{\nominataCoordname}{Coordenador do PPGC}
+% \renewcommand{\nominataBibchefe}{Beatriz Regina Bastos Haro}
+% \renewcommand{\nominataBibchefename}{Bibliotec{\'a}ria-chefe do Instituto de Inform{\'a}tica}
+% \renewcommand{\nominataChefeINA}{Prof.~Jos{\'e} Valdeni de Lima}
+% \renewcommand{\nominataChefeINAname}{Chefe do \deptINA}
+% \renewcommand{\nominataChefeINT}{Prof.~Leila Ribeiro}
+% \renewcommand{\nominataChefeINTname}{Chefe do \deptINT}
+
+%
+% TODO: provide these keywords
+%
+% \keyword{formatação eletrônica de documentos}
+% \keyword{\LaTeX}
+% \keyword{ABNT}
+% \keyword{UFRGS}
+#+END_LaTeX
+
+* Front page                                                       :ignore:
+#+BEGIN_LaTeX
+\maketitle
+#+END_LaTeX
+* Dedicatory                                                       :ignore:
+
+#+BEGIN_LaTeX
+% \clearpage
+% \begin{flushright}
+%     \mbox{}\vfill
+%     {\sffamily\itshape
+%       ``If I have seen farther than others,\\
+%       it is because I stood on the shoulders of giants.''\\}
+%     --- \textsc{Sir~Isaac Newton}
+% \end{flushright}
+#+END_LaTeX
+
+* Acknowledgements                                                 :ignore:
+
+#+BEGIN_LaTeX
+% agradecimentos
+%\chapter*{Agradecimentos}
+%Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
+#+END_LaTeX
+
+* Abstract                                                         :ignore:
+                                                      
+#+BEGIN_LaTeX
+\begin{abstract}
+#+END_LaTeX
+
+Tracing is a very common method to observe program behavior, where
+interesting program events are registered in trace files. Replaying
+these trace files through simulation is used to analyze the data. The
+simulation combines information that is spread in multiple events
+deriving new and richer entities. Usually, this event processing is
+done once and discarded, an approach adopted, for instance, by the
+Pajé trace simulator. The objective of this proposal is to allow the
+performance analyst to change the simulator behavior when entities are
+detected according to his needs. This extensibility is implemented
+through plugins, that could be developed by any programmer, where
+every entity created is forwaded to it. It is the plugin's
+responsibility to handle the entity. As a proof of concept, this work
+presents the implementation of two plugins: a textual output similar
+to an existing one in the Pajé tool; and a database insertion in a
+pre-defined relational schema.  A performance analysis was developed
+to compare Aiyra against the Pajé trace simulator. It is worth
+highlighting that the new simulator had better performance results
+with bigger files (over 120 Megabytes), that being possibly attributed
+to the fact that it discards from memory entities that will no longer
+be used. Additionally, the Pajé Insert Database plugin was evaluated
+comparing its different possibilities of usage. In this investigation,
+we varied the frequency of the insertions in the database by grouping
+queries in memory. The aim of this test was to understand the impact
+of the access to a database in the performance versus the memory
+usage. The memory usage had more impact in the performance than the
+accesses to the database themselves, probably due to the Garbage
+Collector mechanism used by Java, the language used for the
+implementation.
+
+#+BEGIN_LaTeX
+\end{abstract}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+% resumo na outra língua
+% como parametros devem ser passados o titulo e as palavras-chave
+% na outra língua, separadas por vírgulas
+\begin{englishabstract}{Titulo em pt-br.}{Palavra-chave 1. Palavra-chave 2.}
+#+END_LaTeX
+
+Put your Portuguese abstract here.
+
+#+BEGIN_LaTeX
+\end{englishabstract}
+#+END_LaTeX
+* Lists                                                            :ignore:
+
+#+BEGIN_LaTeX
+\listoffigures
+\listoftables
+
+% lista de abreviaturas e siglas
+% o parametro deve ser a abreviatura mais longa
+\begin{listofabbrv}{SPMD}
+    \item[SMP] Symmetric Multi-Processor
+    \item[NUMA] Non-Uniform Memory Access
+    \item[SIMD] Single Instruction Multiple Data
+    \item[SPMD] Single Program Multiple Data
+    \item[ABNT] Associação Brasileira de Normas Técnicas
+\end{listofabbrv}
+
+
+% idem para a lista de símbolos
+% \begin{listofsymbols}{$\alpha\beta\pi\omega$}
+%     \item[$\sum{\frac{a}{b}}$] Somatório do produtório
+%     \item[$\alpha\beta\pi\omega$] Fator de inconstância do resultado
+% \end{listofsymbols}
+#+END_LaTeX
+
+* Sumário                                                          :ignore:
+
+#+BEGIN_LaTeX
+\tableofcontents
+#+END_LaTeX
 
 * Configuring Emacs to correctly export to PDF                     :noexport:
 
