@@ -1629,6 +1629,9 @@ expected, the *pj_flex* version was slower than *pj*, thus, slower than
 \end{figure}
 #+END_LaTeX
 
+_Comment_:
+- Remove the title of this figure please.
+
 #+BEGIN_LaTeX
 \begin{table}[!htb]
 \caption{Average Execution Time (s) for each configuration}
