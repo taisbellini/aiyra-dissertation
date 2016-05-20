@@ -1480,11 +1480,6 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 \end{table}
 #+END_LaTeX
 
-_Comment_:
-- Are you sure L1, L2 and L3 cache sizes are the same for all of them?
-  *Luiza I am sure, the others apparently I have used the wrong
-  command to check CPU, maybe I used the wrong onw for it too*
-
 *** Aiyra and PajeNG Comparison Methodology
 
 This experiment evaluates the performance of Aiyra using the
