@@ -227,7 +227,37 @@ through the use of a rigorous experimental design.
 \begin{englishabstract}{Titulo em pt-br.}{Palavra-chave 1. Palavra-chave 2.}
 #+END_LaTeX
 
-Put your Portuguese abstract here.
+Observation of program behavior through trace files is particularly
+important in High Performance Computing (HPC) since it enables an
+accurate performance analysis. In this context, the Pajé framework is
+commonly employed to simulate trace files in the Pajé file format. The
+simulator works by recreating the program behavior in an offline
+fashion, allowing the performance analyst to better understand
+performance issues that might have occurred during execution.  As of
+today, there are at least three issues with the Pajé simulator: little
+extensibility, lack of partial outcomes and impermanent
+results. Although Pajé has been built in an extensible manner, it is
+necessary to write a full component for Pajé to actually achieve
+extensibility. This is a complex task since it implies in
+understanding the internal class hierarchy of the framework. The
+second issue is that it is impossible to get a partial view of
+simulated data prior to the end of the input trace. And finally, the
+third is related to the ephemerality of results: all simulated data is
+discarted once Pajé exists. To address these issues, an extensible
+plugin-based trace file simulator called Aiyra has been designed and
+implemented.  Aiyra's objective is to allow extreme extensibility by
+letting the performance analyst write plugins that deal with simulated
+data. The plugins can be attached to the simulator in specific and
+important points where the trace events are combined. As a proof of
+concept, we have implemented plugins to dump partial data that has
+just been simulated and to make the results permanent, by inserting
+simulated data into a database.  A performance analysis has been
+conducted to compare Aiyra against the existing Pajé trace
+simulator. Our simulator presented better performance results with
+larger files, that being possibly attributed to the fact that our
+solution keeps the memory footprint low throughout execution. We have
+also evaluated the database plugin in a number of different scenarios
+through the use of a rigorous experimental design.
 
 #+BEGIN_LaTeX
 \end{englishabstract}
