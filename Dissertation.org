@@ -1533,6 +1533,9 @@ network speed.
 
 *Mention 0.5 RTT average?? * 
 
+_Comment to answer the question_:
+- Please do, state how you have measured it.
+
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Network topology}
