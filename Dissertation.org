@@ -1570,9 +1570,10 @@ We have used the R language to merge the data from the different files
 generated and to plot results. For the experiments we have used the
 average execution time among the replications as a mesurement. For
 *PajeInsertDBPlugin*, there is also the average insertion time. The
-time is measured in seconds. We considered the standard error to be
-three standard deviations of the mean, which cover 99.7% of the cases
-in a normal distribution \cite{normaldistribution}. We describe below
+time unit is seconds. We considered the standard error to be
+three standard deviations divided by the square root of the number of
+experiments, which cover 99.7% of the cases
+assuming a normal distribution \cite{normaldistribution}. We describe below
 our expectation about each experimental setup and the interpretation
 of the measurements.
 
