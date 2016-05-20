@@ -1675,9 +1675,9 @@ overall analysis, the experiment was considered valid.
 
 
 So far, we have analysed the execution time of the *medium* and *big*
-inputs. In Figure \ref{fig.cppoverview} shows only the measurement
-considering the *small* input in the different platforms. It portrays
-a closer sight of the graphic, where we can see that the behavior for
+inputs. Figure \ref{fig.cppoverview} shows only the measurement
+considering the *small* input in the different platforms, to have a
+closer look in its time scale. The behavior for
 the *small* input is different from the others. In this case, we
 observe exactly the expected result (see previous subsection). This is
 probably because it is a very small file, with very few entities, so
