@@ -41,8 +41,84 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
-* Front page preparation                                             :ignore:
+* Export to PDF (org-mode installation + emacs configuration)      :noexport:
 
+_org-mode installation_
+
+Use the org-version =8.3.4=. To check, run M-x then type org-version,
+then hit the enter key. You should see the current version. If your
+version is older, or if the command you just type is unrecognized, you
+have to install the latest version of org by following these steps:
+
+#+BEGIN_SRC sh :results silent :exports none
+git clone git://orgmode.org/org-mode.git; cd org-mode;
+git checkout release_8.3.4; make
+#+END_SRC
+
+Then, edit the file =local.mk= changing the variable =prefix=. I
+suggest you install in your HOME directory by putting something like:
+
+=/home/schnorr/install/org-mode/=
+
+For me, I have this (just an example):
+
+#+BEGIN_EXAMPLE
+prefix  = /home/schnorr/install/org-mode/
+#+END_EXAMPLE
+
+Finally, within the org-mode directory, just type:
+
+#+BEGIN_SRC sh :results silent :exports none
+make install
+#+END_SRC
+
+_Emacs configuration_
+
+Now, you need to configure emacs.
+
+Create a directory =.emacs.d= in your HOME directory.
+
+Make sure your version of emacs is at least 24.4. Mine is:
+
+#+begin_src sh :results output :session :exports both
+emacs --version
+#+end_src
+
+#+RESULTS:
+: GNU Emacs 24.4.1
+: Copyright (C) 2014 Free Software Foundation, Inc.
+: GNU Emacs comes with ABSOLUTELY NO WARRANTY.
+: You may redistribute copies of Emacs
+: under the terms of the GNU General Public License.
+: For more information about these matters, see the file named COPYING.
+
+Then, create (in =.emacs.d= directory) a =init.el= file with the following:
+
+#+BEGIN_EXAMPLE
+(add-to-list 'load-path "~/install/org-mode/emacs/site-lisp/org")
+(mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))
+#+END_EXAMPLE
+
+To have the shortcuts and facilities I employ when coding in org, you
+might want to put in the =.emacs.d= directory the contents described here:
+
+http://mescal.imag.fr/membres/arnaud.legrand/misc/init.php
+
+Or, just execute the following sequence of commands:
+
+#+begin_src sh :results output :session :exports both
+cd $HOME/.emacs.d/
+wget http://mescal.imag.fr/membres/arnaud.legrand/misc/init.org -O mine.org
+#+end_src
+
+Note that the name has to be different from =init.org=, otherwise in the
+first run of =emacs=, the initialization process will destroy the
+configuration file you have just created. In this example, I have then
+called the file =mine.org=.
+
+Hope this helps.
+
+* Front page preparation                                           :ignore:
 #+BEGIN_LaTeX
 \title{Extensible Simulator for Replay of Trace Files in the Pajé format}
 \author{Loureiro Bellini}{Tais}
@@ -71,10 +147,12 @@
 %
 % TODO: provide these keywords
 %
-% \keyword{formatação eletrônica de documentos}
-% \keyword{\LaTeX}
-% \keyword{ABNT}
-% \keyword{UFRGS}
+\keyword{Trace simulation}
+\keyword{Replay}
+\keyword{Pajé}
+\keyword{JavaCC}
+\keyword{MySQL}
+\keyword{Performance}
 #+END_LaTeX
 
 * Front page                                                       :ignore:
@@ -103,40 +181,41 @@
 #+END_LaTeX
 
 * Abstract                                                         :ignore:
-                                                      
+
 #+BEGIN_LaTeX
 \begin{abstract}
 #+END_LaTeX
-
-Tracing is a very common method to observe program behavior, where
-interesting program events are registered in trace files. Replaying
-these trace files through simulation is used to analyze the data. The
-simulation combines information that is spread in multiple events
-deriving new and richer entities. Usually, this event processing is
-done once and discarded, an approach adopted, for instance, by the
-Pajé trace simulator. The objective of this proposal is to allow the
-performance analyst to change the simulator behavior when entities are
-detected according to his needs. This extensibility is implemented
-through plugins, that could be developed by any programmer, where
-every entity created is forwaded to it. It is the plugin's
-responsibility to handle the entity. As a proof of concept, this work
-presents the implementation of two plugins: a textual output similar
-to an existing one in the Pajé tool; and a database insertion in a
-pre-defined relational schema.  A performance analysis was developed
-to compare Aiyra against the Pajé trace simulator. It is worth
-highlighting that the new simulator had better performance results
-with bigger files (over 120 Megabytes), that being possibly attributed
-to the fact that it discards from memory entities that will no longer
-be used. Additionally, the Pajé Insert Database plugin was evaluated
-comparing its different possibilities of usage. In this investigation,
-we varied the frequency of the insertions in the database by grouping
-queries in memory. The aim of this test was to understand the impact
-of the access to a database in the performance versus the memory
-usage. The memory usage had more impact in the performance than the
-accesses to the database themselves, probably due to the Garbage
-Collector mechanism used by Java, the language used for the
-implementation.
-
+Observation of program behavior through trace files is particularly
+important in High Performance Computing (HPC) since it enables an
+accurate performance analysis. In this context, the Pajé framework is
+commonly employed to simulate trace files in the Pajé file format. The
+simulator works by recreating the program behavior in an offline
+fashion, allowing the performance analyst to better understand
+performance issues that might have occurred during execution.  As of
+today, there are at least three issues with the Pajé simulator: little
+extensibility, lack of partial outcomes and impermanent
+results. Although Pajé has been built in an extensible manner, it is
+necessary to write a full component for Pajé to actually achieve
+extensibility. This is a complex task since it implies in
+understanding the internal class hierarchy of the framework. The
+second issue is that it is impossible to get a partial view of
+simulated data prior to the end of the input trace. And finally, the
+third is related to the ephemerality of results: all simulated data is
+discarted once Pajé exists. To address these issues, an extensible
+plugin-based trace file simulator called Aiyra has been designed and
+implemented.  Aiyra's objective is to allow extreme extensibility by
+letting the performance analyst write plugins that deal with simulated
+data. The plugins can be attached to the simulator in specific and
+important points where the trace events are combined. As a proof of
+concept, we have implemented plugins to dump partial data that has
+just been simulated and to make the results permanent, by inserting
+simulated data into a database.  A performance analysis has been
+conducted to compare Aiyra against the existing Pajé trace
+simulator. Our simulator presented better performance results with
+larger files, that being possibly attributed to the fact that our
+solution keeps the memory footprint low throughout execution. We have
+also evaluated the database plugin in a number of different scenarios
+through the use of a rigorous experimental design.
 #+BEGIN_LaTeX
 \end{abstract}
 #+END_LaTeX
@@ -373,12 +452,13 @@ during the parsing.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{How JavaCC works}
+\caption{JavaCC's file generation flow}
 \centering
 \includegraphics[width=.7\linewidth]{./img/javaccex.pdf}
 \label{fig.javaccex}
 \end{figure}
 #+END_LaTeX
+
 In Figure \ref{fig.javaccex} we can see an example of the processing
 of a file named *MyGrammar.jj*, which results in seven files: the
 parser in *MyGrammar.java*; the lexical analyser in
@@ -3458,10 +3538,11 @@ the program. Notice that the class must have the same name as the
 generated parser.
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 TOKEN_MGR_DECLS:
 {
-
 }
+\end{lstlisting}
 #+END_LaTeX
 
 The declarations used by the lexical analyser are placed in the
@@ -3478,15 +3559,18 @@ performed since it is just an example to clarify the JavaCC syntax. To
 declare tokens, we use the following notation:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 TOKEN: 
 {
   < [NAME] : [EXPRESSION] >  
 }
+\end{lstlisting}
 #+END_LaTeX
 
 For our example of language we will have the following tokens: 
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 /* Integer Literals */
 TOKEN : 
 {
@@ -3506,6 +3590,7 @@ TOKEN:
   < INTEGER_TYPE : "int" >
   < CHAR_TYPE: "char" >
 }
+\end{lstlisting}
 #+END_LaTeX
 
 As we can see in the definitions above, it is not necessary to
@@ -3519,12 +3604,13 @@ regular expression defined in the SKIP scope will not be treated by
 the parser.  Example:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 SKIP: 
 {
   "\n" 
   \| "\t"
-
 } 
+\end{lstlisting}
 #+END_LaTeX
 
 After the token declaration, comes the grammar rules. The rules are
@@ -3532,11 +3618,13 @@ declared as methods, that can have return values or not. The structure
 of a method is the following:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 [type] [name] ()
 {}
 { 
   /* Rules */
 }
+\end{lstlisting}
 #+END_LaTeX
 
 The empty braces in the beginning of the method can be filled with
@@ -3547,11 +3635,13 @@ variables declared earlier. To refer to the tokens, we use its name
 between angular brackets. Example:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void parser()
 { int number; }
 {
   number = <INTEGER>
 }
+\end{lstlisting}
 #+END_LaTeX
 
 The first method defined will be the entrance to the parser and it can
@@ -3560,11 +3650,13 @@ entrance for the language we are using as an example would be as
 follows:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void start()
 {}
 {
   declarations() assignments() <EOF>
 }
+\end{lstlisting}
 #+END_LaTeX
 
 EOF is a default token. It is important to guarantee that the file
@@ -3574,6 +3666,7 @@ and the assignments at the end. Next, we expand the two methods to
 address all the possibilities:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void declarations()
 {}
 {
@@ -3585,7 +3678,7 @@ void assignments()
 {
   (<VARIABLE> <ASSIGNMENT> (<CHAR> | <INTEGER>))*
 }
-
+\end{lstlisting}
 #+END_LaTeX
 
 The multiplicity can be defined with the standard characters "*", "?",
@@ -3595,6 +3688,7 @@ to describe a value that will be assigned to a variable. In this case,
 the assignments() rule would be expanded as follows:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void assignments()
 {}
 {
@@ -3606,6 +3700,7 @@ void assignable():
 {
   <CHAR> | <INTEGER> 
 }
+\end{lstlisting}
 #+END_LaTeX
 
 *** Usage with Java
@@ -3614,14 +3709,18 @@ In order to call the parser in a Java program, an object of the
 MyGrammar class needs to be instantiated:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 MyGrammar parser = new MyGrammar(input);
+\end{lstlisting}
 #+END_LaTeX
 
 Then, once there is an instance of the parser, it is possible to call
 the first method of the parser:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 parser.start();
+\end{lstlisting}
 #+END_LaTeX
 
 This code has a Java syntax and is placed in the main class presented
@@ -3629,24 +3728,21 @@ previously. Between the declarations of PARSER_BEGIN and PARSER_END,
 any Java code can be placed to manipulate the results of the parsing.
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 PARSER_BEGIN(MyGrammar)
 /* Imports */
 public class MyGrammar {
     public static void main(String args []){
         /* Code to read the input */
-
         MyGrammar parser = new MyGrammar(input);
         parser.start();
-
        /* Java code to manipulate the parser results */
-  
   }
-
 }
-
 PARSER_END(MyGrammar)
+\end{lstlisting}
 #+END_LaTeX
-* Paje File Format Specification
+* Paje File Format Specification                                   :noexport:
 \label{ap.pajeformat}
 
 The Pajé Trace File Format has two parts: event definition and events.
@@ -3835,7 +3931,7 @@ completed link is identified by a unique key.
 *end of a link of type *Type*, in container *Container*, ending in
 *EndContainer*, with value *Value*, and identified by key *Key*.
 
-* PajeNG structures
+* PajeNG structures                                                :noexport:
 \label{ap.pajeng}
 
 The main structures used by the PajeNG simulator to manipulate the
@@ -3875,7 +3971,7 @@ pointers, the changes made in one structure are reflected in the other
 ones. All of the variable and event objects are stored in this general
 list of entities.
 
-* Processing Command Line Arguments 
+* Processing Command Line Arguments                                :noexport:
 \label{ap.optionshandler}
 
 Since handling command line arguments is not very straightforward in
@@ -3941,9 +4037,11 @@ program. The constructor of Aiyra's OptionsHandler class has the
 following definitions:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
 opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
 opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);		
+\end{lstlisting}
 #+END_LaTeX
 
 =-f=: required field that indicates the file to be parsed;
@@ -3956,7 +4054,9 @@ To check if the user has passed the arguments properly, the Options
 class provides a simple method thet returns a boolean:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 opt.check
+\end{lstlisting}
 #+END_LaTeX
 
 In the OptionsHandler class, this verification is done in the
@@ -3964,6 +4064,7 @@ In the OptionsHandler class, this verification is done in the
 case the check fails.
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 public void checkOptionsHelper() {
 	// true=ignoreUnmatched false=requireLast
 	if (!this.opt.check(true, false)) {
@@ -3972,30 +4073,31 @@ public void checkOptionsHelper() {
 		System.out.println("-f <path-to-filename>");
 		System.out.println("-m <comment> (optional)");
 		System.out.println("-p <plugin> (optional, default: null) ");
-			
 		System.exit(1);
 	}
 }
+\end{lstlisting}
 #+END_LaTeX
 
 This validation must be done before the program continues, thus, this
 method is already called in the constructor:
 
 #+BEGIN_LaTeX
- public OptionsHandler(String args[]) {
-	  opt = new Options(args);
-
-      opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
-      opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
-      opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
-
-      checkOptionsHelper();	
-  }
+\begin{lstlisting}
+public OptionsHandler(String args[]) {
+  opt = new Options(args);
+  opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
+  opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
+  opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
+  checkOptionsHelper();	
+}
+\end{lstlisting}
 #+END_LaTeX 
 
-* Paje File Format Parser for JavaCC
+Paje File Format Parser for JavaCC
 \label{ap.grammar}
 #+BEGIN_LaTeX
+\begin{lstlisting}
 options
 {
   static = false;
@@ -4346,11 +4448,11 @@ String argument():
 	|arg = < FLOAT > {return arg.image.toString();}
 	|arg = < INT > {return arg.image.toString();}
 
-} 
+}
+\end{lstlisting}
 #+END_LaTeX
 
-
-* How to execute aiyra
+* How to execute aiyra                                             :noexport:
 \label{ap.aiyraexecute}
 
 Clone the repository in [[https://github.com/taisbellini/aiyra]].
@@ -4385,7 +4487,7 @@ by the script =pajeDB.sql= in Aiyra's main folder. Execute this plugin
 in a connection in MySQL and provide the parameters for the host,
 username and password.
 
-* How to create a plugin
+* How to create a plugin                                           :noexport:
 
 To create a plugin, extend the *PajePlugin* class and override the
 abstract methods. The objects available for the plugin are described
