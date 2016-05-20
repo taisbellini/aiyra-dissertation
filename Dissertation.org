@@ -41,7 +41,7 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
-* Export to PDF (org-mode installation + emacs configuration)      :noexport:
+* Export to PDF (org-mode installation + emacnos configuration)    :noexport:
 
 _org-mode installation_
 
@@ -124,7 +124,7 @@ Hope this helps.
 \author{Loureiro Bellini}{Tais}
 \advisor[Prof.~Dr.]{Mello Schnorr}{Lucas}
 
-\date{Maio}{2016}
+\date{May}{2016}
 \location{Porto Alegre}{RS}
 
 % \renewcommand{\nominataReit}{Prof\textsuperscript{a}.~Wrana Maria Panizzi}
@@ -3479,7 +3479,7 @@ ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
 \label{chapter.conclusion}
 
 In this proposal, we have elaborated a different approach to an
-existing simulation tool for Pajé Trace files (PajeNG). We have
+existing simulation tool for PajÃ© Trace files (PajeNG). We have
 observed issues in the PajeNG implementation, mainly regarding the
 lack of flexibility to handle the resulting data of the simulation and
 the ephemerality of these results. To improve the extensibility of the
@@ -3491,7 +3491,7 @@ design by implementing plugins.
 The separation of the core simulation from the data handling provided
 very good results. We were able to perform a simulation two times
 faster than the original tool. This is very relevant, since it opens
-several possibilities of creating high performance solutions. Creating
+several possibilities of creating high performance solutions. Building
 plugins for the solution was extremely important to validate and
 improve the proposal. The first approach consisted in having
 instrumentation points only for the events that generated complete
@@ -3501,37 +3501,33 @@ to insert a state entity, with foreign keys reffering a container and
 a type, the object referenced must already be in the database. Thus,
 we noticed that, for the extensibility to apply to the maximum number
 of potential scenarios, it needed to give access to every type of
-event possible in the Pajé format. Implementing this plugin took a lot
+event possible in the PajÃ© format. Implementing this plugin took a lot
 of time, and changes to it were made very frequently. It was
 interesting to observe that the modificatons were only performed in
 the *PajeInsertDBPlugin* class, demonstrating clearly that the
 handling of the results was totally deattached from the core
 simulation.
 
-The *PajeInsertDBPlugin* presented some issues that the Java language
-may bring regarding memory usage. First, it can become very slow
-depending on the number of objects it is storing. Second, there must
-be a carefull analysis on the configuration of the JVM to assure that
-it will have a capacity consistent to the platform in which it is
+The *PajeInsertDBPlugin* analysis presented some issues that the Java
+language may bring regarding memory usage. First, it can become very
+slow depending on the number of objects it is storing. Second, there
+must be a carefull analysis on the configuration of the JVM to assure
+that it will have a capacity consistent to the platform in which it is
 running. The *PajeDumpPlugin*, besides solving an issue, brings
 another concern which is the order in which the entities are
 presented, for example, states will be dumped before their
 containers. However, Aiyra is designed to facilitate the creation of
-new solutions to address these issues and any other that.
+new solutions to address these issues and any other that might appear
+in the future.
 
 For future work, it would be interesting to provide an interface for
 the plugin package such as it could support multiple languages. There
 is also room to improve the organization of the entry points so that
 they can be event more generic. It would also be interesting to shift
 the options handling regarding each plugin to its proper class,
-instead of centralizing all in the controller.
- 
-
-not only the simulator
-- plugins are important
-
-*Future Work*
-- Plugins in other languages
+instead of centralizing all in the controller. The way it is currently
+implemented, the user needs to modify the code in the controller
+package to add an argument to the plugin.
 
 #+LATEX: \bibliography{References}
 
