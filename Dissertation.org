@@ -1462,7 +1462,7 @@ each of these cases are
 
 #+BEGIN_LaTeX
 \begin{table}[!htb]
-\caption{Experimental Units description.}
+\caption{Experimental Units description}
 \label{tab.machines}
 \centering
 \begin{tabularx}{\linewidth}{lXXX}\toprule
@@ -1493,8 +1493,8 @@ Table \ref{tab.jvm}.
 \centering
 \begin{tabularx}{\linewidth}{lXXX}\toprule
                          &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
-Inital heap size         &  Intel Core i7        & 526368896            & 327213824   \\
-Maximum heap size        &  1                    & 8422162432           & 5236588544       \\
+Inital heap size (bytes)         &  Intel Core i7        & 526368896            & 327213824   \\
+Maximum heap size(bytes)        &  1                    & 8422162432           & 5236588544       \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
@@ -1760,7 +1760,7 @@ exploratory tests. The experients for these platforms do not have the
 *A* batch size.
 
 \noindent
-*_Expected_*
+_Expected_
 
 According to the observation of bad performance when executing
 excessive accesses to the database, we expect that the bigger the
