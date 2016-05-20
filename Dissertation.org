@@ -1787,7 +1787,7 @@ are divided in the three metrics analysed: *execution time*,
 *insertion time*, and *maximum memory usage*. There is also a section
 to analyse metrics obtained during the execution of the batches.
 
-\noident
+\noindent
 *Execution Time*
 
 Figure \ref{fig.batchbig} illustrates the behavior of the execution
@@ -1870,7 +1870,7 @@ are at least in the Megabytes order of magnitude.
 \end{figure}
 #+END_LaTeX
 
-\noident
+\noindent
 *Memory Usage* 
 
 Going further on the analysis, we see in Figures \ref{fig.membig} and
@@ -1896,6 +1896,7 @@ batches.
 \end{figure}
 #+END_LaTeX
 
+\noindent
 *Insertion Time*
 
 By analyzing the results, we observed that the number of accesses to
@@ -1947,6 +1948,7 @@ remote and local experiments rely on the insertion time.
 \end{figure}
 #+END_LaTeX
 
+\noindent
 *Batch Insertion Traces*
 
 To have a more detailed sight of the insertion time behavior, we
