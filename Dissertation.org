@@ -3454,10 +3454,11 @@ the program. Notice that the class must have the same name as the
 generated parser.
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 TOKEN_MGR_DECLS:
 {
-
 }
+\end{lstlisting}
 #+END_LaTeX
 
 The declarations used by the lexical analyser are placed in the
@@ -3474,15 +3475,18 @@ performed since it is just an example to clarify the JavaCC syntax. To
 declare tokens, we use the following notation:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 TOKEN: 
 {
   < [NAME] : [EXPRESSION] >  
 }
+\end{lstlisting}
 #+END_LaTeX
 
 For our example of language we will have the following tokens: 
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 /* Integer Literals */
 TOKEN : 
 {
@@ -3502,6 +3506,7 @@ TOKEN:
   < INTEGER_TYPE : "int" >
   < CHAR_TYPE: "char" >
 }
+\end{lstlisting}
 #+END_LaTeX
 
 As we can see in the definitions above, it is not necessary to
@@ -3515,12 +3520,13 @@ regular expression defined in the SKIP scope will not be treated by
 the parser.  Example:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 SKIP: 
 {
   "\n" 
   \| "\t"
-
 } 
+\end{lstlisting}
 #+END_LaTeX
 
 After the token declaration, comes the grammar rules. The rules are
@@ -3528,11 +3534,13 @@ declared as methods, that can have return values or not. The structure
 of a method is the following:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 [type] [name] ()
 {}
 { 
   /* Rules */
 }
+\end{lstlisting}
 #+END_LaTeX
 
 The empty braces in the beginning of the method can be filled with
@@ -3543,11 +3551,13 @@ variables declared earlier. To refer to the tokens, we use its name
 between angular brackets. Example:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void parser()
 { int number; }
 {
   number = <INTEGER>
 }
+\end{lstlisting}
 #+END_LaTeX
 
 The first method defined will be the entrance to the parser and it can
@@ -3556,11 +3566,13 @@ entrance for the language we are using as an example would be as
 follows:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void start()
 {}
 {
   declarations() assignments() <EOF>
 }
+\end{lstlisting}
 #+END_LaTeX
 
 EOF is a default token. It is important to guarantee that the file
@@ -3570,6 +3582,7 @@ and the assignments at the end. Next, we expand the two methods to
 address all the possibilities:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void declarations()
 {}
 {
@@ -3581,7 +3594,7 @@ void assignments()
 {
   (<VARIABLE> <ASSIGNMENT> (<CHAR> | <INTEGER>))*
 }
-
+\end{lstlisting}
 #+END_LaTeX
 
 The multiplicity can be defined with the standard characters "*", "?",
@@ -3591,6 +3604,7 @@ to describe a value that will be assigned to a variable. In this case,
 the assignments() rule would be expanded as follows:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 void assignments()
 {}
 {
@@ -3602,6 +3616,7 @@ void assignable():
 {
   <CHAR> | <INTEGER> 
 }
+\end{lstlisting}
 #+END_LaTeX
 
 *** Usage with Java
@@ -3610,14 +3625,18 @@ In order to call the parser in a Java program, an object of the
 MyGrammar class needs to be instantiated:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 MyGrammar parser = new MyGrammar(input);
+\end{lstlisting}
 #+END_LaTeX
 
 Then, once there is an instance of the parser, it is possible to call
 the first method of the parser:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 parser.start();
+\end{lstlisting}
 #+END_LaTeX
 
 This code has a Java syntax and is placed in the main class presented
@@ -3625,22 +3644,19 @@ previously. Between the declarations of PARSER_BEGIN and PARSER_END,
 any Java code can be placed to manipulate the results of the parsing.
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 PARSER_BEGIN(MyGrammar)
 /* Imports */
 public class MyGrammar {
     public static void main(String args []){
         /* Code to read the input */
-
         MyGrammar parser = new MyGrammar(input);
         parser.start();
-
        /* Java code to manipulate the parser results */
-  
   }
-
 }
-
 PARSER_END(MyGrammar)
+\end{lstlisting}
 #+END_LaTeX
 * Paje File Format Specification
 \label{ap.pajeformat}
@@ -3937,9 +3953,11 @@ program. The constructor of Aiyra's OptionsHandler class has the
 following definitions:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
 opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
 opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);		
+\end{lstlisting}
 #+END_LaTeX
 
 =-f=: required field that indicates the file to be parsed;
@@ -3952,7 +3970,9 @@ To check if the user has passed the arguments properly, the Options
 class provides a simple method thet returns a boolean:
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 opt.check
+\end{lstlisting}
 #+END_LaTeX
 
 In the OptionsHandler class, this verification is done in the
@@ -3960,6 +3980,7 @@ In the OptionsHandler class, this verification is done in the
 case the check fails.
 
 #+BEGIN_LaTeX
+\begin{lstlisting}
 public void checkOptionsHelper() {
 	// true=ignoreUnmatched false=requireLast
 	if (!this.opt.check(true, false)) {
@@ -3968,30 +3989,31 @@ public void checkOptionsHelper() {
 		System.out.println("-f <path-to-filename>");
 		System.out.println("-m <comment> (optional)");
 		System.out.println("-p <plugin> (optional, default: null) ");
-			
 		System.exit(1);
 	}
 }
+\end{lstlisting}
 #+END_LaTeX
 
 This validation must be done before the program continues, thus, this
 method is already called in the constructor:
 
 #+BEGIN_LaTeX
- public OptionsHandler(String args[]) {
-	  opt = new Options(args);
-
-      opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
-      opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
-      opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
-
-      checkOptionsHelper();	
-  }
+\begin{lstlisting}
+public OptionsHandler(String args[]) {
+  opt = new Options(args);
+  opt.getSet().addOption("f", Options.Separator.BLANK, Options.Multiplicity.ONCE);
+  opt.getSet().addOption("m", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
+  opt.getSet().addOption("p", Options.Separator.BLANK, Options.Multiplicity.ZERO_OR_ONE);
+  checkOptionsHelper();	
+}
+\end{lstlisting}
 #+END_LaTeX 
 
-* Paje File Format Parser for JavaCC
+Paje File Format Parser for JavaCC
 \label{ap.grammar}
 #+BEGIN_LaTeX
+\begin{lstlisting}
 options
 {
   static = false;
@@ -4342,7 +4364,8 @@ String argument():
 	|arg = < FLOAT > {return arg.image.toString();}
 	|arg = < INT > {return arg.image.toString();}
 
-} 
+}
+\end{lstlisting}
 #+END_LaTeX
 
 
