@@ -182,38 +182,41 @@ Hope this helps.
 #+END_LaTeX
 
 * Abstract                                                         :ignore:
-                                                      
+
 #+BEGIN_LaTeX
 \begin{abstract}
 #+END_LaTeX
-Tracing is a very common method to observe program behavior, where
-interesting program events are registered in trace files. Replaying
-these trace files through simulation is used to analyze the data. The
-simulation combines information that is spread in multiple events
-deriving new and richer entities. Usually, this event processing is
-done once and discarded, an approach adopted, for instance, by the
-Pajé trace simulator. The objective of this proposal is to allow the
-performance analyst to change the simulator behavior when entities are
-detected according to his needs. This extensibility is implemented
-through plugins, that could be developed by any programmer, where
-every entity created is forwaded to it. It is the plugin's
-responsibility to handle the entity. As a proof of concept, this work
-presents the implementation of two plugins: a textual output similar
-to an existing one in the Pajé tool; and a database insertion in a
-pre-defined relational schema.  A performance analysis was developed
-to compare Aiyra against the Pajé trace simulator. It is worth
-highlighting that the new simulator had better performance results
-with bigger files (over 120 Megabytes), that being possibly attributed
-to the fact that it discards from memory entities that will no longer
-be used. Additionally, the Pajé Insert Database plugin was evaluated
-comparing its different possibilities of usage. In this investigation,
-we varied the frequency of the insertions in the database by grouping
-queries in memory. The aim of this test was to understand the impact
-of the access to a database in the performance versus the memory
-usage. The memory usage had more impact in the performance than the
-accesses to the database themselves, probably due to the Garbage
-Collector mechanism used by Java, the language used for the
-implementation.
+Observation of program behavior through trace files is particularly
+important in High Performance Computing (HPC) since it enables an
+accurate performance analysis. In this context, the Pajé framework is
+commonly employed to simulate trace files in the Pajé file format. The
+simulator works by recreating the program behavior in an offline
+fashion, allowing the performance analyst to better understand
+performance issues that might have occurred during execution.  As of
+today, there are at least three issues with the Pajé simulator: little
+extensibility, lack of partial outcomes and impermanent
+results. Although Pajé has been built in an extensible manner, it is
+necessary to write a full component for Pajé to actually achieve
+extensibility. This is a complex task since it implies in
+understanding the internal class hierarchy of the framework. The
+second issue is that it is impossible to get a partial view of
+simulated data prior to the end of the input trace. And finally, the
+third is related to the ephemerality of results: all simulated data is
+discarted once Pajé exists. To address these issues, an extensible
+plugin-based trace file simulator called Aiyra has been designed and
+implemented.  Aiyra's objective is to allow extreme extensibility by
+letting the performance analyst write plugins that deal with simulated
+data. The plugins can be attached to the simulator in specific and
+important points where the trace events are combined. As a proof of
+concept, we have implemented plugins to dump partial data that has
+just been simulated and to make the results permanent, by inserting
+simulated data into a database.  A performance analysis has been
+conducted to compare Aiyra against the existing Pajé trace
+simulator. Our simulator presented better performance results with
+larger files, that being possibly attributed to the fact that our
+solution keeps the memory footprint low throughout execution. We have
+also evaluated the database plugin in a number of different scenarios
+through the use of a rigorous experimental design.
 #+BEGIN_LaTeX
 \end{abstract}
 #+END_LaTeX
@@ -310,6 +313,8 @@ Do as follows:
    #+end_src
 
 * Introduction
+
+
 
 _Global Comment_
 - Check the PDF to respect all margins
