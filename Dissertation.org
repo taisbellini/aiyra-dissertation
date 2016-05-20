@@ -285,7 +285,7 @@ rigoroso /design/ experimental.
 % \end{listofsymbols}
 #+END_LaTeX
 
-* Sumário                                                          :ignore:
+* Sumário                                                            :ignore:
 
 #+BEGIN_LaTeX
 \tableofcontents
@@ -389,7 +389,8 @@ printed out. Besides not being able to have a partial view of already
 simulated entities, the user won't have records of the results between
 executions for different files unless he specifies a destination for
 it himself. To address these issues, an extensible trace files
-simulator, Aiyra, was developed in Java.
+simulator, Aiyra\footnote{http://github.com/taisbellini/aiyra/}, was
+developed in Java. The full code is publicly available on Github.
 
 The objective of this proposal is to allow the performance analyst to
 change the simulator behavior when a new entity is detected. Thus, the
@@ -473,11 +474,12 @@ generator, but it was soon discarded due to its very low performance.
 
 JavaCC can be downloaded, unzipped and added to the PATH. It also has
 a plugin for Eclipse. Figure \ref{fig.javaccex} exemplifies the flow
-in JavaCC. Once installed, JavaCC processes your grammar defined in a file
-with extension =.jj= using the command =javacc=. The whole grammar
-is kept in this file and it is the only file that needs to be
+in JavaCC. Once installed, JavaCC processes your grammar defined in a
+file with extension =.jj= using the command =javacc=. The whole
+grammar is kept in this file and it is the only file that needs to be
 modified. It is also possible to add Java code that has to be executed
-during the parsing.
+during the parsing. A detailed tutorial about the JavaCC is in
+Appendix \ref{ap.javacc}.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -750,9 +752,7 @@ and end, indicating how long the variable had that specific value. A
 communication between processes. It contains two timestamps specifying
 the beginning and the end of the communication. A Pajé trace file is
 divided in two segments: event definition and timestamped events. A
-brief description of these sections is provided below. For details and
-an example of an event definition, as well as a full list of events
-refer to Appendix \ref{ap.pajeformat}.
+brief description of these sections is provided below.
 
 *** Header section: events definition
 
@@ -838,7 +838,7 @@ the trace file and puts it in memory. Then, the *EventDecoder* breaks
 it into events identifying, line by line, the event's fields and
 creating an object with all the necessary information. Last, the
 *PajeSimulator* receives this event object and addresses to the proper
-simulation. 
+simulation.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -956,11 +956,10 @@ created throughout the simulation by using map structures (=typeMap=
 and =contMap=) with the name or alias as key. There is always a
 pointer to the root type and another to the root container initialized
 in the beginning of the program.  The simulator contains one method
-for each type of event described in Appendix \ref{ap.events}, which
-perform all the validations, besides the processing itself. Whenever
-there is an event that defines a type the entity generated is added to
-the =typeMap=.  =contMap= and the proper method of the container
-object is called.
+for each type of event, which perform all the validations, besides the
+processing itself. Whenever there is an event that defines a type the
+entity generated is added to the =typeMap=.  =contMap= and the proper
+method of the container object is called.
 
 The PajeContainer class also uses map structures to store all the
 entities that are related to it including other containers. Besides
@@ -1029,8 +1028,8 @@ memory, forwards every created entity to a common place where it can
 be manipulated freely. The architecture of the implementation,
 characterized in Figure \ref{fig.aiyraArchitecture}, contains three
 packages: *controller*, *simulator core* and *plugin*. Every event of
-a trace file always goes through all packages. First, the trace
-file in the input is read by the parser, where a trace event object is
+a trace file always goes through all packages. First, the trace file
+in the input is read by the parser, where a trace event object is
 created. This instance contains the type of event in question and the
 field values. In the example of Figure \ref{fig.aiyraArchitecture},
 the event read is the creation of a container of type *P* with alias
@@ -1059,10 +1058,9 @@ The program receives arguments from the user in its execution. The
 what is the trace file to be simulated. There are other two general
 options: *comment* (=-m=), a comment about the file; and *plugin*
 (=-p=), which indicates which plugin will be used in the
-simulation. The details about the already implemented plugins are 
-presented in chapter \ref{chapter.plugins} and a step-by-step 
-execution of Aiyra can be found in Appendix \ref{ap.aiyraexecute}. The
-following subsections detail each one of the packages.
+simulation. The details about the already implemented plugins are
+presented in chapter \ref{chapter.plugins}. The following subsections
+detail each one of the packages.
 
 ** The controller: option handling and JavaCC
 
@@ -1086,10 +1084,8 @@ parsing component, all the necessary Java code for the program to run,
 such as the initialization of the simulator object, where all of the
 simulation takes place. Every time an event is identified, the
 simulator instance, which is the entry point of the simulator core
-package, is called to simulate that event. The next section describes the
-simulator core package. For details about the OptionsHandler class and
-the complete grammar created for the Pajé Format refer to Appendix
-\ref{ap.optionshandler} and \ref{ap.grammar}.
+package, is called to simulate that event. The next section describes
+the simulator core package.
 
 ** Aiyra's core simulator
 
@@ -1256,14 +1252,15 @@ chapter.
 
 To address traditional uses of Paje trace files, we have implemented
 three plugins for the Aiyra framework: the *PajeDumpPlugin*, the
-*PajeInsertDBPlugin*, and the *PajeNullPlugin*. The first one is used to
-match the behavior of the existing =pj_dump= tool but without the issues
-we have mentioned in Section \ref{sec.pajeng_issues}; the second one
-can be used to insert the trace file in a relationa database, allowing
-the user to use SQL commands to inspect simulated traces; and finally,
-the third can be used to evaluate the Aiyra's performance for any kind
-of input. We detail each of them in the following, from the one that
-presents the lowest to the highest complexity.
+*PajeInsertDBPlugin*, and the *PajeNullPlugin*. The first one is used
+to match the behavior of the existing =pj_dump= tool but without the
+issues we have mentioned in Section \ref{sec.pajeng_issues}; the
+second one can be used to insert the trace file in a relationa
+database, allowing the user to use SQL commands to inspect simulated
+traces; and finally, the third can be used to evaluate the Aiyra's
+performance for any kind of input. We detail each of them in the
+following, from the one that presents the lowest to the highest
+complexity.
 
 ** Paje Null Plugin
 
@@ -1411,9 +1408,6 @@ field.
 \end{figure}
 #+END_LaTeX
 
-_Comment_
-- You should take extra care with this figure. Reorganize.
-
 *** Relational Model
 
 
@@ -1468,10 +1462,9 @@ the analysis of its performance and the study of the most efficient
 use of it is very important.
 
 The experiment execution order is dictated by full factorial
-experimental designs created in the R language with the
-*DoE.base* package. The
-package generates a Comma-Separated Values (*CSV)* file with one
-column for each factor. The rows represent each possible
+experimental designs created in the R language with the *DoE.base*
+package. The package generates a Comma-Separated Values (*CSV*) file
+with one column for each factor. The rows represent each possible
 combination of the different levels and multiplies it by the number of
 replications. We created *bash* scripts to execute the experiments of
 the design generating another *CSV* sheet including the response
@@ -1483,11 +1476,11 @@ remainder of this chapter comprises the analysis results.
 
 The experiments are performed in three different machines: *luiza*,
 with a Mac OSX environment, *guarani*, and *orion1*, both running
-Linux. The details about the experimental platforms are described in Table
-\ref{tab.machines}. We have created three input trace files with
-different sizes identified by *small*, *medium*, and *big*. The sizes for
-each of these cases are
-128 Kilobytes, 128 Megabytes, and 1 Gigabytes, respectively.
+Linux. The details about the experimental platforms are described in
+Table \ref{tab.machines}. We have created three input trace files with
+different sizes identified by *small*, *medium*, and *big*. The sizes
+for each of these cases are 128 Kilobytes, 128 Megabytes, and 1
+Gigabytes, respectively.
 
 #+BEGIN_LaTeX
 \begin{table}[!htb]
@@ -1522,8 +1515,8 @@ Table \ref{tab.jvm}.
 \centering
 \begin{tabularx}{\linewidth}{lXXX}\toprule
                          &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
-Inital heap size (bytes)         &  Intel Core i7        & 526368896            & 327213824   \\
-Maximum heap size(bytes)        &  1                    & 8422162432           & 5236588544       \\
+Inital heap size (bytes)         &  268435456        & 526368896            & 327213824   \\
+Maximum heap size(bytes)        &  4294967296            & 8422162432        & 5236588544       \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
