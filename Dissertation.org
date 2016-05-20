@@ -3665,7 +3665,7 @@ public class MyGrammar {
 PARSER_END(MyGrammar)
 \end{lstlisting}
 #+END_LaTeX
-* Paje File Format Specification
+* Paje File Format Specification                                   :noexport:
 \label{ap.pajeformat}
 
 The Pajé Trace File Format has two parts: event definition and events.
@@ -3854,7 +3854,7 @@ completed link is identified by a unique key.
 *end of a link of type *Type*, in container *Container*, ending in
 *EndContainer*, with value *Value*, and identified by key *Key*.
 
-* PajeNG structures
+* PajeNG structures                                                :noexport:
 \label{ap.pajeng}
 
 The main structures used by the PajeNG simulator to manipulate the
@@ -3894,7 +3894,7 @@ pointers, the changes made in one structure are reflected in the other
 ones. All of the variable and event objects are stored in this general
 list of entities.
 
-* Processing Command Line Arguments 
+* Processing Command Line Arguments                                :noexport:
 \label{ap.optionshandler}
 
 Since handling command line arguments is not very straightforward in
@@ -4375,8 +4375,7 @@ String argument():
 \end{lstlisting}
 #+END_LaTeX
 
-
-* How to execute aiyra
+* How to execute aiyra                                             :noexport:
 \label{ap.aiyraexecute}
 
 Clone the repository in [[https://github.com/taisbellini/aiyra]].
@@ -4411,7 +4410,7 @@ by the script =pajeDB.sql= in Aiyra's main folder. Execute this plugin
 in a connection in MySQL and provide the parameters for the host,
 username and password.
 
-* How to create a plugin
+* How to create a plugin                                           :noexport:
 
 To create a plugin, extend the *PajePlugin* class and override the
 abstract methods. The objects available for the plugin are described
