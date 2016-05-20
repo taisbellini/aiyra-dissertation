@@ -1405,7 +1405,7 @@ each of these cases are
 \begin{tabularx}{\linewidth}{lXXX}\toprule
                          &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
 Processor                &  Intel Core i7        & Xeon E5-2630         & Intel Core i5-2400   \\
-CPU(s)                   &  1                    & 24                   & 4       \\
+CPU(s)                   &  1                    & 2                    & 1       \\
 Cores per CPU            &  4                    & 6                    & 4             \\
 Max. Freq.               &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
 L1 Cache                 & 32/32KBytes           & 32/32KBytes          & 32/32KBytes  \\     
@@ -1419,8 +1419,8 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 
 _Comment_:
 - Are you sure L1, L2 and L3 cache sizes are the same for all of them?
-- =Orion1= has only 2 CPUs, each one with 6 cores
-- =guarani= has only 1 CPU with 4 cores.
+  *Luiza I am sure, the others apparently I have used the wrong
+  command to check CPU, maybe I used the wrong onw for it too*
 
 *** Aiyra and PajeNG Comparison Methodology
 
@@ -1451,11 +1451,6 @@ of the platforms, thus, we had three files each with $270$ rows. The
 total number of experiments considering the three platforms is
 therefore $810$.
 
-(header of the design?)
-
-_Comment_:
-- What do you mean by header of the design?
-
 *** PajeInsertDBPlugin evaluation
 
 The *PajeInsertDBPlugin* provides an option for the user to define a
@@ -1483,7 +1478,7 @@ network speed.
 \begin{figure}[!htb]
 \caption{Network topology}
 \centering
-\includegraphics[width=\linewidth]{./img/infnetwork.pdf}
+\includegraphics[width=.4\linewidth]{./img/infnetwork.pdf}
 \label{fig.infnetwork}
 \end{figure}
 #+END_LaTeX
