@@ -148,10 +148,12 @@ Hope this helps.
 %
 % TODO: provide these keywords
 %
-% \keyword{formatação eletrônica de documentos}
-% \keyword{\LaTeX}
-% \keyword{ABNT}
-% \keyword{UFRGS}
+\keyword{Trace simulation}
+\keyword{Replay}
+\keyword{Pajé}
+\keyword{JavaCC}
+\keyword{MySQL}
+\keyword{Performance}
 #+END_LaTeX
 
 * Front page                                                       :ignore:
