@@ -1486,25 +1486,25 @@ This experiment evaluates the performance of Aiyra using the
 *PajeNullPlugin* against two versions of the *pj_dump* tool (*pj* and
 *pjflex)*, both part of PajeNG. The difference between the =pj_dump=
 versions is in the reading of the trace file: while the first (*pj*)
-uses the standard C++ parsing, the second (*pjflex*) uses a scanner
-and parser generator (based on the standard *flex* and *bison* from
-GNU). The executions of the *pj_dump* tool received =--quiet= as a
-parameter to avoid the actual dumping of the information in the
-standard output, since we only need the execution time to carry out
-the comparison.  It is important to highlight that Aiyra does not
-perform any action in the resulted entities and discards all of them.
+uses a hand-tailored parsing, the second (*pjflex*) uses a standard
+scanner and parser generator (based on the *flex* and *bison* from GNU).
+Since we only need the execution time to carry out the comparison, the
+*pj_dump* executions received =--quiet= as a parameter to avoid the actual
+dumping of the information in the standard output.  It is important to
+highlight that Aiyra does not perform any action in the resulted
+entities and discards all of them.
 
 Concerning the experimental design, two factors are chosen: *input*
-and *version*. The first assumed the values *small*, *medium*, and
-*big*. The second, *aiyra*, *pj* and *pjflex*. The number of
-replications chosen was $30$. This value was selected after a few
+and *version*. The first assumes the values *small*, *medium*, and
+*big*. The second, *aiyra*, *pj* and *pjflex*. Each experimental combination
+is executed $30$ times so we can understand measurement variability. This value was selected after a few
 preliminary experiments where we have noticed very little experimental
 variability. As the executions take a significant amount time, $30$
 repetitions is enough to have reliable results. Since we have two
 factors, each with three levels, we have a total of $270$ experiments
 (the product of $3*3*30$). The outcome of this experiment is the
-*execution* time for each combination of input and version. This
-design was run in each one of the platforms, thus, we had three files
+*execution* time for each combination of input and version. We execute the
+design in each one of the platforms, thus, we had three files
 each with $270$ rows. The total number of experiments considering the
 three platforms is therefore $810$.
 
