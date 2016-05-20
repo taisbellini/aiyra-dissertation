@@ -1755,6 +1755,12 @@ longer than the local experiment.
 \noindent
 _Observed Results_
 
+_Comment_
+- This long part requires structure. Can you create "sections and
+  subsections" within? I known it might be hard but I think it would
+  be better to understand (as always, before starting, explain the
+  structure to the reader).
+
 As the values for A, B, C, D, E and F vary among the different input
 sizes, it is consistent to analyze each input separately. Figure
 \ref{fig.batchbig} illustrates the behavior of the execution using the
