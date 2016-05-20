@@ -473,6 +473,10 @@ during the parsing.
 \end{figure}
 #+END_LaTeX
 
+_Comments_:
+- Improve the caption
+- put names in the output source files
+
 
 In Figure \ref{fig.javaccex} we can see an example of the processing
 of a file named *MyGrammar.jj*, which results in seven files: the
