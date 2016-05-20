@@ -1761,10 +1761,11 @@ sizes, it is consistent to analyze each input separately. Figure
 big input. We have results for all batch sizes except A. The reason
 for this is that Aiyra exceed the heap space to store data in memory,
 mainly because we have adopted default values for heap allocation in
-the JVM. The *guarani* platform also did not handle the B size. These
-missing data do not affect the analysis of the results and it is
+the JVM. The *guarani* platform was uncapable of handling A and B sizes.
+Our analysis is unaffected by these missing cases since it is
 possible to observe a pattern which is the opposite of what we have
-imagined. We can see that the smaller the batch size, the better the
+expected.
+We can see that the smaller the batch size, the better the
 performance. In fact, this is easily explained since Java's memory
 management may be very slow, specially if the heap size is big. By
 these results, we see that the memory usage overhead is higher than
