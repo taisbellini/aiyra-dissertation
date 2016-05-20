@@ -201,7 +201,7 @@ understanding the internal class hierarchy of the framework. The
 second issue is that it is impossible to get a partial view of
 simulated data prior to the end of the input trace. And finally, the
 third is related to the ephemerality of results: all simulated data is
-discarted once Pajé exists. To address these issues, an extensible
+discarted once Pajé exits. To address these issues, an extensible
 plugin-based trace file simulator called Aiyra has been designed and
 implemented.  Aiyra's objective is to allow extreme extensibility by
 letting the performance analyst write plugins that deal with simulated
@@ -224,41 +224,41 @@ through the use of a rigorous experimental design.
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
-\begin{englishabstract}{Titulo em pt-br.}{Palavra-chave 1. Palavra-chave 2.}
+\begin{englishabstract}{Simulador extensível para arquivos de rastro no formato Pajé}{Pajé.Rastro.Simulador.}
 #+END_LaTeX
-
-Observation of program behavior through trace files is particularly
-important in High Performance Computing (HPC) since it enables an
-accurate performance analysis. In this context, the Pajé framework is
-commonly employed to simulate trace files in the Pajé file format. The
-simulator works by recreating the program behavior in an offline
-fashion, allowing the performance analyst to better understand
-performance issues that might have occurred during execution.  As of
-today, there are at least three issues with the Pajé simulator: little
-extensibility, lack of partial outcomes and impermanent
-results. Although Pajé has been built in an extensible manner, it is
-necessary to write a full component for Pajé to actually achieve
-extensibility. This is a complex task since it implies in
-understanding the internal class hierarchy of the framework. The
-second issue is that it is impossible to get a partial view of
-simulated data prior to the end of the input trace. And finally, the
-third is related to the ephemerality of results: all simulated data is
-discarted once Pajé exists. To address these issues, an extensible
-plugin-based trace file simulator called Aiyra has been designed and
-implemented.  Aiyra's objective is to allow extreme extensibility by
-letting the performance analyst write plugins that deal with simulated
-data. The plugins can be attached to the simulator in specific and
-important points where the trace events are combined. As a proof of
-concept, we have implemented plugins to dump partial data that has
-just been simulated and to make the results permanent, by inserting
-simulated data into a database.  A performance analysis has been
-conducted to compare Aiyra against the existing Pajé trace
-simulator. Our simulator presented better performance results with
-larger files, that being possibly attributed to the fact that our
-solution keeps the memory footprint low throughout execution. We have
-also evaluated the database plugin in a number of different scenarios
-through the use of a rigorous experimental design.
-
+Observação do comportamento de programa através de arquivos de rastro
+é particularmente importante em Computação de Alta Performance, uma
+vez que permite que uma análise de desempenho precisa. Neste contexto,
+a ferramenta Pajé é bastante utilizada para simular arquivos de rastro
+no formato de arquivo Pajé. O simulador funciona, recriando o
+comportamento do programa em modo /offline/, permitindo que o analista
+de desempenho entenda melhor problemas de desempenho que possam ter
+ocorrido durante a execução. Atualmente, há pelo menos três problemas
+com o simulador Pajé: pouca extensibilidade, falta de resultados
+parciais e resultados temporários. Embora o Pajé tenha sido construído
+para ser extensível, é necessário escrever um componente inteiro para
+conseguir realmente extensibilidade. Esta é uma tarefa complexa, pois
+implica em compreender a hierarquia de classes interna do programa. A
+segunda questão é que é impossível obter uma visão parcial do dados
+simulados antes do final do arquivo de entrada. E, finalmente, o
+terceiro problema está relacionado com a efemeridade dos resultados:
+todos os dados simulados são descartados quando o Pajé termina de
+executar. Para resolver estas questões, um simulador extensível
+baseado em /plugins/ chamado Aiyra foi concebido e implementado. O
+objetivo da Aiyra é permitir extrema extensibilidade deixando o
+analista de desempenho construir /plugins/ que lidam com os dados
+simulados. Os /plugins/ podem ser conectados ao simulador em pontos
+específicos onde os eventos de rastreamento importantes são
+combinados. Como prova de conceito, implementamos plugins para mostrar
+na saída padrão dados parciais que acabaram de ser simulados e para
+tornar os resultados permanente, inserindo os dados simulados em uma
+base de dados. Uma análise de desempenho foi conduzido para comparar
+Aiyra com o simulador Pajé existente. Nosso simulador apresentou
+melhores resultados de desempenho com arquivos maiores, o que foi
+atribuído ao fato de que o nosso solução mantém o consumo de memória
+baixo ao longo da execução. Nós também avaliamos o /plugin/ de
+inserção em uma base de dados para diferentes cenários através de um
+rigoroso /design/ experimental.
 #+BEGIN_LaTeX
 \end{englishabstract}
 #+END_LaTeX
@@ -271,11 +271,10 @@ through the use of a rigorous experimental design.
 % lista de abreviaturas e siglas
 % o parametro deve ser a abreviatura mais longa
 \begin{listofabbrv}{SPMD}
-    \item[SMP] Symmetric Multi-Processor
-    \item[NUMA] Non-Uniform Memory Access
-    \item[SIMD] Single Instruction Multiple Data
-    \item[SPMD] Single Program Multiple Data
-    \item[ABNT] Associação Brasileira de Normas Técnicas
+    \item[GC] Garbage Collector
+    \item[CSV] Comma Separated Values
+    \item[JVM] Java Virtual Machine
+    \item[JDBC] Java Database Connectivity
 \end{listofabbrv}
 
 
