@@ -1585,18 +1585,8 @@ _Expectation_
 It is universally known that C++ is a language with better
 performance than Java. We suppose that Aiyra will be slower than
 PajeNG, but with an acceptable execution time. It is also expected
-that the version *pj_flex* will be slower than *pj*, since *flex* has
-the characteristic of having lower performance.
-
-_Comment_:
-- Actually, when *pjflex* was proposed, we through it would provide
-  better performance than *pj*. That's was not the case, but we never
-  took a look to understand why. So, I'd say the expectations would be
-    different, but that doesn't really matter from your perspective.
-
-*But when we started the experiments, we already knew that
-*pj_flex* was slower, so we knew this results. Or should we ommit that
-and say we expected flex to be faster?*
+that the version *pj_flex* will be slower than *pj*, an information
+provided by the PajeNG developers.
 
 \noindent
 _Observed Results_
