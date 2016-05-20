@@ -1438,10 +1438,11 @@ to be studied. As it involves the connection with an external tool,
 the analysis of its performance and the study of the most efficient
 use of it is very important.
 
-We created full factorial experimental designs, using the R language
-with the *DoE.base* package, to define the tests to be performed. The
+The experiment execution order is dictated by full factorial
+experimental designs created in the R language with the
+*DoE.base* package. The
 package generates a Comma-Separated Values (*CSV)* file with one
-column for each factor. Each row of the file represents each possible
+column for each factor. The rows represent each possible
 combination of the different levels and multiplies it by the number of
 replications. We created *bash* scripts to execute the experiments of
 the design generating another *CSV* sheet including the response
