@@ -1620,10 +1620,6 @@ allocation is not usually a problem in C++ programs, it is more likely
 that this result relies on the implementation difference. As expected,
 the *pj_flex* version was slower than *pj*, thus, slower than *aiyra*.
 
-_Comment_:
-- What do you mean by "architectural difference"? *implementation difference*
-- What do you mean by "C++ implementation"? That from gcc? *General C++ programs*
-
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Results of comparison between Aiyra and PajeNG}
