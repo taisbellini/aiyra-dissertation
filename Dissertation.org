@@ -41,147 +41,6 @@
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
 #+LATEX_HEADER: \input{configuration.tex}
 
-* Front page preparation                                           :ignore:
-
-#+BEGIN_LaTeX
-\title{Extensible Simulator for Replay of Trace Files in the Pajé format}
-\author{Loureiro Bellini}{Tais}
-\advisor[Prof.~Dr.]{Mello Schnorr}{Lucas}
-
-\date{Maio}{2016}
-\location{Porto Alegre}{RS}
-
-% \renewcommand{\nominataReit}{Prof\textsuperscript{a}.~Wrana Maria Panizzi}
-% \renewcommand{\nominataReitname}{Reitora}
-% \renewcommand{\nominataPRE}{Prof.~Jos{\'e} Carlos Ferraz Hennemann}
-% \renewcommand{\nominataPREname}{Pr{\'o}-Reitor de Ensino}
-% \renewcommand{\nominataPRAPG}{Prof\textsuperscript{a}.~Joc{\'e}lia Grazia}
-% \renewcommand{\nominataPRAPGname}{Pr{\'o}-Reitora Adjunta de P{\'o}s-Gradua{\c{c}}{\~a}o}
-% \renewcommand{\nominataDir}{Prof.~Philippe Olivier Alexandre Navaux}
-% \renewcommand{\nominataDirname}{Diretor do Instituto de Inform{\'a}tica}
-% \renewcommand{\nominataCoord}{Prof.~Carlos Alberto Heuser}
-% \renewcommand{\nominataCoordname}{Coordenador do PPGC}
-% \renewcommand{\nominataBibchefe}{Beatriz Regina Bastos Haro}
-% \renewcommand{\nominataBibchefename}{Bibliotec{\'a}ria-chefe do Instituto de Inform{\'a}tica}
-% \renewcommand{\nominataChefeINA}{Prof.~Jos{\'e} Valdeni de Lima}
-% \renewcommand{\nominataChefeINAname}{Chefe do \deptINA}
-% \renewcommand{\nominataChefeINT}{Prof.~Leila Ribeiro}
-% \renewcommand{\nominataChefeINTname}{Chefe do \deptINT}
-
-%
-% TODO: provide these keywords
-%
-% \keyword{formatação eletrônica de documentos}
-% \keyword{\LaTeX}
-% \keyword{ABNT}
-% \keyword{UFRGS}
-#+END_LaTeX
-
-* Front page                                                       :ignore:
-#+BEGIN_LaTeX
-\maketitle
-#+END_LaTeX
-* Dedicatory                                                       :ignore:
-
-#+BEGIN_LaTeX
-% \clearpage
-% \begin{flushright}
-%     \mbox{}\vfill
-%     {\sffamily\itshape
-%       ``If I have seen farther than others,\\
-%       it is because I stood on the shoulders of giants.''\\}
-%     --- \textsc{Sir~Isaac Newton}
-% \end{flushright}
-#+END_LaTeX
-
-* Acknowledgements                                                 :ignore:
-
-#+BEGIN_LaTeX
-% agradecimentos
-%\chapter*{Agradecimentos}
-%Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
-#+END_LaTeX
-
-* Abstract                                                         :ignore:
-                                                      
-#+BEGIN_LaTeX
-\begin{abstract}
-#+END_LaTeX
-
-Tracing is a very common method to observe program behavior, where
-interesting program events are registered in trace files. Replaying
-these trace files through simulation is used to analyze the data. The
-simulation combines information that is spread in multiple events
-deriving new and richer entities. Usually, this event processing is
-done once and discarded, an approach adopted, for instance, by the
-Pajé trace simulator. The objective of this proposal is to allow the
-performance analyst to change the simulator behavior when entities are
-detected according to his needs. This extensibility is implemented
-through plugins, that could be developed by any programmer, where
-every entity created is forwaded to it. It is the plugin's
-responsibility to handle the entity. As a proof of concept, this work
-presents the implementation of two plugins: a textual output similar
-to an existing one in the Pajé tool; and a database insertion in a
-pre-defined relational schema.  A performance analysis was developed
-to compare Aiyra against the Pajé trace simulator. It is worth
-highlighting that the new simulator had better performance results
-with bigger files (over 120 Megabytes), that being possibly attributed
-to the fact that it discards from memory entities that will no longer
-be used. Additionally, the Pajé Insert Database plugin was evaluated
-comparing its different possibilities of usage. In this investigation,
-we varied the frequency of the insertions in the database by grouping
-queries in memory. The aim of this test was to understand the impact
-of the access to a database in the performance versus the memory
-usage. The memory usage had more impact in the performance than the
-accesses to the database themselves, probably due to the Garbage
-Collector mechanism used by Java, the language used for the
-implementation.
-
-#+BEGIN_LaTeX
-\end{abstract}
-#+END_LaTeX
-
-#+BEGIN_LaTeX
-% resumo na outra língua
-% como parametros devem ser passados o titulo e as palavras-chave
-% na outra língua, separadas por vírgulas
-\begin{englishabstract}{Titulo em pt-br.}{Palavra-chave 1. Palavra-chave 2.}
-#+END_LaTeX
-
-Put your Portuguese abstract here.
-
-#+BEGIN_LaTeX
-\end{englishabstract}
-#+END_LaTeX
-* Lists                                                            :ignore:
-
-#+BEGIN_LaTeX
-\listoffigures
-\listoftables
-
-% lista de abreviaturas e siglas
-% o parametro deve ser a abreviatura mais longa
-\begin{listofabbrv}{SPMD}
-    \item[SMP] Symmetric Multi-Processor
-    \item[NUMA] Non-Uniform Memory Access
-    \item[SIMD] Single Instruction Multiple Data
-    \item[SPMD] Single Program Multiple Data
-    \item[ABNT] Associação Brasileira de Normas Técnicas
-\end{listofabbrv}
-
-
-% idem para a lista de símbolos
-% \begin{listofsymbols}{$\alpha\beta\pi\omega$}
-%     \item[$\sum{\frac{a}{b}}$] Somatório do produtório
-%     \item[$\alpha\beta\pi\omega$] Fator de inconstância do resultado
-% \end{listofsymbols}
-#+END_LaTeX
-
-* Sumário                                                          :ignore:
-
-#+BEGIN_LaTeX
-\tableofcontents
-#+END_LaTeX
 
 * Configuring Emacs to correctly export to PDF                     :noexport:
 
@@ -1426,30 +1285,29 @@ _Comment_:
 
 This experiment evaluates the performance of Aiyra using the
 *PajeNullPlugin* against two versions of the *pj_dump* tool (*pj* and
-*pjflex)*, both part of PajeNG. The difference between the
-=pj_dump= versions is in the reading of the
-trace file: while the first (*pj*) uses the standard C++ parsing, the
-second (*pjflex*) uses a scanner and parser generator (based on the
-standard *flex* and *bison* from GNU). The
-executions of the *pj_dump* tool received =--quiet= as a parameter to
-avoid the actual dumping of the information in the standard output,
-since we only need the execution time to carry out the comparison.
-It is important to highlight that Aiyra does not perform any action
-in the resulted entities and discards all of them.
+*pjflex)*, both part of PajeNG. The difference between the =pj_dump=
+versions is in the reading of the trace file: while the first (*pj*)
+uses the standard C++ parsing, the second (*pjflex*) uses a scanner
+and parser generator (based on the standard *flex* and *bison* from
+GNU). The executions of the *pj_dump* tool received =--quiet= as a
+parameter to avoid the actual dumping of the information in the
+standard output, since we only need the execution time to carry out
+the comparison.  It is important to highlight that Aiyra does not
+perform any action in the resulted entities and discards all of them.
 
-Concerning the experimental design, two factors are chosen: *input* and
-*version*. The first assumed the values *small*, *medium*, and
+Concerning the experimental design, two factors are chosen: *input*
+and *version*. The first assumed the values *small*, *medium*, and
 *big*. The second, *aiyra*, *pj* and *pjflex*. The number of
-replications chosen was $30$. This value was selected after a few preliminary
-experiments where we have noticed very little experimental variability. As the
-executions take a significant amount time, $30$ repetitions is enough
-to have reliable results. Since we have two factors, each with three
-levels, we have a total of $270$ experiments (the product of
-$3*3*30$). The outcome of this experiment is the *execution* time for
-each combination of input and version. This design was run in each one
-of the platforms, thus, we had three files each with $270$ rows. The
-total number of experiments considering the three platforms is
-therefore $810$.
+replications chosen was $30$. This value was selected after a few
+preliminary experiments where we have noticed very little experimental
+variability. As the executions take a significant amount time, $30$
+repetitions is enough to have reliable results. Since we have two
+factors, each with three levels, we have a total of $270$ experiments
+(the product of $3*3*30$). The outcome of this experiment is the
+*execution* time for each combination of input and version. This
+design was run in each one of the platforms, thus, we had three files
+each with $270$ rows. The total number of experiments considering the
+three platforms is therefore $810$.
 
 *** PajeInsertDBPlugin evaluation
 
@@ -1472,18 +1330,18 @@ Informatics Institute of the Federal University of Rio Grande do
 Sul. Albeit the platforms are equipped with gigabit network cards, the
 theoretical bandwidth is only 100Mb/s. We believe this is due the
 existence of a 100Mb/s switch between both endpoints limiting the
-network speed.
+network speed. 
+
+*Mention 0.5 RTT average?? * 
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Network topology}
 \centering
-\includegraphics[width=.4\linewidth]{./img/infnetwork.pdf}
+\includegraphics[width=.5\linewidth]{./img/infnetwork.pdf}
 \label{fig.infnetwork}
 \end{figure}
 #+END_LaTeX
-
-
 The factors for this evaluation consist in the *input*, the same as
 the ones described previously, and *batch*, which assumes six different
 values. The *batch* factor consists in the size of the batch to be
@@ -1508,13 +1366,13 @@ results and our interpretation of the experiments.
 
 We have used the R language to merge the data from the different files
 generated and to plot results. For the experiments we have used the
-average execution time among the $30$ replications as a
-mesurement. For *PajeInsertDBPlugin*, there is also the average
-insertion time. The time is measured in seconds. We considered the
-standard error to be three standard deviations of the mean, which
-cover 99.7% of the cases in a normal distribution
-\cite{normaldistribution}. We describe below our expectation about
-each experimental setup and the interpretation of the measurements.
+average execution time among the replications as a mesurement. For
+*PajeInsertDBPlugin*, there is also the average insertion time. The
+time is measured in seconds. We considered the standard error to be
+three standard deviations of the mean, which cover 99.7% of the cases
+in a normal distribution \cite{normaldistribution}. We describe below
+our expectation about each experimental setup and the interpretation
+of the measurements.
 
 *** Comparison between Aiyra and PajeNG
 
@@ -1534,37 +1392,40 @@ _Comment_:
   took a look to understand why. So, I'd say the expectations would be
     different, but that doesn't really matter from your perspective.
 
-*_Comment_*: But when we started the experiments, we already knew that
+*But when we started the experiments, we already knew that
 *pj_flex* was slower, so we knew this results. Or should we ommit that
-and say we expected flex to be faster?
+and say we expected flex to be faster?*
 
 \noindent
 _Observed Results_
 
 We can see in Figure \ref{fig.cppoverview} that, for the *medium* and
 *big* inputs, Aiyra was actually faster than both versions of
-PajeNG. To understand this results it is crucial to recognize the
-difference between the implementation and configuration of both
-programs. Aiyra is designed to get rid of the entities as soon as they
-are finished. Thus, with the *PajeNullPlugin*, very little is kept in
-memory. One of Java's biggest overhead is the memory handling,
-specially the Garbage Collector(GC). Since we have an implementation
-that stores as few objects as possible, and the less alive objects in
-the program, the faster is GC \cite{garbagecollector}, Java may have a
-chance in this case. Another important difference among Aiyra and
-PajeNG is the process of reading the trace file, parsing it and then
-sending to the simulator. As seen in Chapter \ref{chapter.paje}, the
-PajeNG file reader first reads from the file a chunk of data, then the
-decoder, which has predominant execution time, breaks it into events
-and sends them to the simulator. The next segment of data is only read
-after the first is completely decoded. On the other hand, Aiyra's
-controller sends each event read immediately to the simulator. The
-controller package performs the reading and parsing simultaneously and
-is probably faster than the decoding process of PajeNG. Since the
-memory allocation is not usually a problem in C++ programs, it is more
-likely that this result relies on the implementation difference. As
-expected, the *pj_flex* version was slower than *pj*, thus, slower
-than *aiyra*.
+PajeNG. Table \ref{tab.cpptimes} portrays the average execution time
+in seconds for these input sizes separated by platform. *_Is it ok or
+should I make three tables?_*. For all platforms, *aiyra* is at least
+two times faster than either *pj* and *pjflex*. To understand this
+results it is crucial to recognize the difference between the
+implementation and configuration of both programs. Aiyra is designed
+to get rid of the entities as soon as they are finished. Thus, with
+the *PajeNullPlugin*, very little is kept in memory. One of Java's
+biggest overhead is the memory handling, specially the Garbage
+Collector(GC). Since we have an implementation that stores as few
+objects as possible, and the less alive objects in the program, the
+faster is GC \cite{garbagecollector}, Java may have a chance in this
+case. Another important difference among Aiyra and PajeNG is the
+process of reading the trace file, parsing it and then sending to the
+simulator. As seen in Chapter \ref{chapter.paje}, the PajeNG file
+reader first reads from the file a chunk of data, then the decoder,
+which has predominant execution time, breaks it into events and sends
+them to the simulator. The next segment of data is only read after the
+first is completely decoded. On the other hand, Aiyra's controller
+sends each event read immediately to the simulator. The controller
+package performs the reading and parsing simultaneously and is
+probably faster than the decoding process of PajeNG. Since the memory
+allocation is not usually a problem in C++ programs, it is more likely
+that this result relies on the implementation difference. As expected,
+the *pj_flex* version was slower than *pj*, thus, slower than *aiyra*.
 
 _Comment_:
 - What do you mean by "architectural difference"? *implementation difference*
@@ -1579,46 +1440,57 @@ _Comment_:
 \end{figure}
 #+END_LaTeX
 
+#+BEGIN_LaTeX
+\begin{table}[!htb]
+\caption{Average Execution Time (s) for each configuration}
+\label{tab.cpptimes}
+\centering
+\begin{tabularx}{\linewidth}{lXXX}\toprule
+                         &   {\bf Big}         & {\bf Medium}            \\\toprule
+& Aiyra                    &  82.94644007        & 9.38572857              \\
+Luiza & Pj                 &  207.434215571      & 24.92862427             \\
+& PjFlex                   &  215.79006593       & 25.85007707               \\\midrule
+& Aiyra                    &  124.24501307       & 13.62979877              \\
+Guarani & Pj               &  232.04630737       & 29.97373843            \\     
+& PjFlex                   & 248.65192840        & 32.14986230           \\\midrule
+& Aiyra                    & 111.78373253        & 13.08560363               \\
+Orion1 & Pj                       & 259.72360747        & 33.47163073        \\
+& PjFlex                   & 279.74462510        & 36.08434247          & 0.04819160     \\
+\bottomrule\end{tabularx}
+\end{table}
+#+END_LaTeX
+
+
 _Comment_:
 - The title from the figure should be remove (remove =ggtitle=)
   - We have the caption, it is enough.
+- *Code ready in Labbook. need to be generated*
 
 Notice that the experiment in *luiza* had a bigger variability with
 the *pj* version and the *big* input. The average execution time for
 the big file in the *aiyra* version was around $80$ seconds, but there
 was an outlier experiment that executed in $2888$ seconds. This
-particular measurement has been manually removed from the data set. Even with this
-particular case deleted, an instability can still be perceived. The
-experiments are randomized in the design so, if there was any
-disturbance in the environment during the experiment, it should have
-affected other configurations as well, but we can notice the
-variability only in this particular configuration. There is no
+particular measurement has been manually removed from the data
+set. Even with this particular case deleted, an instability can still
+be perceived. The experiments are randomized in the design so, if
+there was any disturbance in the environment during the experiment, it
+should have affected other configurations as well, but we can notice
+the variability only in this particular configuration. There is no
 confirmed explanation for this situation, it may be because *luiza* is
-the weakest machine in the experiment and did not handle well the C++
+running a different operating system and did not handle well the C++
 parsing with the biggest file. Considering that it does not affect the
-overall analysis, the experiment was considered valid.
+overall analysis, the experiment was considered valid. 
 
-_Comment_:
-- You say luiza is the "weaker" machine, but you got the fastest times
-  with it. I think variability comes from other reasons, such as OS or
-  other services running in the platform.
-- Perhaps it would be nice to provide a table with the averages, so
-  you can calculate the percentages considering *pjflex* as the
-  baseline. That way, you can write that you are almost XX% faster,
-  which is a very good result. People tend to like this numbers, since
-  they are easy to remember. You can even mention them in the
-  introduction and conclusion of your document.
 
 So far, we have analysed the execution time of the *medium* and *big*
-inputs. In 
-
-Figure \ref{fig.cppoverview} shows only the measurement considering
-the *small* input in the different platforms. It portrays a closer sight
-of the graphic, where we can see that the behavior for the *small* input
-is different from the others. In this case, we observe exactly the
-expected result (see previous subsection). This is probably because it
-is a very small file, with very few entities, so there is no memory
-overhead in either versions and C++ is naturally faster than Java.
+inputs. In Figure \ref{fig.cppoverview} shows only the measurement
+considering the *small* input in the different platforms. It portrays
+a closer sight of the graphic, where we can see that the behavior for
+the *small* input is different from the others. In this case, we
+observe exactly the expected result (see previous subsection). This is
+probably because it is a very small file, with very few entities, so
+there is no memory overhead in either versions and C++ is naturally
+faster than Java.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1631,6 +1503,7 @@ overhead in either versions and C++ is naturally faster than Java.
 
 _Comment_:
 - Remove =ggtitle= from all =ggplot= figures, keep the caption.
+- *see comment above*
 
 These results are particularly important to assure the relevance of
 this proposal. By deattaching the core simulation from the data
@@ -1640,12 +1513,10 @@ that the fewer data we retain in memory, the better our performance
 will be. The implementation of Aiyra gives the user more flexibility
 to manage the memory usage of his program and space to develop high
 performance implementations. It is also possible to notice that
-changes in the design of the program, specially the handling of
-detected events, may have significant impacts in the performance of
-the program.
+changes in the design of the program, specially in the trace file
+parsing and detected events handling, may have significant impacts in
+the performance of the program.
 
-_Comment_:
-- What do you mean by "architectural approach"?
 
 *** PajeInsertDBPlugin Evaluation
 
@@ -1662,20 +1533,16 @@ the maximum observed in the replications. As this experiment consists
 in storing data of $540$ executions in memory, we used a =-test= flag,
 which drops the database and recreates it after each simulation.
 
-
-Since we had a very large number of experiments, it took
-approximatedly $48$ hours to execute the design in each platform. In
-the preliminary tests, we noticed that *orion1* was taking too long to
-execute. This may have happened for several reasons, specially because
-it is a machine shared by the students in the Informatics Institute of
-the Federal University of Rio Grande do Sul.
-Although we have locked the machine for the experiment, it was
-out of our hands to stop eventual programs that could be running in
-other students' users and affecting the performance. Likewise, it was
-not desirable to disable other users from using the machine for longer
-than two or three days. For these reasons, the experiment in *orion1*
-had only $10$ replications. Even so, we have observed very little
-variability among the executions in the exploratory tests.
+Since we had a very large number of experiments, it took more than
+$48$ hours to execute the design in each platform. *Guarani* and
+*orion1* are machines shared by the professors and students in the
+Informatics Institute of the Federal University of Rio Grande do Sul,
+thus, it was not desirable to disable other users from using the
+machine for longer than two days. For these reasons, the experiment in
+*orion1* and *guarani* had only $10$ replications. Even so, we have
+observed very little variability among the executions in the
+exploratory tests. The experients for these platforms do not have the
+*A* batch size.
 
 \noindent
 _Expected_
@@ -1699,29 +1566,25 @@ sizes, it is consistent to analyze each input separately. Figure
 big input. We have results for all batch sizes except A. The reason
 for this is that Aiyra exceed the heap space to store data in memory,
 mainly because we have adopted default values for heap allocation in
-the JVM. The *guarani* platform also did not handle the B
-size. Although having less results, it is still possible to observe a
-pattern which is the opposite of what we have imagined. We can see
-that the smaller the batch size, the better the performance. In fact,
-this is easily explained since Java's memory management may be very
-slow, specially when there are many alive objects in the program. By
+the JVM. The *guarani* platform also did not handle the B size. These
+missing data do not affect the analysis of the results and it is
+possible to observe a pattern which is the opposite of what we have
+imagined. We can see that the smaller the batch size, the better the
+performance. In fact, this is easily explained since Java's memory
+management may be very slow, specially if the heap size is big. By
 these results, we see that the memory usage overhead is higher than
 the database access cost. With the medium input, presented in Figure
 \ref{fig.batchmedium}, we observe the same behavior as the big one for
 *luiza*, *guarani* and *orion1* platforms. The *orion1* results are
-inconclusive for the *medium* input size, probably due to the same
-problems mentioned previously related to external interferences.
-
-_Comment_:
-- What do you mean by "connection cost"? *database access*
-- Java "may be very slow" if the heap size is big
-- *orion1* is inconclusive, but this variability is not present in *big*, right?
-
+inconclusive for the *medium* input size, probably due to external
+interferences. Although we have locked the machine for the experiment,
+it was out of our hands to stop eventual programs that could be
+running in other students' users and affecting the performance.
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for big input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/local_big_v2.pdf}
+\includegraphics[width=\linewidth]{./img/batch_size/local_big_v2_3.pdf}
 \label{fig.batchbig}
 \end{figure}
 #+END_LaTeX
@@ -1730,7 +1593,7 @@ _Comment_:
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for medium input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/local_medium_v1.pdf}
+\includegraphics[width=\linewidth]{./img/batch_size/local_medium_v1_3.pdf}
 \label{fig.batchmedium}
 \end{figure}
 #+END_LaTeX
@@ -1743,7 +1606,7 @@ above. Naturally, the memory usage peak is higher for bigger batches.
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for the big input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/local_mem_big_v1.pdf}
+\includegraphics[width=\linewidth]{./img/batch_size/local_mem_big_v2.pdf}
 \label{fig.membig}
 \end{figure}
 #+END_LaTeX
@@ -1752,7 +1615,7 @@ above. Naturally, the memory usage peak is higher for bigger batches.
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for the medium input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v1.pdf}
+\includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v2.pdf}
 \label{fig.memmedium}
 \end{figure}
 #+END_LaTeX
@@ -1768,20 +1631,96 @@ are at least in the Megabytes order of magnitude.
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for the small input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/local_small_v1.pdf}
+\includegraphics[width=\linewidth]{./img/batch_size/local_small_v1_3.pdf}
 \label{fig.batchsmall}
 \end{figure}
 #+END_LaTeX
 
-(analysis on the remote, slower indeed?)
+Figures \ref{fig.remotebig} and \ref{fig.remotemedium} portray the
+comparison between the local and remote execution times in
+*guarani*. As expected, the remote access inreases the execution
+time. It is not a big difference because both machines are in the same
+network with only one hop of distance.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results for remote and local executions for the big input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_big_v1_3.pdf}
+\label{fig.remotebig}
+\end{figure}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results for remote and local executions for the medium input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_medium_v1_3.pdf}
+\label{fig.remotemedium}
+\end{figure}
+#+END_LaTeX
 
 By analyzing the results, we observed that the number of accesses to
 the database did not impact on the performance of *big* and *medium*
-traces. To support our conclusions, we generated traces for the batch
-executions. These traces logged the duration of every batch insertion
-for each experiment. It is depicted, in Figures \ref{fig.batchtimebig}
-and \ref{fig.batchtimemedium}, $10$ replications of the executions,
-for each batch size, represented in a timeline. It is possible to see
+traces. Figures \ref{fig.insertbig} and \ref{fig.insertmedium} support
+our conclusion that the number of accesses did not affect the
+insertion time and what increases the execution time is the memory
+usage. We see in both graphics that the insertion time is almost the
+same for the different batch sizes. The medium input in *guarani* had
+actually a lower insertion time for smaller batches.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Insertion time for the big input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_insert_big_v1_1.pdf}
+\label{fig.insertbig}
+\end{figure}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Insertion time for the medium input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_insert_medium_v1_1.pdf}
+\label{fig.insertmedium}
+\end{figure}
+#+END_LaTeX
+
+We can also observe by analysing Figures \ref{fig.insertremotebig} and
+\ref{fig.insertremotemedium} that difference of performance among the
+remote and local experiments rely on the insertion time.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Remote and local insertion times for the big input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_big_v1_3.pdf}
+\label{fig.insertremotebig}
+\end{figure}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Remote and local insertion times for the medium input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_medium_v1_3.pdf}
+\label{fig.insertremotemedium}
+\end{figure}
+#+END_LaTeX
+
+
+
+To have a more detailed sight of the insertion time behavior, we
+generated traces for the batch executions. These traces logged the
+duration of every batch insertion for each experiment. It is depicted,
+in Figures \ref{fig.batchtimebig} and \ref{fig.batchtimemedium}, $10$
+replications of the experiments for each platform and batch size. The
+graphics present a timeline in the horizontal axis of all the
+execution. There is one line for each replication. The colored
+segments portray the moments where a batch is being executed. For
+batch size *C*, for example, there are 4 insertions, thus, there are
+four colored segments for each replication. It is possible to see
 through these graphics that bigger batches take longer to execute, a
 detail that we had not considered in the hipotesis. In this way, we
 see that the insertion time does not significantly change between
@@ -1794,7 +1733,7 @@ performance.
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for the small input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v1.pdf}
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v2.pdf}
 \label{fig.batchtimebig}
 \end{figure}
 #+END_LaTeX
@@ -1803,22 +1742,27 @@ performance.
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for the small input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v1.pdf}
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v2.pdf}
 \label{fig.batchtimemedium}
 \end{figure}
 #+END_LaTeX
 
 For the small input, we can observe, in Figure
-\ref{fig.batchtimesmall}, the opposite behavior.
+\ref{fig.batchtimesmall}, the opposite behavior. In these cases, it is
+better to insert all the data at once.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for the small input}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v1.pdf}
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
 \label{fig.batchtimesmall}
 \end{figure}
 #+END_LaTeX
+
+*I have made some small changes in the graphics in the labbook (remove title, etc),
+but I couldn't generate them (again). Could you just re genarate with
+the same name please?* 
 
 * Data                                                             :noexport:
 ** Load batch size measurements
@@ -3298,9 +3242,21 @@ ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
 * Conclusion
 \label{chapter.conclusion}
 
-+ proposal: extensible, more flexibility. deattach core.
-+ other issues
+In this proposal, we have elaborated a different approach to an
+existing simulation tool Pajé Trace files, the PajeNG. We have
+observed issues in the PajeNG implementation, mainly regarding the
+lack of flexibility to handle the resulting data of the simulation and
+the ephemerality of these results. To improve the extensibility of the
+tool, we introduced the concept of plugins, where every generated
+entites is sent to. This permits the manipulation of the results totally
+deattached from the core simulation.
 
+The separation of the core simulation from the data handling provided
+very good results. We were able to perform a simulation two times
+faster than the original tool. This is very relevant, since it opens
+several possibilities of creating high performance plugins.  
+
++ other issues
    - implementation of plugins
    - pjdump - problem of outputting the states before container. space
      for improvements.
