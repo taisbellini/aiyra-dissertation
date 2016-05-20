@@ -3438,50 +3438,52 @@ ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
 \label{chapter.conclusion}
 
 In this proposal, we have elaborated a different approach to an
-existing simulation tool PajÃ© Trace files, the PajeNG. We have
+existing simulation tool for Pajé Trace files (PajeNG). We have
 observed issues in the PajeNG implementation, mainly regarding the
 lack of flexibility to handle the resulting data of the simulation and
 the ephemerality of these results. To improve the extensibility of the
 tool, we introduced the concept of plugins, where every generated
-entites is sent to. This permits the manipulation of the results totally
-deattached from the core simulation.
+entity is sent to. This permits the manipulation of the results
+totally deattached from the core simulation. We also validated this
+design by implementing plugins.
 
 The separation of the core simulation from the data handling provided
 very good results. We were able to perform a simulation two times
 faster than the original tool. This is very relevant, since it opens
-several possibilities of creating high performance plugins.  
+several possibilities of creating high performance solutions. Creating
+plugins for the solution was extremely important to validate and
+improve the proposal. The first approach consisted in having
+instrumentation points only for the events that generated complete
+entities, like *PajePopState*, which was soon discarded during the
+implementation of the *PajeInsertDBPlugin*. We saw that, for example,
+to insert a state entity, with foreign keys reffering a container and
+a type, the object referenced must already be in the database. Thus,
+we noticed that, for the extensibility to apply to the maximum number
+of potential scenarios, it needed to give access to every type of
+event possible in the Pajé format. Implementing this plugin took a lot
+of time, and changes to it were made very frequently. It was
+interesting to observe that the modificatons were only performed in
+the *PajeInsertDBPlugin* class, demonstrating clearly that the
+handling of the results was totally deattached from the core
+simulation.
 
-+ other issues
-   - implementation of plugins
-   - pjdump - problem of outputting the states before container. space
-     for improvements.
-   - database:
-       - results of batches. 
-+ importance of implementation of plugins.
-Creating plugins for the solution was extremely important to validate
-the proposal. The first approach consisted in having instrumentation
-points only for the events that generated complete entities, which was
-soon discarded during the implementation of the
-*PajeInsertDBPlugin*. We saw that, for example, to insert a state
-entity, with foreign keys reffering a container and a type, the object
-referenced must be already in the database. Thus, we noticed that, for
-the extensibility to apply to the maximum number of potential
-scenarios, it needed to give access to every type of event possible in
-the PajÃ© format. Implementing this plugin took a lot of time, and
-changes to it were made very frequently. It was interesting to observe
-that the modificatons were only performed in the *PajeInsertDBPlugin*
-class, demonstrating clearly that the handling of the results was
-totally deattached from the core simulation.
+The *PajeInsertDBPlugin* presented some issues that the Java language
+may bring regarding memory usage. First, it can become very slow
+depending on the number of objects it is storing. Second, there must
+be a carefull analysis on the configuration of the JVM to assure that
+it will have a capacity consistent to the platform in which it is
+running. The *PajeDumpPlugin*, besides solving an issue, brings
+another concern which is the order in which the entities are
+presented, for example, states will be dumped before their
+containers. However, Aiyra is designed to facilitate the creation of
+new solutions to address these issues and any other that.
 
 For future work, it would be interesting to provide an interface for
-the plugin package such as it could support multiple languages. 
-of plugins, like .
-
-+future work
- - improvement of entry points: variable for ex.
- - interface for plugins in other languages.
- - plugin to parallelize
- - options handler
+the plugin package such as it could support multiple languages. There
+is also room to improve the organization of the entry points so that
+they can be event more generic. It would also be interesting to shift
+the options handling regarding each plugin to its proper class,
+instead of centralizing all in the controller.
  
 
 not only the simulator
