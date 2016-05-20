@@ -1471,7 +1471,7 @@ Processor                &  Intel Core i7        & Xeon E5-2630         & Intel 
 CPU(s)                   &  1                    & 2                    & 1       \\
 Cores per CPU            &  4                    & 6                    & 4             \\
 Max. Freq.               &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
-L1 Cache                 & 32/32KBytes           & 32/32KBytes          & 32/32KBytes  \\     
+L1d/L1i Cache            & 32/32KBytes           & 32/32KBytes          & 32/32KBytes  \\     
 L2 Cache                 & 256KBytes             & 256KBytes            & 256KBytes    \\
 L3 Cache                 & 6MBytes               & 15MBytes              & 6MBytes         \\
 Memory                   & 16GBytes              & 32GBytes             & 20GBytes      \\\midrule
