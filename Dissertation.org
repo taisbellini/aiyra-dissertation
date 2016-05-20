@@ -1,4 +1,4 @@
-#+TITLE: 
+33#+TITLE: 
 #+AUTHOR: Tais Bellini
 
 #+STARTUP: overview indent
@@ -1476,6 +1476,25 @@ L2 Cache                 & 256KBytes             & 256KBytes            & 256KBy
 L3 Cache                 & 6MBytes               & 15MBytes              & 6MBytes         \\
 Memory                   & 16GBytes              & 32GBytes             & 20GBytes      \\\midrule
 OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian 4.3.5-1 \\
+\bottomrule\end{tabularx}
+\end{table}
+#+END_LaTeX
+
+Java programs run in the Java Virtual Machine (JVM), an abstract
+computing machine where the specifications about memory size are
+placed. For the experiments, the heap size is the relevant
+information. We used the default configuration, which is presented in
+Table \ref{tab.jvm}.
+
+#+BEGIN_LaTeX
+\begin{table}[!htb]
+\caption{JVM heap sizes}
+\label{tab.jvm}
+\centering
+\begin{tabularx}{\linewidth}{lXXX}\toprule
+                         &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
+Inital heap size         &  Intel Core i7        & 526368896            & 327213824   \\
+Maximum heap size        &  1                    & 8422162432           & 5236588544       \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX

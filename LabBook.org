@@ -851,6 +851,8 @@ Where the code is.
 
 http://stackoverflow.com/questions/4935590/is-it-normal-for-mysql-to-be-slow-when-connecting-to-a-remote-host
 
+java info
+
 
 
 * Front page preparation                                             :ignore:
