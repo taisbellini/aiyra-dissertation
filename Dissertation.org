@@ -1684,6 +1684,9 @@ probably because it is a very small file, with very few entities, so
 there is no memory overhead in either versions and C++ is naturally
 faster than Java.
 
+_Comment_:
+- not completely convinced by your final explanation
+
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Results of comparison between Aiyra and PajeNG for the small input}
