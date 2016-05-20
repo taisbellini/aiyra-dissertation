@@ -93,17 +93,6 @@ Do as follows:
 
 * Introduction
 
-_Global Comment_
-- Check the PDF to respect all margins
-- Compile latex manually with =pdflatex= after export to latex
-  - Pay attention to these warnings: they are in fact errors
-    - LaTeX Warning: There were undefined references.
-    - LaTeX Warning: There were multiply-defined labels.
-- All figures should be included as PDF (export to PDF with your
-  figure editing tool), then include them here as PDF. That way, your
-  figures will probably be vectorial, smaller and render much nicely
-  in the final PDF.
-
 Observation of program behavior is particularly important in High
 Performance Computing since it enables an accurate performance
 analysis. A very common method of evaluation is registering program
@@ -245,12 +234,10 @@ during the parsing.
 \begin{figure}[!htb]
 \caption{How JavaCC works}
 \centering
-\includegraphics[width=\linewidth]{./img/javaccex.pdf}
+\includegraphics[width=.7\linewidth]{./img/javaccex.pdf}
 \label{fig.javaccex}
 \end{figure}
 #+END_LaTeX
-
-
 In Figure \ref{fig.javaccex} we can see an example of the processing
 of a file named *MyGrammar.jj*, which results in seven files: the
 parser in *MyGrammar.java*; the lexical analyser in
@@ -347,12 +334,6 @@ a *weak entity*.
 \label{fig.ermodelex}
 \end{figure}
 #+END_LaTeX
-
-_Comment_:
-- Figure improved a lot. Thanks. Unfortunately, text still looks like
-  very small when comparing to the ordinary surrounding text. Can you
-  print to see if it is readable? Maybe it's just a bad feeling from
-  my side.
 
 The ER Model is an overview of the structure of a database. To evolve
 to the implementation, a translation to a Relational Model must be
@@ -571,7 +552,7 @@ depending on the number of containers in the trace.
 \begin{figure}[!htb]
 \caption{Example of Entities Hierarchy}
 \centering
-\includegraphics[width=\linewidth]{./img/hierarchyex.pdf}
+\includegraphics[width=.75\linewidth]{./img/hierarchyex.pdf}
 \label{fig.hierarchyex}
 \end{figure}
 #+END_LaTeX
@@ -811,7 +792,6 @@ ending timestamp. Finally, this new entity is sent to the plugin,
 which contains specific entry points for every different kind of
 entity.
 
-
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Aiyra Architecture}
@@ -821,10 +801,8 @@ entity.
 \end{figure}
 #+END_LaTeX
 
-_Comment_:
-- For some reason, there is a lot of vertical space just below Figure
-  4.1 (aiyra arch.). Please remote it since it looks strange. Perhaps
-  it is just a bounding box issue with your PNG.
+*_Used the pdf crop but still has margin. I have no Idea of how to fix
+it_*
 
 The program receives arguments from the user in its execution. The
 *filename* option (=-f=) is the only mandatory one, which indicates
@@ -883,22 +861,6 @@ changes in the Pajé Trace file, which happens not very often. Despite
 that, it would be simple to adjust it since changes do not affect the
 implementation of the plugins.
 
-  _Comments_:
-- A figure explaining the behavior of the PajeSimulator and its
-  relationship with the PajeContainer would be nice. I think that from
-  here on you describe all the specific details of the implementation
-  without giving the reader a proper preparation stating how the
-  simulator actually _works_. Note that it is important to have an
-  abstract understanding of the behavior before diving in details. If
-  you start with details, nothing can be understood.
-- Input on the left; output on the right: on the center, the
-  PajeSimulator and on its right the multiple PajeContainers. You can
-  use a specific example with three containers and very few
-  timestamped events regarding states, for example. SEE DESCRIPTION ABOVE.
-- I just figured out the existence of Figure \ref{fig.aiyraCore}. It
-  is exactly that, but focused on an example regarding the behavior of
-  your simulator (you can even use a component to represent your
-  grammar) in particular. You would have here another figure then.
 
 Every entity generated is represented by an object with attributes
 representing its fields. The class hierarchy of the entities is the
@@ -936,30 +898,29 @@ identified by *startContainer* and *endContainer*.
 Every trace event simulation has an instrumentation point, which
 dispatches the entity objects generated to the plugin package. These
 points are either in the *PajeSimulator* or in the *PajeContainer*, as
-illustrated in figure \ref{fig.aiyraCore}. *REFER BETTER TO THE
-EXAMPLE OF FIGURE* In the *PajeSimulator* are
+illustrated in figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
 the outputs regarding the definition of types and values and the
 creation of containers. Although in this point the containers are not
 complete objects, since they do not have ending timestamp or the
 related entities, they are forwarded anyway with the alias and type
-information. The *PajeContainer* is in charge of dispatching to the
-plugin the instances related to it, which involve the states, events,
-links and variables. It also may send unfinished objects. When there
-is a *PajeDestroyContainerEvent*, the container object is sent again,
-now complete with an ending timestamp.
+information. In Figure \ref{fig.aiyraCore} we represent the processing
+of a *PajePushState*, which, after being validated by the simulator,
+is forwarded to the appropriate container. The *PajeContainer* is in
+charge of dispatching to the plugin the instances related to it, which
+involve the states, events, links and variables. It also may send
+unfinished objects. In our example, the container sends the
+*PajeUserState* to the *pushState* plugin without an ending
+timestamp. When there is a *PajeDestroyContainerEvent*, the container
+object is sent again, now complete with an ending timestamp.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Aiyra's Core Architecture}
 \centering
-\includegraphics[width=\linewidth]{./img/aiyraCore.pdf}
+\includegraphics[width=.8\linewidth]{./img/aiyraCore.pdf}
 \label{fig.aiyraCore}
 \end{figure}
 #+END_LaTeX
-
-_Comment_
-- This figure also has a large white margin on the bottom. Remote it
-  please.
 
 The choice of creating an instrumentation point for each trace event
 is due to the intention of covering all of the different needs of the
@@ -976,20 +937,30 @@ received in each one is presented in the next section.
 ** The plugin package
 \label{section.plugin}
 
-The plugin package is a common place where all entities created
-throughout simulation are sent. It has sets of entry points specific
-for each type of entity and event. The entrances consist in:
-*newType*, *newValue*, *startLink*, *endLink*, *newCompleteLink*,
-*newCreatedContainer*, *destroyedContainer*, *setState*, *pushState*,
-*popState*, *resetState*, *setVar*, *updateVar*, and *newEvent*. The
-details of each point are presented later in this section. The plugin
-package is composed by an abstract class, the *PajePlugin*, with one
-method for each instrumentation point. It also contains a method
-called *finish* where the user can perform some concluding actions
-after the simulation is completed. To create a new plugin, the user
-just needs to extend the *PajePlugin* class and override its
-methods. It is also possible to extend another existing plugin, if the
-differences are small and not worth of a new class implementation.
+The plugin package, as depicted in Figure \ref{fig.aiyraPlugin} is a
+common place where all entities created throughout simulation are
+sent. It has sets of entry points specific for each type of entity and
+event. The entrances consist in: *newType*, *newValue*, *startLink*,
+*endLink*, *newCompleteLink*, *newCreatedContainer*,
+*destroyedContainer*, *setState*, *pushState*, *popState*,
+*resetState*, *setVar*, *updateVar*, and *newEvent*. The details of
+each point are presented later in this section. The plugin package is
+composed by an abstract class, the *PajePlugin*, with one method for
+each instrumentation point. It also contains a method called *finish*
+where the user can perform some concluding actions after the
+simulation is completed. To create a new plugin, the user just needs
+to extend the *PajePlugin* class and override its methods. It is also
+possible to extend another existing plugin, if the differences are
+small and not worth of a new class implementation.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Aiyra's Plugin Package}
+\centering
+\includegraphics[width=.8\linewidth]{./img/aiyraPlugin.pdf}
+\label{fig.aiyraCore}
+\end{figure}
+#+END_LaTeX
 
 The entrances of the plugins comprise the definition of types and
 values, the creation of containers, and the formation and completion
@@ -1032,15 +1003,6 @@ chapter.
 * Aiyra's Standard Plugins
 \label{chapter.plugins} 
 
-_Comment_
-- about previous and this chapter.
-- perhaps in the "plugin" section (or even before) of previous chapter
-  you could introduce a figure with a standard plugin visual
-  representation.
-- Then here, for each plugin, you would copy that standard plugin
-  visual representation and keep only things that are part of that
-  specific plugin. It would be very easy to understand, and you'd have
-  a figure for each plugin below.
 
 To address traditional uses of Paje trace files, we have implemented
 three plugins for the Aiyra framework: the *PajeDumpPlugin*, the
@@ -1070,10 +1032,20 @@ dumps to the standard output the entities generated by the
 simulator. The implementation consists in inserting a =print= function
 in each instrumentation point that receives a complete entity. These
 points are: *destroyContainer*, *popState*, *newCompletedLink*, and
-*newEvent*. When it is a destroyed container, it is necessary to
-iterate over the entities left in the container. The variables printed
-in the destruction of the container, since they are not removed during
-simulation.
+*newEvent*. Figure \ref{fig.plugindump} demonstrates the usage of the
+available entry points. When it is a destroyed container, it is
+necessary to iterate over the entities left in the container. The
+variables printed in the destruction of the container, since they are
+not removed during simulation.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Aiyra's Dump Plugin}
+\centering
+\includegraphics[width=.8\linewidth]{./img/pluginDump.pdf}
+\label{fig.plugindump}
+\end{figure}
+#+END_LaTeX
 
 The difference between the *PajeDumpPlugin* and the *pj_dump* tool is
 that the first one outputs the information as soon as the entity is
@@ -1110,10 +1082,20 @@ password (=-pwd=). The default for these options is: *localhost*,
 
 The following entry points were used in the *PajeInsertDBPlugin*:
 *newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
-*popState*, *newCompleteLink*, *updateVar* and *newEvent*. Types,
-values and containers are inserted in the database as soon as they are
-created due to the dependency of other entities on these ones. When a
+*popState*, *newCompleteLink*, *updateVar* and *newEvent*.  Figure
+\ref{fig.plugindump} demonstrates these points. Types, values and
+containers are inserted in the database as soon as they are created
+due to the dependency of other entities on these ones. When a
 container is destroyed, its *endTime* is updated in the database.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Aiyra's Insert DB Plugin}
+\centering
+\includegraphics[width=.8\linewidth]{./img/pluginDB.pdf}
+\label{fig.plugindump}
+\end{figure}
+#+END_LaTeX
 
 The first approach of this implementation consisted in inserting the
 entities in the database at the time they were created. Database
