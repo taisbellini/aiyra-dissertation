@@ -200,7 +200,7 @@ understanding the internal class hierarchy of the framework. The
 second issue is that it is impossible to get a partial view of
 simulated data prior to the end of the input trace. And finally, the
 third is related to the ephemerality of results: all simulated data is
-discarted once Pajé exits. To address these issues, an extensible
+discarded once Pajé exits. To address these issues, an extensible
 plugin-based trace file simulator called Aiyra has been designed and
 implemented.  Aiyra's objective is to allow extreme extensibility by
 letting the performance analyst write plugins that deal with simulated
@@ -523,7 +523,7 @@ manager. The JDBC API consists in classes and interfaces, such as
 *DriverManager*, which makes a connection between requests from the
 application and the proper database driver; *Connection*, containing
 all the methods necessary to contact the database; *Statement*, that
-creates objects that will be submited to the database; and
+creates objects that will be submitted to the database; and
 *ResultSet*, where the retrieved objects are placed.
 
 #+BEGIN_LaTeX
@@ -1253,7 +1253,7 @@ three plugins for the Aiyra framework: the *PajeDumpPlugin*, the
 *PajeInsertDBPlugin*, and the *PajeNullPlugin*. The first one is used
 to match the behavior of the existing =pj_dump= tool but without the
 issues we have mentioned in Section \ref{sec.pajeng_issues}; the
-second one can be used to insert the trace file in a relationa
+second one can be used to insert the trace file in a relational
 database, allowing the user to use SQL commands to inspect simulated
 traces; and finally, the third can be used to evaluate the Aiyra's
 performance for any kind of input. We detail each of them in the
@@ -1265,8 +1265,8 @@ complexity.
 The *PajeNullPlugin* is the default plugin option. It does not make
 any treatment to the data so the objects are simply discarded. The
 utility of this plugin relies on the need to verify the performance of
-the simulation itself, whithout the interference of data
-manipulation. Since the main goal of this proposal is to deattach the
+the simulation itself, without the interference of data
+manipulation. Since the main goal of this proposal is to detach the
 core simulation from the data handling, it is desirable to be able to
 execute the core alone.
 
@@ -1345,7 +1345,7 @@ container is destroyed, its *endTime* is updated in the database.
 The first approach of this implementation consisted in inserting the
 entities in the database at the time they were created. Database
 accesses cost time and, by executing some preliminary tests, we
-observed a very bad performance, that took an unnaceptable amount of
+observed a very bad performance, that took an unacceptable amount of
 time (over $24$ hours for 1 Gigabyte trace files). To solve this
 problem, we used the mechanism of *batches* provided by JDBC, which
 sends a block of queries all at once, reducing the communication
@@ -1384,7 +1384,7 @@ to represent a the start and end. This is a many-to-many relationship
 because the types can be the start and end to various
 communications. The *VariableType* has a color attribute.
 
-The *Container* entity has an identifying one-to-many relashionship
+The *Container* entity has an identifying one-to-many relationship
 with *Type*, as well as every other entity, since all of them are
 classified by a type. Containers have the same attributes as types,
 including the *parent* one-to-many relation. All of the entities that
@@ -1605,7 +1605,7 @@ interpretation of the experiments.
 
 We have used the R language to merge the data from the different files
 generated and to plot results. For the experiments we have used the
-average execution time among the replications as a mesurement. For
+average execution time among the replications as a measurement. For
 *PajeInsertDBPlugin*, there is also the average insertion time. The
 time unit is seconds. We considered the standard error to be three
 standard deviations divided by the square root of the number of
@@ -1723,7 +1723,7 @@ times.
 #+END_LaTeX
 
 These results are particularly important to assure the relevance of
-this proposal. By deattaching the core simulation from the data
+this proposal. By detaching the core simulation from the data
 handling, we perceive that there is room for performance improvements
 in the replay of large Pajé trace files. It is possible to observe
 that the fewer data we retain in memory, the better our performance
@@ -1758,7 +1758,7 @@ thus, it was not desirable to disable other users from using the
 machine for longer than two days. For these reasons, the experiment in
 *orion1* and *guarani* had only $10$ replications. Even so, we have
 observed very little variability among the executions in the
-exploratory tests. The experients for these platforms do not have the
+exploratory tests. The experiments for these platforms do not have the
 *A* batch size.
 
 \noindent
@@ -1794,7 +1794,7 @@ behavior of the execution using the *big* input. We have results for
 all batch sizes except A. The reason for this is that Aiyra exceeded
 the heap space to store data in memory, mainly because we have adopted
 default values for heap allocation in the JVM, as presented in Table
-\ref{tab.jvm}. The *guarani* platform was uncapable of handling A and
+\ref{tab.jvm}. The *guarani* platform was incapable of handling A and
 B sizes. Our analysis is unaffected by these missing cases since it is
 possible to observe a pattern, which is the opposite of what we have
 expected.  We can see that the smaller the batch size, the better the
@@ -1901,7 +1901,7 @@ size *E*, which is the second smallest of the levels, occupies more
 memory than *A*, *B*, *C*, *D*, and we can see in Figure
 \ref{fig.batchsmall} that there was a big variability in this
 platform, we consider that it was an external interference. Even
-though, the memory usage of this *input* is less than 5 Megaytes,
+though, the memory usage of this *input* is less than 5 Megabytes,
 while for the others it reached over 1Gigabyte for the *medium* input
 and 4Gigabytes with the *big*.
 
@@ -3531,13 +3531,13 @@ improve the proposal. The first approach consisted in having
 instrumentation points only for the events that generated complete
 entities, like *PajePopState*, which was soon discarded during the
 implementation of the *PajeInsertDBPlugin*. We saw that, for example,
-to insert a state entity, with foreign keys reffering a container and
+to insert a state entity, with foreign keys referring a container and
 a type, the object referenced must already be in the database. Thus,
 we noticed that, for the extensibility to apply to the maximum number
 of potential scenarios, it needed to give access to every type of
 event possible in the Pajé format. Implementing this plugin took a lot
 of time, and changes to it were made very frequently. It was
-interesting to observe that the modificatons were only performed in
+interesting to observe that the modifications were only performed in
 the *PajeInsertDBPlugin* class, demonstrating clearly that the
 handling of the results was totally deattached from the core
 simulation.
