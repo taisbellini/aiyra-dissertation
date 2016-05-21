@@ -1896,17 +1896,39 @@ batches.
 \end{figure}
 #+END_LaTeX
 
+The memory usage with the *small* file, portrayed in Figure
+\ref{fig.memsmall}, had the same behavior as the previous ones, except
+for the *guarani* platform. Since it is not a logical that the batch
+size *E*, which is the second smallest of the levels, occupies more
+memory than *A*, *B*, *C*, *D*, and we can see in Figure
+\ref{fig.batchsmall} that there was a big variability in this
+platform, we consider that it was an external interference. Even
+though, the memory usage of this *input* is less than 5 Megaytes,
+while for the others it reached over 1Gigabyte for the *medium* input
+and 4Gigabytes with the *big*.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results of batch sizes variability for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_mem_small_v2.pdf}
+\label{fig.memmsmall}
+\end{figure}
+#+END_LaTeX
+
 \noindent
 *Insertion Time*
 
-By analyzing the results, we observed that the number of accesses to
-the database did not impact on the performance of *big* and *medium*
-traces. Figures \ref{fig.insertbig} and \ref{fig.insertmedium} support
-our conclusion that the number of accesses did not affect the
-insertion time and what increases the execution time is the memory
-usage. We see in both graphics that the insertion time is almost the
-same for the different batch sizes. The medium input in *guarani* had
-actually a lower insertion time for smaller batches.
+The insertion time measures only the moments of the execution that the
+program is making an insertion in the database. By analyzing the
+results, we observed that the number of accesses to the database did
+not impact on the performance of *big* and *medium* traces. Figures
+\ref{fig.insertbig} and \ref{fig.insertmedium} support our conclusion
+that the number of accesses did not affect the insertion time and what
+increases the execution time is the memory usage. We see in both
+graphics that the insertion time is almost the same for the different
+batch sizes. The medium input in *guarani* had actually a lower
+insertion time for smaller batches.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1923,6 +1945,20 @@ actually a lower insertion time for smaller batches.
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_insert_medium_v1_1.pdf}
 \label{fig.insertmedium}
+\end{figure}
+#+END_LaTeX
+
+For the *small* input, the average insertion time had a small
+difference between batches, as depicted in Figure
+\ref{fig.insertsmall}. It presented the expected behavior described
+previously.
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Insertion time for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_insert_small_v1_1.pdf}
+\label{fig.insertsmall}
 \end{figure}
 #+END_LaTeX
 
