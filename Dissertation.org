@@ -1138,15 +1138,14 @@ events, states and links, it is a double number. The *PajeUserLink*
 has a string that defines the *key* and start and end containers
 identified by *startContainer* and *endContainer*.
 
-*I don`t know why it is not respecting the margin* Every trace event
-simulation has an instrumentation point, which dispatches the entity
-objects generated to the plugin package. These points are either in
-the *PajeSimulator* or in the *PajeContainer*, as illustrated in
-figure \ref{fig.aiyraCore}. In the *PajeSimulator* are the outputs
-regarding the definition of types and values and the creation of
-containers. Although in this point the containers are not complete
-objects, since they do not have ending timestamp or the related
-entities, they are forwarded anyway with the alias and type
+Every trace event simulation has an instrumentation point, which
+dispatches the entity objects generated to the plugin package. These
+points are either in the *PajeSimulator* or in the *PajeContainer*, as
+illustrated in figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
+the outputs regarding the definition of types and values and the
+creation of containers. Although in this point the containers are not
+complete objects, since they do not have ending timestamp or the
+related entities, they are forwarded anyway with the alias and type
 information. In Figure \ref{fig.aiyraCore} we represent the processing
 of a *PajePushState*, which, after being validated by the simulator,
 is forwarded to the appropriate container. The *PajeContainer* is in
@@ -1785,9 +1784,9 @@ are divided in subsections according to the metrics analysed:
 is also a subsection to analyse metrics obtained during the execution
 of the batches.
 
-\noindent
+#+BEGIN_CENTER
 *Execution Time*
-
+#+END_CENTER
 The *execution time* measures the duration of the entire simulation
 from beginning to end. Figure \ref{fig.batchbig} illustrates the
 behavior of the execution using the *big* input. We have results for
@@ -1850,7 +1849,6 @@ network with only one hop of distance.
 \end{figure}
 #+END_LaTeX
 
-
 For smaller inputs, however, we see (in Figure \ref{fig.batchsmall})
 that the behavior is what we have predicted. It is explained by the
 very little memory usage, that is too irrelevant to impact the
@@ -1868,9 +1866,9 @@ are at least in the Megabytes order of magnitude.
 \end{figure}
 #+END_LaTeX
 
-\noindent
+#+BEGIN_CENTER
 *Memory Usage* 
-
+#+END_CENTER
 Going further on the analysis, we see in Figures \ref{fig.membig} and
 \ref{fig.memmedium} the memory usage for the scenarios with *big* and
 *medium* inputs. Naturally, the memory usage peak is higher for bigger
@@ -1914,9 +1912,9 @@ and 4Gigabytes with the *big*.
 \end{figure}
 #+END_LaTeX
 
-\noindent
+#+BEGIN_CENTER
 *Insertion Time*
-
+#+END_CENTER
 The insertion time measures only the moments of the execution that the
 program is making an insertion in the database. By analyzing the
 results, we observed that the number of accesses to the database did
@@ -1961,8 +1959,12 @@ previously.
 #+END_LaTeX
 
 We can also observe by analysing Figures \ref{fig.insertremotebig} and
-\ref{fig.insertremotemedium} that difference of performance among the
-remote and local experiments rely on the insertion time.
+\ref{fig.insertremotemedium} that the difference of performance among the
+remote and local experiments rely exclusively on the insertion
+time. That is probably the case since insertion requests have to be
+communicated through the network topology. Since the network is a
+contention point, in situations with high data volume, this affects
+directly the performance, as our results have shown.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1982,9 +1984,9 @@ remote and local experiments rely on the insertion time.
 \end{figure}
 #+END_LaTeX
 
-\noindent
+#+BEGIN_CENTER
 *Batch Insertion Traces*
-
+#+END_CENTER
 To have a more detailed sight of the insertion time behavior, we
 generated traces for the batch executions. These traces logged the
 duration of every batch insertion for each experiment. It is depicted,
@@ -3555,9 +3557,9 @@ new solutions to address these issues and any other that might appear
 in the future.
 
 For future work, it would be interesting to provide an interface for
-the plugin package such as it could support multiple languages. There
+the plugin package to make it support multiple languages. There
 is also room to improve the organization of the entry points so that
-they can be event more generic. It would also be interesting to shift
+they can be even more generic. It would also be interesting to shift
 the options handling regarding each plugin to its proper class,
 instead of centralizing all in the controller. The way it is currently
 implemented, the user needs to modify the code in the controller
