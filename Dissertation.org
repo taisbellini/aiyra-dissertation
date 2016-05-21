@@ -1912,7 +1912,7 @@ and 4Gigabytes with the *big*.
 \caption{Results of batch sizes variability for the small input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_small_v2.pdf}
-\label{fig.memmsmall}
+\label{fig.memsmall}
 \end{figure}
 #+END_LaTeX
 
