@@ -175,11 +175,9 @@ Hope this helps.
 * Acknowledgements                                                 :ignore:
 
 #+BEGIN_LaTeX
-% agradecimentos
- \chapter*{Acknoledgements} 
-First of all, I would like to say thank you to my advisor, Lucas Mello
-Schnorr, for dedicating his time and attention to make this project a
-relevant contribution. 
+% agradecimentos \chapter*{Acknoledgements} First of all, I would like
+ to say thank you to my advisor, Lucas Mello Schnorr, for dedicating
+ his time and attention to make this project a relevant contribution.
 
 To my mother, Zaida Loureiro, for being comprehensive and understanding the time I needed to finish this work and trying to review it even without a deep knowledge of the language.
 
@@ -237,7 +235,7 @@ through the use of a rigorous experimental design.
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
-\begin{englishabstract}{Simulador extensível para arquivos de rastro no formato Pajé}{Pajé.Rastro.Simulador.}
+\begin{englishabstract}{Simulador Extensível para arquivos de rastro no formato Pajé}{Pajé,Rastro,Simulador}
 #+END_LaTeX
 Observação do comportamento de programa através de arquivos de rastro
 é particularmente importante em Computação de Alta Performance, uma
@@ -289,6 +287,7 @@ rigoroso /design/ experimental.
     \item[JVM] Java Virtual Machine
    \item [DBMS] Database Management System
     \item[JDBC] Java Database Connectivity
+   \item[ANTLR] Another Tool For Language Recognition
 \end{listofabbrv}
 
 
@@ -467,7 +466,7 @@ conceptual and logical database schemas, an overview about
 experimental design, and the R language in the experimental design
 context.
 
-** The Java Compiler Compiler (JavaCC) tool
+** The Java Compiler Compiler (JavaCC) Tool
 \label{section.javacc}
 
 The Java Compiler Compiler (JavaCC) \cite{javaccdoc} is a scanner and
@@ -692,7 +691,7 @@ most important features the analyser wants to test. Although it saves
 time and expenses, the results provide less information.
 
 
-** The R language
+** The R Language
 
 R is a language for statistical computing and graphics generation. It
 can be very easily extended, by creating and using packages. With R,
@@ -770,7 +769,7 @@ the beginning and the end of the communication. A Pajé trace file is
 divided in two segments: event definition and timestamped events. A
 brief description of these sections is provided below.
 
-*** Header section: events definition
+*** Header Section: Events Definition
 
 The first part of a trace file describes all of the possible events of
 the trace. This part is composed by a block where the first line
@@ -781,7 +780,7 @@ question. After, there is a set of fields, one in each line. Each
 field comprises a name, and a type. The type of a filed can be a
 string, double, int, date, hex or color.
 
-*** Body section: timestamped events
+*** Body Section: Timestamped Events
 \label{subsection.events} 
 
 After the events definition, the events themselves are described, one
@@ -878,7 +877,7 @@ types and one for entities. With this modular implementation, it is
 relatively easy to add a new type of event or entity and integrate it
 with the rest of the code.
 
-*** Class hierarchy for Paje events
+*** Class Hierarchy for Pajé Events
 
 An event object is what is passed as an argument to the simulator so
 that it can be processed. Therefore, it must contain all of the
@@ -904,7 +903,7 @@ their respective childs inherit from it.
 \end{figure}
 #+END_LaTeX
 
-*** Class hierarchy for the Paje types
+*** Class Hierarchy for the Pajé Types
 
 Figure \ref{fig.typesHierarchy} portrays the type hierarchy, where the
 first element is the *PajeType*. It has a name, an alias and a parent
@@ -927,7 +926,7 @@ manipulate it. Its childs are the *PajeStateType*, *PajeEventType* and
 \end{figure}
 #+END_LaTeX
 
-*** Class hierarchy for the Paje entities
+*** Class Hierarchy for the Pajé Entities
 
 As demonstrated in Figure \ref{fig.entitiesHierarchy}, the
 *PajeEntity* is the first node of the entities tree. It originates a
@@ -952,7 +951,7 @@ entity.
 \end{figure}
 #+END_LaTeX
 
-*** The core simulator
+*** The Core Simulator
 
 All the simulation is performed in two classes: *PajeSimulator* and
 *PajeContainer*. A PajeSimulator object is instantiated in the
@@ -1075,7 +1074,7 @@ simulation. The details about the already implemented plugins are
 presented in chapter \ref{chapter.plugins}. The following subsections
 detail each one of the packages.
 
-** The controller: option handling and JavaCC
+** The Controller: Option Handling and JavaCC
 
 
 The controller package is the entry point of the program, thus, it
@@ -1100,7 +1099,7 @@ simulator instance, which is the entry point of the simulator core
 package, is called to simulate that event. The next section describes
 the simulator core package.
 
-** Aiyra's core simulator
+** Aiyra's Core Simulator
 
 Aiyra's core simulator, depicted in Figure \ref{fig.aiyraCore},
 follows the exact same structure of the *PajeNG* implementation
@@ -1193,7 +1192,7 @@ approach. A full list of the plugin entrances and the information
 received in each one is presented in the next section.
 
 
-** The plugin package
+** The Plugin Package
 \label{section.plugin}
 
 The plugin package, as depicted in Figure \ref{fig.aiyraPlugin} is a
@@ -1563,7 +1562,7 @@ the design in each one of the platforms, thus, we had three files each
 with $270$ rows. The total number of experiments considering the three
 platforms is therefore $810$.
 
-*** PajeInsertDBPlugin evaluation
+*** PajeInsertDBPlugin Evaluation Methodology
 
 The *PajeInsertDBPlugin* provides an option for the user to define a
 batch size for the insertion in the database. The size defines the
@@ -1629,7 +1628,7 @@ distribution \cite{normaldistribution}. We describe below our
 expectation about each experimental setup and the interpretation of
 the measurements.
 
-*** Comparison between Aiyra and PajeNG
+*** Comparison Between Aiyra and PajeNG
 
 
 \noindent
