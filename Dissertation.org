@@ -175,8 +175,22 @@ Hope this helps.
 * Acknowledgements                                                 :ignore:
 
 #+BEGIN_LaTeX
-% agradecimentos \chapter*{Acknoledgements} 
-  
+% agradecimentos
+ \chapter*{Acknoledgements} 
+First of all, I would like to say thank you to my advisor, Lucas Mello
+Schnorr, for dedicating his time and attention to make this project a
+relevant contribution. 
+
+To my mother, Zaida Loureiro, for being comprehensive and understanding the time I needed to finish this work and trying to review it even without a deep knowledge of the language.
+
+To my university colleagues, specially Arthur Jacobs and Matheus
+Prola, for always being available to help me at any time and without whom I would not have come so far.
+
+To my good friend, Thom Morais, for helping me create a visual
+identity for this project.
+
+Last, but not least, to Adolfo Schneider, for his love and support and
+for making my life easier when I needed to be focused.
 #+END_LaTeX
 
 * Abstract                                                         :ignore:
