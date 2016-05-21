@@ -274,6 +274,7 @@ rigoroso /design/ experimental.
     \item[GC] Garbage Collector
     \item[CSV] Comma Separated Values
     \item[JVM] Java Virtual Machine
+   \item [DBMS] Database Management System
     \item[JDBC] Java Database Connectivity
 \end{listofabbrv}
 
@@ -399,10 +400,10 @@ a database, or even discarded if not relevant. This extensibility is
 implemented through the concept of plugins that are attached to the
 simulator in specific and important points where the trace events are
 combined. This main objective solves the lack of extensibility
-problem. Once the simulator allows the immediate manipulation of the 
+problem. Once the simulator allows the immediate manipulation of the
 entities, the other two issues can be easily addressed with
-extensions. Hence, the secondary objectives of the project are the 
-creation of plugins to dump partial data that has just been simulated 
+extensions. Hence, the secondary objectives of the project are the
+creation of plugins to dump partial data that has just been simulated
 and to make the results permanent.
 
 For the validation of the extensible trace files simulator, two
@@ -485,7 +486,7 @@ Appendix \ref{ap.javacc}.
 \begin{figure}[!htb]
 \caption{JavaCC's file generation flow}
 \centering
-\includegraphics[width=.7\linewidth]{./img/javaccex.pdf}
+\includegraphics[width=.75\linewidth]{./img/javaccex.pdf}
 \label{fig.javaccex}
 \end{figure}
 #+END_LaTeX
@@ -1050,9 +1051,6 @@ entity.
 \end{figure}
 #+END_LaTeX
 
-*_Used the pdf crop but still has margin. I have no Idea of how to fix
-it_*
-
 The program receives arguments from the user in its execution. The
 *filename* option (=-f=) is the only mandatory one, which indicates
 what is the trace file to be simulated. There are other two general
@@ -1141,14 +1139,15 @@ events, states and links, it is a double number. The *PajeUserLink*
 has a string that defines the *key* and start and end containers
 identified by *startContainer* and *endContainer*.
 
-Every trace event simulation has an instrumentation point, which
-dispatches the entity objects generated to the plugin package. These
-points are either in the *PajeSimulator* or in the *PajeContainer*, as
-illustrated in figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
-the outputs regarding the definition of types and values and the
-creation of containers. Although in this point the containers are not
-complete objects, since they do not have ending timestamp or the
-related entities, they are forwarded anyway with the alias and type
+*I don`t know why it is not respecting the margin* Every trace event
+simulation has an instrumentation point, which dispatches the entity
+objects generated to the plugin package. These points are either in
+the *PajeSimulator* or in the *PajeContainer*, as illustrated in
+figure \ref{fig.aiyraCore}. In the *PajeSimulator* are the outputs
+regarding the definition of types and values and the creation of
+containers. Although in this point the containers are not complete
+objects, since they do not have ending timestamp or the related
+entities, they are forwarded anyway with the alias and type
 information. In Figure \ref{fig.aiyraCore} we represent the processing
 of a *PajePushState*, which, after being validated by the simulator,
 is forwarded to the appropriate container. The *PajeContainer* is in
@@ -1510,13 +1509,13 @@ Table \ref{tab.jvm}.
 
 #+BEGIN_LaTeX
 \begin{table}[!htb]
-\caption{JVM heap sizes}
+\caption{JVM heap sizes in bytes}
 \label{tab.jvm}
 \centering
 \begin{tabularx}{\linewidth}{lXXX}\toprule
                          &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
-Inital heap size (bytes)         &  268435456        & 526368896            & 327213824   \\
-Maximum heap size(bytes)        &  4294967296            & 8422162432        & 5236588544       \\
+Inital heap size          &  268435456        & 526368896            & 327213824   \\
+Maximum heap size        &  4294967296            & 8422162432        & 5236588544       \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
@@ -2007,7 +2006,7 @@ performance.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the small input}
+\caption{Results of batch sizes variability for the medium input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v2.pdf}
 \label{fig.batchtimebig}
@@ -2016,7 +2015,7 @@ performance.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the small input}
+\caption{Results of batch sizes variability for the medium input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v2.pdf}
 \label{fig.batchtimemedium}
