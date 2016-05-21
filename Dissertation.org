@@ -356,18 +356,18 @@ entities for further analysis.
 
 In this context of performance analysis, a common tool used is the
 Pajé Trace Simulator \cite{kergommeaux2000paje}, an open source
-project that reads trace files in a specific format, the Pajé Trace
-File Format \cite{pajetracefile}, and processes five types of
-entities: Containers, States, Events, Variables and Links. These
-concepts represent basic structures of computer programs executed in
-parallel or distributed systems, such as processes, threads, network
-links, hardware counters and so on. As a base for the implementation
-of this proposal, the new generation of Pajé, PajeNG \cite{pajeng},
-was used. Details of PajeNG, the types of entities and the Pajé File
-Format will be presented in Chapter \ref{chapter.paje}. Although it
-has a visualization functionality, we will focus on the simulation
-part of the Pajé implementation in this project. The most commonly
-used tool of PajeNG is the Pajé
+project that reads trace files in a specific format and processes five
+types of entities: Containers, States, Events, Variables and
+Links. This format is named Pajé Trace File Format
+\cite{pajetracefile}. These concepts represent basic structures of
+computer programs executed in parallel or distributed systems, such as
+processes, threads, network links, hardware counters and so on. As a
+base for the implementation of this proposal, the new generation of
+Pajé, PajeNG \cite{pajeng}, was used. Details of PajeNG, the types of
+entities and the Pajé File Format will be presented in Chapter
+\ref{chapter.paje}. Although it has a visualization functionality, we
+will focus on the simulation part of the Pajé implementation in this
+project. The most commonly used tool of PajeNG is the Pajé
 Dump\footnote{http://github.com/schnorr/pajeng/} (=pj_dump=), that
 dumps to the standard output all information regarding entities
 created throughout the simulation.
@@ -3616,8 +3616,8 @@ TOKEN_MGR_DECLS:
 \end{lstlisting}
 #+END_LaTeX
 
-The declarations used by the lexical analyser are placed in the
-*TOKEN_MGR_DECLS* function.
+In the *TOKEN_MGR_DECLS* function, the declarations used by the
+lexical analyser are placed.
 
 Below these three structures, comes the lexical analysis where the
 Token rules and parser actions can be written using a top-down
