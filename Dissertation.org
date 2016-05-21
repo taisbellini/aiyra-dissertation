@@ -120,7 +120,7 @@ Hope this helps.
 
 * Front page preparation                                           :ignore:
 #+BEGIN_LaTeX
-\title{Extensible Simulator for Replay of Trace Files in the Pajé format}
+\title{Extensible Simulator for Replay of Trace Files in the Pajé Format}
 \author{Loureiro Bellini}{Tais}
 \advisor[Prof.~Dr.]{Mello Schnorr}{Lucas}
 
@@ -175,14 +175,19 @@ Hope this helps.
 * Acknowledgements                                                 :ignore:
 
 #+BEGIN_LaTeX
-% agradecimentos \chapter*{Acknoledgements} First of all, I would like
- to say thank you to my advisor, Lucas Mello Schnorr, for dedicating
- his time and attention to make this project a relevant contribution.
+% agradecimentos 
 
-To my mother, Zaida Loureiro, for being comprehensive and understanding the time I needed to finish this work and trying to review it even without a deep knowledge of the language.
+\chapter*{Acknoledgements} First of all, I would like to say thank you
+ to my advisor, Lucas Mello Schnorr, for dedicating his time and
+ attention to make this project a relevant contribution.
+
+To my mother, Zaida Loureiro, for being comprehensive and
+understanding the time I needed to finish this work and trying to
+review it even without a deep knowledge of the language.
 
 To my university colleagues, specially Arthur Jacobs and Matheus
-Prola, for always being available to help me at any time and without whom I would not have come so far.
+Prola, for always being available to help me at any time and without
+whom I would not have come so far.
 
 To my good friend, Thom Morais, for helping me create a visual
 identity for this project.
@@ -235,7 +240,7 @@ through the use of a rigorous experimental design.
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
-\begin{englishabstract}{Simulador Extensível para arquivos de rastro no formato Pajé}{Pajé,Rastro,Simulador}
+\begin{englishabstract}{Simulador Extensível para Arquivos de Rastro no Formato Pajé}{Pajé,Rastro,Simulador}
 #+END_LaTeX
 Observação do comportamento de programa através de arquivos de rastro
 é particularmente importante em Computação de Alta Performance, uma
