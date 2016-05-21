@@ -456,12 +456,13 @@ context.
 ** The Java Compiler Compiler (JavaCC) tool
 \label{section.javacc}
 
-The Java Compiler Compiler (JavaCC) is a scanner and parser generator
-configured with a set of regular expressions describing the tokens of
-a language and a grammar using these tokens. As output, it generates a
-lexical and syntax parser in the Java language. The lexical code
-separates the input file into tokens; the parser code is responsible
-for the syntax analysis.
+The Java Compiler Compiler (JavaCC) \cite{javaccdoc} is a scanner and
+parser generator configured with a set of regular expressions
+describing the tokens of a language and a grammar using these
+tokens. As output, it generates a lexical and syntax parser in the
+Java language \cite{javaccclass}. The lexical code separates the input
+file into tokens; the parser code is responsible for the syntax
+analysis.
 
 What differentiates JavaCC from other parser generators that exist for
 the Java language is that it creates source code in Java. This
@@ -664,9 +665,9 @@ experiments, which can cost a lot of time. Therefore, when using this
 technique, it is important to weight the relevance of each factor and
 level to generate an appropriate and accurate design. To calculate the
 total size of the sample you multiply the numbers of levels of the
-factors and the number of replications. For example, a design with a
-three-level factor, a two-level factor and 20 replications would have
-120 experiments (the result of $3*2*20$).
+factors and the number of replications \cite{fullfact}. For example, a
+design with a three-level factor, a two-level factor and 20
+replications would have 120 experiments (the result of $3*2*20$).
 
 When there are too many factors and levels, it may not be possible to
 use the full factorial design. In these cases, one can use a
@@ -3651,7 +3652,7 @@ TOKEN :
 {
   < VARIABLE: (["a"-"z", "A" - "Z"])+ >
   < ASSIGNMENT: "=" >
-  < CHAR: (~["\""] | "\\" (["n","r","\\","\'","\"""])) >
+  < CHAR: (~["\""] | "\\"" (["n","r","\\","\'","\""])) >
 } 
 /* Types */
 TOKEN: 
