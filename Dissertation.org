@@ -1784,9 +1784,9 @@ are divided in subsections according to the metrics analysed:
 is also a subsection to analyse metrics obtained during the execution
 of the batches.
 
-\noindent
+#+BEGIN_CENTER
 *Execution Time*
-
+#+END_CENTER
 The *execution time* measures the duration of the entire simulation
 from beginning to end. Figure \ref{fig.batchbig} illustrates the
 behavior of the execution using the *big* input. We have results for
@@ -1849,7 +1849,6 @@ network with only one hop of distance.
 \end{figure}
 #+END_LaTeX
 
-
 For smaller inputs, however, we see (in Figure \ref{fig.batchsmall})
 that the behavior is what we have predicted. It is explained by the
 very little memory usage, that is too irrelevant to impact the
@@ -1867,9 +1866,9 @@ are at least in the Megabytes order of magnitude.
 \end{figure}
 #+END_LaTeX
 
-\noindent
+#+BEGIN_CENTER
 *Memory Usage* 
-
+#+END_CENTER
 Going further on the analysis, we see in Figures \ref{fig.membig} and
 \ref{fig.memmedium} the memory usage for the scenarios with *big* and
 *medium* inputs. Naturally, the memory usage peak is higher for bigger
@@ -1913,9 +1912,9 @@ and 4Gigabytes with the *big*.
 \end{figure}
 #+END_LaTeX
 
-\noindent
+#+BEGIN_CENTER
 *Insertion Time*
-
+#+END_CENTER
 The insertion time measures only the moments of the execution that the
 program is making an insertion in the database. By analyzing the
 results, we observed that the number of accesses to the database did
@@ -1981,9 +1980,9 @@ remote and local experiments rely on the insertion time.
 \end{figure}
 #+END_LaTeX
 
-\noindent
+#+BEGIN_CENTER
 *Batch Insertion Traces*
-
+#+END_CENTER
 To have a more detailed sight of the insertion time behavior, we
 generated traces for the batch executions. These traces logged the
 duration of every batch insertion for each experiment. It is depicted,
