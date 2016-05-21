@@ -1204,7 +1204,7 @@ small and not worth of a new class implementation.
 \caption{Aiyra's Plugin Package}
 \centering
 \includegraphics[width=.8\linewidth]{./img/aiyraPlugin.pdf}
-\label{fig.aiyraCore}
+\label{fig.aiyraPlugin}
 \end{figure}
 #+END_LaTeX
 
