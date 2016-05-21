@@ -3554,9 +3554,9 @@ new solutions to address these issues and any other that might appear
 in the future.
 
 For future work, it would be interesting to provide an interface for
-the plugin package such as it could support multiple languages. There
+the plugin package to make it support multiple languages. There
 is also room to improve the organization of the entry points so that
-they can be event more generic. It would also be interesting to shift
+they can be even more generic. It would also be interesting to shift
 the options handling regarding each plugin to its proper class,
 instead of centralizing all in the controller. The way it is currently
 implemented, the user needs to modify the code in the controller
