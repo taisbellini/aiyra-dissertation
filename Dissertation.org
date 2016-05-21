@@ -175,9 +175,8 @@ Hope this helps.
 * Acknowledgements                                                 :ignore:
 
 #+BEGIN_LaTeX
-% agradecimentos
-%\chapter*{Agradecimentos}
-%Agradeço ao \LaTeX\ por não ter vírus de macro\ldots
+% agradecimentos \chapter*{Acknoledgements} 
+  
 #+END_LaTeX
 
 * Abstract                                                         :ignore:
@@ -3562,7 +3561,9 @@ they can be event more generic. It would also be interesting to shift
 the options handling regarding each plugin to its proper class,
 instead of centralizing all in the controller. The way it is currently
 implemented, the user needs to modify the code in the controller
-package to add an argument to the plugin.
+package to add an argument to the plugin. In terms of analysis, the
+*PajeInsertDBPlugin* can be deeper explored by evaluating the
+performance of queries to the relational database created.
 
 #+LATEX: \bibliography{References}
 
