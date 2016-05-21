@@ -1896,7 +1896,7 @@ batches.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the big input}
+\caption{Memory usage for the big input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_big_v2.pdf}
 \label{fig.membig}
@@ -1905,7 +1905,7 @@ batches.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the medium input}
+\caption{{Memory usage for the medium input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v2.pdf}
 \label{fig.memmedium}
@@ -1925,7 +1925,7 @@ and 4Gigabytes with the *big*.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the small input}
+\caption{{Memory usage for the small input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_small_v2.pdf}
 \label{fig.memsmall}
@@ -2027,7 +2027,7 @@ performance.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the medium input}
+\caption{Timeline of batch executions for the big input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v2.pdf}
 \label{fig.batchtimebig}
@@ -2036,7 +2036,7 @@ performance.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the medium input}
+\caption{Timeline of batch executions for the medium input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v2.pdf}
 \label{fig.batchtimemedium}
@@ -2049,7 +2049,7 @@ better to insert all the data at once.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Results of batch sizes variability for the small input}
+\caption{Timeline of batch executions for the small input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
 \label{fig.batchtimesmall}
