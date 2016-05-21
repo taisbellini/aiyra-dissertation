@@ -683,12 +683,13 @@ time and expenses, the results provide less information.
 R is a language for statistical computing and graphics generation. It
 can be very easily extended, by creating and using packages. With R,
 it is possible to create full factorial or fractional designs using
-the *DoE.base* package. It contains the class *design* with several
-accessor functions to create different types of design. One particular
-important function is the *fac.design*, which creates full factorial
-designs with an arbitrary numbers of levels. The function receives
-several arguments, including number of factors, levels and
-replication. The usage of the function is the following:
+the *DoE.base* package \cite{doebase}. It contains the class *design*
+with several accessor functions to create different types of
+design. One particular important function is the *fac.design*, which
+creates full factorial designs with an arbitrary numbers of
+levels. The function receives several arguments, including number of
+factors, levels and replication. The usage of the function is the
+following:
 #+BEGIN_LaTeX
 \lstsetForR
 \begin{lstlisting}
@@ -3652,7 +3653,7 @@ TOKEN :
 {
   < VARIABLE: (["a"-"z", "A" - "Z"])+ >
   < ASSIGNMENT: "=" >
-  < CHAR: (~["\""] | "\\"" (["n","r","\\","\'","\""])) >
+  < CHAR: (~["\""] | "\\"" (["n","r","\\"","\'","\""])) >
 } 
 /* Types */
 TOKEN: 
