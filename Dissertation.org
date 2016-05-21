@@ -3615,7 +3615,7 @@ TOKEN_MGR_DECLS:
 #+END_LaTeX
 
 The declarations used by the lexical analyser are placed in the
-TOKEN_MGR_DECLS function.
+*TOKEN_MGR_DECLS* function.
 
 Below these three structures, comes the lexical analysis where the
 Token rules and parser actions can be written using a top-down
@@ -3651,7 +3651,7 @@ TOKEN :
 {
   < VARIABLE: (["a"-"z", "A" - "Z"])+ >
   < ASSIGNMENT: "=" >
-  < CHAR: (~["\""] | "\\" (["n","r","\\","\'","\""])) >
+  < CHAR: (~["\""] | "\\" (["n","r","\\","\'","\"""])) >
 } 
 /* Types */
 TOKEN: 
