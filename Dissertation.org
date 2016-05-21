@@ -1330,7 +1330,7 @@ password (=-pwd=). The default for these options is: *localhost*,
 The following entry points were used in the *PajeInsertDBPlugin*:
 *newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
 *popState*, *newCompleteLink*, *updateVar* and *newEvent*.  Figure
-\ref{fig.plugindump} demonstrates these points. Types, values and
+\ref{fig.pluginDB} demonstrates these points. Types, values and
 containers are inserted in the database as soon as they are created
 due to the dependency of other entities on these ones. When a
 container is destroyed, its *endTime* is updated in the database.
@@ -1340,7 +1340,7 @@ container is destroyed, its *endTime* is updated in the database.
 \caption{Aiyra's Insert DB Plugin}
 \centering
 \includegraphics[width=.8\linewidth]{./img/pluginDB.pdf}
-\label{fig.plugindump}
+\label{fig.pluginDB}
 \end{figure}
 #+END_LaTeX
 
