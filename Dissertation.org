@@ -1959,8 +1959,12 @@ previously.
 #+END_LaTeX
 
 We can also observe by analysing Figures \ref{fig.insertremotebig} and
-\ref{fig.insertremotemedium} that difference of performance among the
-remote and local experiments rely on the insertion time.
+\ref{fig.insertremotemedium} that the difference of performance among the
+remote and local experiments rely exclusively on the insertion
+time. That is probably the case since insertion requests have to be
+communicated through the network topology. Since the network is a
+contention point, in situations with high data volume, this affects
+directly the performance, as our results have shown.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
