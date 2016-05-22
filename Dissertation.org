@@ -176,7 +176,7 @@ Hope this helps.
 #+BEGIN_LaTeX
 % agradecimentos 
 
-\chapter*{Acknoledgements} First of all, I would like to say thank you
+\chapter*{Acknowledgements} First of all, I would like to say thank you
  to my advisor, Lucas Mello Schnorr, for dedicating his time and
  attention to make this project a relevant contribution.
 
