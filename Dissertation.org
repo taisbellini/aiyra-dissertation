@@ -181,8 +181,7 @@ Hope this helps.
  to my advisor, Lucas Mello Schnorr, for dedicating his time and
  attention to make this project a relevant contribution.
 
-To my mother, Zaida Loureiro, for being comprehensive and
-understanding the time I needed to finish this work and trying to
+To my mother, Zaida Loureiro, for understanding the time I needed to finish this work and trying to
 review it even without a deep knowledge of the language.
 
 To my university colleagues, specially Arthur Jacobs and Matheus
@@ -3534,58 +3533,72 @@ ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
 * Conclusion
 \label{chapter.conclusion}
 
+Tinha olhada por cima a conclusão ontem. Meus comentários alto nível:
+- começar por remotivar rapidamente o problema que tu atacas
+- lembrar que a tua solução resolve o problema, explicar como
+mesmo paragrafo
+
+- dizer as vantagens da tua solução em relação a abordagem existente (talvez repetitivo com a tua motivação no contexto do teu TCC)
+- dizer as desvantagens da tua abordagem (mostra maturidade, deixar claro quais são os problemas)
+- dizer como foi feita a avaliação da tua solução
+- colocar em evidência o principal ou dois principais resultados
+- falar sobre trabalhos futuros
+
 In this proposal, we have elaborated a different approach to an
 existing simulation tool for Pajé Trace files (PajeNG). We have
-observed issues in the PajeNG implementation, mainly regarding the
-lack of flexibility to handle the resulting data of the simulation and
-the ephemerality of these results. To improve the extensibility of the
-tool, we introduced the concept of plugins, where every generated
-entity is sent to. This permits the manipulation of the results
-totally deattached from the core simulation. We also validated this
-design by implementing plugins.
+observed issues in the PajeNG implementation regarding the lack of
+flexibility to handle the resulting data of the simulation, the lack
+of partial results and the ephemerality of these results. To improve
+the extensibility of the tool, we introduced the concept of plugins,
+where every generated entity is sent to. This permits the manipulation
+of the results totally deattached from the core simulation. We also
+validated this design by implementing plugins that solve the other
+problems identified. 
 
-The separation of the core simulation from the data handling provided
-very good results. We were able to perform a simulation two times
-faster than the original tool. This is very relevant, since it opens
-several possibilities of creating high performance solutions. Building
-plugins for the solution was extremely important to validate and
-improve the proposal. The first approach consisted in having
-instrumentation points only for the events that generated complete
-entities, like *PajePopState*, which was soon discarded during the
-implementation of the *PajeInsertDBPlugin*. We saw that, for example,
-to insert a state entity, with foreign keys referring a container and
-a type, the object referenced must already be in the database. Thus,
-we noticed that, for the extensibility to apply to the maximum number
-of potential scenarios, it needed to give access to every type of
-event possible in the Pajé format. Implementing this plugin took a lot
-of time, and changes to it were made very frequently. It was
-interesting to observe that the modifications were only performed in
-the *PajeInsertDBPlugin* class, demonstrating clearly that the
-handling of the results was totally deattached from the core
-simulation.
+We performed an experimental evaluation comparing Aiyra to the
+existing approach. The separation of the core simulation from the data
+handling provided very good results. We were able to perform a
+simulation two times faster than the original tool. This is very
+relevant, since it opens several possibilities of creating high
+performance solutions. Thus, besides building an extensible simulator,
+we also proved it to have better performance than the existing
+tool. Building plugins for the solution was extremely important to
+validate and improve the proposal. The first approach consisted in
+having instrumentation points only for the events that generated
+complete entities, like *PajePopState*, which was soon discarded
+during the implementation of the *PajeInsertDBPlugin*. We saw that,
+for example, to insert a state entity, with foreign keys referring a
+container and a type, the object referenced must already be in the
+database. Thus, we noticed that, for the extensibility to apply to the
+maximum number of potential scenarios, it needed to give access to
+every type of event possible in the Pajé format. Implementing this
+plugin took a lot of time, and changes to it were made very
+frequently. It was interesting to observe that the modifications were
+only performed in the *PajeInsertDBPlugin* class, demonstrating
+clearly that the handling of the results was totally deattached from
+the core simulation.
 
 The *PajeInsertDBPlugin* analysis presented some issues that the Java
 language may bring regarding memory usage. First, it can become very
 slow depending on the number of objects it is storing. Second, there
 must be a carefull analysis on the configuration of the JVM to assure
 that it will have a capacity consistent to the platform in which it is
-running. The *PajeDumpPlugin*, besides solving an issue, brings
-another concern which is the order in which the entities are
-presented, for example, states will be dumped before their
-containers. However, Aiyra is designed to facilitate the creation of
-new solutions to address these issues and any other that might appear
-in the future.
+running. This may cause a limitation for the user that needs to store
+many entities in memory. The *PajeDumpPlugin*, although solving an
+issue, brings another concern which is the order in which the entities
+are presented, for example, states will be dumped before their
+containers. The organization of the plugin's entry points is still strongly
+based on the plugins crated. There is room to make more generic entrances that can comprehend
 
 For future work, it would be interesting to provide an interface for
-the plugin package to make it support multiple languages. There
-is also room to improve the organization of the entry points so that
-they can be even more generic. It would also be interesting to shift
-the options handling regarding each plugin to its proper class,
-instead of centralizing all in the controller. The way it is currently
-implemented, the user needs to modify the code in the controller
-package to add an argument to the plugin. In terms of analysis, the
-*PajeInsertDBPlugin* can be deeper explored by evaluating the
-performance of queries to the relational database created.
+the plugin package to make it support multiple languages. It would
+also be interesting to shift the options handling regarding each
+plugin to its proper class, instead of centralizing all in the
+controller. The way it is currently implemented, the user needs to
+modify the code in the controller package to add an argument to the
+plugin. In terms of analysis, the *PajeInsertDBPlugin* can be deeper
+explored. There can be evaluations testing different configurations
+for the JVM, as well as an study on the eficiency of the schema.
 
 #+LATEX: \bibliography{References}
 
