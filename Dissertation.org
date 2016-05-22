@@ -10,7 +10,7 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 
 #+LATEX_CLASS: iiufrgs
-#+LATEX_CLASS_OPTIONS: [times,cic,tc,english]
+#+LATEX_CLASS_OPTIONS: [cic,tc,english]
 #+LATEX_HEADER: \usepackage[utf8]{inputenc}
 #+LATEX_HEADER: \usepackage[T1]{fontenc}
 #+LATEX_HEADER: \usepackage{subfigure}
@@ -35,7 +35,6 @@
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage{color}
 #+LATEX_HEADER: \graphicspath{{img/}{img/final/}}
-#+LATEX_HEADER: \hypersetup{hidelinks = true}
 
 #+LATEX_HEADER: \newcommand{\review}[1]{\textcolor[rgb]{1,0,0}{[Lucas: #1]}}
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
