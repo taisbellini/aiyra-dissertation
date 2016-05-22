@@ -1905,7 +1905,7 @@ batches.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{{Memory usage for the medium input}
+\caption{Memory usage for the medium input}
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v2.pdf}
 \label{fig.memmedium}
