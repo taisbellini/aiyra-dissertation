@@ -1564,10 +1564,10 @@ variability. As the executions take a significant amount time, $30$
 repetitions is enough to have reliable results. Since we have two
 factors, each with three levels, we have a total of $270$ experiments
 (the product of $3*3*30$). The outcome of this experiment is the
-*execution* time for each combination of input and version. We execute
-the design in each one of the platforms, thus, we had three files each
-with $270$ rows. The total number of experiments considering the three
-platforms is therefore $810$.
+*execution* time for each combination of *input* and *version*. We
+execute the design in each one of the platforms, thus, we had three
+files each with $270$ rows. The total number of experiments
+considering the three platforms is therefore $810$.
 
 *** PajeInsertDBPlugin Evaluation Methodology
 
@@ -1916,7 +1916,7 @@ batches.
 
 The memory usage with the *small* file, portrayed in Figure
 \ref{fig.memsmall}, had the same behavior as the previous ones, except
-for the *guarani* platform. Since it is not a logical that the batch
+for the *guarani* platform. Since it is not logical that the batch
 size *E*, which is the second smallest of the levels, occupies more
 memory than *A*, *B*, *C*, *D*, and we can see in Figure
 \ref{fig.batchsmall} that there was a big variability in this
@@ -2015,17 +2015,17 @@ duration of every batch insertion for each experiment. It is depicted,
 in Figures \ref{fig.batchtimebig} and \ref{fig.batchtimemedium}, $10$
 replications of the experiments for each platform and batch size. The
 graphics present a timeline in the horizontal axis of all the
-execution. There is one line for each replication. The colored
-segments portray the moments where a batch is being executed. For
-batch size *C*, for example, there are 4 insertions, thus, there are
-four colored segments for each replication. It is possible to see
-through these graphics that bigger batches take longer to execute, a
-detail that we had not considered in the hipotesis. In this way, we
-see that the insertion time does not significantly change between
-configurations for the same input size, as the number of queries is
-always the same, while the simulation itself is what impacts the run
-time. As we have seen before, the memory usage is what penalizes the
-performance.
+execution. There is one line for each replication and they are
+separated by batch size. The colored segments portray the moments
+where a batch is being executed. For batch size *C*, for example,
+there are 4 insertions, thus, there are four colored segments for each
+replication. It is possible to see through these graphics that bigger
+batches take longer to execute, a detail that we had not considered in
+the hipotesis. In this way, we see that the insertion time does not
+significantly change between configurations for the same input size,
+as the number of queries is always the same, while the simulation
+itself is what impacts the run time. As we have seen before, the
+memory usage is what penalizes the performance.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -3554,7 +3554,9 @@ simulation two times faster than the original tool. This is very
 relevant, since it opens several possibilities of creating high
 performance solutions. Thus, besides building an extensible simulator,
 we also proved it to have better performance than the existing
-tool. Building plugins for the solution was extremely important to
+tool. 
+
+Building plugins for the solution was extremely important to
 validate and improve the proposal. The first approach consisted in
 having instrumentation points only for the events that generated
 complete entities, like *PajePopState*, which was soon discarded
@@ -3573,7 +3575,7 @@ the core simulation.
 The *PajeInsertDBPlugin* analysis presented some issues that the Java
 language may bring regarding memory usage. First, it can become very
 slow depending on the number of objects it is storing. Second, there
-must be a carefull analysis on the configuration of the JVM to assure
+must be a careful analysis on the configuration of the JVM to assure
 that it will have a capacity consistent to the platform in which it is
 running. This may cause a limitation for the user that needs to store
 many entities in memory. The *PajeDumpPlugin*, although solving an
