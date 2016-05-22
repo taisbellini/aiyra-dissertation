@@ -207,8 +207,8 @@ commonly employed to simulate trace files in the Pajé file format. The
 simulator works by recreating the program behavior in an offline
 fashion, allowing the performance analyst to better understand
 performance issues that might have occurred during execution.  As of
-today, there are at least three issues with the Pajé simulator: little
-extensibility, lack of partial outcomes and impermanent
+today, there are at least three problems with the Pajé simulator:
+little extensibility, lack of partial outcomes and impermanent
 results. Although Pajé has been built in an extensible manner, it is
 necessary to write a full component for Pajé to actually achieve
 extensibility. This is a complex task since it implies in
@@ -241,32 +241,32 @@ through the use of a rigorous experimental design.
 % na outra língua, separadas por vírgulas
 \begin{englishabstract}{Simulador Extensível para Arquivos de Rastro no Formato Pajé}{Pajé,Rastro,Simulador}
 #+END_LaTeX
-Observação do comportamento de programa através de arquivos de rastro
+Observação do comportamento de programas através de arquivos de rastro
 é particularmente importante em Computação de Alta Performance, uma
-vez que permite que uma análise de desempenho precisa. Neste contexto,
-a ferramenta Pajé é bastante utilizada para simular arquivos de rastro
-no formato de arquivo Pajé. O simulador funciona, recriando o
+vez que permite uma análise de desempenho precisa. Neste contexto, a
+ferramenta Pajé é bastante utilizada para simular arquivos de rastro
+no formato de arquivo Pajé. O simulador funciona recriando o
 comportamento do programa em modo /offline/, permitindo que o analista
-de desempenho entenda melhor problemas de desempenho que possam ter
-ocorrido durante a execução. Atualmente, há pelo menos três problemas
-com o simulador Pajé: pouca extensibilidade, falta de resultados
-parciais e resultados temporários. Embora o Pajé tenha sido construído
-para ser extensível, é necessário escrever um componente inteiro para
-conseguir realmente extensibilidade. Esta é uma tarefa complexa, pois
-implica em compreender a hierarquia de classes interna do programa. A
-segunda questão é que é impossível obter uma visão parcial do dados
-simulados antes do final do arquivo de entrada. E, finalmente, o
-terceiro problema está relacionado com a efemeridade dos resultados:
-todos os dados simulados são descartados quando o Pajé termina de
+de desempenho entenda melhor complicações que possam ter ocorrido
+durante a execução. Atualmente, há pelo menos três problemas com o
+simulador Pajé: pouca extensibilidade, falta de resultados parciais e
+resultados temporários. Embora o Pajé tenha sido construído para ser
+extensível, é necessário escrever um componente inteiro para atingir
+realmente a extensibilidade. Esta é uma tarefa complexa, pois implica
+em compreender a hierarquia de classes interna do programa. A segunda
+questão é que é impossível obter uma visão parcial dos dados simulados
+antes do final do arquivo de entrada. E, finalmente, o terceiro
+problema está relacionado com a efemeridade dos resultados: todos os
+dados simulados são descartados quando o Pajé termina de
 executar. Para resolver estas questões, um simulador extensível
 baseado em /plugins/ chamado Aiyra foi concebido e implementado. O
 objetivo da Aiyra é permitir extrema extensibilidade deixando o
 analista de desempenho construir /plugins/ que lidam com os dados
 simulados. Os /plugins/ podem ser conectados ao simulador em pontos
-específicos onde os eventos de rastreamento importantes são
+específicos onde eventos de rastreamento importantes são
 combinados. Como prova de conceito, implementamos plugins para mostrar
 na saída padrão dados parciais que acabaram de ser simulados e para
-tornar os resultados permanente, inserindo os dados simulados em uma
+tornar os resultados permanentes, inserindo os dados simulados em uma
 base de dados. Uma análise de desempenho foi conduzido para comparar
 Aiyra com o simulador Pajé existente. Nosso simulador apresentou
 melhores resultados de desempenho com arquivos maiores, o que foi
@@ -288,6 +288,7 @@ rigoroso /design/ experimental.
 \begin{listofabbrv}{SPMD}
     \item[GC] Garbage Collector
     \item[CSV] Comma Separated Values
+    \item[HPC] High Performance Computing
     \item[JVM] Java Virtual Machine
    \item [DBMS] Database Management System
     \item[JDBC] Java Database Connectivity
@@ -425,7 +426,7 @@ and to make the results permanent.
 For the validation of the extensible trace files simulator, two
 plugins were implemented: Paje Dump Plugin and Paje Insert Database
 Plugin. The first one plays the same roll as the original Paje Dump
-tool in the Paje new generation, with the difference that the entities
+tool in the Pajé new generation, with the difference that the entities
 are dumped at the moment they are completed. The second one inserts
 all the data in a relational database. A specific schema for the Pajé
 Format was designed and will be presented in Chapter
@@ -503,7 +504,7 @@ Appendix \ref{ap.javacc}.
 \begin{figure}[!htb]
 \caption{JavaCC's file generation flow}
 \centering
-\includegraphics[width=.75\linewidth]{./img/javaccex.pdf}
+\includegraphics[width=.8\linewidth]{./img/javaccex.pdf}
 \label{fig.javaccex}
 \end{figure}
 #+END_LaTeX
@@ -621,17 +622,17 @@ model, while its attributes become the *columns* of the tables. Each
 instance of an entity is a row and its identifier can be one or more
 columns that compose the *primary key*. When there is an identifying
 relationship, the weak entity attaches the identifier of the other
-entity to its own primary key. In Figure \ref{fig.ermodelex}, the
-*City* table has two columns as primary key: *stateName* and
-*cityName*. A *one-to-one* relationship generates a merge of both
-tables involved. *One-to-many* links adds an attribute in one of the
-tables. The entity that can only be related to one of the instances of
-the other receives the attribute, which is called *foreign key*. It
-also absorbs the attributes of the relationship. In the example of
-figure \ref{fig.ermodelex}, the table referencing the *School* entity
-would have the *stateName* and *cityName* as foreign keys and
-*address* as attribute. The foreign key is what preserves the link
-between two entities. *Many-to-many* relationships have to be
+entity to its own primary key. In the example of Figure
+\ref{fig.ermodelex}, the *City* table will have two columns as primary
+key: *stateName* and *cityName*. A *one-to-one* relationship generates
+a merge of both tables involved. *One-to-many* links adds an attribute
+in one of the tables. The entity that can only be related to one of
+the instances of the other receives the attribute, which is called
+*foreign key*. It also absorbs the attributes of the relationship. In
+the example of figure \ref{fig.ermodelex}, the table referencing the
+*School* entity would have the *stateName* and *cityName* as foreign
+keys and *address* as attribute. The foreign key is what preserves the
+link between two entities. *Many-to-many* relationships have to be
 represented by a separate table with the primary keys of both entities
 involved, which also work as foreign keys. In our illustration, the
 relationship between *Grade* and *Student* would become a table, with
@@ -724,7 +725,7 @@ fac.design(
                 batch=c("A", "B", "C", "D", "E", "F")));
 \end{lstlisting}
 #+END_LaTeX
-where =nfactors= represents the number of factors, *replications* is
+where *nfactors* represents the number of factors, *replications* is
 the number of replications, *repeat.only* tells if the replications of
 each run are grouped together, *blocks* is a prime-number telling in
 how many blocks the experiment is subdivided, *randomize* informs the
