@@ -1049,9 +1049,9 @@ files in the Pajé format and, instead of storing the results in
 memory, forwards every created entity to a common place where it can
 be manipulated freely. The architecture of the implementation,
 characterized in Figure \ref{fig.aiyraArchitecture}, contains three
-packages: *controller*, *simulator core* and *plugin*. Every event of
+packages: *controller*, *core simulator* and *plugin*. Every event of
 a trace file always goes through all packages. First, the trace file
-in the input is read by the parser, where a trace event object is
+in the input is read by the controller, where a trace event object is
 created. This instance contains the type of event in question and the
 field values. In the example of Figure \ref{fig.aiyraArchitecture},
 the event read is the creation of a container of type *P* with alias
@@ -1088,7 +1088,7 @@ The controller package is the entry point of the program, thus, it
 also handles the arguments passed by the user. For this processing, an
 external library \cite{optionhandler} was used. The arguments handling
 is centralized in one single class, *OptionsHandler*, to facilitate
-the inclusion of new ones. The Paje file format (see Section
+the inclusion of new ones. The Pajé file format (see Section
 \ref{section.pajeformat}) is parsed by a grammar written using the
 JavaCC syntax. The file *PajeGrammar.jj* containing all the grammar
 rules of the format is processed by the Java Compiler Compiler
@@ -1097,7 +1097,7 @@ an array, while the events are simulated as soon as they are obtained
 from the trace.
 
 The controller package is composed by all of the JavaCC files
-described in Section \ref{section.javacc} and the OptionsHandler
+described in Section \ref{section.javacc} and the *OptionsHandler*
 class. The generated class *PajeGrammar.java* contains, besides the
 parsing component, all the necessary Java code for the program to run,
 such as the initialization of the simulator object, where all of the
@@ -1114,8 +1114,8 @@ described in section \ref{section.pajeng}. Every event read by the
 parser and sent to the core by the controller goes through the
 *PajeSimulator* component, which is then forwarded to a
 *PajeContainer* if necessary. In the example of Figure
-\ref{fig.aiyraCore}, the simulator receives a *PajePopStateEvent*,
-that is validated in the *PajeSimulator*, forwarded to the *C1*
+\ref{fig.aiyraCore}, the simulator receives a *PajePushStateEvent*,
+that is validated in the *PajeSimulator*, forwarded to the *C2*
 container, and then dispatched to the proper instrumentation
 point. The class hierarchy follows the same organization as the
 PajeNG, thus, it is equally expandable in terms of creating new types
@@ -1163,7 +1163,7 @@ identified by *startContainer* and *endContainer*.
 Every trace event simulation has an instrumentation point, which
 dispatches the entity objects generated to the plugin package. These
 points are either in the *PajeSimulator* or in the *PajeContainer*, as
-illustrated in figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
+illustrated in Figure \ref{fig.aiyraCore}. In the *PajeSimulator* are
 the outputs regarding the definition of types and values and the
 creation of containers. Although in this point the containers are not
 complete objects, since they do not have ending timestamp or the
@@ -1245,7 +1245,7 @@ that could not be excluded, such as variables.
 
 The link entry points receive *PajeUserLink* objects. In the
 *startLink*, the end time and end container of the communication link
-are unknown, while in the *endLink*, instance has the end point of the
+are unknown, while in the *endLink*, the instance has the end point of the
 link but not the start. The *newCompleteLink* method takes in a link
 entity with beginning and end. Anytime a variable is set or updated,
 there are three *PajeUserVariable* entities sent to the plugin: the
