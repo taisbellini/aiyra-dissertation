@@ -504,7 +504,7 @@ Appendix \ref{ap.javacc}.
 \begin{figure}[!htb]
 \caption{JavaCC's file generation flow}
 \centering
-\includegraphics[width=.8\linewidth]{./img/javaccex.pdf}
+\includegraphics[width=.85\linewidth]{./img/javaccex.pdf}
 \label{fig.javaccex}
 \end{figure}
 #+END_LaTeX
@@ -1245,20 +1245,20 @@ that could not be excluded, such as variables.
 
 The link entry points receive *PajeUserLink* objects. In the
 *startLink*, the end time and end container of the communication link
-are unknown, while in the *endLink*, the instance has the end point of the
-link but not the start. The *newCompleteLink* method takes in a link
-entity with beginning and end. Anytime a variable is set or updated,
-there are three *PajeUserVariable* entities sent to the plugin: the
-*first*, which contains the first value of the variable; the *last*,
-which is the one immediately before the variable in question; and the
-new variable which is not completed yet (*newVar*). The aditions and
-subtractions are sent to the same point (*updateVar*). Since the
-previous variable objects are necessary to generate the new value,
-they are not removed from memory during simulation. The set, push and
-pop state instrumentation points all receive a *PajeUserState*. The
-only one with an entity with beginning and end timestamps is the
-*popState*. The *PajeUserEvent* objects are sent to the *newEvent*
-function.
+are unknown, while in the *endLink*, the instance has the end point of
+the link but not the start. The *newCompleteLink* method takes in a
+link entity with beginning and end. Anytime a variable is set or
+updated, there are three *PajeUserVariable* entities sent to the
+plugin: the *first*, which contains the first value of the variable;
+the *last*, which is the one immediately before the variable in
+question; and the new variable which is not completed yet
+(*newVar*). The aditions and subtractions are sent to the same point
+(*updateVar*). Since the previous variable objects are necessary to
+generate the new value, they are not removed from memory during
+simulation. The set, push and pop state instrumentation points all
+receive a *PajeUserState*. The only one with an entity with beginning
+and end timestamps is the *popState*. The *PajeUserEvent* objects are
+sent to the *newEvent* function.
 
 To validate the concept of the plugins and its entry points, three
 plugins were created: *PajeNullPlugin*, *PajeDumpPlugin* and
