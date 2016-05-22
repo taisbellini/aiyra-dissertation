@@ -181,8 +181,9 @@ Hope this helps.
  to my advisor, Lucas Mello Schnorr, for dedicating his time and
  attention to make this project a relevant contribution.
 
-To my mother, Zaida Loureiro, for understanding the time I needed to finish this work and trying to
-review it even without a deep knowledge of the language.
+To my mother, Zaida Loureiro, for understanding the time I needed to
+finish this work and trying to review it even without a deep knowledge
+of the language.
 
 To my university colleagues, specially Arthur Jacobs and Matheus
 Prola, for always being available to help me at any time and without
@@ -3533,17 +3534,6 @@ ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
 * Conclusion
 \label{chapter.conclusion}
 
-Tinha olhada por cima a conclusão ontem. Meus comentários alto nível:
-- começar por remotivar rapidamente o problema que tu atacas
-- lembrar que a tua solução resolve o problema, explicar como
-mesmo paragrafo
-
-- dizer as vantagens da tua solução em relação a abordagem existente (talvez repetitivo com a tua motivação no contexto do teu TCC)
-- dizer as desvantagens da tua abordagem (mostra maturidade, deixar claro quais são os problemas)
-- dizer como foi feita a avaliação da tua solução
-- colocar em evidência o principal ou dois principais resultados
-- falar sobre trabalhos futuros
-
 In this proposal, we have elaborated a different approach to an
 existing simulation tool for Pajé Trace files (PajeNG). We have
 observed issues in the PajeNG implementation regarding the lack of
@@ -3587,13 +3577,14 @@ running. This may cause a limitation for the user that needs to store
 many entities in memory. The *PajeDumpPlugin*, although solving an
 issue, brings another concern which is the order in which the entities
 are presented, for example, states will be dumped before their
-containers. The organization of the plugin's entry points is still strongly
-based on the plugins crated. There is room to make more generic entrances that can comprehend
+containers. The organization of the plugin's entry points is still
+strongly based on the two plugins crated. There is room to make more
+generic entrances that can comprehend as many scenarios as possible.
 
 For future work, it would be interesting to provide an interface for
 the plugin package to make it support multiple languages. It would
-also be interesting to shift the options handling regarding each
-plugin to its proper class, instead of centralizing all in the
+also be desirable to shift the options handling regarding each plugin
+to its proper class, instead of centralizing all in the
 controller. The way it is currently implemented, the user needs to
 modify the code in the controller package to add an argument to the
 plugin. In terms of analysis, the *PajeInsertDBPlugin* can be deeper
