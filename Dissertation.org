@@ -3577,9 +3577,12 @@ running. This may cause a limitation for the user that needs to store
 many entities in memory. The *PajeDumpPlugin*, although solving an
 issue, brings another concern which is the order in which the entities
 are presented, for example, states will be dumped before their
-containers. The organization of the plugin's entry points is still
-strongly based on the two plugins crated. There is room to make more
-generic entrances that can comprehend as many scenarios as possible.
+containers. Concerning the simulator design, there are some points
+that can be improved. First, the organization of the plugin's entry
+points is still strongly based on the two plugins created. There is
+room to make more generic entrances that can comprehend as many
+scenarios as possible. Second, it does not accepts entities with extra
+fields, which limits a little the extension of the Pajé format.
 
 For future work, it would be interesting to provide an interface for
 the plugin package to make it support multiple languages. It would
