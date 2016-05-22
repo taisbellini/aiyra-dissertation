@@ -1301,8 +1301,8 @@ points are: *destroyContainer*, *popState*, *newCompletedLink*, and
 *newEvent*. Figure \ref{fig.plugindump} demonstrates the usage of the
 available entry points. When it is a destroyed container, it is
 necessary to iterate over the entities left in the container. The
-variables printed in the destruction of the container, since they are
-not removed during simulation.
+variables are printed in the destruction of the container, since they
+are not removed during simulation.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1375,7 +1375,7 @@ the (=-batch=) option with an integer as argument. This number will
 define how many queries it will store before inserting a batch in the
 database. This is only applicable to states, events, links and
 variables, since types, values and containers are immediately
-inserted. performance analysis for different sizes of batch is
+inserted. A performance analysis for different sizes of batch is
 presented in the next chapter.
 
 To create a relational database for the Pajé format, first, we created
@@ -1388,7 +1388,7 @@ The entity-relationship (ER) model, illustrated in Figure
 \ref{fig.ermodel}, contains one entity for each type of Pajé
 object. Also, to support multiple files, there is a *file* entity,
 which has the *name*, a *comment* and the *date* as attributes, as
-well as a *file_id*. The *Type* and *Container* entities have an
+well as a *fileId*. The *Type* and *Container* entities have an
 identifying relationship with *file*, which means that the file id is
 part of their identifier. The relationship is one-to-many, since a
 file can have multiple types and containers.
@@ -1413,7 +1413,7 @@ are related to a container, have an identifying one-to-many relation
 with *Container* entity. *State* has *startTime* and *endTime*
 attributes, where the first is identifier. *Link* has two one-to-many
 relationships with *Container*, one for *startContainer* and one for
-*endContainer*. A *Variable* entity contains the *Time* attribute, as
+*endContainer*. A *Variable* entity contains the *time* attribute, as
 well as an *updateTime* in the relation with *Container*. Also, this
 relation has a *value* attribute. The *Event* entity has a *time*
 field.
@@ -1455,7 +1455,7 @@ one wants to know the value of a state, for example, it needs to first
 get its type, then, go to *Type* table to retrieve the value. Since it
 is desirable to easily get an entity's value, we added a relationship
 between the valued entities (*State*, *Link* and *Variable*) with
-*Value*. *value_alias* is an identifying foreign key for all, except
+*Value*. *Value_alias* is an identifying foreign key for all, except
 *Link*, where the identifier consists only in the *key*, *type* and
 *file_id*. With the conceptual model of the *Variable* entity, it is
 required to retrieve two rows if one needs to know the beginning and
