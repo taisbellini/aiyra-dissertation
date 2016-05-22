@@ -753,7 +753,7 @@ generation of the Pajé Visualization Tool, the PajeNG, focusing on the
 \label{section.pajeformat}
 
 The Pajé Trace File Format \cite{pajetracefile} is a textual and
-generic pattern that describes the behaviour of parallel and
+generic pattern that describes the behavior of parallel and
 distributed programs. The Pajé format describes five types of
 entities: containers, states, events, variables and links. Each entity
 is always associated to a container, even the containers themselves. A
@@ -762,7 +762,7 @@ processor, a thread, a network link, etc. It is the only Pajé object
 that holds other objects, including containers, which makes it the
 main component to define a type hierarchy. A *state* is used to
 describe periods of time where a container stays at the same state,
-like a thread that is blocked, for example. It always has a beginning
+like a thread that is blocked, for example. It always has beginning
 and an ending timestamps. An *event* has only one timestamp, and can
 be anything noteworthy to be uniquely identified. A *variable* entity
 represents the progression of a variable's value along time. It is
@@ -782,8 +782,8 @@ contains the name of the event, like *PajeDefineContainerType*, for
 example, followed by a unique identifier. The identifier is an integer
 and will be used later by the events to determine the type of event in
 question. After, there is a set of fields, one in each line. Each
-field comprises a name, and a type. The type of a filed can be a
-string, double, int, date, hex or color.
+field comprises a name, and a type. The type of a filed can be string,
+double, int, date, hex or color.
 
 *** Body Section: Timestamped Events
 \label{subsection.events} 
@@ -802,21 +802,21 @@ entities. These hierarchies are specific for each trace file, although
 it can be repeated in traces with the same scenario. In the structure
 of the trace file, the type hierarchy comes just after the event
 definition. There, each type of the program is defined and one of the
-fields is always the parent type. Each entity is always associated to
-a type and they must follow the same precedence as the types
-definition. In Figure \ref{fig.hierarchyex}, we have a type hierarchy
-on the left, and a corresponding entities hierarchy on the right. The
-only kind of entity that holds other entities is the container, thus,
-the rounded entities are container types, while the squared ones
-represent states. On the right, the *M* type stands for machine, *C*
-is core, *P* is process and *Sp* and *Sc* are states. On the left, we
-have one machine, *M1*, with two cores: *C1*, running a process *P1*;
-and *C2*, running a process *P2*. The processes and the cores have a
-stack of states organized by the timestamp. Notice that the entities
-tree respect the precedences set on the left. The difference between
-both hierarchies relies on the number of nodes: while the type
-hierarchy has only a few, the entities hierarchy may have millions
-depending on the number of containers in the trace.
+fields is the parent type. Each entity is always associated to a type
+and they must follow the same precedence as the types definition. In
+Figure \ref{fig.hierarchyex}, we have a type hierarchy on the left,
+and a corresponding entities hierarchy on the right. The only kind of
+entity that holds other entities is the container, thus, the rounded
+entities are container types, while the squared ones represent
+states. On the right, the *M* type stands for machine, *C* is core,
+*P* is process and *Sp* and *Sc* are states. On the left, we have one
+machine, *M1*, with two cores: *C1*, running a process *P1*; and *C2*,
+running a process *P2*. The processes and the cores have a stack of
+states organized by the timestamp. Notice that the entities tree
+respect the precedences set on the left. The difference between both
+hierarchies relies on the number of nodes: while the type hierarchy
+has only a few, the entities hierarchy may have millions depending on
+the number of containers in the trace.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -837,7 +837,9 @@ specific timestamp and have its value changed throughout the
 simulation by addition and subtraction events. The value of a variable
 is a double precision floating-point number, which is different from
 the values of the other entities. A variable must be set before
-changes to its value can be made.
+changes to its value can be made. States have push and pop events that
+can occur several times during a trace. Links have start and end
+events, and must be completed before the end of the file.
 
 ** PajeNG Tools and Simulation Library 
 \label{section.pajeng}
@@ -912,25 +914,23 @@ their respective childs inherit from it.
 
 Figure \ref{fig.typesHierarchy} portrays the type hierarchy, where the
 first element is the *PajeType*. It has a name, an alias and a parent
-type, which is also a PajeType. These fields are the ones common to
-all the type definition events described in section
+type, which is also a *PajeType*. These fields are the ones common to
+all the type definition events mentioned in section
 \ref{section.pajeformat}. The immediate childs of this class are:
 *PajeCategorizedType*, *PajeVariableType* and *PajeContainerType*. As
 the events, the categorized types are associated to a value, hence,
-the PajeCategorizedType has a PajeValue field and methods to
+the *PajeCategorizedType* has a *PajeValue* field and methods to
 manipulate it. Its childs are the *PajeStateType*, *PajeEventType* and
 *PajeLinkType*.
-
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
-\caption{Events class hierarchy}
+\caption{Types class hierarchy}
 \centering
 \includegraphics[width=.6
 \linewidth]{./img/typesHierarchy.pdf}
 \label{fig.typesHierarchy}
 \end{figure}
 #+END_LaTeX
-
 *** Class Hierarchy for the Pajé Entities
 
 As demonstrated in Figure \ref{fig.entitiesHierarchy}, the
@@ -959,29 +959,31 @@ entity.
 *** The Core Simulator
 
 All the simulation is performed in two classes: *PajeSimulator* and
-*PajeContainer*. A PajeSimulator object is instantiated in the
+*PajeContainer*. A *PajeSimulator* object is instantiated in the
 beginning of the program and incorporates all the event processing of
 the simulation. The type definitions, container creations and entity
-value declarations are completed and stored in the PajeSimulator
+value declarations are completed and stored in the *PajeSimulator*
 object. Every time there is an event of type *PajeCreateContainer*, a
-PajeContainer object is instantiated. All other events are always
+*PajeContainer* object is instantiated. All other events are always
 associated to a container, thus, they will be simulated in the
-appropriate container instance. The PajeContainer object will keep the
-entities until the program finishes. Since all the data from the
+appropriate container instance. The *PajeContainer* object will keep
+the entities until the program finishes. Since all the data from the
 simulation is kept in memory, the end timestamp is used to signal that
 an entity no longer can be referred.
 
-The PajeSimulator class lists every type declared and container
+The *PajeSimulator* class lists every type declared and container
 created throughout the simulation by using map structures (=typeMap=
 and =contMap=) with the name or alias as key. There is always a
 pointer to the root type and another to the root container initialized
 in the beginning of the program.  The simulator contains one method
 for each type of event, which perform all the validations, besides the
 processing itself. Whenever there is an event that defines a type the
-entity generated is added to the =typeMap=.  =contMap= and the proper
+entity generated is added to the =typeMap=. The created containers are
+included in the =contMap= structure. When there is an event associated
+to a container, the object is found in the =contMap= and the proper
 method of the container object is called.
 
-The PajeContainer class also uses map structures to store all the
+The *PajeContainer* class also uses map structures to store all the
 entities that are related to it including other containers. Besides
 one general structure that lists all of the objects related to the
 container (=entities=), there are auxiliar structures for some
@@ -995,7 +997,7 @@ the =stackStates= stack, while every pop state event will "remove" the
 last state in the vector by setting its end time. The simulation keeps
 track of the pending communication links and fails if a container is
 destroyed, or the simulation ends, before all the links are
-completed. The PajeContainer class contains a method for each event
+completed. The *PajeContainer* class contains a method for each event
 that is associated to a container, adding and removing entities of
 these structures listed above.
 
@@ -1007,7 +1009,7 @@ the Pajé format and adapt the simulator to it. Its support for extra
 fields allows the inclusion of different descriptions for the events
 and its modularity facilitates the integration of new
 classes. Altering or adding simulation behavior can be done by
-modifying only the =PajeSimulator= and =PajeContainer= classes.
+modifying only the *PajeSimulator* and *PajeContainer* classes.
 
 Although complying with its goal of extensibility in terms of
 expanding the Pajé format, we identified three main issues in the
