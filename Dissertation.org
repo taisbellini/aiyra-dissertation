@@ -1529,13 +1529,13 @@ Table \ref{tab.jvm}.
 
 #+BEGIN_LaTeX
 \begin{table}[!htb]
-\caption{JVM heap sizes in bytes}
+\caption{JVM heap sizes}
 \label{tab.jvm}
 \centering
 \begin{tabularx}{\linewidth}{lXXX}\toprule
                          &   {\bf Luiza}         & {\bf Orion1}         & {\bf Guarani}    \\\toprule
-Inital heap size          &  268435456        & 526368896            & 327213824   \\
-Maximum heap size        &  4294967296            & 8422162432        & 5236588544       \\
+Inital heap size          &  256MBytes            & 501MBytes           & 312Megabytes   \\
+Maximum heap size        &   4GBytes              & 8GBytes             & 5GBytes       \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
