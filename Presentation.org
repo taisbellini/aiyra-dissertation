@@ -1,0 +1,72 @@
+# -*- coding: utf-8 -*-
+# -*- mode: org -*-
+#+startup: beamer
+#+STARTUP: overview
+#+STARTUP: indent
+#+TAGS: noexport(n)
+
+#+Title: Extensible Simulator for Replay of @@latex:\\@@ Trace Files in the Pajé Format
+#+Author: Tais Loureiro Bellini
+#+Date: Bachelor Dissertation Presentation  @@latex:\\@@ Porto Alegre, May 30th 2016
+
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [12pt,xcolor=dvipsnames,presentation]
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+STARTUP: beamer overview indent
+#+LATEX_HEADER: \input{org-babel-style-preembule.tex}
+#+LATEX_HEADER: \institute{
+#+LATEX_HEADER:   Advised by Prof. Dr. Lucas Mello Schnorr\\
+#+LATEX_HEADER:   \hfill
+#+LATEX_HEADER:   \includegraphics[width=.16\textwidth]{img/inf.pdf}
+#+LATEX_HEADER:   \hfill
+#+LATEX_HEADER:   \includegraphics[width=.16\textwidth]{img/ufrgs.pdf}
+#+LATEX_HEADER:   \hfill
+#+LATEX_HEADER: }
+#+LaTeX: \input{org-babel-document-preembule.tex}
+#+LaTeX: \newcommand{\prettysmall}[1]{\fontsize{#1}{#1}\selectfont}
+
+* How to export to PDF                                             :noexport:
+
+Do: C-c C-e l P.
+
+Note that is P instead of p.
+
+Because you are now exporting using beamer.
+
+* Plan                                                             :noexport:
+- outline                 :: 0 or 1
+- motivation              :: 2
+- proposal                :: 7
+- doe                     :: 8
+- results                 :: 7
+- conclusion              :: 1
+- repository/marketing    :: 1
+* Context/Introduction
+** 
+*** Context
+
+This is my first slide contents, write it as usual.
+
+You can also use items
+
+- such as this
+- and this
+
+Feel free to add figures as well
+
+Slides are the third level (***), while "sections" are the first
+level. The second level is usually empty and serves as subsection. We
+can change that if you think subsections are unnecessary (note that
+here I have kept it without title to make it out of toc).
+
+*** Problem statement, motivation and objective
+
+* Conclusion and Future Work
+** 
+*** Conclusion and Future Work
+*** Thank you + Propaganda
+*** References
+
+#+LATEX: \tiny
+#+LATEX: \bibliographystyle{plain}
+#+LATEX: \bibliography{References}
