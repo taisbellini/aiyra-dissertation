@@ -1871,12 +1871,20 @@ network with only one hop of distance.
 \end{figure}
 #+END_LaTeX
 
-For smaller inputs, however, we see (in Figure \ref{fig.batchsmall})
-that the behavior is what we have predicted. It is explained by the
-very little memory usage, that is too irrelevant to impact the
-performance. It is worth mentioning that 128 Kilobytes, which is the
-size of the *small* input, is very uncommon and that the usual traces
-are at least in the Megabytes order of magnitude.
+For smaller inputs, however, the results for either the local and the
+remote tests were different from the other sizes. We see (in Figure
+\ref{fig.batchsmall}) that the behavior for the local experiment is
+what we have predicted. It is explained by the very little memory
+usage, that is too irrelevant to impact the performance. It is worth
+mentioning that 128 Kilobytes, which is the size of the *small* input,
+is very uncommon and that the usual traces are at least in the
+Megabytes order of magnitude. In Figure \ref{fig.remotesmall}, we see
+that the remote execution was actually faster than the local one. This
+can be possibly explained by the remote database allowing a
+distribution of resource usage, while the local environment is
+overloaded by the MySQL server. However, this would have affected the
+other inputs as well, which was not the case. We do not have a
+conclusion about this result and it is open for further analysis.
 
 
 #+BEGIN_LaTeX
@@ -1885,6 +1893,15 @@ are at least in the Megabytes order of magnitude.
 \centering
 \includegraphics[width=\linewidth]{./img/batch_size/local_small_v1_3.pdf}
 \label{fig.batchsmall}
+\end{figure}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\caption{Results for remote and local executions for the small input}
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_small_v1_3.pdf}
+\label{fig.remotesmall}
 \end{figure}
 #+END_LaTeX
 
