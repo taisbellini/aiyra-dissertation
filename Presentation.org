@@ -39,9 +39,45 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 
 - outline                 :: 1
 - motivation              :: 2-3
+  - Pajé Overview - with image to illustrate entities (maybe split in
+    two to have both hierarchies (types and entities))
+    - the image would bethe same that is in the text but including the
+      other entities so we's have all illustrated.
+  - Pajé architecture - important to show later in the results that
+    this may be the cause it is slower.
+  - Three issues
 - proposal (aiyra + plugins)  :: 4-6
+  - aiyra architecture - I think the image is enough to explain
+    Aiyra. Maybe some keywords. 
+ - Core and plugin packages (I think it can be all in the same
+   slide. They are strictly connected. The controller can be explained
+   in the previous slide, it does no have many things inside it to
+   highlight. The core has that part of the PajeSimulator and
+   PajeContainer that is important.
+- PajeNullPlugin
+- PajeDumpPlugin
+- PajeInserDBPlugin (I think it needs two slides)
+  - The image of the dissertation, and details about the
+    implementation (batches).
+  - The schema
 - results                 :: TBD
+  - Overview (very overview about the two tests).
+  * I think the methodology and results could be all together for each
+    experiment. Thus we would have a full "path" for each.
+  - Methodology of cpp comparison
+  - Results (as many slides as results)
+  - Methodology of inserdbplugin
+  - Results separated by section. 
+    * Figure out some type of aggrupation. Like big and medium inputs
+      in the same slide.
 - conclusion              :: 1
+  - Positive Results (I don't think it needs an overview, just, when
+    talking about the result mention the proposal. Ex: We saw that by
+    deataching the core simulator and by changing the event decoding
+    we got good results...).
+ - Negative points: Java, JVM, memory. 
+ - Things to improve: entry points
+ - Future work 
 - repository/marketing    :: 1
 * Context/Introduction
 ** 
