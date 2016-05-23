@@ -1693,16 +1693,16 @@ than *aiyra*.
 \label{tab.cpptimes}
 \centering
 \begin{tabularx}{\linewidth}{lXXX}\toprule
-{\bf Platform}& {\bf Tool}                          &   {\bf Big}         & {\bf Medium}            \\\toprule
-& Aiyra                    &  82.94644007        & 9.38572857              \\
-Luiza & Pj                 &  207.434215571      & 24.92862427             \\
-& PjFlex                   &  215.79006593       & 25.85007707               \\\midrule
-& Aiyra                    &  124.24501307       & 13.62979877              \\
-Guarani & Pj               &  232.04630737       & 29.97373843            \\     
-& PjFlex                   & 248.65192840        & 32.14986230           \\\midrule
-& Aiyra                    & 111.78373253        & 13.08560363               \\
-Orion1 & Pj                       & 259.72360747        & 33.47163073        \\
-& PjFlex                   & 279.74462510        & 36.08434247         \\% & 0.04819160     \\
+{\bf Platform}& {\bf Tool} &   {\bf Big}         & {\bf Medium}            \\\toprule
+& Aiyra                    &  82.9               &  9.3                     \\
+Luiza & Pj                 &  207.4              & 24.9               \\
+& PjFlex                   &  215.7              & 25.8               \\\midrule
+& Aiyra                    &  124.2              & 13.6              \\
+Guarani & Pj               &  232.0              & 29.9            \\     
+& PjFlex                   & 248.6               & 32.1           \\\midrule
+& Aiyra                    & 111.7               & 13.0               \\
+Orion1 & Pj                & 259.7               & 33.4               \\
+& PjFlex                   & 279.7               & 36.0               \\
 \bottomrule\end{tabularx}
 \end{table}
 #+END_LaTeX
