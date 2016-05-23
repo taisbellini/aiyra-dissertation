@@ -34,11 +34,13 @@ Note that is P instead of p.
 Because you are now exporting using beamer.
 
 * Plan                                                             :noexport:
-- outline                 :: 0 or 1
-- motivation              :: 2
-- proposal                :: 7
-- doe                     :: 8
-- results                 :: 7
+
+You'll have 20 minutes if I'm right, please confirm with the secretary.
+
+- outline                 :: 1
+- motivation              :: 2-3
+- proposal (aiyra + plugins)  :: 4-6
+- results                 :: TBD
 - conclusion              :: 1
 - repository/marketing    :: 1
 * Context/Introduction
