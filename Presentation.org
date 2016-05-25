@@ -79,32 +79,178 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
  - Things to improve: entry points
  - Future work 
 - repository/marketing    :: 1
-* Context/Introduction
+* Motivation: Pajé Context and Issues
 ** 
 *** Context
+- Trace files in the context of Performance Analysis
+- Replay
+- Pajé Trace File Format
+- Pajé Visualization Tool and PajeNG
 
-This is my first slide contents, write it as usual.
+*** Pajé Trace File Format
+- *Entities*: Container, State, Link, Variable and Event
+- Types and entities hierarchy
+- Header and body sections
 
-You can also use items
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/hierarchyex.pdf}
+\end{figure}
+#+END_LaTeX
+ 
+*** PajeNG Architecture
+- Core simulation in *libpaje*
+- Designed to support extensions in Pajé Format 
+- Simulation occurs in *PajeSimulator* and *PajeContainer* 
+- *pj_dump* tool
 
-- such as this
-- and this
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/pajeparco.pdf}
+\end{figure}
+#+END_LaTeX
 
-Feel free to add figures as well
+*** PajeNG Issues
+- Extensibility 
+  - little flexibility in the manipulation of data 
 
-Slides are the third level (***), while "sections" are the first
-level. The second level is usually empty and serves as subsection. We
-can change that if you think subsections are unnecessary (note that
-here I have kept it without title to make it out of toc).
+- Partial results
+  - full set of results dumped at once
 
-*** Problem statement, motivation and objective
+- Permanent results
+ - results are discarded at the end
+
+* Proposal: Aiyra and Plugins
+** 
+*** Aiyra Architecture
+- Three packages: *controller*, *core simulator* and *plugin*
+- Every event detected goes through all packages
+- As little in memory as possible
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.65\linewidth]{./img/aiyraArchitecture.pdf}
+\end{figure}
+#+END_LaTeX
+
+*** Core Simulator
+
+- Same structure as *libpaje* 
+- Generic entry points
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.6\linewidth]{./img/aiyraCorePres.pdf}
+\end{figure}
+#+END_LaTeX
+
+*** Plugins
+
+Three plugins to validate the proposal:
+
+- *PajeNullPlugin*
+  - No treatment for entities
+
+- *PajeDumpPlugin*
+  - Dump entities to standard output
+
+- *PajeInsertDBPlugin*
+  - Insert entities in a relational database
+
+*** Paje Insert Database Plugin
+
+- Relational Model, JDBC and MySQL
+- Insertion using JDBC batches
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.6\linewidth]{./img/ermodel.pdf}
+\end{figure}
+#+END_LaTeX
+  
+
+* Experimental Results
+** 
+*** Methodology
+- Full Factorial Experimental Design
+- Experiments: 
+  - Comparison between Aiyra and PajeNG
+  - Different batch sizes in the *PajeInsertDBPlugin*
+
+
+#+BEGIN_LaTeX
+\begin{tabular}{l*{4}{c}r}
+                 & {\bf Luiza} & {\bf Orion1} & {\bf Guarani} \\
+\hline
+Processor        & Intel Core i7 & Xeon E5-2630 & Intel Core i5-2400   \\
+CPU(s)                   &  1                    & 2                    & 1       \\
+Cores per CPU            &  4                    & 6                    & 4             \\
+Max. Freq.               &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
+L1d/L1i Cache            & 32/32KBytes           & 32/32KBytes          & 32/32KBytes  \\     
+L2 Cache                 & 256KBytes             & 256KBytes            & 256KBytes    \\
+L3 Cache                 & 6MBytes               & 15MBytes              & 6MBytes         \\
+Memory                   & 16GBytes              & 32GBytes             & 20GBytes      \\\hline
+OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian 4.3.5-1 \\\hline
+\end{tabular}
+#+END_LaTeX
+
+*** Comparison Between Aiyra and PajeNG
+
+- Evaluate the difference in the execution time
+- Factors and Levels: 
+  - Platform: luiza, orion1, guarani
+  - Version: aiyra, pj, pjflex
+  - Input: big, mediumm small
+
+- *Replications*: 30
+
+
+*** Results Comparison Aiyra and PajeNG
+
+*** Results Comparison Aiyra and PajeNG 
+
+*** Different Batch Sizes in InsertDBPlugin 
+
+*Luiza Platform*:
+- Factors and Levels: 
+  - Batch Size: A, B, C, D, E, F
+   - Input : big, mediumm small
+
+- Replications: 30
+
+*Guarani and Orion1*:
+- Factors and Levels:  
+  - Batch Size: B, C, D, E, F
+  - Input : 
+         - big - 1G
+         - medium - 128M
+         - small - 128K
+- Replications: 10
+
+*** Execution Time - Big and Medium Inputs
+
+*** Memory Usage - Big and Medium Inputs
+
+*** Insertion Time - Big and Medium Inputs
+
+*** Execution Time - Small Input
+
+*** Memory Usage - Small Input
+
+*** Insertion Time - Small Input
+
+*** Remote - Big and Medium
 
 * Conclusion and Future Work
 ** 
 *** Conclusion and Future Work
-*** Thank you + Propaganda
-*** References
 
-#+LATEX: \tiny
-#+LATEX: \bibliographystyle{plain}
-#+LATEX: \bibliography{References}
+
+*** Thank you
+
+
