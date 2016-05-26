@@ -83,7 +83,10 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 ** 
 *** Context
 - Trace files in the context of Performance Analysis
-- Replay
+  - Important events in program executions are logged
+- Replay of trace files
+  - Richer entities
+  - Analyze program behavior
 - Pajé Trace File Format
 - Pajé Visualization Tool and PajeNG
 
@@ -103,7 +106,7 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 - Core simulation in *libpaje*
 - Designed to support extensions in Pajé Format 
 - Simulation occurs in *PajeSimulator* and *PajeContainer* 
-- *pj_dump* tool
+- *pjdump* tool
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -475,9 +478,22 @@ Timeline of batch executions for small input:
 ** 
 *** Conclusion and Future Work
 
-- 
-
+- Proposal contributions
+   - Deatach core simulator from entities manipulation
+   - Standard plugins 
+   - Resolution of PajeNG issues
+- Implementation of Plugins
+   - Important for validation of proposal
+- Point to improve
+   - Plugin entry points: still based on implemented plugins
+   - Extensibility of Pajé format
+   - Dump plugin: order of entities presented
+- Future work
+  - Multiple languages plugins
+  - Database schema evaluation
 
 *** Thank you
 
+- Code
+  - http://github.com/taisbellini/aiyra
 
