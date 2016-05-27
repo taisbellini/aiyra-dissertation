@@ -508,7 +508,7 @@ Timeline of batch executions for small input:
 #+LATEX: \tiny
 #+LATEX: \bibliographystyle{plain}
 #+LATEX: \bibliography{References}
-* 2016-05-27 Attempt to present
+* 2016-05-27 Attempt to present                                    :noexport:
 
 Início: 11:12
 Fim: 11:43
