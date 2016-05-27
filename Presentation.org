@@ -103,7 +103,6 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 #+END_LaTeX
  
 *** PajeNG Architecture
-- Core simulation in *libpaje*
 - Designed to support extensions in Pajé Format 
 - *pjdump* tool
 
@@ -140,7 +139,7 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 
 *** Core Simulator
 
-- Same structure as *libpaje* 
+- Same structure as PajeNG simulator - Java
 - Generic entry points
 
 #+BEGIN_LaTeX
@@ -197,7 +196,7 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 - *Factors and Levels*: 
   - Platform: luiza, orion1, guarani
   - Version: aiyra, pj, pjflex
-  - Input: big, medium, small
+  - Input: big(1G), medium(128M), small(128K)
 
 - *Replications*: 30
 
@@ -222,7 +221,7 @@ Comparison between Aiyra and PajeNG with flags O3:
 *** Different Batch Sizes in InsertDBPlugin 
 
 *Factors and Levels:*
-- Input : big(1G), medium(128M), small(128K) 
+- Input : big, medium, small 
 - Batch Size: 
        - Luiza: A, B, C, D, E, F
        - Guarani and Orion1: B, C, D, E, F
@@ -248,7 +247,7 @@ Comparison between Aiyra and PajeNG with flags O3:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.95\linewidth]{./img/infnetwork.pdf}
+\includegraphics[width=.75\linewidth]{./img/infnetwork.pdf}
 \end{figure}
 #+END_LaTeX
 
@@ -278,8 +277,7 @@ Execution time for big and medium inputs, respectively:
 #+END_LaTeX
 
 - Batch sizes without results: Java heap space exceeded
-- Bigger batches increase execution time
-  - Garbage Collector overhead
+- Bigger batches increase execution time - GC overhead
 
 
 *** Memory Usage - Big and Medium Inputs
@@ -341,7 +339,7 @@ Execution time for small input:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.95\linewidth]{./img/batch_size/local_small_v1_3.pdf}
+\includegraphics[width=.75\linewidth]{./img/batch_size/local_small_v1_3.pdf}
 \end{figure}
 #+END_LaTeX
 
@@ -352,7 +350,7 @@ Memory usage for small input:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.95\linewidth]{./img/batch_size/local_mem_small_v2.pdf}
+\includegraphics[width=.75\linewidth]{./img/batch_size/local_mem_small_v2.pdf}
 \end{figure}
 #+END_LaTeX
 
@@ -365,7 +363,7 @@ Insertion time for small input:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.95\linewidth]{./img/batch_size/local_small_v1_3.pdf}
+\includegraphics[width=.75\linewidth]{./img/batch_size/local_small_v1_3.pdf}
 \end{figure}
 #+END_LaTeX
 
@@ -479,7 +477,7 @@ Timeline of batch executions for small input:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
+\includegraphics[width=.75\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
 \end{figure}
 #+END_LaTeX
 
