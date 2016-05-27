@@ -233,7 +233,7 @@ Comparison between Aiyra and PajeNG _with compilation flag O3_:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.95\linewidth]{./img/cpp/aiyra-pj-pjflex_overview_v2.pdf}
+\includegraphics[width=.95\linewidth]{./img/cpp/aiyra-pj-pjflex_overview_v2_o3.pdf}
 \end{figure}
 #+END_LaTeX
 
