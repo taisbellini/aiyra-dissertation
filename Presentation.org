@@ -108,3 +108,76 @@ here I have kept it without title to make it out of toc).
 #+LATEX: \tiny
 #+LATEX: \bibliographystyle{plain}
 #+LATEX: \bibliography{References}
+* 2016-05-27 Attempt to present
+
+Início: 11:12
+Fim: 
+
+28 slides
+
+_Comentários_:
+
+11:12
+
+- Slide 4
+  - Bastante tempo gasto neste slide (5 minutos +-)
+  - O ponto cabeçalho e corpo aparece depois da figura
+    - Diminuir a figura um pouco de tamanho
+- Slide 5
+  - Desnecessário falar sobre extra fields
+  - PFR não salva em memória
+- Slide 6
+  - Problemas
+  - O objetivo desse trabalho é...
+
+11:20
+
+- Slide 7
+
+11:25
+
+- Slide 10
+  - Quais são os fatores possíveis?
+    - Mas falou depois no Slide 11
+    - Continua falando que faz fatorial completo, mas fatores/níveis
+      depende dos experimentos realizados; então detalha isso depois.
+- Slide 11
+  - 30 replicações, falar da média e do CI
+- Slide 12
+  - Sublinhar _without compilation flags_
+- Slide 13
+  - Compilação com -O3
+    - Gráfico faltando
+
+11:30
+
+- Slide 14
+  - O que são os valores 256, 501, 312?
+    - Tirar esses valores mínimos
+- Slide 15
+  - Colocar depois dos resultados locais
+    - Movido para antes do slide 22
+- Slide 16
+  - Tempo vai decaindo conforme vai aumentando o tamanho de batch.
+    - Na realidade é a _quantidade_ de batches
+- Slide 19
+  - Green color hard to see when datashow is on
+    - Não muda
+- Slide 22
+  - São 2 hops de distância.
+- Slide 25
+  - Supreende com rastros de execução
+
+11:41
+
+- Conclusion starts
+- Slide 27
+  - Fora de ordem não necessariamente um problema
+- Slide 28
+  - Thank + Propaganda
+    - Add LabBook (reproducibility)
+    - Tutorial how to use, how to compile...
+  - Dúvidas
+  - Nome/email
+
+11:43
