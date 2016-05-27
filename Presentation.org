@@ -93,14 +93,15 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 *** Pajé Trace File Format
 - *Entities*: Container, State, Link, Variable and Event
 - Types and entities hierarchy
-- Header and body sections
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.75\linewidth]{./img/hierarchyex.pdf}
+\includegraphics[width=.6\linewidth]{./img/hierarchyex.pdf}
 \end{figure}
 #+END_LaTeX
+
+- Header and body sections
  
 *** PajeNG Architecture
 - Designed to support extensions in Pajé Format 
@@ -122,6 +123,14 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 
 - Permanent results
  - results are discarded at the end
+
+\pause
+
+**** \textbf{Objective}
+- Solve these issues by proposing an extensible simulator that makes
+  the core simulation transparent to the user facilitating the
+  manipulation of data.
+
 
 * Proposal: Aiyra and Plugins
 ** 
@@ -192,6 +201,9 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 *** Comparison Between Aiyra and PajeNG
 
 - Evaluate the difference in the execution time
+  - Average of the execution times
+  - Standard error: 3 standard deviations / sqrt(#experiments)
+  - 99.7% in a normal distribution
 - Aiyra with PajeNullPlugin
 - *Factors and Levels*: 
   - Platform: luiza, orion1, guarani
@@ -205,7 +217,7 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 
 *** Results Comparison Aiyra and PajeNG
 
-Comparison between Aiyra and PajeNG without compilation flags:
+Comparison between Aiyra and PajeNG _without compilation flags_:
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -216,40 +228,31 @@ Comparison between Aiyra and PajeNG without compilation flags:
 
 *** Results Comparison Aiyra and PajeNG 
 
-Comparison between Aiyra and PajeNG with flags O3:
+Comparison between Aiyra and PajeNG _with compilation flag O3_:
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.95\linewidth]{./img/cpp/aiyra-pj-pjflex_overview_v2.pdf}
+\end{figure}
+#+END_LaTeX
 
 *** Different Batch Sizes in InsertDBPlugin 
 
 *Factors and Levels:*
 - Input : big, medium, small 
 - Batch Size: 
-       - Luiza: A, B, C, D, E, F
-       - Guarani and Orion1: B, C, D, E, F
+       - _Luiza_: A, B, C, D, E, F; _Guarani and Orion1_: B, C, D, E, F
 *Replications:* 
-       - Luiza: 30
-       - Guarani and Orion1: 10
+       - _Luiza_: 30; _Guarani and Orion1_: 10
 
-*JVM Heap Sizes:*
-- Luiza: 256MBytes - 4GBytes
-- Orion1: 501MBytes - 8Gbytes
-- Guarani: 312Mbytes - 5Gbytes
+*JVM Maximum Heap Sizes:*
+- _Luiza_: 4GBytes; _Orion1_: 8Gbytes; _Guarani_: 5Gbytes
 
-*Response Variables:* Execution time, memory usage, insertion time
+*Response Variables:* Execution time, memory usage, insertion time,
+batch insertion traces
 
 *Expected:* Bigger batches, less insertions, better performance
-
-*** Different Batch Sizes in InsertDBPlugin 
-
-- Test with remote conection
-- INF network
-- Simulator in Guarani, database server in Orion1
-
-#+BEGIN_LaTeX
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=.75\linewidth]{./img/infnetwork.pdf}
-\end{figure}
-#+END_LaTeX
 
 
 *** Execution Time - Big and Medium Inputs
@@ -278,33 +281,6 @@ Execution time for big and medium inputs, respectively:
 
 - Batch sizes without results: Java heap space exceeded
 - Bigger batches increase execution time - GC overhead
-
-
-*** Memory Usage - Big and Medium Inputs
-
-Memory usage for big and medium inputs, respectively:
-
-#+BEGIN_LaTeX
-\begin{columns}
-\begin{column}{.5\linewidth}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\linewidth]{./img/batch_size/local_mem_big_v2.pdf}
-\end{figure}
-\end{column}
-#+END_LaTeX
-
-#+BEGIN_LaTeX
-\begin{column}{.5\linewidth}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v2.pdf}
-\end{figure}
-\end{column}
-\end{columns}
-#+END_LaTeX
-
-- As expected, more memory used with bigger batches
 
 *** Insertion Time - Big and Medium Inputs
 
@@ -339,22 +315,9 @@ Execution time for small input:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.75\linewidth]{./img/batch_size/local_small_v1_3.pdf}
+\includegraphics[width=.85\linewidth]{./img/batch_size/local_small_v1_3.pdf}
 \end{figure}
 #+END_LaTeX
-
-*** Memory Usage - Small Input
-
-Memory usage for small input:
-
-#+BEGIN_LaTeX
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=.75\linewidth]{./img/batch_size/local_mem_small_v2.pdf}
-\end{figure}
-#+END_LaTeX
-
-- More susceptible to external interference changing results
 
 *** Insertion Time - Small Input
 
@@ -368,6 +331,20 @@ Insertion time for small input:
 #+END_LaTeX
 
 - As expected, more insertions increase the insertion time
+
+*** Different Batch Sizes in InsertDBPlugin 
+
+- Test with remote conection
+- INF network
+- Simulator in Guarani, database server in Orion1
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/infnetwork.pdf}
+\end{figure}
+#+END_LaTeX
+
 
 *** Remote Execution Time - Big and Medium Inputs
 
@@ -446,28 +423,26 @@ Comparison of execution and insertion times, respectively, for small input:
 \end{columns}
 #+END_LaTeX
 
-*** Batch Insertion Traces - Big and Medium Inputs
+*** Batch Insertion Traces - Big Input
 
-Timeline of batch executions for big and medium inputs, respectively:
+Timeline of batch executions for big input:
 
 #+BEGIN_LaTeX
-\begin{columns}
-\begin{column}{.5\linewidth}
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v2.pdf}
 \end{figure}
-\end{column}
 #+END_LaTeX
 
+*** Batch Insertion Traces - Medium Input
+
+Timeline of batch executions for medium input:
+
 #+BEGIN_LaTeX
-\begin{column}{.5\linewidth}
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v2.pdf}
 \end{figure}
-\end{column}
-\end{columns}
 #+END_LaTeX
 
 *** Batch Insertion Traces - Small Input
@@ -477,7 +452,7 @@ Timeline of batch executions for small input:
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.75\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
 \end{figure}
 #+END_LaTeX
 
@@ -488,22 +463,29 @@ Timeline of batch executions for small input:
 
 - Proposal contributions
    - Detach core simulator from entities manipulation
-   - Standard plugins 
+   - Standard plugins implementation 
+     - Important for proposal validation
    - Resolution of PajeNG issues
-- Implementation of Plugins
-   - Important for validation of proposal
+
+\pause
 - Point to improve
-   - Plugin entry points: still based on implemented plugins
-   - Extensibility of Pajé format
-   - Dump plugin: order of entities presented
+   - Plugin entry points more generic
+
+\pause
 - Future work
   - Multiple languages plugins
   - Database schema evaluation
 
-*** Thank you
+*** Thank you + Propaganda
 
-- Code
-  - http://github.com/taisbellini/aiyra
+- Code publicly available at: *http://github.com/taisbellini/aiyra*
+
+- Documentation of development and experiments in *LabBook.org*
+
+   - Tutorial on how to compile and use
+
+- Doubts? Contact at *tais38@gmail.com*
+
 
 #+LATEX: \tiny
 #+LATEX: \bibliographystyle{plain}
@@ -522,13 +504,13 @@ _Comentários_:
 - Slide 4
   - Bastante tempo gasto neste slide (5 minutos +-)
   - O ponto cabeçalho e corpo aparece depois da figura
-    - Diminuir a figura um pouco de tamanho
+    - Diminuir a figura um pouco de tamanho DONE
 - Slide 5
   - Desnecessário falar sobre extra fields
   - PFR não salva em memória
 - Slide 6
   - Problemas
-  - O objetivo desse trabalho é...
+  - O objetivo desse trabalho é... DONE
 
 11:20
 
@@ -542,20 +524,20 @@ _Comentários_:
     - Continua falando que faz fatorial completo, mas fatores/níveis
       depende dos experimentos realizados; então detalha isso depois.
 - Slide 11
-  - 30 replicações, falar da média e do CI
+  - 30 replicações, falar da média e do CI DONE
 - Slide 12
-  - Sublinhar _without compilation flags_
+  - Sublinhar _without compilation flags_ DONE
 - Slide 13
-  - Compilação com -O3
+  - Compilação com -O3 DONE
     - Gráfico faltando
 
 11:30
 
 - Slide 14
-  - O que são os valores 256, 501, 312?
-    - Tirar esses valores mínimos
+  - O que são os valores 256, 501, 312? 
+    - Tirar esses valores mínimos DONE
 - Slide 15
-  - Colocar depois dos resultados locais
+  - Colocar depois dos resultados locais DONE
     - Movido para antes do slide 22
 - Slide 16
   - Tempo vai decaindo conforme vai aumentando o tamanho de batch.
@@ -578,6 +560,6 @@ _Comentários_:
     - Add LabBook (reproducibility)
     - Tutorial how to use, how to compile...
   - Dúvidas
-  - Nome/email
+  - Nome/email (Nome ta no começo da apresentaçãos
 
 11:43
