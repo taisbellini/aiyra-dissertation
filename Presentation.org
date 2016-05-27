@@ -105,7 +105,6 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 *** PajeNG Architecture
 - Core simulation in *libpaje*
 - Designed to support extensions in Pajé Format 
-- Simulation occurs in *PajeSimulator* and *PajeContainer* 
 - *pjdump* tool
 
 #+BEGIN_LaTeX
@@ -163,23 +162,12 @@ Three plugins to validate the proposal:
 
 - *PajeInsertDBPlugin*
   - Insert entities in a relational database
-
-*** Paje Insert Database Plugin
-
-- Relational Model, JDBC and MySQL
-- Insertion using JDBC batches
-
-#+BEGIN_LaTeX
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=.6\linewidth]{./img/ermodel.pdf}
-\end{figure}
-#+END_LaTeX
-  
+  - JDBC and MySQL
+  - Insertion using JDBC Batches
 
 * Experimental Results
 ** 
-*** Methodology
+*** Experimental Evaluation Methodology
 - Full Factorial Experimental Design
 - Experiments: 
   - Comparison between Aiyra and PajeNG
@@ -205,12 +193,15 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 *** Comparison Between Aiyra and PajeNG
 
 - Evaluate the difference in the execution time
+- Aiyra with PajeNullPlugin
 - *Factors and Levels*: 
   - Platform: luiza, orion1, guarani
   - Version: aiyra, pj, pjflex
-  - Input: big, mediumm small
+  - Input: big, medium, small
 
 - *Replications*: 30
+
+- *Expected:* PajeNG faster than Aiyra
 
 
 *** Results Comparison Aiyra and PajeNG
@@ -226,10 +217,12 @@ Comparison between Aiyra and PajeNG without compilation flags:
 
 *** Results Comparison Aiyra and PajeNG 
 
+Comparison between Aiyra and PajeNG with flags O3:
+
 *** Different Batch Sizes in InsertDBPlugin 
 
 *Factors and Levels:*
-- Input : big, medium, small 
+- Input : big(1G), medium(128M), small(128K) 
 - Batch Size: 
        - Luiza: A, B, C, D, E, F
        - Guarani and Orion1: B, C, D, E, F
@@ -237,10 +230,27 @@ Comparison between Aiyra and PajeNG without compilation flags:
        - Luiza: 30
        - Guarani and Orion1: 10
 
-*Java Heap Sizes:*
+*JVM Heap Sizes:*
 - Luiza: 256MBytes - 4GBytes
 - Orion1: 501MBytes - 8Gbytes
 - Guarani: 312Mbytes - 5Gbytes
+
+*Response Variables:* Execution time, memory usage, insertion time
+
+*Expected:* Bigger batches, less insertions, better performance
+
+*** Different Batch Sizes in InsertDBPlugin 
+
+- Test with remote conection
+- INF network
+- Simulator in Guarani, database server in Orion1
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.95\linewidth]{./img/infnetwork.pdf}
+\end{figure}
+#+END_LaTeX
 
 
 *** Execution Time - Big and Medium Inputs
@@ -479,7 +489,7 @@ Timeline of batch executions for small input:
 *** Conclusion and Future Work
 
 - Proposal contributions
-   - Deatach core simulator from entities manipulation
+   - Detach core simulator from entities manipulation
    - Standard plugins 
    - Resolution of PajeNG issues
 - Implementation of Plugins
