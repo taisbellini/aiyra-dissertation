@@ -79,31 +79,431 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
  - Things to improve: entry points
  - Future work 
 - repository/marketing    :: 1
-* Context/Introduction
+* Motivation: Pajé Context and Issues
 ** 
 *** Context
+- Trace files in the context of Performance Analysis
+  - Important events in program executions are logged
+- Replay of trace files
+  - Richer entities
+  - Analyze program behavior
+- Pajé Trace File Format
+- Pajé Visualization Tool and PajeNG
 
-This is my first slide contents, write it as usual.
+*** Pajé Trace File Format
+- *Entities*: Container, State, Link, Variable and Event
+- Types and entities hierarchy
+- Header and body sections
 
-You can also use items
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/hierarchyex.pdf}
+\end{figure}
+#+END_LaTeX
+ 
+*** PajeNG Architecture
+- Designed to support extensions in Pajé Format 
+- *pjdump* tool
 
-- such as this
-- and this
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/pajeparco.pdf}
+\end{figure}
+#+END_LaTeX
 
-Feel free to add figures as well
+*** PajeNG Issues
+- Extensibility 
+  - little flexibility in the manipulation of data 
 
-Slides are the third level (***), while "sections" are the first
-level. The second level is usually empty and serves as subsection. We
-can change that if you think subsections are unnecessary (note that
-here I have kept it without title to make it out of toc).
+- Partial results
+  - full set of results dumped at once
 
-*** Problem statement, motivation and objective
+- Permanent results
+ - results are discarded at the end
+
+* Proposal: Aiyra and Plugins
+** 
+*** Aiyra Architecture
+- Three packages: *controller*, *core simulator* and *plugin*
+- Every event detected goes through all packages
+- As little in memory as possible
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.65\linewidth]{./img/aiyraArchitecture.pdf}
+\end{figure}
+#+END_LaTeX
+
+*** Core Simulator
+
+- Same structure as PajeNG simulator - Java
+- Generic entry points
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.6\linewidth]{./img/aiyraCorePres.pdf}
+\end{figure}
+#+END_LaTeX
+
+*** Plugins
+
+Three plugins to validate the proposal:
+
+- *PajeNullPlugin*
+  - No treatment for entities
+
+- *PajeDumpPlugin*
+  - Dump entities to standard output
+
+- *PajeInsertDBPlugin*
+  - Insert entities in a relational database
+  - JDBC and MySQL
+  - Insertion using JDBC Batches
+
+* Experimental Results
+** 
+*** Experimental Evaluation Methodology
+- Full Factorial Experimental Design
+- Experiments: 
+  - Comparison between Aiyra and PajeNG
+  - Different batch sizes in the *PajeInsertDBPlugin*
+
+
+#+BEGIN_LaTeX
+\begin{tabular}{l*{4}{c}r}
+                 & {\bf Luiza} & {\bf Orion1} & {\bf Guarani} \\
+\hline
+Processor        & Intel Core i7 & Xeon E5-2630 & Intel Core i5-2400   \\
+CPU(s)                   &  1                    & 2                    & 1       \\
+Cores per CPU            &  4                    & 6                    & 4             \\
+Max. Freq.               &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
+L1d/L1i Cache            & 32/32KBytes           & 32/32KBytes          & 32/32KBytes  \\     
+L2 Cache                 & 256KBytes             & 256KBytes            & 256KBytes    \\
+L3 Cache                 & 6MBytes               & 15MBytes              & 6MBytes         \\
+Memory                   & 16GBytes              & 32GBytes             & 20GBytes      \\\hline
+OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian 4.3.5-1 \\\hline
+\end{tabular}
+#+END_LaTeX
+
+*** Comparison Between Aiyra and PajeNG
+
+- Evaluate the difference in the execution time
+- Aiyra with PajeNullPlugin
+- *Factors and Levels*: 
+  - Platform: luiza, orion1, guarani
+  - Version: aiyra, pj, pjflex
+  - Input: big(1G), medium(128M), small(128K)
+
+- *Replications*: 30
+
+- *Expected:* PajeNG faster than Aiyra
+
+
+*** Results Comparison Aiyra and PajeNG
+
+Comparison between Aiyra and PajeNG without compilation flags:
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.95\linewidth]{./img/cpp/aiyra-pj-pjflex_overview.pdf}
+\end{figure}
+#+END_LaTeX
+
+*** Results Comparison Aiyra and PajeNG 
+
+Comparison between Aiyra and PajeNG with flags O3:
+
+*** Different Batch Sizes in InsertDBPlugin 
+
+*Factors and Levels:*
+- Input : big, medium, small 
+- Batch Size: 
+       - Luiza: A, B, C, D, E, F
+       - Guarani and Orion1: B, C, D, E, F
+*Replications:* 
+       - Luiza: 30
+       - Guarani and Orion1: 10
+
+*JVM Heap Sizes:*
+- Luiza: 256MBytes - 4GBytes
+- Orion1: 501MBytes - 8Gbytes
+- Guarani: 312Mbytes - 5Gbytes
+
+*Response Variables:* Execution time, memory usage, insertion time
+
+*Expected:* Bigger batches, less insertions, better performance
+
+*** Different Batch Sizes in InsertDBPlugin 
+
+- Test with remote conection
+- INF network
+- Simulator in Guarani, database server in Orion1
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/infnetwork.pdf}
+\end{figure}
+#+END_LaTeX
+
+
+*** Execution Time - Big and Medium Inputs
+
+Execution time for big and medium inputs, respectively:
+
+#+BEGIN_LaTeX
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_big_v2_3.pdf}
+\end{figure}
+\end{column}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_medium_v1_3.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+#+END_LaTeX
+
+- Batch sizes without results: Java heap space exceeded
+- Bigger batches increase execution time - GC overhead
+
+
+*** Memory Usage - Big and Medium Inputs
+
+Memory usage for big and medium inputs, respectively:
+
+#+BEGIN_LaTeX
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_mem_big_v2.pdf}
+\end{figure}
+\end{column}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_mem_medium_v2.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+#+END_LaTeX
+
+- As expected, more memory used with bigger batches
+
+*** Insertion Time - Big and Medium Inputs
+
+Insertion time for big and medium inputs, respectively:
+
+#+BEGIN_LaTeX
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_insert_big_v1_1.pdf}
+\end{figure}
+\end{column}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/local_insert_medium_v1_1.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+#+END_LaTeX
+
+- Constant with different batch sizes
+
+*** Execution Time - Small Input
+
+Execution time for small input:
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/batch_size/local_small_v1_3.pdf}
+\end{figure}
+#+END_LaTeX
+
+*** Memory Usage - Small Input
+
+Memory usage for small input:
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/batch_size/local_mem_small_v2.pdf}
+\end{figure}
+#+END_LaTeX
+
+- More susceptible to external interference changing results
+
+*** Insertion Time - Small Input
+
+Insertion time for small input:
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/batch_size/local_small_v1_3.pdf}
+\end{figure}
+#+END_LaTeX
+
+- As expected, more insertions increase the insertion time
+
+*** Remote Execution Time - Big and Medium Inputs
+
+- Comparison of execution times guarani local and guarani remote
+
+Big and medium inputs, respectively:
+
+#+BEGIN_LaTeX
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_big_v1_3.pdf}
+\end{figure}
+\end{column}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_medium_v1_3.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+#+END_LaTeX
+
+*** Remote Insertion Time - Big and Medium Inputs
+
+- Comparison of insertion times guarani local and guarani remote
+
+Big and medium inputs, respectively:
+
+#+BEGIN_LaTeX
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_big_v1_3.pdf}
+\end{figure}
+\end{column}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_medium_v1_3.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+#+END_LaTeX
+
+
+*** Remote - Small Input
+
+Comparison of execution and insertion times, respectively, for small input:
+
+#+BEGIN_LaTeX
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_small_v1_3.pdf}
+\end{figure}
+\end{column}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_small_v1_3.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+#+END_LaTeX
+
+*** Batch Insertion Traces - Big and Medium Inputs
+
+Timeline of batch executions for big and medium inputs, respectively:
+
+#+BEGIN_LaTeX
+\begin{columns}
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v2.pdf}
+\end{figure}
+\end{column}
+#+END_LaTeX
+
+#+BEGIN_LaTeX
+\begin{column}{.5\linewidth}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v2.pdf}
+\end{figure}
+\end{column}
+\end{columns}
+#+END_LaTeX
+
+*** Batch Insertion Traces - Small Input
+
+Timeline of batch executions for small input:
+
+#+BEGIN_LaTeX
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=.75\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
+\end{figure}
+#+END_LaTeX
+
 
 * Conclusion and Future Work
 ** 
 *** Conclusion and Future Work
-*** Thank you + Propaganda
-*** References
+
+- Proposal contributions
+   - Detach core simulator from entities manipulation
+   - Standard plugins 
+   - Resolution of PajeNG issues
+- Implementation of Plugins
+   - Important for validation of proposal
+- Point to improve
+   - Plugin entry points: still based on implemented plugins
+   - Extensibility of Pajé format
+   - Dump plugin: order of entities presented
+- Future work
+  - Multiple languages plugins
+  - Database schema evaluation
+
+*** Thank you
+
+- Code
+  - http://github.com/taisbellini/aiyra
 
 #+LATEX: \tiny
 #+LATEX: \bibliographystyle{plain}
@@ -111,7 +511,7 @@ here I have kept it without title to make it out of toc).
 * 2016-05-27 Attempt to present
 
 Início: 11:12
-Fim: 
+Fim: 11:43
 
 28 slides
 
