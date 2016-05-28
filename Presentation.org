@@ -106,7 +106,7 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
  
 *** PajeNG Architecture
 - Designed to support extensions in Pajé Format 
-- *pjdump* tool
+- =pj_dump= tool
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
