@@ -366,62 +366,47 @@ Comparison of different batch sizes
 
 *Expected behavior*: local execution is always faster (network cost)
 
-*** Remote Execution Time - Big and Medium Inputs
+*** Big/Medium Inputs Exec./Insertion Time (remote)
 
-- Comparison of execution times guarani local and guarani remote
-
-Big and medium inputs, respectively:
+# _Execution time_ of remote against local for big and medium inputs
 
 #+BEGIN_LaTeX
 \begin{columns}
 \begin{column}{.5\linewidth}
-\begin{figure}[!htb]
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/remote_big_v1_3.pdf}
-\end{figure}
+\includegraphics[width=\linewidth]{./img/batch_size/remote_big_v1_3-crop.pdf}
 \end{column}
 #+END_LaTeX
 
 #+BEGIN_LaTeX
 \begin{column}{.5\linewidth}
-\begin{figure}[!htb]
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/remote_medium_v1_3.pdf}
-\end{figure}
+\includegraphics[width=\linewidth]{./img/batch_size/remote_medium_v1_3-crop.pdf}
 \end{column}
 \end{columns}
 #+END_LaTeX
 
-*** Remote Insertion Time - Big and Medium Inputs
-
-- Comparison of insertion times guarani local and guarani remote
-
-Big and medium inputs, respectively:
+# _Insertion time_ of remote against local for big and medium inputs
 
 #+BEGIN_LaTeX
 \begin{columns}
 \begin{column}{.5\linewidth}
-\begin{figure}[!htb]
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_big_v1_3.pdf}
-\end{figure}
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_big_v1_3-crop.pdf}
 \end{column}
 #+END_LaTeX
 
 #+BEGIN_LaTeX
 \begin{column}{.5\linewidth}
-\begin{figure}[!htb]
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_medium_v1_3.pdf}
-\end{figure}
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_medium_v1_3-crop.pdf}
 \end{column}
 \end{columns}
 #+END_LaTeX
 
+*** Small Input Execution/Insertion Time (remote)
 
-*** Remote - Small Input
-
-Comparison of execution and insertion times, respectively, for small input:
+_Execution and Insertion time_ of remote against local for small input
 
 #+BEGIN_LaTeX
 \begin{columns}
