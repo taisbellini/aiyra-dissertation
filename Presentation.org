@@ -270,7 +270,7 @@ JVM Maximum Heap Sizes \rightarrow _Luiza_: 4GB _Orion1_: 8GB _Guarani_: 5G
 
 \vfill
 
-*Expected:* Bigger batches, less insertions, better performance
+*Expected behavior:* Bigger batches, better performance
 
 *** Big and Medium Inputs Execution Time
 
