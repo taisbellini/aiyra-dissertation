@@ -187,7 +187,7 @@ Three plugins to validate the proposal:
 \begin{tabular}{l*{4}{c}r}
                  & {\bf Luiza} & {\bf Orion1} & {\bf Guarani} \\
 \hline
-Processor        & Intel Core i7 & Xeon E5-2630 & Intel Core i5-2400   \\
+Processor        &  Core i7 & Xeon E5-2630 & Core i5-2400   \\
 CPU(s)                   &  1                    & 2                    & 1       \\
 Cores per CPU            &  4                    & 6                    & 4             \\
 Max. Freq.               &  2.7 GHz              & 2.30GHz              & 3.10GHz       \\
