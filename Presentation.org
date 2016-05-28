@@ -349,13 +349,13 @@ _Insertion time_ for small input
 
 - As expected, more insertions increase the insertion time
 
-*** Considering a networked environment
+*** 2.1 Considering a networked environment
 
 Scenario with a remote connection (local network at INF)
 - Ethernet Gigabit, but limited to 100Mbit/s
-Comparison
-- Pure local (Simulator and Database in Guarani)
-- Simulator in Guarani, database server in Orion1
+Comparison of different batch sizes
+- Local: both Simulator and Database in Guarani
+- Remote: Simulator in Guarani, Database server in Orion1
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -364,7 +364,7 @@ Comparison
 \end{figure}
 #+END_LaTeX
 
-*Expected behavior*: local execution is faster
+*Expected behavior*: local execution is always faster (network cost)
 
 *** Remote Execution Time - Big and Medium Inputs
 
