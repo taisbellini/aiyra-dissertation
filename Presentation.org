@@ -6,7 +6,7 @@
 #+TAGS: noexport(n)
 
 #+Title: Extensible Simulator for Replay of @@latex:\\@@ Trace Files in the Pajé Format
-#+Author: Tais Loureiro Bellini
+#+Author: @@latex:{\Large@@ Tais Loureiro Bellini @@latex:}@@
 #+Date: Bachelor Dissertation Presentation  @@latex:\\@@ Porto Alegre, May 30th 2016
 
 #+LaTeX_CLASS: beamer
@@ -15,12 +15,13 @@
 #+STARTUP: beamer overview indent
 #+LATEX_HEADER: \input{org-babel-style-preembule.tex}
 #+LATEX_HEADER: \institute{
-#+LATEX_HEADER:   Advised by Prof. Dr. Lucas Mello Schnorr\\
+#+LATEX_HEADER:   Advised by Prof. Dr. Lucas Mello Schnorr\\\vspace{2\baselineskip}
 #+LATEX_HEADER:   \hfill
 #+LATEX_HEADER:   \includegraphics[width=.16\textwidth]{img/inf.pdf}
 #+LATEX_HEADER:   \hfill
 #+LATEX_HEADER:   \includegraphics[width=.16\textwidth]{img/ufrgs.pdf}
 #+LATEX_HEADER:   \hfill
+#+LATEX_HEADER:   \vspace{\baselineskip}
 #+LATEX_HEADER: }
 #+LaTeX: \input{org-babel-document-preembule.tex}
 #+LaTeX: \newcommand{\prettysmall}[1]{\fontsize{#1}{#1}\selectfont}
