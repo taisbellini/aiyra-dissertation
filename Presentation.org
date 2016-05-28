@@ -259,7 +259,7 @@ Factors and Levels
 - Batch Sizes
   - _Luiza_ (A, B, C, D, E, F) _Guarani and Orion1_ (B, C, D, E, F)
 
-Response Variable \rightarrow Execution time, Maximum memory usage, Insertion
+Response Variables \rightarrow Execution time, Maximum memory usage, Insertion
 time, Batch insertion traces (temporal series)
 
 \vfill
