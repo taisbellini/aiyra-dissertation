@@ -349,19 +349,22 @@ _Insertion time_ for small input
 
 - As expected, more insertions increase the insertion time
 
-*** Different Batch Sizes in InsertDBPlugin 
+*** Considering a networked environment
 
-- Test with remote conection
-- INF network
+Scenario with a remote connection (local network at INF)
+- Ethernet Gigabit, but limited to 100Mbit/s
+Comparison
+- Pure local (Simulator and Database in Guarani)
 - Simulator in Guarani, database server in Orion1
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.75\linewidth]{./img/infnetwork.pdf}
+\includegraphics[width=.65\linewidth]{./img/infnetwork.pdf}
 \end{figure}
 #+END_LaTeX
 
+*Expected behavior*: local execution is faster
 
 *** Remote Execution Time - Big and Medium Inputs
 
