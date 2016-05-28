@@ -201,7 +201,7 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 }
 #+END_LaTeX
 
-*** 1. Aiyra against PajeNG
+*** 1. The Aiyra against PajeNG Case
 
 Setup: Aiyra with PajeNullPlugin, PajeNG without dump
 
@@ -224,9 +224,9 @@ Statistical framework
 
 *Expected behavior:* PajeNG (pj, pjflex) faster than Aiyra
 
-*** Results Comparison Aiyra and PajeNG
+*** Results of Aiyra against PajeNG (unoptimized)
 
-Comparison between Aiyra and PajeNG _without compilation flags_:
+Comparison between Aiyra and PajeNG _without optimization flags_
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -235,9 +235,9 @@ Comparison between Aiyra and PajeNG _without compilation flags_:
 \end{figure}
 #+END_LaTeX
 
-*** Results Comparison Aiyra and PajeNG 
+*** Results of Aiyra against PajeNG (optimized)
 
-Comparison between Aiyra and PajeNG _with compilation flag O3_:
+Comparison between Aiyra and PajeNG _with compilation flag -O3_
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -246,7 +246,7 @@ Comparison between Aiyra and PajeNG _with compilation flag O3_:
 \end{figure}
 #+END_LaTeX
 
-*** 2. InsertDBPlugin: the Batch Size Evaluation
+*** 2. The Batch Size Evaluation (InsertDBPlugin)
 
 Setup: Aiyra with InsertDBPlugin
 
@@ -268,13 +268,11 @@ Replications \rightarrow _Luiza_: 30 _Guarani and Orion1_: 10
 
 JVM Maximum Heap Sizes \rightarrow _Luiza_: 4GB _Orion1_: 8GB _Guarani_: 5G
 
-
-
 \vfill
 
 *Expected:* Bigger batches, less insertions, better performance
 
-*** Execution Time - Big and Medium Inputs
+*** Big and Medium Inputs Execution Time
 
 _Execution time_ for big and medium inputs
 
@@ -301,7 +299,7 @@ _Execution time_ for big and medium inputs
 - Batch sizes without results: Java heap space exceeded
 - Bigger batches increase execution time - GC overhead
 
-*** Insertion Time - Big and Medium Inputs
+*** Big and Medium Inputs Insertion Time
 
 _Insertion time_ for big and medium inputs
 
@@ -327,7 +325,7 @@ _Insertion time_ for big and medium inputs
 
 - Constant with different batch sizes
 
-*** Execution Time - Small Input
+*** Small Input Execution Time
 
 _Execution time_ for small input
 
@@ -338,7 +336,7 @@ _Execution time_ for small input
 \end{figure}
 #+END_LaTeX
 
-*** Insertion Time - Small Input
+*** Small Input Insertion Time
 
 _Insertion time_ for small input
 
@@ -474,7 +472,6 @@ Timeline of batch executions for small input:
 \includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
 \end{figure}
 #+END_LaTeX
-
 
 * Conclusion and Future Work
 ** 
