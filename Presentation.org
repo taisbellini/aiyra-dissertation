@@ -246,23 +246,33 @@ Comparison between Aiyra and PajeNG _with compilation flag O3_:
 \end{figure}
 #+END_LaTeX
 
-*** Different Batch Sizes in InsertDBPlugin 
+*** 2. InsertDBPlugin: the Batch Size Evaluation
 
-*Factors and Levels:*
-- Input : big, medium, small 
-- Batch Size: 
-       - _Luiza_: A, B, C, D, E, F; _Guarani and Orion1_: B, C, D, E, F
-*Replications:* 
-       - _Luiza_: 30; _Guarani and Orion1_: 10
+Setup: Aiyra with InsertDBPlugin
 
-*JVM Maximum Heap Sizes:*
-- _Luiza_: 4GBytes; _Orion1_: 8Gbytes; _Guarani_: 5Gbytes
+*Goal*: What is the best batch size?
 
-*Response Variables:* Execution time, memory usage, insertion time,
-batch insertion traces
+\vfill
+
+Factors and Levels
+- Input: big, medium, small 
+- Batch Sizes
+  - _Luiza_ (A, B, C, D, E, F) _Guarani and Orion1_ (B, C, D, E, F)
+
+Response Variable \rightarrow Execution time, Maximum memory usage, Insertion
+time, Batch insertion traces (temporal series)
+
+\vfill
+
+Replications \rightarrow _Luiza_: 30 _Guarani and Orion1_: 10
+
+JVM Maximum Heap Sizes \rightarrow _Luiza_: 4GB _Orion1_: 8GB _Guarani_: 5G
+
+
+
+\vfill
 
 *Expected:* Bigger batches, less insertions, better performance
-
 
 *** Execution Time - Big and Medium Inputs
 
