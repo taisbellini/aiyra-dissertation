@@ -143,7 +143,7 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.65\linewidth]{./img/aiyraArchitecture.pdf}
+\includegraphics[width=.63\linewidth]{./img/aiyraArchitecture.pdf}
 \end{figure}
 #+END_LaTeX
 
