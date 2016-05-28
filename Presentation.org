@@ -408,25 +408,27 @@ Comparison of different batch sizes
 
 _Execution and Insertion time_ of remote against local for small input
 
+\vfill
+
 #+BEGIN_LaTeX
 \begin{columns}
 \begin{column}{.5\linewidth}
-\begin{figure}[!htb]
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/remote_small_v1_3.pdf}
-\end{figure}
+\includegraphics[width=\linewidth]{./img/batch_size/remote_small_v1_3-crop.pdf}
 \end{column}
 #+END_LaTeX
 
 #+BEGIN_LaTeX
 \begin{column}{.5\linewidth}
-\begin{figure}[!htb]
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_small_v1_3.pdf}
-\end{figure}
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_small_v1_3-crop.pdf}
 \end{column}
 \end{columns}
 #+END_LaTeX
+
+\vfill
+
+*Note*: inverse behavior (remote faster than local) for smaller inputs
 
 *** Batch Insertion Traces - Big Input
 
