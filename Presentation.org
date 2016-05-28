@@ -184,6 +184,7 @@ Three plugins to validate the proposal:
 
 
 #+BEGIN_LaTeX
+{\small
 \begin{tabular}{l*{4}{c}r}
                  & {\bf Luiza} & {\bf Orion1} & {\bf Guarani} \\
 \hline
@@ -197,6 +198,7 @@ L3 Cache                 & 6MBytes               & 15MBytes              & 6MByt
 Memory                   & 16GBytes              & 32GBytes             & 20GBytes      \\\hline
 OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian 4.3.5-1 \\\hline
 \end{tabular}
+}
 #+END_LaTeX
 
 *** Comparison Between Aiyra and PajeNG
