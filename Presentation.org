@@ -177,10 +177,10 @@ Three plugins to validate the proposal:
 * Experimental Results
 ** 
 *** Experimental Evaluation Methodology
-- Full Factorial Experimental Design
+- Full Factorial and Randomized Experimental Design
 - Experiments: 
-  - Comparison between Aiyra and PajeNG
-  - Different batch sizes in the *PajeInsertDBPlugin*
+  1. Comparison between Aiyra and PajeNG
+  2. Different batch sizes in the *PajeInsertDBPlugin*
 
 
 #+BEGIN_LaTeX
