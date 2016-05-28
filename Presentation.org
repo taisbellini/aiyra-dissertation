@@ -432,35 +432,35 @@ _Execution and Insertion time_ of remote against local for small input
 
 *** Batch Insertion Traces - Big Input
 
-Timeline of batch executions for big input:
+Timeline of batch executions for big input
+- Note that 10 executions are depicted (in the vertical dimension)
+
+\vfill
 
 #+BEGIN_LaTeX
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\linewidth]{./img/batch_time/batch_time_big_v2.pdf}
-\end{figure}
+\hspace*{-4.5mm}\includegraphics[width=\paperwidth]{./img/batch_time/batch_time_big_v2-crop.pdf}
 #+END_LaTeX
 
 *** Batch Insertion Traces - Medium Input
 
-Timeline of batch executions for medium input:
+Timeline of batch executions for medium input
+- Note that 10 executions are depicted (in the vertical dimension)
+
+\vfill
 
 #+BEGIN_LaTeX
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\linewidth]{./img/batch_time/batch_time_medium_v2.pdf}
-\end{figure}
+\hspace*{-4.5mm}\includegraphics[width=\paperwidth]{./img/batch_time/batch_time_medium_v2-crop.pdf}
 #+END_LaTeX
 
 *** Batch Insertion Traces - Small Input
 
-Timeline of batch executions for small input:
+Timeline of batch executions for small input
+- Note that 10 executions are depicted (in the vertical dimension)
+
+\vfill
 
 #+BEGIN_LaTeX
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=\linewidth]{./img/batch_time/batch_time_small_v2.pdf}
-\end{figure}
+\hspace*{-4.5mm}\includegraphics[width=\paperwidth]{./img/batch_time/batch_time_small_v2-crop.pdf}
 #+END_LaTeX
 
 * Conclusion and Future Work
@@ -479,7 +479,7 @@ Timeline of batch executions for small input:
 
 \pause
 - Future work
-  - Multiple languages plugins
+  - Support plugins written in other languages
   - Database schema evaluation
 
 *** Thank you + Propaganda
