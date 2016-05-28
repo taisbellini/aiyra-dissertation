@@ -127,18 +127,18 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 
 \pause
 
-**** \textbf{Objective}
-- Solve these issues by proposing an extensible simulator that makes
+**** Objective of our work
+- Solve these issues by proposing a new _extensible simulator_ that makes
   the core simulation transparent to the user facilitating the
-  manipulation of data.
+  manipulation of data
 
 
 * Proposal: Aiyra and Plugins
 ** 
 *** Aiyra Architecture
 - Three packages: *controller*, *core simulator* and *plugin*
-- Every event detected goes through all packages
-- As little in memory as possible
+  - Every event detected goes through all packages
+- Keep memory footprint as low as possible
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -149,8 +149,8 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 
 *** Core Simulator
 
-- Same structure as PajeNG simulator - Java
-- Generic entry points
+- Same structure as PajeNG simulator, but in Java
+- Generic instrumentation points for extensibility
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
