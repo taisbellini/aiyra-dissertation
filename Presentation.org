@@ -203,25 +203,26 @@ OS                       & OSX 10.10.5           & Ubuntu 12.04.5       & Debian
 
 *** 1. Aiyra against PajeNG
 
-- Setup: Aiyra with PajeNullPlugin, PajeNG without dump
-- *Goal*: Evaluate the difference in the execution time
+Setup: Aiyra with PajeNullPlugin, PajeNG without dump
+
+*Goal*: Evaluate the difference in the execution time
 
 \vfill
 
-- Factors and Levels
+Factors and Levels
   - Platform: luiza, orion1, guarani
   - Version: aiyra, pj, pjflex
   - Input: big(1G), medium(128M), small(128K)
-- Response variables
-  - Execution time
-- Statistical framework
-  - Average of 30 executions, in random order (DoE)
-  - Confidence Interval of 99.7% (assuming gaussian)
-    - $3 \times sd / sqrt(N)$, where N is the number of replications
+
+Response variable \rightarrow Execution time
+
+Statistical framework
+  - Average of 30 runs -- CI of 99.7% (assuming gaussian)
+    - SE: $3 \times sd / sqrt(N)$, where N is the number of replications
 
 \vfill
 
-- *Expected behavior:* PajeNG (pj, pjflex) faster than Aiyra
+*Expected behavior:* PajeNG (pj, pjflex) faster than Aiyra
 
 *** Results Comparison Aiyra and PajeNG
 
