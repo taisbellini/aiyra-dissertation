@@ -266,7 +266,7 @@ batch insertion traces
 
 *** Execution Time - Big and Medium Inputs
 
-Execution time for big and medium inputs, respectively:
+_Execution time_ for big and medium inputs
 
 #+BEGIN_LaTeX
 \begin{columns}
@@ -293,7 +293,7 @@ Execution time for big and medium inputs, respectively:
 
 *** Insertion Time - Big and Medium Inputs
 
-Insertion time for big and medium inputs, respectively:
+_Insertion time_ for big and medium inputs
 
 #+BEGIN_LaTeX
 \begin{columns}
@@ -319,7 +319,7 @@ Insertion time for big and medium inputs, respectively:
 
 *** Execution Time - Small Input
 
-Execution time for small input:
+_Execution time_ for small input
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -330,7 +330,7 @@ Execution time for small input:
 
 *** Insertion Time - Small Input
 
-Insertion time for small input:
+_Insertion time_ for small input
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
