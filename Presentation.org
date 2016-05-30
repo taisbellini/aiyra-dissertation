@@ -162,7 +162,7 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 
 *** Plugins
 
-Three plugins to validate the proposal:
+Three plugins to validate the proposal
 
 - *PajeNullPlugin*
   - No treatment for entities
