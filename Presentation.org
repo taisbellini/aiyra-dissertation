@@ -147,7 +147,7 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 \end{figure}
 #+END_LaTeX
 
-*** Core Simulator
+*** Core Simulator                                               :noexport:
 
 - Same structure as PajeNG simulator, but in Java
 - Generic instrumentation points for extensibility
