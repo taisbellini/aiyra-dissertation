@@ -481,6 +481,7 @@ Timeline of batch executions for small input
 - Future work
   - Support plugins written in other languages
   - Database schema evaluation
+  - Further study on batch sizes
 
 *** Thank you + Propaganda
 
