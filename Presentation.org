@@ -86,8 +86,9 @@ You'll have 20 minutes if I'm right, please confirm with the secretary.
 - Trace files in the context of Performance Analysis
   - Important events in program executions are logged
 - Replay of trace files
-  - Richer entities
-  - Analyze program behavior
+  - Richer entities (combination of multiple events)
+  - Analyze program behavior \rightarrow Optimizations
+\vfill
 - Pajé Trace File Format
 - Pajé Visualization Tool and PajeNG
 
