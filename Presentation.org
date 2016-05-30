@@ -343,7 +343,7 @@ _Insertion time_ for small input
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=.75\linewidth]{./img/batch_size/local_small_v1_3.pdf}
+\includegraphics[width=.75\linewidth]{./img/batch_size/local_insert_small_v1_1.pdf}
 \end{figure}
 #+END_LaTeX
 
@@ -421,7 +421,7 @@ _Execution and Insertion time_ of remote against local for small input
 #+BEGIN_LaTeX
 \begin{column}{.5\linewidth}
 \centering
-\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_small_v1_3-crop.pdf}
+\includegraphics[width=\linewidth]{./img/batch_size/remote_insert_small_v1_3.pdf}
 \end{column}
 \end{columns}
 #+END_LaTeX
