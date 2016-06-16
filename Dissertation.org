@@ -1587,11 +1587,9 @@ had the simulator running in *guarani* inserting data in the database
 hosted by *orion1*. Figure \ref{fig.infnetwork} represents the network
 topology connecting the two machines. Both are placed at the
 Informatics Institute of the Federal University of Rio Grande do
-Sul. Albeit the platforms are equipped with gigabit network cards, the
-theoretical bandwidth is only 100Mb/s. We believe this is due the
-existence of a 100Mb/s switch between both endpoints limiting the
-network speed. The average round-trip time (RTT) is $0.5$ seconds and
-was measured by the *ping* bash command.
+Sul. The plataforms are in a network with bandwidth of 100 Mbps. The
+average round-trip time (RTT) is $0.5$ seconds and was measured by the
+*ping* bash command.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1650,79 +1648,34 @@ provided by the PajeNG developers.
 \noindent
 _Observed Results_
 
-We can see in Figure \ref{fig.cppoverview} that, for the *medium* and
-*big* inputs, Aiyra was actually faster than both versions of
-PajeNG. Table \ref{tab.cpptimes} portrays the average execution time
-in seconds for these input sizes separated by platform. For all
-platforms, *aiyra* is at least two times faster than either *pj* and
-*pjflex*. To understand this results it is crucial to recognize the
-difference between the implementation and configuration of both
-programs. Aiyra is designed to get rid of the entities as soon as they
-are finished. Thus, with the *PajeNullPlugin*, very little is kept in
-memory. One of Java's biggest overhead is the memory handling,
-specially the Garbage Collector(GC). Since we have an implementation
-that stores as few objects as possible, and the less alive objects in
-the program, the faster is GC \cite{garbagecollector}, Java may have a
-chance in this case. Another important difference among Aiyra and
-PajeNG is the process of reading the trace file, parsing it and then
-sending to the simulator. As seen in Chapter \ref{chapter.paje}, the
-PajeNG file reader first reads from the file a chunk of data, then the
-decoder, which has predominant execution time, breaks it into events
-and sends them to the simulator. The next segment of data is only read
-after the first is completely decoded. On the other hand, Aiyra's
-controller sends each event read immediately to the simulator. The
-controller package performs the reading and parsing simultaneously and
-is probably faster than the decoding process of PajeNG. Since the
-memory allocation is not usually a problem in C++ programs, it is more
-likely that this result relies on the implementation difference. As
-expected, the *pj_flex* version was slower than *pj*, thus, slower
-than *aiyra*.
+We can see in Figure \ref{fig.cppoverview} that the result is what we
+expected. We see *aiyra* having a lower performance in all three
+platforms, taking almost two times more time than *pj* to execute in
+*guarani* and *orion1*. When comparing with *pjflex*, the difference
+is smaller since *pjflex* is slower than *pj*, and in the *luiza*
+platform the difference almost does not exist. An important difference
+among Aiyra and PajeNG is the process of reading the trace file,
+parsing it and then sending to the simulator. As seen in Chapter
+\ref{chapter.paje}, the PajeNG file reader first reads from the file a
+chunk of data, then the decoder, which has predominant execution time,
+breaks it into events and sends them to the simulator. The next
+segment of data is only read after the first is completely decoded. On
+the other hand, Aiyra's controller reads each event one at time making
+more I/O calls to read the file. This is probably one of the causes of
+Aiyra being slower. Besides, the language is also a factor, since we
+know Java is slower than C++.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Results of comparison between Aiyra and PajeNG}
 \centering
-\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_overview.pdf}
+\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_overview_v2_03.pdf}
 \label{fig.cppoverview}
 \end{figure}
 #+END_LaTeX
 
-#+BEGIN_LaTeX
-\begin{table}[!htb]
-\caption{Average Execution Time (s) for each configuration}
-\label{tab.cpptimes}
-\centering
-\begin{tabularx}{\linewidth}{lXXX}\toprule
-{\bf Platform}& {\bf Tool} &   {\bf Big}         & {\bf Medium}            \\\toprule
-& Aiyra                    &  82.9               &  9.3                     \\
-Luiza & Pj                 &  207.4              & 24.9               \\
-& PjFlex                   &  215.7              & 25.8               \\\midrule
-& Aiyra                    &  124.2              & 13.6              \\
-Guarani & Pj               &  232.0              & 29.9            \\     
-& PjFlex                   & 248.6               & 32.1           \\\midrule
-& Aiyra                    & 111.7               & 13.0               \\
-Orion1 & Pj                & 259.7               & 33.4               \\
-& PjFlex                   & 279.7               & 36.0               \\
-\bottomrule\end{tabularx}
-\end{table}
-#+END_LaTeX
 
-Notice that the experiment in *luiza* had a bigger variability with
-the *pj* version and the *big* input. The average execution time for
-the big file in the *aiyra* version was around $80$ seconds, but there
-was an outlier experiment that executed in $2888$ seconds. This
-particular measurement has been manually removed from the data
-set. Even with this particular case deleted, an instability can still
-be perceived. The experiments are randomized in the design so, if
-there was any disturbance in the environment during the experiment, it
-should have affected other configurations as well, but we can notice
-the variability only in this particular configuration. There is no
-confirmed explanation for this situation, it may be because *luiza* is
-running a different operating system and did not handle well the C++
-parsing with the biggest file. Considering that it does not affect the
-overall analysis, the experiment was considered valid. 
-
-
+(need a closer look of the small file)
 So far, we have analysed the execution time of the *medium* and *big*
 inputs. Figure \ref{fig.cppsmall} shows only the measurement
 considering the *small* input in the different platforms, to have a
@@ -1743,17 +1696,15 @@ times.
 \end{figure}
 #+END_LaTeX
 
-These results are particularly important to assure the relevance of
-this proposal. By detaching the core simulation from the data
-handling, we perceive that there is room for performance improvements
-in the replay of large Pajé trace files. It is possible to observe
-that the fewer data we retain in memory, the better our performance
-will be. The implementation of Aiyra gives the user more flexibility
-to manage the memory usage of his program and space to develop high
-performance implementations. It is also possible to notice that
-changes in the design of the program, specially in the trace file
-parsing and detected events handling, may have significant impacts in
-the performance of the program.
+These results do not affect the relevance of the proposal, since it
+was never a goal to make a faster simulator. The implementation of
+Aiyra gives the user more flexibility to manage the memory usage of
+his program and space to develop high performance implementations. It
+is also possible to notice that changes in the design of the program,
+specially in the trace file parsing and detected events handling, may
+have impacts in the performance of the program.
+
+(REVISAR)
 
 
 *** PajeInsertDBPlugin Evaluation
@@ -1851,7 +1802,7 @@ Figures \ref{fig.remotebig} and \ref{fig.remotemedium} portray the
 comparison between the local and remote execution times in
 *guarani*. As expected, the remote access increases the execution
 time. It is not a big difference because both machines are in the same
-network with only one hop of distance.
+network and connected by one single switch.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -3564,14 +3515,17 @@ of the results totally deattached from the core simulation. We also
 validated this design by implementing plugins that solve the other
 problems identified. 
 
-We performed an experimental evaluation comparing Aiyra to the
+
+
+(We performed an experimental evaluation comparing Aiyra to the
 existing approach. The separation of the core simulation from the data
 handling provided very good results. We were able to perform a
 simulation two times faster than the original tool. This is very
 relevant, since it opens several possibilities of creating high
 performance solutions. Thus, besides building an extensible simulator,
-we also proved it to have better performance than the existing
-tool. 
+we also proved it to have better performance than the existing tool.)
+NAO PRECISA MAIS. So mencionar esse experimento e dar enfase na
+relevancia.
 
 Building plugins for the solution was extremely important to
 validate and improve the proposal. The first approach consisted in
