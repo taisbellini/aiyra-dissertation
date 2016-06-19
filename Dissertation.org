@@ -3515,17 +3515,15 @@ of the results totally deattached from the core simulation. We also
 validated this design by implementing plugins that solve the other
 problems identified. 
 
-
-
-(We performed an experimental evaluation comparing Aiyra to the
-existing approach. The separation of the core simulation from the data
-handling provided very good results. We were able to perform a
-simulation two times faster than the original tool. This is very
-relevant, since it opens several possibilities of creating high
-performance solutions. Thus, besides building an extensible simulator,
-we also proved it to have better performance than the existing tool.)
-NAO PRECISA MAIS. So mencionar esse experimento e dar enfase na
-relevancia.
+The objective of this work was to build a simulator that would give
+the performance analyst more flexibility to extend it how he
+desired. With Aiyra, it is fast and easy to develop plugins to
+manipulate the results of any part of the simulation. It is possible
+to build either specific extensions, that comprise very particular
+types of events, or broad approaches, including multiple types of
+entities. The performance analyst does not need to get into the
+details of the simulation code to build a plugin and will only need to
+know which entities are provided by the simulator.
 
 Building plugins for the solution was extremely important to
 validate and improve the proposal. The first approach consisted in
