@@ -38,6 +38,7 @@
 
 #+LATEX_HEADER: \newcommand{\review}[1]{\textcolor[rgb]{1,0,0}{[Lucas: #1]}}
 #+LATEX_HEADER: \newcommand{\lucas}[1]{\textcolor[rgb]{0.2,0.2,0.7}{[Lucas: #1]}}
+#+LATEX_HEADER: \newcommand{\source}{Source: Author}
 #+LATEX_HEADER: \input{configuration.tex}
 
 * Export to PDF (org-mode installation + emacnos configuration)    :noexport:
@@ -142,6 +143,7 @@ Hope this helps.
 % \renewcommand{\nominataChefeINAname}{Chefe do \deptINA}
 % \renewcommand{\nominataChefeINT}{Prof.~Leila Ribeiro}
 % \renewcommand{\nominataChefeINTname}{Chefe do \deptINT}
+
 
 %
 % TODO: provide these keywords
@@ -505,7 +507,8 @@ Appendix \ref{ap.javacc}.
 \caption{JavaCC's file generation flow}
 \centering
 \includegraphics[width=.85\linewidth]{./img/javaccex.pdf}
-\label{fig.javaccex}
+\label{fig.javaccex} 
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -551,6 +554,7 @@ creates objects that will be submitted to the database; and
 \centering
 \includegraphics[width=.5\linewidth]{./img/jdbcex.pdf}
 \label{fig.jdbcex}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -603,6 +607,7 @@ a *weak entity*.
 \centering
 \includegraphics[width=\linewidth]{./img/ermodelex.pdf}
 \label{fig.ermodelex}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -824,6 +829,7 @@ the number of containers in the trace.
 \centering
 \includegraphics[width=.75\linewidth]{./img/hierarchyex.pdf}
 \label{fig.hierarchyex}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -868,6 +874,7 @@ simulation.
 \centering
 \includegraphics[width=\linewidth]{./img/pajeparco.pdf}
 \label{fig.pajeparco}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -907,6 +914,7 @@ their respective childs inherit from it.
 \centering
 \includegraphics[width=\linewidth]{./img/eventsHierarchy.pdf}
 \label{fig.eventsHierarchy}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -929,6 +937,7 @@ manipulate it. Its childs are the *PajeStateType*, *PajeEventType* and
 \includegraphics[width=.6
 \linewidth]{./img/typesHierarchy.pdf}
 \label{fig.typesHierarchy}
+\\\source
 \end{figure}
 #+END_LaTeX
 *** Class Hierarchy for the Pajé Entities
@@ -953,6 +962,7 @@ entity.
 \centering
 \includegraphics[width=\linewidth]{./img/entitiesHierarchy.pdf}
 \label{fig.entitiesHierarchy}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -1069,6 +1079,7 @@ entity.
 \centering
 \includegraphics[width=\linewidth]{./img/aiyraArchitecture.pdf}
 \label{fig.aiyraArchitecture}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -1184,6 +1195,7 @@ object is sent again, now complete with an ending timestamp.
 \centering
 \includegraphics[width=.8\linewidth]{./img/aiyraCore.pdf}
 \label{fig.aiyraCore}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -1224,6 +1236,7 @@ small and not worth of a new class implementation.
 \centering
 \includegraphics[width=.8\linewidth]{./img/aiyraPlugin.pdf}
 \label{fig.aiyraPlugin}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -1310,6 +1323,7 @@ are not removed during simulation.
 \centering
 \includegraphics[width=.8\linewidth]{./img/pluginDump.pdf}
 \label{fig.plugindump}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -1360,6 +1374,7 @@ container is destroyed, its *endTime* is updated in the database.
 \centering
 \includegraphics[width=.8\linewidth]{./img/pluginDB.pdf}
 \label{fig.pluginDB}
+\\\source
 \end{figure}
 #+END_LaTeX
 
@@ -1424,6 +1439,7 @@ field.
 \centering
 \includegraphics[width=\linewidth]{./img/ermodel.pdf}
 \label{fig.ermodel}
+\\\source
 \end{figure}
 #+END_LaTeX
 
