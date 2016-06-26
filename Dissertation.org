@@ -1324,11 +1324,11 @@ are not removed during simulation.
 #+END_LaTeX
 
 The difference between the *PajeDumpPlugin* and the *pj_dump* tool is
-that the first one outputs the information as soon as the entity is
-completed. The *pj_dump*, in turn, keeps everything in memory before
-dumping it all at once. With this approach, it is possible to solve
-the issue regarding the need to wait for the program to end to have
-the results.
+that the first approach reveals the information to the as soon as the
+entity is completed. The *pj_dump*, in turn, keeps everything in
+memory and then dumps it all at once in the end of the execution. With
+this approach, it is possible to solve the issue regarding the need to
+wait for the program to end to have the results.
 
 This plugin can be called with the argument =PajeDump= in the =-p=
 option and adds a new argument (=-l=) that can group together a
@@ -1349,12 +1349,12 @@ specially designed for the Pajé format and is presented in the next
 subsections. This plugin allows the user to save data from multiple
 files in the same database.
 
-The plugin can be used by specifying =mysql= as argument for the =-p=
-option. It is necessary to have a MySQL connection and a database with
-the correct schema. To specify the server of the connection, there is
-the option =-s=. It is also possible to inform a username (=-u=) and a
-password (=-pwd=). The default for these options is: *localhost*,
-*root* and *root*, respectively.
+It can be used by specifying =mysql= as argument for the =-p=
+option. To use the plugin, it is necessary to have a MySQL connection
+and a database with the correct schema. To specify the server of the
+connection, there is the option =-s=. It is also possible to inform a
+username (=-u=) and a password (=-pwd=). The default for these options
+is: *localhost*, *root* and *root*, respectively.
 
 The following entry points were used in the *PajeInsertDBPlugin*:
 *newType*, *newValue*, *newCreatedContainer*, *destroyedContainer*,
