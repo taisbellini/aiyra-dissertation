@@ -1670,6 +1670,7 @@ know Java is slower than C++.
 \begin{figure}[!htb]
 \caption{Results of comparison between Aiyra and PajeNG}
 \centering
+\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_overview_v2_o3.pdf}
 \includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_overview_v2_03.pdf}
 \label{fig.cppoverview}
 \end{figure}
