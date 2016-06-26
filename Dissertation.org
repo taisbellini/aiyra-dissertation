@@ -1189,7 +1189,7 @@ object is sent again, now complete with an ending timestamp.
 \begin{figure}[!htb]
 \caption{Aiyra's Core Architecture}
 \centering
-\includegraphics[width=.8\linewidth]{./img/aiyraCore.pdf}
+\includegraphics[width=.85\linewidth]{./img/aiyraCore.pdf}
 \label{fig.aiyraCore}
 \\\source
 \end{figure}
