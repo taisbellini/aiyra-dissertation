@@ -1039,12 +1039,12 @@ the simulation again if a trace file needs to be revisited.
 Considering the presented issues, an extensible simulator written in
 Java was developed. The intention of this proposal is to make the
 simulation core more transparent for the performance analyst providing
-the created entities in a way that can manipulated without
-knowledge of the rest of the implementation. The program uses the
-concept of plugins that attached to every type of event. The simulator
-itself addresses the first issue presented, while the creation of new
-plugins provide a possible solution to the other two. The details of
-this novel approach, developed in our work, are detailed in the next
+the created entities in a way that can manipulated without knowledge
+of the rest of the implementation. The program uses the concept of
+plugins that attached to every type of event. The simulator itself
+addresses the first issue presented, while the creation of new plugins
+provide a possible solution to the other two. The details of this
+novel approach, developed in our work, are detailed in the next
 chapter.
 
 * Aiyra - a Java-based simulator for Paje trace files
