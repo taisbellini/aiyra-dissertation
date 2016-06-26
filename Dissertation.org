@@ -514,7 +514,7 @@ Appendix \ref{ap.javacc}.
 
 In Figure \ref{fig.javaccex} we can see an example of the processing
 of a file named *MyGrammar.jj*, which results in seven files: the
-parser in *MyGrammar.java*; the lexical analyser in
+parser, that is in *MyGrammar.java*; the lexical analyser in
 *MyGrammarTokenManager.java* and some useful constants in
 *MyGrammarConstants.java*.  The other four files generated:
 *Token.java*, *TokenMgrError.java*, *SimpleCharStream.java* and
@@ -542,11 +542,11 @@ The JDBC Driver API manages the corresponding drivers to ensure that
 the correct one is being used. The JDBC API layer, in turn,
 administrates the communication between the application and the driver
 manager. The JDBC API consists in classes and interfaces, such as
-*DriverManager*, which makes a connection between requests from the
-application and the proper database driver; *Connection*, containing
-all the methods necessary to contact the database; *Statement*, that
-creates objects that will be submitted to the database; and
-*ResultSet*, where the retrieved objects are placed.
+*DriverManager*, which connects requests from the application and the
+proper database driver; *Connection*, containing all the methods
+necessary to contact the database; *Statement*, that creates objects
+that will be submitted to the database; and *ResultSet*, where the
+retrieved objects are placed.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
