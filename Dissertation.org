@@ -803,25 +803,23 @@ are sets of events associated to each kind of entity described above,
 besides the events that define entity types.
 
 The Pajé objects are organized in two separated hierarchies: types and
-entities. These hierarchies are specific for each trace file, although
-it can be repeated in traces with the same scenario. In the structure
-of the trace file, the type hierarchy comes just after the event
-definition. There, each type of the program is defined and one of the
-fields is the parent type. Each entity is always associated to a type
-and they must follow the same precedence as the types definition. In
-Figure \ref{fig.hierarchyex}, we have a type hierarchy on the left,
-and a corresponding entities hierarchy on the right. The only kind of
-entity that holds other entities is the container, thus, the rounded
-entities are container types, while the squared ones represent
-states. On the right, the *M* type stands for machine, *C* is core,
-*P* is process and *Sp* and *Sc* are states. On the left, we have one
-machine, *M1*, with two cores: *C1*, running a process *P1*; and *C2*,
-running a process *P2*. The processes and the cores have a stack of
-states organized by the timestamp. Notice that the entities tree
-respect the precedences set on the left. The difference between both
-hierarchies relies on the number of nodes: while the type hierarchy
-has only a few, the entities hierarchy may have millions depending on
-the number of containers in the trace.
+entities. These hierarchies are specific for each trace file. In the
+beginning body section, each type of the program is defined and one of
+the fields is the parent type. Each entity is always associated to a
+type and they must follow the same precedence as the types
+definition. In Figure \ref{fig.hierarchyex}, we have a type hierarchy
+on the left, and a corresponding entities hierarchy on the right. The
+only kind of entity that holds other entities is the container, thus,
+the rounded entities are container types, while the squared ones
+represent states. On the right, the *M* type stands for machine, *C*
+is core, *P* is process and *Sp* and *Sc* are states. On the left, we
+have one machine, *M1*, with two cores: *C1*, running a process *P1*;
+and *C2*, running a process *P2*. The processes and the cores have a
+stack of states organized by the timestamp. Notice that the entities
+tree respect the precedences set on the left. The difference between
+both hierarchies relies on the number of nodes: while the type
+hierarchy has only a few, the entities hierarchy may have millions
+depending on the number of containers in the trace.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -858,13 +856,13 @@ a space-time visualization tool and some auxiliary tools to manage the
 trace files. The base for the implementation of this project was the
 *libpaje* library.
 
-The library, represented in Figure \ref{fig.pajeparco} has three main
-components forming a pipeline that results in complete simulated
-entities. These components are: *FileReader*, *EventDecoder* and
-*PajeSimulator*. First, the *FileReader* reads a chunk of data from
-the trace file and puts it in memory. Then, the *EventDecoder* breaks
-it into events identifying, line by line, the event's fields and
-creating an object with all the necessary information. Last, the
+The library, that is represented in Figure \ref{fig.pajeparco} has
+three main components forming a pipeline resulting in complete
+simulated entities. These components are: *FileReader*, *EventDecoder*
+and *PajeSimulator*. First, the *FileReader* reads a chunk of data
+from the trace file and puts it in memory. Then, the *EventDecoder*
+breaks it into events identifying, line by line, the event's fields
+and creating an object with all the necessary information. Last, the
 *PajeSimulator* receives this event object and addresses to the proper
 simulation.
 
@@ -974,12 +972,10 @@ beginning of the program and incorporates all the event processing of
 the simulation. The type definitions, container creations and entity
 value declarations are completed and stored in the *PajeSimulator*
 object. Every time there is an event of type *PajeCreateContainer*, a
-*PajeContainer* object is instantiated. All other events are always
-associated to a container, thus, they will be simulated in the
-appropriate container instance. The *PajeContainer* object will keep
-the entities until the program finishes. Since all the data from the
-simulation is kept in memory, the end timestamp is used to signal that
-an entity no longer can be referred.
+*PajeContainer* object is instantiated. All other events are simulated
+in the appropriate container instance. The *PajeContainer* object will
+keep the entities until the program finishes. The end timestamp is
+used to signal that an entity no longer can be referred.
 
 The *PajeSimulator* class lists every type declared and container
 created throughout the simulation by using map structures (=typeMap=
@@ -1043,8 +1039,8 @@ the simulation again if a trace file needs to be revisited.
 Considering the presented issues, an extensible simulator written in
 Java was developed. The intention of this proposal is to make the
 simulation core more transparent for the performance analyst providing
-the created entities in a way that he can manipulate them without
-looking to the rest of the implementation. The program uses the
+the created entities in a way that can manipulated without
+knowledge of the rest of the implementation. The program uses the
 concept of plugins that attached to every type of event. The simulator
 itself addresses the first issue presented, while the creation of new
 plugins provide a possible solution to the other two. The details of
