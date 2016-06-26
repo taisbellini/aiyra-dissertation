@@ -1578,8 +1578,7 @@ factors, each with three levels, we have a total of $270$ experiments
 (the product of $3*3*30$). The outcome of this experiment is the
 *execution* time for each combination of *input* and *version*. We
 execute the design in each one of the platforms, thus, we had three
-files each with $270$ rows. The total number of experiments
-considering the three platforms is therefore $810$.
+files each with $270$ rows.
 
 *** PajeInsertDBPlugin Evaluation Methodology
 
@@ -1669,14 +1668,13 @@ with *pjflex*, the difference is smaller since *pjflex* is slower than
 exist. An important difference among Aiyra and PajeNG is the process
 of reading the trace file, parsing it and then sending to the
 simulator. As seen in Chapter \ref{chapter.paje}, the PajeNG file
-reader first reads from the file a chunk of data, then the decoder,
-which has predominant execution time, breaks it into events and sends
-them to the simulator. The next segment of data is only read after the
-first is completely decoded. On the other hand, Aiyra's controller
-reads each event one at time making more I/O calls to read the
-file. This is probably one of the causes of Aiyra being
-slower. Besides, the language is also a factor, since we know Java is
-slower than C++.
+reader first reads from the file a chunk of data, then the decoder
+breaks it into events and sends them to the simulator. The next
+segment of data is only read after the first is completely decoded. On
+the other hand, Aiyra's controller reads each event one at time making
+more I/O calls to read the file. This is probably one of the causes of
+Aiyra being slower. Besides, the language is also a factor, since we
+know Java is slower than C++.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1732,8 +1730,8 @@ $48$ hours to execute the design in each platform. *Guarani* and
 *orion1* are machines shared by the professors and students in the
 Informatics Institute of the Federal University of Rio Grande do Sul,
 thus, it was not desirable to disable other users from using the
-machine for longer than two days. For these reasons, the experiment in
-*orion1* and *guarani* had only $10$ replications. Even so, we have
+machine for longer than two days. For these reasons, we chose to use
+only $10$ replications *orion1* and *guarani*. Even so, we have
 observed very little variability among the executions in the
 exploratory tests. The experiments for these platforms do not have the
 *A* batch size.
