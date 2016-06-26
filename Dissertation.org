@@ -1665,21 +1665,22 @@ provided by the PajeNG developers.
 _Observed Results_
 
 We can see in Figure \ref{fig.cppoverview} that the result is what we
-expected. We see *aiyra* having a lower performance in all three
-platforms, taking almost two times more time than *pj* to execute in
-*guarani* and *orion1*. When comparing with *pjflex*, the difference
-is smaller since *pjflex* is slower than *pj*, and in the *luiza*
-platform the difference almost does not exist. An important difference
-among Aiyra and PajeNG is the process of reading the trace file,
-parsing it and then sending to the simulator. As seen in Chapter
-\ref{chapter.paje}, the PajeNG file reader first reads from the file a
-chunk of data, then the decoder, which has predominant execution time,
-breaks it into events and sends them to the simulator. The next
-segment of data is only read after the first is completely decoded. On
-the other hand, Aiyra's controller reads each event one at time making
-more I/O calls to read the file. This is probably one of the causes of
-Aiyra being slower. Besides, the language is also a factor, since we
-know Java is slower than C++.
+expected. We see *aiyra* having a lower performance for the *big* and
+*medium* inputs in all three platforms, taking almost two times more
+time than *pj* to execute in *guarani* and *orion1*. When comparing
+with *pjflex*, the difference is smaller since *pjflex* is slower than
+*pj*, and in the *luiza* platform the difference almost does not
+exist. An important difference among Aiyra and PajeNG is the process
+of reading the trace file, parsing it and then sending to the
+simulator. As seen in Chapter \ref{chapter.paje}, the PajeNG file
+reader first reads from the file a chunk of data, then the decoder,
+which has predominant execution time, breaks it into events and sends
+them to the simulator. The next segment of data is only read after the
+first is completely decoded. On the other hand, Aiyra's controller
+reads each event one at time making more I/O calls to read the
+file. This is probably one of the causes of Aiyra being
+slower. Besides, the language is also a factor, since we know Java is
+slower than C++.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
@@ -1691,23 +1692,17 @@ know Java is slower than C++.
 #+END_LaTeX
 
 
-(need a closer look of the small file)
 So far, we have analysed the execution time of the *medium* and *big*
 inputs. Figure \ref{fig.cppsmall} shows only the measurement
 considering the *small* input in the different platforms, to have a
 closer look in its time scale. The behavior for the *small* input is
-different from the others. In this case, we observe exactly the
-expected result (see previous subsection). For the bigger files, we
-concluded that the process of decoding the data in blocks was what
-made *pj* and *pj_flex* slower. In this case, we have a very small
-file, so we will have less blocks and the decoder is called fewer
-times.
+not different from the others.
 
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Results of comparison between Aiyra and PajeNG for the small input}
 \centering
-\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_small.pdf}
+\includegraphics[width=\linewidth]{./img/cpp/aiyra-pj-pjflex_small_v2_o3.pdf}
 \label{fig.cppsmall}
 \end{figure}
 #+END_LaTeX
@@ -1719,8 +1714,6 @@ his program and space to develop high performance implementations. It
 is also possible to notice that changes in the design of the program,
 specially in the trace file parsing and detected events handling, may
 have impacts in the performance of the program.
-
-(REVISAR)
 
 
 *** PajeInsertDBPlugin Evaluation
