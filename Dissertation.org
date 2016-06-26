@@ -287,13 +287,13 @@ rigoroso /design/ experimental.
 % lista de abreviaturas e siglas
 % o parametro deve ser a abreviatura mais longa
 \begin{listofabbrv}{SPMD}
-    \item[GC] Garbage Collector
-    \item[CSV] Comma Separated Values
-    \item[HPC] High Performance Computing
-    \item[JVM] Java Virtual Machine
-   \item [DBMS] Database Management System
-    \item[JDBC] Java Database Connectivity
    \item[ANTLR] Another Tool For Language Recognition
+   \item[CSV] Comma Separated Values
+   \item [DBMS] Database Management System    
+   \item[GC] Garbage Collector 
+   \item[HPC] High Performance Computing
+   \item[JDBC] Java Database Connectivity
+   \item[JVM] Java Virtual Machine
 \end{listofabbrv}
 
 
