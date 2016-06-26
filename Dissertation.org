@@ -239,6 +239,7 @@ through the use of a rigorous experimental design.
 % resumo na outra língua
 % como parametros devem ser passados o titulo e as palavras-chave
 % na outra língua, separadas por vírgulas
+\begin{englishabstract}{Simulador Extensível para Arquivos de Rastro no Formato Pajé}{Simulação de Rastros,Simulação,Pajé,JavaCC,MySQL,Performance}
 \begin{englishabstract}{Simulador Extensível para Arquivos de Rastro no Formato Pajé}{Pajé,Rastro,Simulador}
 #+END_LaTeX
 Observação do comportamento de programas através de arquivos de rastro
