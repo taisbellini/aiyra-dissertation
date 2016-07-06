@@ -1781,8 +1781,8 @@ the database access cost. With the *medium* input, presented in Figure
 *luiza*, *guarani* and *orion1* platforms. The *orion1* results are
 inconclusive for the *medium* input size, probably due to external
 interferences. Although we have locked the machine for the experiment,
-it was out of our hands to stop eventual programs that could be
-running in other students' users and affecting the performance.
+we haven't the rights to stop other user programs that could be
+running and affecting the performance.
 #+BEGIN_LaTeX
 \begin{figure}[!htb]
 \caption{Results of batch sizes variability for big input}
@@ -1835,10 +1835,9 @@ is very uncommon and that the usual traces are at least in the
 Megabytes order of magnitude. In Figure \ref{fig.remotesmall}, we see
 that the remote execution was actually faster than the local one. This
 can be possibly explained by the remote database allowing a
-distribution of resource usage, while the local environment is
+resource usage distribution, while the local environment is
 overloaded by the MySQL server. However, this would have affected the
-other inputs as well, which was not the case. We do not have a
-conclusion about this result and it is open for further analysis.
+other inputs as well, which was not the case. This is still open for further analysis.
 
 
 #+BEGIN_LaTeX
@@ -3507,7 +3506,7 @@ ggplot(k[k$input == "small",], aes(x=batch, y=mem_max, fill=input)) +
 * Conclusion
 \label{chapter.conclusion}
 
-In this proposal, we have elaborated a different approach to an
+In this work, we have elaborated a different approach to an
 existing simulation tool for Pajé Trace files (PajeNG). We have
 observed issues in the PajeNG implementation regarding the lack of
 flexibility to handle the resulting data of the simulation, the lack
@@ -3516,9 +3515,10 @@ the extensibility of the tool, we introduced the concept of plugins,
 where every generated entity is sent to. This permits the manipulation
 of the results totally deattached from the core simulation. We also
 validated this design by implementing plugins that solve the other
-problems identified. 
+problems we have identified. 
 
-The objective of this work was to build a simulator that would give
+The objective of this work is to build a simulator, called Aiyra,
+that would give
 the performance analyst more flexibility to extend it how he
 desired. With Aiyra, it is fast and easy to develop plugins to
 manipulate the results of any part of the simulation. It is possible
@@ -3547,7 +3547,7 @@ the core simulation.
 The *PajeInsertDBPlugin* analysis presented some issues that the Java
 language may bring regarding memory usage. First, it can become very
 slow depending on the number of objects it is storing. Second, there
-must be a careful analysis on the configuration of the JVM to assure
+must be a careful analysis of the JVM configuration to be sure
 that it will have a capacity consistent to the platform in which it is
 running. This may cause a limitation for the user that needs to store
 many entities in memory. The *PajeDumpPlugin*, although solving an
@@ -3567,7 +3567,7 @@ to its proper class, instead of centralizing all in the
 controller. The way it is currently implemented, the user needs to
 modify the code in the controller package to add an argument to the
 plugin. In terms of analysis, the *PajeInsertDBPlugin* can be deeper
-explored. There can be evaluations testing different configurations
+explored. There can be evaluation testing different configurations
 for the JVM, as well as an study on the eficiency of the schema.
 
 #+LATEX: \bibliography{References}
