@@ -1,1 +1,1 @@
-Dissertation of aiyra project. TCC.
+This is the final project for the conclusion of the Computer Science Bachelor degree in the Federal University of Rio Grande do Sul, Porto Alegre - Brazil. The complete dissertation can be downloaded at http://hdl.handle.net/10183/147645.
